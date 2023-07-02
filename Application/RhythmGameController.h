@@ -25,6 +25,7 @@ public:
 	std::list<Note> remainNotes;
 
 	std::vector<ModelObj> noteModelObjs;
+	std::vector<ModelObj> lineModelObjs;
 
 	int32_t countJudgePerfect = 0;
 	int32_t countJudgeHit = 0;
@@ -48,10 +49,10 @@ public:
 	void Load();
 	void Save();
 
-	static constexpr int32_t posJudgeLine = 620;
-	static constexpr int32_t laneCenter = 1280 / 2;
-	static constexpr int32_t laneWidth = 100;
-	static constexpr float scrollBase = 0.1f;
+	static constexpr float posJudgeLine = 0;
+	static constexpr float laneCenter = 0;
+	static constexpr float laneWidth = 4;
+	static constexpr float scrollBase = 0.01f;
 
 	static constexpr float judgeUltimatePerfect = 25;
 	static constexpr float judgePerfect = 50;

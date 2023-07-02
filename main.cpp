@@ -153,7 +153,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		//Ç◊ÇÒÇËÅI
 		{
-			ImGui::SetNextWindowSize({ 400, 350 });
+			ImGui::SetNextWindowSize({ 400, 380 });
 
 			ImGuiWindowFlags window_flags = 0;
 			window_flags |= ImGuiWindowFlags_NoResize;

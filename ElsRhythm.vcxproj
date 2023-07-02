@@ -168,6 +168,8 @@
     <ClCompile Include="Application\ChartFile.cpp" />
     <ClCompile Include="Application\CollidersScene.cpp" />
     <ClCompile Include="Application\ControllerScene.cpp" />
+    <ClCompile Include="Application\ParticleExplode.cpp" />
+    <ClCompile Include="Application\ParticleObject.cpp" />
     <ClCompile Include="Application\RhythmGameController.cpp" />
     <ClCompile Include="Application\Note.cpp" />
     <ClCompile Include="Application\SimpleSceneTransition.cpp" />
@@ -529,6 +531,8 @@
     <ClInclude Include="Application\ChartFile.h" />
     <ClInclude Include="Application\CollidersScene.h" />
     <ClInclude Include="Application\ControllerScene.h" />
+    <ClInclude Include="Application\ParticleExplode.h" />
+    <ClInclude Include="Application\ParticleObject.h" />
     <ClInclude Include="Application\RhythmGameController.h" />
     <ClInclude Include="Application\Note.h" />
     <ClInclude Include="Application\SimpleSceneTransition.h" />

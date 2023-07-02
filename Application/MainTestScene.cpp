@@ -6,11 +6,41 @@
 #include <RenderTarget.h>
 #include <Renderer.h>
 #include <RImGui.h>
+#include <ParticleObject.h>
 
 MainTestScene::MainTestScene()
 {
-	camera.mViewProjection.mEye = { 0, 0, -10 };
-	camera.mViewProjection.mTarget = { 0, 0, 0 };
+	judgeLine = ModelObj("Cube");
+	judgeLine.mTransform.position = { 0, -0.04f, 0 };
+	judgeLine.mTransform.scale = { 16, 0.1f, 0.2f };
+	judgeLine.mTransform.UpdateMatrix();
+	judgeLine.mTuneMaterial.mColor = { 0.3f, 0, 0.3f, 1.0f };
+
+	lane = ModelObj("Cube");
+	lane.mTransform.position = { 0, -0.1f, 0 };
+	lane.mTransform.scale = { 16, 0.1f, 160.0f };
+	lane.mTransform.UpdateMatrix();
+	lane.mTuneMaterial.mColor = { 0.2f, 0.2f, 0.2f, 1.0f };
+
+	for (int32_t i = 0; i < 3; i++) {
+		lines[i] = ModelObj("Cube");
+		lines[i].mTransform.position = { -4.0f + 4.0f * i, -0.045f, 0 };
+		lines[i].mTransform.scale = { 0.2f, 0.1f, 160.0f };
+		lines[i].mTransform.UpdateMatrix();
+		lines[i].mTuneMaterial.mColor = { 0.0f, 0.0f, 0.0f, 1.0f };
+	}
+
+	for (int32_t i = 0; i < 4; i++) {
+		inputlines[i] = ModelObj("Cube");
+		inputlines[i].mTransform.position = { -6.0f + 4.0f * i, -0.05f, 0 };
+		inputlines[i].mTransform.scale = { 4.0f, 0.1f, 160.0f };
+		inputlines[i].mTransform.UpdateMatrix();
+		inputlines[i].mTuneMaterial.mColor = { 0.4f, 0.4f, 0.4f, 0.5f };
+	}
+
+	camera.mViewProjection.mEye = { 0, 11.0f, -12.0f };
+	camera.mAngle = { 90, -25 };
+	camera.mFreeFlag = true;
 	camera.mViewProjection.UpdateMatrix();
 
 	chartFile = ChartFile("Charts/aleph-0.kasu");
@@ -24,35 +54,36 @@ void MainTestScene::Init()
 {
 	Camera::sNowCamera = &camera;
 	LightGroup::sNowLight = &light;
+
+	ParticleObject::Clear();
 }
 
 void MainTestScene::Update()
 {
-	gameController.Update();
-
-	/*{
-		ImGui::SetNextWindowSize({ 400, 270 });
-		ImGui::SetNextWindowPos({ ImGui::GetMainViewport()->WorkPos.x + 800, ImGui::GetMainViewport()->WorkPos.y + 10 }, ImGuiCond_Once);
-
-		ImGuiWindowFlags window_flags = 0;
-		window_flags |= ImGuiWindowFlags_NoResize;
-		ImGui::Begin("Scene", NULL, window_flags);
-
-		if(ImGui::Button("Reset")) {
-
-		}
-
-		ImGui::Separator();
-
-
-		
-		ImGui::End();
-	}*/
-
 	light.Update();
 	camera.Update();
+	gameController.Update();
+	ParticleObject::ManageParticleObject(true);
 }
 
 void MainTestScene::Draw()
 {
+	judgeLine.TransferBuffer(Camera::sNowCamera->mViewProjection);
+	judgeLine.Draw();
+	lane.TransferBuffer(Camera::sNowCamera->mViewProjection);
+	lane.Draw();
+	for (int32_t i = 0; i < 3; i++) {
+		lines[i].TransferBuffer(Camera::sNowCamera->mViewProjection);
+		lines[i].Draw();
+	}
+
+	std::array<int32_t, 4> laneKeys = { DIK_F, DIK_G, DIK_H, DIK_J };
+	for (int32_t i = 0; i < 4; i++) {
+		if (RInput::GetKey(laneKeys[i])) {
+			inputlines[i].TransferBuffer(Camera::sNowCamera->mViewProjection);
+			inputlines[i].Draw();
+		}
+	}
+
+	SimpleDrawer::DrawString(0, 0, 0, Util::StringFormat("%.2f, %.2f, %.2f, %.2f, %.2f", camera.mViewProjection.mEye.x, camera.mViewProjection.mEye.y, camera.mViewProjection.mEye.z, camera.mAngle.x, camera.mAngle.y));
 }

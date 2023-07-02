@@ -4,6 +4,7 @@
 #include <RInput.h>
 #include <RImGui.h>
 #include <Camera.h>
+#include <ParticleExplode.h>
 
 float RhythmGameController::GetScroll(float miliSec)
 {
@@ -50,11 +51,12 @@ float RhythmGameController::GetPosition(float miliSec)
 
 void RhythmGameController::DrawMeasureLine()
 {
+	int32_t lineObjIndex = 0;
 	Beat beat = music.ConvertMiliSecondsToBeat(time);
 	for (int32_t measure = beat.measure; ;) {
 		float posY = posJudgeLine - (GetPosition(music.ConvertBeatToMiliSeconds({ measure, 0, 1 })) - nowPosY);
 
-		if (posY < -50 || posY > 770) {
+		if (posY < -80 || posY > 50) {
 			break;
 		}
 
@@ -63,18 +65,22 @@ void RhythmGameController::DrawMeasureLine()
 			break;
 		}
 
-		SimpleDrawer::DrawBox(
-			0,
-			static_cast<int32_t>(posY),
-			RWindow::GetWidth(),
-			static_cast<int32_t>(posY - 2),
-			50, 0xffffff, true);
+		if (lineObjIndex == lineModelObjs.size()) {
+			lineModelObjs.emplace_back("Cube");
+		}
+		ModelObj& obj = lineModelObjs[lineObjIndex];
+		obj.mTransform.position = { 0, -0.035f, -posY };
+		obj.mTransform.scale = { 16.0f, 0.1f, 0.1f };
+		obj.mTransform.UpdateMatrix();
+		obj.TransferBuffer(Camera::sNowCamera->mViewProjection);
+		obj.Draw();
+		lineObjIndex++;
 		measure--;
 	}
 	for (int32_t measure = beat.measure + 1; ;) {
 		float posY = posJudgeLine - (GetPosition(music.ConvertBeatToMiliSeconds({ measure, 0, 1 })) - nowPosY);
 
-		if (posY < -50 || posY > 770) {
+		if (posY < -80 || posY > 50) {
 			break;
 		}
 
@@ -83,27 +89,35 @@ void RhythmGameController::DrawMeasureLine()
 			break;
 		}
 
-		SimpleDrawer::DrawBox(
-			0,
-			static_cast<int32_t>(posY),
-			RWindow::GetWidth(),
-			static_cast<int32_t>(posY - 2),
-			50, 0xffffff, true);
+		if (lineObjIndex == lineModelObjs.size()) {
+			lineModelObjs.emplace_back("Cube");
+		}
+		ModelObj& obj = lineModelObjs[lineObjIndex];
+		obj.mTransform.position = { 0, -0.035f, -posY };
+		obj.mTransform.scale = { 16.0f, 0.1f, 0.1f };
+		obj.mTransform.UpdateMatrix();
+		obj.TransferBuffer(Camera::sNowCamera->mViewProjection);
+		obj.Draw();
+		lineObjIndex++;
 		measure++;
 	}
 	for (std::pair<Beat, float> change : scrollChange) {
 		float posY = posJudgeLine - (GetPosition(music.ConvertBeatToMiliSeconds(change.first)) - nowPosY);
 
-		if (posY < -50 || posY > 770) {
-			continue;
+		if (posY < -80 || posY > 50) {
+			break;
 		}
 
-		SimpleDrawer::DrawBox(
-			0,
-			static_cast<int32_t>(posY),
-			RWindow::GetWidth(),
-			static_cast<int32_t>(posY - 2),
-			50, 0xffffff, true);
+		if (lineObjIndex == lineModelObjs.size()) {
+			lineModelObjs.emplace_back("Cube");
+		}
+		ModelObj& obj = lineModelObjs[lineObjIndex];
+		obj.mTransform.position = { 0, -0.035f, -posY };
+		obj.mTransform.scale = { 16.0f, 0.1f, 0.1f };
+		obj.mTransform.UpdateMatrix();
+		obj.TransferBuffer(Camera::sNowCamera->mViewProjection);
+		obj.Draw();
+		lineObjIndex++;
 	}
 }
 
@@ -137,6 +151,13 @@ void RhythmGameController::Init()
 		Model::Load("./Resources/Model/Note", "note.obj", "Note");
 		for (int32_t i = 0; i < 100; i++) {
 			noteModelObjs.emplace_back("Note");
+		}
+	}
+
+	if (lineModelObjs.empty()) {
+		Model::Load("./Resources/Model/", "cube.obj", "Cube");
+		for (int32_t i = 0; i < 100; i++) {
+			lineModelObjs.emplace_back("Cube");
 		}
 	}
 
@@ -276,29 +297,7 @@ void RhythmGameController::Update()
 
 	nowPosY = GetPosition(time);
 
-	SimpleDrawer::DrawLine(0, posJudgeLine, RWindow::GetWidth(), posJudgeLine, 45, 0xff00ff, 5);
-
-	for (int32_t lane = 0; lane < 5; lane++) {
-		int32_t posX = laneCenter + (-laneWidth * 2 + laneWidth * lane);
-
-		SimpleDrawer::DrawLine(posX, 0, posX, 720, 40, 0xffffff, 3);
-	}
-
 	int32_t laneKey[4] = { DIK_F, DIK_G, DIK_H, DIK_J };
-	for (int32_t lane = 0; lane < 4; lane++) {
-		if (RInput::GetKeyDown(laneKey[lane])) {
-			int32_t posX = laneCenter + (-laneWidth * 2 + laneWidth * lane);
-			SimpleDrawer::DrawBox(
-				posX,
-				0,
-				posX + laneWidth,
-				posJudgeLine,
-				40, Color(0.8f, 0.8f, 0.8f, 0.15f), true, 3);
-		}
-	}
-
-	SimpleDrawer::DrawBox(0, 0, laneCenter - laneWidth * 2, 720, 70, 0x111111, true);
-	SimpleDrawer::DrawBox(laneCenter + laneWidth * 2, 0, 1280, 720, 70, 0x111111, true);
 
 	Beat beat = music.ConvertMiliSecondsToBeat(time);
 
@@ -322,7 +321,7 @@ void RhythmGameController::Update()
 
 	std::list<Note> removeNotes;
 	for (Note& note : remainNotes) {
-		int32_t posX = laneCenter + (-laneWidth * 2 + laneWidth * note.lane);
+		float posX = laneCenter + (-laneWidth * 2 + laneWidth * note.lane + laneWidth / 2);
 		if (!note.posMemed) {
 			note.posMem = GetPosition(music.ConvertBeatToMiliSeconds(note.beat));
 			note.posMemed = true;
@@ -332,8 +331,10 @@ void RhythmGameController::Update()
 		if (playing) {
 			if (note.judged && note.judgeDiff <= judgePerfect && (music.ConvertBeatToMiliSeconds(note.beat) - time) <= 0) {
 				//TODO:PlaySE("JudgePerfect");
-				//TODO:PlayParticle(Particle::Spawn, posX + laneWidth / 2, posJudgeLine);
 				//TODO:ShowJudgeText(posX + laneWidth / 2, posJudgeLine, "Perfect!", 0xffff00);
+				for (int32_t i = 0; i < 12; i++) {
+					ParticleExplode::Spawn({ posX, 0, 0 }, 0xffe32e, (360.0f / 12) + (360.0f / 12 * i), 10, 15, 0.5f);
+				}
 				countJudgePerfect++;
 				removeNotes.push_back(note);
 				continue;
@@ -356,9 +357,11 @@ void RhythmGameController::Update()
 							}
 							else if (diffB <= judgeHit) {
 								//TODO:PlaySE("JudgeHit");
-								//TODO:PlayParticle(Particle::Despawn, posX + laneWidth / 2, posY);
 								//TODO:ShowJudgeText(posX + laneWidth / 2, posJudgeLine, "Hit", 0x00ff00);
 								//TODO:ShowJudgeText(posX + laneWidth / 2, posJudgeLine + 20, StringFormat("%+.1f", diffA) + "ms", diffA > 0 ? 0xff0000 : 0x00ffff);
+								for (int32_t i = 0; i < 12; i++) {
+									ParticleExplode::Spawn({ posX, 0, 0 }, 0x77ff5e, (360.0f / 12) + (360.0f / 12 * i), 5, 15, 0.5f);
+								}
 								countJudgeHit++;
 								removeNotes.push_back(note);
 								continue;
@@ -384,28 +387,15 @@ void RhythmGameController::Update()
 			}
 		}
 
-		if (posY < -50 || posY > 770) {
+		if (posY < -80 || posY > 50) {
 			continue;
 		}
-
-		SimpleDrawer::DrawBox(
-			static_cast<int32_t>(posX),
-			static_cast<int32_t>(posY),
-			static_cast<int32_t>(posX + laneWidth),
-			static_cast<int32_t>(posY - 20),
-			55, 0x0055ff, true);
-		SimpleDrawer::DrawBox(
-			static_cast<int32_t>(posX + 3),
-			static_cast<int32_t>(posY - 3),
-			static_cast<int32_t>(posX + laneWidth - 3),
-			static_cast<int32_t>(posY - 17),
-			55, 0x00ffff, true);
 
 		if (noteObjIndex == noteModelObjs.size()) {
 			noteModelObjs.emplace_back("Note");
 		}
 		ModelObj& obj = noteModelObjs[noteObjIndex];
-		obj.mTransform.position = { static_cast<float>(0), 0, -posY / 90.0f };
+		obj.mTransform.position = { posX, 0, -posY };
 		obj.mTransform.UpdateMatrix();
 		obj.TransferBuffer(Camera::sNowCamera->mViewProjection);
 		obj.Draw();

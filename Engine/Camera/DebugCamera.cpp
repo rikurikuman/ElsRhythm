@@ -8,33 +8,33 @@ void DebugCamera::Update()
 		return;
 	}
 
-	if (mFreeFlag) return;
+	if (!mFreeFlag) {
+		if (RInput::GetKey(DIK_W)) {
+			mViewProjection.mEye.x += -mMoveSpeed * cosf(Util::PI / 180 * mAngle.x);
+			mViewProjection.mEye.z += mMoveSpeed * sinf(Util::PI / 180 * mAngle.x);
+		}
+		if (RInput::GetKey(DIK_S)) {
+			mViewProjection.mEye.x += -mMoveSpeed * cosf(Util::PI / 180 * (mAngle.x + 180));
+			mViewProjection.mEye.z += mMoveSpeed * sinf(Util::PI / 180 * (mAngle.x + 180));
+		}
+		if (RInput::GetKey(DIK_A)) {
+			mViewProjection.mEye.x += -mMoveSpeed * cosf(Util::PI / 180 * (mAngle.x - 90));
+			mViewProjection.mEye.z += mMoveSpeed * sinf(Util::PI / 180 * (mAngle.x - 90));
+		}
+		if (RInput::GetKey(DIK_D)) {
+			mViewProjection.mEye.x += -mMoveSpeed * cosf(Util::PI / 180 * (mAngle.x + 90));
+			mViewProjection.mEye.z += mMoveSpeed * sinf(Util::PI / 180 * (mAngle.x + 90));
+		}
+		if (RInput::GetKey(DIK_SPACE)) {
+			mViewProjection.mEye.y += mMoveSpeed;
+		}
+		if (RInput::GetKey(DIK_LSHIFT)) {
+			mViewProjection.mEye.y -= mMoveSpeed;
+		}
 
-	if (RInput::GetKey(DIK_W)) {
-		mViewProjection.mEye.x += -mMoveSpeed * cosf(Util::PI / 180 * mAngle.x);
-		mViewProjection.mEye.z += mMoveSpeed * sinf(Util::PI / 180 * mAngle.x);
+		mAngle.x += RInput::GetMouseMove().x / mSensitivity;
+		mAngle.y -= RInput::GetMouseMove().y / mSensitivity;
 	}
-	if (RInput::GetKey(DIK_S)) {
-		mViewProjection.mEye.x += -mMoveSpeed * cosf(Util::PI / 180 * (mAngle.x + 180));
-		mViewProjection.mEye.z += mMoveSpeed * sinf(Util::PI / 180 * (mAngle.x + 180));
-	}
-	if (RInput::GetKey(DIK_A)) {
-		mViewProjection.mEye.x += -mMoveSpeed * cosf(Util::PI / 180 * (mAngle.x - 90));
-		mViewProjection.mEye.z += mMoveSpeed * sinf(Util::PI / 180 * (mAngle.x - 90));
-	}
-	if (RInput::GetKey(DIK_D)) {
-		mViewProjection.mEye.x += -mMoveSpeed * cosf(Util::PI / 180 * (mAngle.x + 90));
-		mViewProjection.mEye.z += mMoveSpeed * sinf(Util::PI / 180 * (mAngle.x + 90));
-	}
-	if (RInput::GetKey(DIK_SPACE)) {
-		mViewProjection.mEye.y += mMoveSpeed;
-	}
-	if (RInput::GetKey(DIK_LSHIFT)) {
-		mViewProjection.mEye.y -= mMoveSpeed;
-	}
-
-	mAngle.x += RInput::GetMouseMove().x / mSensitivity;
-	mAngle.y -= RInput::GetMouseMove().y / mSensitivity;
 
 	if (mAngle.x >= 360) {
 		mAngle.x -= 360;
