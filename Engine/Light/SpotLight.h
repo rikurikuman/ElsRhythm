@@ -19,21 +19,21 @@ public:
 		float pad4[2]; //8byte(total 80)
 	};
 
-	Vector3 pos;
-	Vector3 direction;
-	Color color;
-	Vector3 atten; //ãóó£å∏êäåWêî
-	Vector2 factorAngle; //å∏êääpìx
-	bool active = false;
+	Vector3 mPos;
+	Vector3 mDirection;
+	Color mColor;
+	Vector3 mAtten; //ãóó£å∏êäåWêî
+	Vector2 mFactorAngle; //å∏êääpìx
+	bool mIsActive = false;
 
 	void TransferBuffer(LightBuffer& buffer) {
-		buffer.active = active;
-		buffer.pos = pos;
-		buffer.direction = direction;
-		buffer.color = { color.r, color.g, color.b };
-		buffer.atten = atten;
-		buffer.factorAngleCos.x = cosf(factorAngle.x);
-		buffer.factorAngleCos.y = cosf(factorAngle.y);
+		buffer.active = mIsActive;
+		buffer.pos = mPos;
+		buffer.direction = mDirection;
+		buffer.color = { mColor.r, mColor.g, mColor.b };
+		buffer.atten = mAtten;
+		buffer.factorAngleCos.x = cosf(mFactorAngle.x);
+		buffer.factorAngleCos.y = cosf(mFactorAngle.y);
 	}
 };
 

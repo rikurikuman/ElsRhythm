@@ -13,6 +13,7 @@ public:
 
 	//ゼロベクトル
 	Vector3();
+	const static Vector3 ZERO;
 
 	//任意の成分ベクトル
 	Vector3(float x, float y, float z);

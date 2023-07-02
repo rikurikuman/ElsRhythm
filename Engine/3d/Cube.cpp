@@ -3,87 +3,87 @@
 
 Cube::Cube(TextureHandle texture, Vector2 size, bool forceSize)
 {
-	this->size = size;
-	for (int i = 0; i < 6; i++) {
-		faces[i].SetParent(this);
-		faces[i].SetTexture(texture);
+	mSize = size;
+	for (int32_t i = 0; i < 6; i++) {
+		mFaces[i].SetParent(this);
+		mFaces[i].SetTexture(texture);
 	}
 
-	for (int i = 0; i < 4; i++) {
-		faces[i].SetSize(size, forceSize);
+	for (int32_t i = 0; i < 4; i++) {
+		mFaces[i].SetSize(size, forceSize);
 	}
 
-	Vector2 fSize = faces[Direction::Front].GetSize();
+	Vector2 fSize = mFaces[Direction::Front].GetSize();
 
-	for (int i = 4; i < 6; i++) {
-		faces[i].SetSize({ fSize.x, fSize.x }, true);
+	for (int32_t i = 4; i < 6; i++) {
+		mFaces[i].SetSize({ fSize.x, fSize.x }, true);
 	}
 
-	for (int i = 0; i < 6; i++) {
-		faces[i].SetParent(this);
-		faces[i].Init();
+	for (int32_t i = 0; i < 6; i++) {
+		mFaces[i].SetParent(this);
+		mFaces[i].Init();
 	}
 
 	//ŽG‚ÉƒLƒ…[ƒu‚É‚·‚é‚æ
-	faces[Direction::Front].transform.position = { 0, 0, -fSize.x / 2.0f };
-	faces[Direction::Right].transform.position = { -fSize.x / 2.0f, 0, 0 };
-	faces[Direction::Right].transform.rotation.y = Util::AngleToRadian(90);
-	faces[Direction::Back].transform.position = { 0, 0, fSize.x / 2.0f };
-	faces[Direction::Back].transform.rotation.y = Util::AngleToRadian(180);
-	faces[Direction::Left].transform.position = { fSize.x / 2.0f, 0, 0 };
-	faces[Direction::Left].transform.rotation.y = Util::AngleToRadian(270);
-	faces[Direction::Top].transform.position = { 0, fSize.y / 2.0f, 0 };
-	faces[Direction::Top].transform.rotation = { Util::AngleToRadian(90), Util::AngleToRadian(180), 0};
-	faces[Direction::Bottom].transform.position = { 0, -fSize.y / 2.0f, 0 };
-	faces[Direction::Bottom].transform.rotation = { Util::AngleToRadian(-90), 0, 0 };
+	mFaces[Direction::Front].mTransform.position = { 0, 0, -fSize.x / 2.0f };
+	mFaces[Direction::Right].mTransform.position = { -fSize.x / 2.0f, 0, 0 };
+	mFaces[Direction::Right].mTransform.rotation.y = Util::AngleToRadian(90);
+	mFaces[Direction::Back].mTransform.position = { 0, 0, fSize.x / 2.0f };
+	mFaces[Direction::Back].mTransform.rotation.y = Util::AngleToRadian(180);
+	mFaces[Direction::Left].mTransform.position = { fSize.x / 2.0f, 0, 0 };
+	mFaces[Direction::Left].mTransform.rotation.y = Util::AngleToRadian(270);
+	mFaces[Direction::Top].mTransform.position = { 0, fSize.y / 2.0f, 0 };
+	mFaces[Direction::Top].mTransform.rotation = { Util::AngleToRadian(90), Util::AngleToRadian(180), 0};
+	mFaces[Direction::Bottom].mTransform.position = { 0, -fSize.y / 2.0f, 0 };
+	mFaces[Direction::Bottom].mTransform.rotation = { Util::AngleToRadian(-90), 0, 0 };
 }
 
 void Cube::SetTexture(TextureHandle texture, Direction direction)
 {
-	faces[direction].SetTexture(texture);
-	faces[direction].Init();
+	mFaces[direction].SetTexture(texture);
+	mFaces[direction].Init();
 }
 
 void Cube::SetAllTexture(TextureHandle texture)
 {
-	for (int i = 0; i < 6; i++) {
-		faces[i].SetTexture(texture);
-		faces[i].Init();
+	for (int32_t i = 0; i < 6; i++) {
+		mFaces[i].SetTexture(texture);
+		mFaces[i].Init();
 	}
 }
 
 void Cube::SetAllAlpha(float alpha)
 {
-	for (int i = 0; i < 6; i++) {
-		faces[i].material.color.a = alpha;
+	for (int32_t i = 0; i < 6; i++) {
+		mFaces[i].mMaterial.mColor.a = alpha;
 	}
 }
 
 void Cube::UpdateFaces()
 {
-	for (int i = 0; i < 6; i++) {
-		faces[i].SetParent(this);
-		faces[i].transform.UpdateMatrix();
+	for (int32_t i = 0; i < 6; i++) {
+		mFaces[i].SetParent(this);
+		mFaces[i].mTransform.UpdateMatrix();
 	}
 }
 
 void Cube::TransferBuffer(ViewProjection viewprojection)
 {
-	for (int i = 0; i < 6; i++) {
-		faces[i].TransferBuffer(viewprojection);
+	for (int32_t i = 0; i < 6; i++) {
+		mFaces[i].TransferBuffer(viewprojection);
 	}
 }
 
 void Cube::Draw()
 {
-	for (int i = 0; i < 6; i++) {
-		faces[i].Draw();
+	for (int32_t i = 0; i < 6; i++) {
+		mFaces[i].Draw();
 	}
 }
 
 void Cube::DrawCommands()
 {
-	for (int i = 0; i < 6; i++) {
-		faces[i].DrawCommands();
+	for (int32_t i = 0; i < 6; i++) {
+		mFaces[i].DrawCommands();
 	}
 }

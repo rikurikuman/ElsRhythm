@@ -10,39 +10,39 @@ using namespace std;
 void SimpleDrawer::ClearData()
 {
 	SimpleDrawer* instance = GetInstance();
-	instance->infoList.clear();
-	for (auto& itr : instance->recycleBuffs) {
+	instance->mInfoList.clear();
+	for (auto& itr : instance->mRecycleBuffs) {
 		SRBufferAllocator::Free(*itr.second);
 	}
-	instance->recycleBuffs.clear();
+	instance->mRecycleBuffs.clear();
 
-	instance->boxInfoMap.clear();
-	instance->boxBuffersMap.clear();
-	instance->lineInfoMap.clear();
-	instance->lineBuffersMap.clear();
-	instance->circleInfoMap.clear();
-	instance->circleVertIndexMap.clear();
-	instance->circleBuffersMap.clear();
+	instance->mBoxInfoMap.clear();
+	instance->mBoxBuffersMap.clear();
+	instance->mLineInfoMap.clear();
+	instance->mLineBuffersMap.clear();
+	instance->mCircleInfoMap.clear();
+	instance->mCircleVertIndexMap.clear();
+	instance->mCircleBuffersMap.clear();
 }
 
 
-void SimpleDrawer::DrawLine(int x1, int y1, int x2, int y2, float layer, Color color, float thickness)
+void SimpleDrawer::DrawLine(int32_t x1, int32_t y1, int32_t x2, int32_t y2, float layer, Color color, float thickness)
 {
 	SimpleDrawer* instance = GetInstance();
 
 	//既にそのレイヤーで描画が要求されてるか探す
-	auto itr = instance->lineInfoMap.find(layer);
-	if (itr != instance->lineInfoMap.end()) {
+	auto itr = instance->mLineInfoMap.find(layer);
+	if (itr != instance->mLineInfoMap.end()) {
 		//同じレイヤーに他の描画がいたら同じ描画コマンドで描画するように要素を追加する
 		std::vector<DrawLineInfo>& list = itr->second;
 		list.push_back({ Vector2(static_cast<float>(x1), static_cast<float>(y1)), Vector2(static_cast<float>(x2), static_cast<float>(y2)), thickness, color });
 		return;
 	}
 	//されてないみたいなので新規描画コマンドを追加する
-	instance->lineInfoMap[layer].push_back({ Vector2(static_cast<float>(x1), static_cast<float>(y1)), Vector2(static_cast<float>(x2), static_cast<float>(y2)), thickness, color });
+	instance->mLineInfoMap[layer].push_back({ Vector2(static_cast<float>(x1), static_cast<float>(y1)), Vector2(static_cast<float>(x2), static_cast<float>(y2)), thickness, color });
 }
 
-void SimpleDrawer::DrawBox(int x1, int y1, int x2, int y2, float layer, Color color, bool fillFlag, float thickness)
+void SimpleDrawer::DrawBox(int32_t x1, int32_t y1, int32_t x2, int32_t y2, float layer, Color color, bool fillFlag, float thickness)
 {
 	SimpleDrawer* instance = GetInstance();
 
@@ -50,22 +50,22 @@ void SimpleDrawer::DrawBox(int x1, int y1, int x2, int y2, float layer, Color co
 		//4頂点ポリゴン描画
 
 		//既にそのレイヤーで描画が要求されてるか探す
-		auto itr = instance->boxInfoMap.find(layer);
-		if (itr != instance->boxInfoMap.end()) {
+		auto itr = instance->mBoxInfoMap.find(layer);
+		if (itr != instance->mBoxInfoMap.end()) {
 			//同じレイヤーに他の描画がいたら同じ描画コマンドで描画するように要素を追加する
 			std::vector<DrawBoxInfo>& list = itr->second;
 			list.push_back({ Vector2(static_cast<float>(x1), static_cast<float>(y1)), Vector2(static_cast<float>(x2), static_cast<float>(y2)), color });
 			return;
 		}
 		//されてないみたいなので新規描画コマンドを追加する
-		instance->boxInfoMap[layer].push_back({ Vector2(static_cast<float>(x1), static_cast<float>(y1)), Vector2(static_cast<float>(x2), static_cast<float>(y2)), color });
+		instance->mBoxInfoMap[layer].push_back({ Vector2(static_cast<float>(x1), static_cast<float>(y1)), Vector2(static_cast<float>(x2), static_cast<float>(y2)), color });
 	}
 	else {
 		//DrawLineによる描画
-		int adjX1 = static_cast<int>(x1 + thickness / 2.0f);
-		int adjX2 = static_cast<int>(x2 - thickness / 2.0f);
-		int adjY1 = static_cast<int>(y1 + thickness / 2.0f);
-		int adjY2 = static_cast<int>(y2 - thickness / 2.0f);
+		int32_t adjX1 = static_cast<int32_t>(x1 + thickness / 2.0f);
+		int32_t adjX2 = static_cast<int32_t>(x2 - thickness / 2.0f);
+		int32_t adjY1 = static_cast<int32_t>(y1 + thickness / 2.0f);
+		int32_t adjY2 = static_cast<int32_t>(y2 - thickness / 2.0f);
 
 		SimpleDrawer::DrawLine(x1, adjY1, x2, adjY1, layer, color, thickness); //左上から右上
 		SimpleDrawer::DrawLine(x1, adjY2, x2, adjY2, layer, color, thickness); //左下から右下
@@ -74,7 +74,7 @@ void SimpleDrawer::DrawBox(int x1, int y1, int x2, int y2, float layer, Color co
 	}
 }
 
-void SimpleDrawer::DrawCircle(int x, int y, int r, float layer, Color color, bool fillFlag, float thickness)
+void SimpleDrawer::DrawCircle(int32_t x, int32_t y, int32_t r, float layer, Color color, bool fillFlag, float thickness)
 {
 	SimpleDrawer* instance = GetInstance();
 
@@ -83,40 +83,40 @@ void SimpleDrawer::DrawCircle(int x, int y, int r, float layer, Color color, boo
 	
 	if (fillFlag) {
 		//頂点とそのインデックスを必要なら計算する
-		if (instance->circleBuffersMap.find(cData) == instance->circleBuffersMap.end()) {
+		if (instance->mCircleBuffersMap.find(cData) == instance->mCircleBuffersMap.end()) {
 			instance->CalcCircleVertAndIndex(cData);
 		}
 	}
 	else {
-		if (instance->circleBuffersMap.find(cData) == instance->circleBuffersMap.end()) {
+		if (instance->mCircleBuffersMap.find(cData) == instance->mCircleBuffersMap.end()) {
 			DrawCustomData cDataMin = cData; //内側の小さめな円
 			DrawCustomData cDataMax = cData; //外側の大きめな円
 			cDataMin.radius -= thickness / 2.0f;
 			cDataMax.radius += thickness / 2.0f;
 
 			//頂点とそのインデックスを必要なら計算する
-			if (instance->circleBuffersMap.find(cDataMin) == instance->circleBuffersMap.end()) {
+			if (instance->mCircleBuffersMap.find(cDataMin) == instance->mCircleBuffersMap.end()) {
 				instance->CalcCircleVertAndIndex(cDataMin);
 			}
-			if (instance->circleBuffersMap.find(cDataMax) == instance->circleBuffersMap.end()) {
+			if (instance->mCircleBuffersMap.find(cDataMax) == instance->mCircleBuffersMap.end()) {
 				instance->CalcCircleVertAndIndex(cDataMax);
 			}
 
 			//二つの円の頂点を融合して最強にする
 			std::vector<VertexP> vertices;
-			std::vector<UINT> indices;
+			std::vector<uint32_t> indices;
 
-			std::vector<VertexP>& vertMin = instance->circleVertIndexMap[cDataMin].vert;
-			std::vector<VertexP>& vertMax = instance->circleVertIndexMap[cDataMax].vert;
-			for (int i = 0; i < vertMin.size() - 1; i++) {
+			std::vector<VertexP>& vertMin = instance->mCircleVertIndexMap[cDataMin].vert;
+			std::vector<VertexP>& vertMax = instance->mCircleVertIndexMap[cDataMax].vert;
+			for (int32_t i = 0; i < vertMin.size() - 1; i++) {
 				vertices.push_back(vertMin[i]);
 			}
-			for (int i = 0; i < vertMax.size() - 1; i++) {
+			for (int32_t i = 0; i < vertMax.size() - 1; i++) {
 				vertices.push_back(vertMax[i]);
 			}
 
-			int minI = 0;
-			int maxI = static_cast<int>(vertMin.size());
+			int32_t minI = 0;
+			int32_t maxI = static_cast<int32_t>(vertMin.size());
 			while (minI < vertMin.size() - 1 || maxI < vertMax.size()) {
 				if (minI < vertMin.size() - 1) {
 					indices.push_back(minI);
@@ -136,37 +136,37 @@ void SimpleDrawer::DrawCircle(int x, int y, int r, float layer, Color color, boo
 			indices.push_back(maxI);
 			indices.push_back(minI + 1);
 
-			instance->circleVertIndexMap[cData].vert = vertices;
-			instance->circleVertIndexMap[cData].index = indices;
-			instance->circleBuffersMap[cData].vert.Init(vertices);
-			instance->circleBuffersMap[cData].index.Init(indices);
+			instance->mCircleVertIndexMap[cData].vert = vertices;
+			instance->mCircleVertIndexMap[cData].index = indices;
+			instance->mCircleBuffersMap[cData].vert.Init(vertices);
+			instance->mCircleBuffersMap[cData].index.Init(indices);
 		}
 	}
 
-	instance->circleInfoMap[cData].push_back({ Vector2(x, y), color });
+	instance->mCircleInfoMap[cData].push_back({ Vector2(x, y), color });
 }
 
-void SimpleDrawer::DrawString(float x, float y, float layer, std::string text, Color color, std::string fontTypeFace, UINT fontSize, Vector2 anchor)
+void SimpleDrawer::DrawString(float x, float y, float layer, std::string text, Color color, std::string fontTypeFace, uint32_t fontSize, Vector2 anchor)
 {
 	SimpleDrawer* instance = GetInstance();
 	shared_ptr<DrawStringInfo> info = make_shared<DrawStringInfo>();
 	TextureHandle tex = TextDrawer::CreateStringTexture(text, fontTypeFace, fontSize);
 	info->sprite = Sprite(tex, anchor);
-	info->sprite.transform.position = { x, y, layer };
-	info->sprite.transform.UpdateMatrix();
-	info->sprite.material.color = color;
+	info->sprite.mTransform.position = { x, y, layer };
+	info->sprite.mTransform.UpdateMatrix();
+	info->sprite.mMaterial.mColor = color;
 	info->sprite.TransferBuffer();
 
 	info->sprite.Draw();
 
 	TextureManager::UnRegisterAtEndFrame(tex);
-	instance->infoList.push_back(info);
+	instance->mInfoList.push_back(info);
 }
 
 void SimpleDrawer::DrawAll() {
 	SimpleDrawer* instance = GetInstance();
 
-	for (auto itr = instance->boxInfoMap.begin(); itr != instance->boxInfoMap.end(); itr++) {
+	for (auto itr = instance->mBoxInfoMap.begin(); itr != instance->mBoxInfoMap.end(); itr++) {
 		float layer = itr->first;
 
 		struct vert {
@@ -174,8 +174,8 @@ void SimpleDrawer::DrawAll() {
 			Color color;
 		};
 		std::vector<vert> vertices;
-		std::vector<UINT> indices;
-		int index = 0;
+		std::vector<uint32_t> indices;
+		int32_t index = 0;
 		for (DrawBoxInfo& info : itr->second) {
 			Matrix4 mat = Matrix4::OrthoGraphicProjection(
 				0, (float)RWindow::GetWidth(),
@@ -202,16 +202,16 @@ void SimpleDrawer::DrawAll() {
 			index += 4;
 		}
 
-		instance->boxBuffersMap[layer].vert.Update(vertices);
-		instance->boxBuffersMap[layer].index.Init(indices);
+		instance->mBoxBuffersMap[layer].vert.Update(vertices);
+		instance->mBoxBuffersMap[layer].index.Init(indices);
 
 		RenderOrder order;
 		order.primitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
-		order.vertBuff = instance->boxBuffersMap[layer].vert;
-		order.indexBuff = instance->boxBuffersMap[layer].index;
-		order.indexCount = instance->boxBuffersMap[layer].index.GetIndexCount();
-		order.rootSignature = instance->boxRS.ptr.Get();
-		order.pipelineState = instance->boxPSO.ptr.Get();
+		order.vertBuff = instance->mBoxBuffersMap[layer].vert;
+		order.indexBuff = instance->mBoxBuffersMap[layer].index;
+		order.indexCount = instance->mBoxBuffersMap[layer].index.GetIndexCount();
+		order.mRootSignature = instance->mBoxRS.mPtr.Get();
+		order.pipelineState = instance->mBoxPSO.mPtr.Get();
 		
 		string stage;
 		if (layer >= 0) {
@@ -227,15 +227,15 @@ void SimpleDrawer::DrawAll() {
 		Renderer::DrawCall(stage, order);
 	}
 
-	if (!instance->lineInfoMap.empty()) {
+	if (!instance->mLineInfoMap.empty()) {
 		Matrix4 mat = Matrix4::OrthoGraphicProjection(
 			0, (float)RWindow::GetWidth(),
 			0, (float)RWindow::GetHeight(),
 			0, 1);
 
-		instance->lineVPBuff->matrix = mat;
+		instance->mLineVPBuff->matrix = mat;
 
-		for (auto itr = instance->lineInfoMap.begin(); itr != instance->lineInfoMap.end(); itr++) {
+		for (auto itr = instance->mLineInfoMap.begin(); itr != instance->mLineInfoMap.end(); itr++) {
 			float layer = itr->first;
 
 			struct vert {
@@ -251,17 +251,17 @@ void SimpleDrawer::DrawAll() {
 				vertices.push_back({ goal, info.color, info.thickness });
 			}
 
-			instance->lineBuffersMap[layer].vert.Update(vertices);
+			instance->mLineBuffersMap[layer].vert.Update(vertices);
 
 			RenderOrder order;
 			order.primitiveTopology = D3D_PRIMITIVE_TOPOLOGY_LINELIST;
-			order.vertBuff = instance->lineBuffersMap[layer].vert;
-			order.indexCount = static_cast<UINT>(vertices.size());
+			order.vertBuff = instance->mLineBuffersMap[layer].vert;
+			order.indexCount = static_cast<uint32_t>(vertices.size());
 			order.rootData = {
-				{RootDataType::SRBUFFER_CBV, instance->lineVPBuff.buff }
+				{RootDataType::SRBUFFER_CBV, instance->mLineVPBuff.mBuff }
 			};
-			order.rootSignature = instance->lineRS.ptr.Get();
-			order.pipelineState = instance->linePSO.ptr.Get();
+			order.mRootSignature = instance->mLineRS.mPtr.Get();
+			order.pipelineState = instance->mLinePSO.mPtr.Get();
 
 			string stage;
 			if (layer >= 0) {
@@ -278,31 +278,31 @@ void SimpleDrawer::DrawAll() {
 		}
 	}
 	
-	if (!instance->circleInfoMap.empty()) {
+	if (!instance->mCircleInfoMap.empty()) {
 		Matrix4 mat = Matrix4::OrthoGraphicProjection(
 			0, (float)RWindow::GetWidth(),
 			0, (float)RWindow::GetHeight(),
 			0, 1);
 
-		instance->circleVPBuff->matrix = mat;
+		instance->mCircleVPBuff->matrix = mat;
 
-		for (auto itr = instance->circleInfoMap.begin(); itr != instance->circleInfoMap.end(); itr++) {
+		for (auto itr = instance->mCircleInfoMap.begin(); itr != instance->mCircleInfoMap.end(); itr++) {
 			float layer = itr->first.layer;
 
-			instance->circleBuffersMap[itr->first].instance.Update(itr->second);
+			instance->mCircleBuffersMap[itr->first].instance.Update(itr->second);
 
 			RenderOrder order;
 			order.primitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
-			order.vertBuff = instance->circleBuffersMap[itr->first].vert;
-			order.indexBuff = instance->circleBuffersMap[itr->first].index;
-			order.indexCount = static_cast<UINT>(instance->circleBuffersMap[itr->first].index.GetIndexCount());
-			order.instanceVertBuff = instance->circleBuffersMap[itr->first].instance;
-			order.instanceCount = static_cast<UINT>(itr->second.size());
+			order.vertBuff = instance->mCircleBuffersMap[itr->first].vert;
+			order.indexBuff = instance->mCircleBuffersMap[itr->first].index;
+			order.indexCount = static_cast<uint32_t>(instance->mCircleBuffersMap[itr->first].index.GetIndexCount());
+			order.instanceVertBuff = instance->mCircleBuffersMap[itr->first].instance;
+			order.instanceCount = static_cast<uint32_t>(itr->second.size());
 			order.rootData = {
-				{RootDataType::SRBUFFER_CBV, instance->circleVPBuff.buff }
+				{RootDataType::SRBUFFER_CBV, instance->mCircleVPBuff.mBuff }
 			};
-			order.rootSignature = instance->circleRS.ptr.Get();
-			order.pipelineState = instance->circlePSO.ptr.Get();
+			order.mRootSignature = instance->mCircleRS.mPtr.Get();
+			order.pipelineState = instance->mCirclePSO.mPtr.Get();
 
 			string stage;
 			if (layer >= 0) {
@@ -322,7 +322,7 @@ void SimpleDrawer::DrawAll() {
 
 void SimpleDrawer::Init()
 {
-	rootSignature = RDirectX::GetDefRootSignature();
+	mRootSignature = RDirectX::GetDefRootSignature();
 
 	// ルートパラメータの設定
 	RootParamaters rootParams(2);
@@ -337,39 +337,39 @@ void SimpleDrawer::Init()
 	rootParams[1].Descriptor.RegisterSpace = 0; //デフォルト値
 	rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL; //全シェーダから見える
 
-	rootSignature.desc.RootParamaters = rootParams;
-	rootSignature.Create();
+	mRootSignature.mDesc.RootParamaters = rootParams;
+	mRootSignature.Create();
 
-	pipelineState = RDirectX::GetDefPipeline();
+	mPipelineState = RDirectX::GetDefPipeline();
 
-	pipelineState.desc.VS = Shader("./Shader/SimpleVS.hlsl", "main", "vs_5_0");
-	pipelineState.desc.PS = Shader("./Shader/SimplePS.hlsl", "main", "ps_5_0");
+	mPipelineState.mDesc.VS = Shader("./Shader/SimpleVS.hlsl", "main", "vs_5_0");
+	mPipelineState.mDesc.PS = Shader("./Shader/SimplePS.hlsl", "main", "ps_5_0");
 
 	// ラスタライザの設定
-	pipelineState.desc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
-	pipelineState.desc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
-	pipelineState.desc.RasterizerState.DepthClipEnable = false;
+	mPipelineState.mDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+	mPipelineState.mDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
+	mPipelineState.mDesc.RasterizerState.DepthClipEnable = false;
 
-	pipelineState.desc.DepthStencilState.DepthEnable = false;
+	mPipelineState.mDesc.DepthStencilState.DepthEnable = false;
 
-	pipelineState.desc.pRootSignature = rootSignature.ptr.Get();
+	mPipelineState.mDesc.pRootSignature = mRootSignature.mPtr.Get();
 
-	pipelineState.Create();
+	mPipelineState.Create();
 
 	//DrawBox用
-	boxRS.desc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-	boxRS.Create();
+	mBoxRS.mDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+	mBoxRS.Create();
 
-	boxPSO.desc.VS = Shader("./Shader/SimpleMeshVS.hlsl", "main", "vs_5_0");
-	boxPSO.desc.PS = Shader("./Shader/SimpleMeshPS.hlsl", "main", "ps_5_0");
-	boxPSO.desc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
+	mBoxPSO.mDesc.VS = Shader("./Shader/SimpleMeshVS.hlsl", "main", "vs_5_0");
+	mBoxPSO.mDesc.PS = Shader("./Shader/SimpleMeshPS.hlsl", "main", "ps_5_0");
+	mBoxPSO.mDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 
-	boxPSO.desc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
-	boxPSO.desc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
-	boxPSO.desc.RasterizerState.DepthClipEnable = true;
+	mBoxPSO.mDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+	mBoxPSO.mDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
+	mBoxPSO.mDesc.RasterizerState.DepthClipEnable = true;
 
 	{
-		auto& blendstate = boxPSO.desc.BlendState.RenderTarget[0];
+		auto& blendstate = mBoxPSO.mDesc.BlendState.RenderTarget[0];
 		blendstate.BlendEnable = true;
 		blendstate.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
 		blendstate.BlendOpAlpha = D3D12_BLEND_OP_ADD;
@@ -380,7 +380,7 @@ void SimpleDrawer::Init()
 		blendstate.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
 	}
 
-	boxPSO.desc.InputLayout = {
+	mBoxPSO.mDesc.InputLayout = {
 		{
 			"POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0,
 			D3D12_APPEND_ALIGNED_ELEMENT,
@@ -393,36 +393,36 @@ void SimpleDrawer::Init()
 		},
 	};
 
-	boxPSO.desc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-	boxPSO.desc.DepthStencilState.DepthEnable = false;
-	boxPSO.desc.NumRenderTargets = 1;
-	boxPSO.desc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-	boxPSO.desc.SampleDesc.Count = 1;
-	boxPSO.desc.pRootSignature = boxRS.ptr.Get();
-	boxPSO.Create();
+	mBoxPSO.mDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+	mBoxPSO.mDesc.DepthStencilState.DepthEnable = false;
+	mBoxPSO.mDesc.NumRenderTargets = 1;
+	mBoxPSO.mDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	mBoxPSO.mDesc.SampleDesc.Count = 1;
+	mBoxPSO.mDesc.pRootSignature = mBoxRS.mPtr.Get();
+	mBoxPSO.Create();
 
 	//DrawLine用
-	lineRS.desc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+	mLineRS.mDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
 	RootParamaters lineRootParams(1);
 	lineRootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	lineRootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
 	lineRootParams[0].Descriptor.RegisterSpace = 0;
 	lineRootParams[0].Descriptor.ShaderRegister = 0;
-	lineRS.desc.RootParamaters = lineRootParams;
-	lineRS.Create();
+	mLineRS.mDesc.RootParamaters = lineRootParams;
+	mLineRS.Create();
 
-	linePSO.desc.VS = Shader("./Shader/SimpleLineVS.hlsl", "main", "vs_5_0");
-	linePSO.desc.GS = Shader("./Shader/SimpleLineGS.hlsl", "main", "gs_5_0");
-	linePSO.desc.PS = Shader("./Shader/SimpleLinePS.hlsl", "main", "ps_5_0");
-	linePSO.desc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
+	mLinePSO.mDesc.VS = Shader("./Shader/SimpleLineVS.hlsl", "main", "vs_5_0");
+	mLinePSO.mDesc.GS = Shader("./Shader/SimpleLineGS.hlsl", "main", "gs_5_0");
+	mLinePSO.mDesc.PS = Shader("./Shader/SimpleLinePS.hlsl", "main", "ps_5_0");
+	mLinePSO.mDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 
-	linePSO.desc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
-	linePSO.desc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
-	linePSO.desc.RasterizerState.DepthClipEnable = true;
+	mLinePSO.mDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+	mLinePSO.mDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
+	mLinePSO.mDesc.RasterizerState.DepthClipEnable = true;
 
 	{
-		auto& blendstate = linePSO.desc.BlendState.RenderTarget[0];
+		auto& blendstate = mLinePSO.mDesc.BlendState.RenderTarget[0];
 		blendstate.BlendEnable = true;
 		blendstate.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
 		blendstate.BlendOpAlpha = D3D12_BLEND_OP_ADD;
@@ -433,7 +433,7 @@ void SimpleDrawer::Init()
 		blendstate.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
 	}
 
-	linePSO.desc.InputLayout = {
+	mLinePSO.mDesc.InputLayout = {
 		{
 			"POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0,
 			D3D12_APPEND_ALIGNED_ELEMENT,
@@ -451,36 +451,36 @@ void SimpleDrawer::Init()
 		}
 	};
 
-	linePSO.desc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_LINE;
-	linePSO.desc.DepthStencilState.DepthEnable = false;
-	linePSO.desc.NumRenderTargets = 1;
-	linePSO.desc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-	linePSO.desc.SampleDesc.Count = 1;
-	linePSO.desc.pRootSignature = lineRS.ptr.Get();
-	linePSO.Create();
+	mLinePSO.mDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_LINE;
+	mLinePSO.mDesc.DepthStencilState.DepthEnable = false;
+	mLinePSO.mDesc.NumRenderTargets = 1;
+	mLinePSO.mDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	mLinePSO.mDesc.SampleDesc.Count = 1;
+	mLinePSO.mDesc.pRootSignature = mLineRS.mPtr.Get();
+	mLinePSO.Create();
 
 	//DrawCircle用
-	circleRS.desc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+	mCircleRS.mDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
 	RootParamaters circleRootParams(1);
 	circleRootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV; //定数バッファビュー
 	circleRootParams[0].Descriptor.ShaderRegister = 0; //定数バッファ番号
 	circleRootParams[0].Descriptor.RegisterSpace = 0; //デフォルト値
 	circleRootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL; //全シェーダから見える
-	circleRS.desc.RootParamaters = circleRootParams;
-	circleRS.desc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-	circleRS.Create();
+	mCircleRS.mDesc.RootParamaters = circleRootParams;
+	mCircleRS.mDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+	mCircleRS.Create();
 
-	circlePSO.desc.VS = Shader("Shader/SimpleInstanceVS.hlsl", "main", "vs_5_0");
-	circlePSO.desc.PS = Shader("Shader/SimpleInstancePS.hlsl", "main", "ps_5_0");
-	circlePSO.desc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
+	mCirclePSO.mDesc.VS = Shader("Shader/SimpleInstanceVS.hlsl", "main", "vs_5_0");
+	mCirclePSO.mDesc.PS = Shader("Shader/SimpleInstancePS.hlsl", "main", "ps_5_0");
+	mCirclePSO.mDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 
-	circlePSO.desc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
-	circlePSO.desc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
-	circlePSO.desc.RasterizerState.DepthClipEnable = true;
+	mCirclePSO.mDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+	mCirclePSO.mDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
+	mCirclePSO.mDesc.RasterizerState.DepthClipEnable = true;
 
 	{
-		auto& blendstate = circlePSO.desc.BlendState.RenderTarget[0];
+		auto& blendstate = mCirclePSO.mDesc.BlendState.RenderTarget[0];
 		blendstate.BlendEnable = true;
 		blendstate.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
 		blendstate.BlendOpAlpha = D3D12_BLEND_OP_ADD;
@@ -491,7 +491,7 @@ void SimpleDrawer::Init()
 		blendstate.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
 	}
 
-	circlePSO.desc.InputLayout = {
+	mCirclePSO.mDesc.InputLayout = {
 		{
 			"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
 			D3D12_APPEND_ALIGNED_ELEMENT,
@@ -509,16 +509,16 @@ void SimpleDrawer::Init()
 		},
 	};
 
-	circlePSO.desc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-	circlePSO.desc.DepthStencilState.DepthEnable = false;
-	circlePSO.desc.NumRenderTargets = 1;
-	circlePSO.desc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-	circlePSO.desc.SampleDesc.Count = 1;
-	circlePSO.desc.pRootSignature = lineRS.ptr.Get();
-	circlePSO.Create();
+	mCirclePSO.mDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+	mCirclePSO.mDesc.DepthStencilState.DepthEnable = false;
+	mCirclePSO.mDesc.NumRenderTargets = 1;
+	mCirclePSO.mDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	mCirclePSO.mDesc.SampleDesc.Count = 1;
+	mCirclePSO.mDesc.pRootSignature = mLineRS.mPtr.Get();
+	mCirclePSO.Create();
 
 	//DrawString用
-	rootSignatureForString = SpriteManager::GetInstance()->GetRootSignature();
+	mRootSignatureForString = SpriteManager::GetInstance()->GetRootSignature();
 
 	StaticSamplerDesc samplerDesc{};
 	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
@@ -530,22 +530,22 @@ void SimpleDrawer::Init()
 	samplerDesc.MinLOD = 0.0f; //ミップマップ最小値
 	samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
 	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL; //ピクセルシェーダーからだけ見える
-	rootSignatureForString.desc.StaticSamplers = StaticSamplerDescs{ samplerDesc };
-	rootSignatureForString.Create();
+	mRootSignatureForString.mDesc.StaticSamplers = StaticSamplerDescs{ samplerDesc };
+	mRootSignatureForString.Create();
 
-	pipelineStateForString = SpriteManager::GetInstance()->GetGraphicsPipeline();
-	pipelineStateForString.desc.pRootSignature = rootSignatureForString.ptr.Get();
-	pipelineStateForString.Create();
+	mPipelineStateForString = SpriteManager::GetInstance()->GetGraphicsPipeline();
+	mPipelineStateForString.mDesc.pRootSignature = mRootSignatureForString.mPtr.Get();
+	mPipelineStateForString.Create();
 }
 
 void SimpleDrawer::CalcCircleVertAndIndex(DrawCustomData cData) {
 	SimpleDrawer* instance = GetInstance();
 
 	std::vector<VertexP> vertices;
-	std::vector<UINT> indices;
+	std::vector<uint32_t> indices;
 
 	float ang = 0;
-	for (int i = 0; i < 360; i++) {
+	for (int32_t i = 0; i < 360; i++) {
 		float plus = 360.0f / 360;
 		vertices.push_back(VertexP({ cData.radius * cosf(Util::AngleToRadian(ang)), cData.radius * sinf(Util::AngleToRadian(ang)), 0 }));
 		vertices.push_back(VertexP({ cData.radius * cosf(Util::AngleToRadian(ang + plus)), cData.radius * sinf(Util::AngleToRadian(ang + plus)), 0 }));
@@ -553,19 +553,19 @@ void SimpleDrawer::CalcCircleVertAndIndex(DrawCustomData cData) {
 	}
 	vertices.push_back(VertexP({ 0, 0, 0 }));
 
-	for (int i = 0; i < vertices.size() - 2; i++) {
+	for (int32_t i = 0; i < vertices.size() - 2; i++) {
 		indices.push_back(i);
 		indices.push_back(i + 1);
-		indices.push_back(static_cast<UINT>(vertices.size() - 1));
+		indices.push_back(static_cast<uint32_t>(vertices.size() - 1));
 	}
 
 	//sin, cosを使わない手法
 	//(intの計算ループの方が早いだろうから速度意識するならこっちか？)
-	/*int cx = 0;
-	int cy = r;
-	int d = 1 - r;
-	int dH = 3;
-	int dD = 5 - 2 * r;
+	/*int32_t cx = 0;
+	int32_t cy = r;
+	int32_t d = 1 - r;
+	int32_t dH = 3;
+	int32_t dD = 5 - 2 * r;
 
 	for (cx = 0; cx <= cy; cx++) {
 		if (d < 0) {
@@ -591,22 +591,22 @@ void SimpleDrawer::CalcCircleVertAndIndex(DrawCustomData cData) {
 	}
 	vertices.push_back(VertexP({ 0, 0, 0 }));
 
-	for (int i = 0; i < 8; i++) {
-		UINT index = i;
-		UINT count = 0;
+	for (int32_t i = 0; i < 8; i++) {
+		uint32_t index = i;
+		uint32_t count = 0;
 
 		while (count < vertices.size() / 8 - 1) {
 			indices.push_back(index);
 			indices.push_back(index + 8);
-			indices.push_back(static_cast<UINT>(vertices.size() - 1));
+			indices.push_back(static_cast<uint32_t>(vertices.size() - 1));
 			index += 8;
 			count++;
 		}
 	}
 	indices.push_back(0);*/
 
-	instance->circleVertIndexMap[cData].vert = vertices;
-	instance->circleVertIndexMap[cData].index = indices;
-	instance->circleBuffersMap[cData].vert.Init(vertices);
-	instance->circleBuffersMap[cData].index.Init(indices);
+	instance->mCircleVertIndexMap[cData].vert = vertices;
+	instance->mCircleVertIndexMap[cData].index = indices;
+	instance->mCircleBuffersMap[cData].vert.Init(vertices);
+	instance->mCircleBuffersMap[cData].index.Init(indices);
 }

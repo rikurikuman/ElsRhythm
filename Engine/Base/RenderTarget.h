@@ -2,14 +2,14 @@
 #include "Texture.h"
 #include <vector>
 
-class RenderTargetTexture
+class RenderTexture
 {
 public:
-	std::string name;
-	TextureHandle texHandle;
-	Color clearColor;
-	Microsoft::WRL::ComPtr<ID3D12Resource> depthBuff;
-	UINT heapIndex = -1;
+	std::string mName;
+	TextureHandle mTexHandle;
+	TextureHandle mDepthTexHandle;
+	Color mClearColor;
+	uint32_t mHeapIndex = UINT32_MAX;
 
 	D3D12_CPU_DESCRIPTOR_HANDLE GetRTVHandle();
 	D3D12_CPU_DESCRIPTOR_HANDLE GetDSVHandle();
@@ -19,8 +19,20 @@ public:
 	void ClearRenderTarget();
 	void ClearDepthStencil();
 
+	bool IsBarrierClosed() {
+		return TextureManager::Get(mTexHandle).GetResourceState() == D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
+	}
+
+	Texture& GetTexture() {
+		return TextureManager::Get(mTexHandle);
+	}
+
+	Texture& GetDepthTexture() {
+		return TextureManager::Get(mDepthTexHandle);
+	}
+
 private:
-	bool isBarrier = true;
+	bool mFlagDepthOpen = false;
 };
 
 class RenderTarget
@@ -30,10 +42,10 @@ public:
 	static void SetToTexture(std::string name);
 	static void SetToTexture(std::vector<std::string> names);
 
-	static void CreateRenderTargetTexture(const UINT width, const UINT height, const Color clearColor, TextureHandle name);
-	static RenderTargetTexture* GetRenderTargetTexture(std::string name);
-	static D3D12_CPU_DESCRIPTOR_HANDLE GetRTVHandle(UINT index);
-	static D3D12_CPU_DESCRIPTOR_HANDLE GetDSVHandle(UINT index);
+	static RenderTexture* CreateRenderTexture(const uint32_t width, const uint32_t height, const Color clearColor, TextureHandle name);
+	static RenderTexture* GetRenderTexture(std::string name);
+	static D3D12_CPU_DESCRIPTOR_HANDLE GetRTVHandle(uint32_t index);
+	static D3D12_CPU_DESCRIPTOR_HANDLE GetDSVHandle(uint32_t index);
 
 	static RenderTarget* GetInstance() {
 		static RenderTarget instance;
@@ -44,16 +56,17 @@ private:
 		CreateHeaps();
 	};
 	~RenderTarget() = default;
-	RenderTarget(const RenderTarget& a) {};
+	RenderTarget(const RenderTarget&) {};
 	RenderTarget& operator=(const RenderTarget&) { return *this; }
 
 	void CreateHeaps();
 
-	static const UINT numDescriptors = 256;
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeap;
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap;
+	static const uint32_t sNUM_DESCRIPTORS = 512;
+	std::recursive_mutex mMutex;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mRtvHeap;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mDsvHeap;
 
-	std::vector<std::string> currentRenderTargets;
-	std::map<std::string, RenderTargetTexture> renderTargetMap;
+	std::vector<std::string> mCurrentRenderTargets;
+	std::map<std::string, RenderTexture> mRenderTargetMap;
 };
 

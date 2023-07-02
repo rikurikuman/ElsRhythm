@@ -3,21 +3,21 @@
 
 void TransparentRenderStage::Init()
 {
-	pipelineState = RDirectX::GetDefPipeline();
+	mPipelineState = RDirectX::GetDefPipeline();
 
 	// ラスタライザの設定
-	pipelineState.desc.BlendState.AlphaToCoverageEnable = false;
+	mPipelineState.mDesc.BlendState.AlphaToCoverageEnable = false;
 
-	pipelineState.desc.DepthStencilState.DepthEnable = true;
-	pipelineState.desc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
-	pipelineState.desc.pRootSignature = RDirectX::GetDefRootSignature().ptr.Get();
+	mPipelineState.mDesc.DepthStencilState.DepthEnable = true;
+	mPipelineState.mDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
+	mPipelineState.mDesc.pRootSignature = RDirectX::GetDefRootSignature().mPtr.Get();
 
-	pipelineState.Create();
+	mPipelineState.Create();
 
-	defParamater.primitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
-	defParamater.renderTargets = { "RenderingImage" };
-	defParamater.rootSignature = RDirectX::GetDefRootSignature().ptr.Get();
-	defParamater.pipelineState = pipelineState.ptr.Get();
+	mDefParamater.primitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+	mDefParamater.renderTargets = { "RenderingImage" };
+	mDefParamater.mRootSignature = RDirectX::GetDefRootSignature().mPtr.Get();
+	mDefParamater.pipelineState = mPipelineState.mPtr.Get();
 }
 
 void TransparentRenderStage::Render()

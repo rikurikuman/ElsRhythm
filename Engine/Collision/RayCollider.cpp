@@ -4,39 +4,39 @@
 
 void RayCollider::Update()
 {
-    skip = false;
-    if (!pierce) {
-        memDis = FLT_MAX;
-        nearest = nullptr;
+    mFlagSkip = false;
+    if (!mOptPierce) {
+        mMemDis = FLT_MAX;
+        mNearest = nullptr;
         Colliders::ColListAccessor access;
-        for (std::unique_ptr<ICollider>& ptr : *access.list) {
+        for (std::unique_ptr<ICollider>& ptr : *access.mList) {
             CollisionInfo info;
             if (Collide(ptr.get(), &info)) {
                 if (info.hasDistance && info.hasInter) {
-                    if (info.distance < memDis) {
-                        memDis = info.distance;
-                        memInfo = info;
-                        nearest = ptr.get();
+                    if (info.distance < mMemDis) {
+                        mMemDis = info.distance;
+                        mMemInfo = info;
+                        mNearest = ptr.get();
                     }
                 }
             }
         }
-        skip = true;
+        mFlagSkip = true;
     }
 }
 
 bool RayCollider::Collide(ICollider* hit, CollisionInfo* outputInfo)
 {
-    if (skip) {
-        if (outputInfo) *outputInfo = memInfo;
-        return hit == nearest;
+    if (mFlagSkip) {
+        if (outputInfo) *outputInfo = mMemInfo;
+        return hit == mNearest;
     }
 
     CollisionInfo info;
     if (hit->GetTypeIndentifier() == "SphereCollider") {
         SphereCollider* hitT = static_cast<SphereCollider*>(hit);
 
-        if (ColPrimitive3D::CheckRayToSphere(this->ray, hitT->sphere, &info.distance, &info.inter)) {
+        if (ColPrimitive3D::CheckRayToSphere(mRay, hitT->mSphere, &info.distance, &info.inter)) {
             info.hitCollider = hit;
             info.hasDistance = true;
             info.hasInter = true;
@@ -51,7 +51,7 @@ bool RayCollider::Collide(ICollider* hit, CollisionInfo* outputInfo)
     if (hit->GetTypeIndentifier() == "PolygonCollider") {
         PolygonCollider* hitT = static_cast<PolygonCollider*>(hit);
 
-        if (ColPrimitive3D::CheckRayToTriangle(this->ray, hitT->polygon, &info.distance, &info.inter)) {
+        if (ColPrimitive3D::CheckRayToTriangle(mRay, hitT->mPolygon, &info.distance, &info.inter)) {
             info.hitCollider = hit;
             info.hasDistance = true;
             info.hasInter = true;

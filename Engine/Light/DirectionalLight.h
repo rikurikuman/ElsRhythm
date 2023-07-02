@@ -13,17 +13,17 @@ public:
 		float pad; // 4byte(total 32)
 	};
 
-	Vector3 lightVec;
-	Color color;
-	bool active = false;
+	Vector3 mLightVec;
+	Color mColor;
+	bool mIsActive = false;
 
-	DirectionalLight() : lightVec(Vector3(0, -1, 0)), color(Color(1, 1, 1, 1)) {}
-	DirectionalLight(Vector3 lightVec, Color color) : lightVec(lightVec), color(color) {}
+	DirectionalLight() : mLightVec(Vector3(0, -1, 0)), mColor(Color(1, 1, 1, 1)) {}
+	DirectionalLight(Vector3 lightVec, Color color) : mLightVec(lightVec), mColor(color) {}
 
 	void TransferBuffer(LightBuffer& buffer) {
-		buffer.active = active;
-		buffer.lightVec = lightVec;
-		buffer.color = Vector3(color.r, color.g, color.b);
+		buffer.active = mIsActive;
+		buffer.lightVec = mLightVec;
+		buffer.color = Vector3(mColor.r, mColor.g, mColor.b);
 	}
 };
 

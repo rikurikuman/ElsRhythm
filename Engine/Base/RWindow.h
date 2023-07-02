@@ -11,20 +11,20 @@ class RWindow
 private:
 	RWindow() {};
 	~RWindow() = default;
-	RWindow(const RWindow& a) {};
+	RWindow(const RWindow&) {};
 	RWindow& operator=(const RWindow&) { return *this; }
 
 	LRESULT(*WindowProc)(HWND, UINT, WPARAM, LPARAM) = _DefWindowProc; //ウィンドウプロシージャへのポインタ
 
-	int windowWidth = 1280; //ウィンドウの幅
-	int windowHeight = 720; //ウィンドウの高さ
-	std::wstring windowName = L"DirectXGame";
+	int32_t mWindowWidth = 1280; //ウィンドウの幅
+	int32_t mWindowHeight = 720; //ウィンドウの高さ
+	std::wstring mWindowName = L"DirectXGame";
 
-	unsigned int iconID = 0;
+	uint32_t mIconID = 0;
 
-	WNDCLASSEX wndClassEx{};
-	HWND wndHandle;
-	MSG msg{};
+	WNDCLASSEX mWndClassEx{};
+	HWND mWndHandle{};
+	MSG mMsg{};
 
 	void InitInternal();
 
@@ -33,37 +33,37 @@ public:
 	static void Init();
 	static RWindow* GetInstance();
 
-	static void SetWindowSize(const int width, const int height) {
-		GetInstance()->windowWidth = width;
-		GetInstance()->windowHeight = height;
+	static void SetWindowSize(const int32_t width, const int32_t height) {
+		GetInstance()->mWindowWidth = width;
+		GetInstance()->mWindowHeight = height;
 	}
 
 	static void SetWindowName(const std::wstring name) {
-		GetInstance()->windowName = name;
+		GetInstance()->mWindowName = name;
 	}
 
-	static void SetIcon(const int id) {
-		GetInstance()->iconID = id;
+	static void SetIcon(const int32_t id) {
+		GetInstance()->mIconID = id;
 	}
 
-	static int GetWidth() {
-		return GetInstance()->windowWidth;
+	static int32_t GetWidth() {
+		return GetInstance()->mWindowWidth;
 	}
 
-	static int GetHeight() {
-		return GetInstance()->windowHeight;
+	static int32_t GetHeight() {
+		return GetInstance()->mWindowHeight;
 	}
 
 	static WNDCLASSEX GetWindowClassEx() {
-		return GetInstance()->wndClassEx;
+		return GetInstance()->mWndClassEx;
 	}
 
 	static HWND GetWindowHandle() {
-		return GetInstance()->wndHandle;
+		return GetInstance()->mWndHandle;
 	}
 
 	static MSG GetMessageStructure() {
-		return GetInstance()->msg;
+		return GetInstance()->mMsg;
 	}
 
 	//メッセージ処理
@@ -77,7 +77,7 @@ public:
 	/// </summary>
 	/// <param name="posX">移動先X座標</param>
 	/// <param name="posY">移動先Y座標</param>
-	static void SetMousePos(int posX, int posY);
+	static void SetMousePos(int32_t posX, int32_t posY);
 
 	/// <summary>
 	/// マウスカーソル移動
@@ -85,7 +85,7 @@ public:
 	/// </summary>
 	/// <param name="posX">移動先X座標</param>
 	/// <param name="posY">移動先Y座標</param>
-	static void SetAbsMousePos(int posX, int posY);
+	static void SetAbsMousePos(int32_t posX, int32_t posY);
 
 	static void SetMouseHideFlag(bool hide);
 };

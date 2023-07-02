@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 
 //仲良し相手宣言
 class Vector3;
@@ -14,7 +15,7 @@ public:
 	Vector2(); 
 	
 	//任意の成分ベクトル
-	Vector2(int x, int y);
+	Vector2(int32_t x, int32_t y);
 	//任意の成分ベクトル
 	Vector2(float x, float y); 
 

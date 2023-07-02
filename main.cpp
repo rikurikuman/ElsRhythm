@@ -33,6 +33,8 @@
 #include <Renderer.h>
 #include <TestRenderStage.h>
 #include <SRBuffer.h>
+#include <CollidersScene.h>
+#include <ControllerScene.h>
 
 using namespace std;
 using namespace DirectX;
@@ -115,9 +117,9 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		RImGui::NewFrame();
 
-		if (Util::instanceof<DebugCamera>(*Camera::nowCamera)
+		if (Util::instanceof<DebugCamera>(*Camera::sNowCamera)
 			&& GetForegroundWindow() == RWindow::GetWindowHandle()
-			&& !dynamic_cast<DebugCamera*>(Camera::nowCamera)->freeFlag) {
+			&& !dynamic_cast<DebugCamera*>(Camera::sNowCamera)->mFreeFlag) {
 			RWindow::SetMouseHideFlag(true);
 			RWindow::SetMousePos(RWindow::GetWidth() / 2, RWindow::GetHeight() / 2);
 		}
@@ -146,7 +148,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		//描画の実行中に別スレッドとかでSRBufferとかの操作をされるとぶっ飛ぶので雑にロックする
 		//いずれもっと良い制御にしたい
-		std::unique_lock<std::recursive_mutex> bufferLockInDrawing(SRBufferAllocator::GetInstance()->mutex);
+		std::unique_lock<std::recursive_mutex> bufferLockInDrawing(SRBufferAllocator::GetInstance()->sMutex);
 		Renderer::Execute();
 
 		//べんり！
@@ -182,8 +184,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 			ImGui::Text("(Raw : %lld / %lld)", buffUsingSize, buffTotalSize);
 			ImGui::NewLine();
 			ImGui::Text("SceneManager");
-			static int sceneNum = 0;
-			const char* scenes[] = { "MainTest" };
+			static int32_t sceneNum = 0;
+			const char* scenes[] = { "RhythmGameTest", "ControllerTest", "CollidersTest" };
 			ImGui::Combo("##SceneNumCombo", &sceneNum, scenes, IM_ARRAYSIZE(scenes));
 			ImGui::SameLine();
 			if (ImGui::Button("Go!!!")) {
@@ -191,6 +193,12 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 					switch (sceneNum) {
 					case 0:
 						SceneManager::Change<MainTestScene, SimpleSceneTransition>();
+						break;
+					case 1:
+						SceneManager::Change<ControllerScene, SimpleSceneTransition>();
+						break;
+					case 2:
+						SceneManager::Change<CollidersScene, SimpleSceneTransition>();
 						break;
 					}
 				}

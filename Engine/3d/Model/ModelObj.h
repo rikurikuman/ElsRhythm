@@ -7,22 +7,22 @@
 #include "SRConstBuffer.h"
 #include <map>
 
-class RenderOrder;
+struct RenderOrder;
 
 class ModelObj : public Obj3D
 {
 public:
-	Model* model = nullptr;
-	Material tuneMaterial = Material(true);
+	Model* mModel = nullptr;
+	Material mTuneMaterial = Material(true);
 
-	std::unordered_map<std::string, SRConstBuffer<MaterialBuffer>> materialBuffMap;
-	SRConstBuffer<TransformBuffer> transformBuff;
-	SRConstBuffer<ViewProjectionBuffer> viewProjectionBuff;
+	std::unordered_map<std::string, SRConstBuffer<MaterialBuffer>> mMaterialBuffMap;
+	SRConstBuffer<TransformBuffer> mTransformBuff;
+	SRConstBuffer<ViewProjectionBuffer> mViewProjectionBuff;
 
 	ModelObj() {};
 	~ModelObj() {}
-	ModelObj(Model* model) : model(model) {};
-	ModelObj(ModelHandle handle) : model(ModelManager::Get(handle)) {};
+	ModelObj(Model* model) : mModel(model) {};
+	ModelObj(ModelHandle handle) : mModel(ModelManager::Get(handle)) {};
 
 	//各データのバッファへの転送
 	void TransferBuffer(ViewProjection viewprojection) override;

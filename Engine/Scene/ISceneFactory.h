@@ -8,7 +8,7 @@ class ISceneFactory
 public:
 	virtual ~ISceneFactory() = default;
 
-	virtual std::shared_ptr<IScene> CreateScene(const std::string& sceneName) {
+	virtual std::shared_ptr<IScene> CreateScene(const std::string&) {
 		return nullptr;
 	}
 };

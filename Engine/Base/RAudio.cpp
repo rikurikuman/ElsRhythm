@@ -7,13 +7,13 @@ AudioHandle RAudio::Load(const std::string filepath, std::string handle)
 {
 	RAudio* instance = GetInstance();
 
-	std::unique_lock<std::recursive_mutex> lock(GetInstance()->mutex);
+	std::unique_lock<std::recursive_mutex> lock(GetInstance()->mMutex);
 
 	//ˆê‰ñ“Ç‚Ýž‚ñ‚¾‚±‚Æ‚ª‚ ‚éƒtƒ@ƒCƒ‹‚Í‚»‚Ì‚Ü‚Ü•Ô‚·
-	auto itr = find_if(instance->audioMap.begin(), instance->audioMap.end(), [&](const std::pair<AudioHandle, shared_ptr<AudioData>>& p) {
+	auto itr = find_if(instance->mAudioMap.begin(), instance->mAudioMap.end(), [&](const std::pair<AudioHandle, shared_ptr<AudioData>>& p) {
 		return p.second->filepath == filepath;
 		});
-	if (itr != instance->audioMap.end()) {
+	if (itr != instance->mAudioMap.end()) {
 		return itr->first;
 	}
 	lock.unlock();
@@ -58,47 +58,46 @@ AudioHandle RAudio::Load(const std::string filepath, std::string handle)
 		return "";
 	}
 
-	char* pBuffer = new char[data.size];
-	file.read(pBuffer, data.size);
-
-	file.close();
-
 	shared_ptr<WaveAudio> sound = make_shared<WaveAudio>();
 	sound->filepath = filepath;
 	sound->wfex = format.fmt;
-	sound->pBuffer = reinterpret_cast<BYTE*>(pBuffer);
 	sound->bufferSize = data.size;
+
+	sound->buffer.resize(data.size);
+	file.read(reinterpret_cast<char*>(&sound->buffer[0]), data.size);
+
+	file.close();
 
 	if (handle.empty()) {
 		handle = "NoNameHandle_" + filepath;
 	}
 
 	lock.lock();
-	GetInstance()->audioMap[handle] = sound;
+	GetInstance()->mAudioMap[handle] = sound;
 	return handle;
 }
 
-void RAudio::Play(const AudioHandle handle, const float volume, const bool loop)
+void RAudio::Play(const AudioHandle handle, const float volume, const float pitch, const bool loop)
 {
 	RAudio* instance = GetInstance();
 	HRESULT result;
 
-	std::lock_guard<std::recursive_mutex> lock(GetInstance()->mutex);
-	if (instance->audioMap.find(handle) == instance->audioMap.end()) {
+	std::lock_guard<std::recursive_mutex> lock(GetInstance()->mMutex);
+	if (instance->mAudioMap.find(handle) == instance->mAudioMap.end()) {
 		return;
 	}
 
-	shared_ptr<AudioData> data = instance->audioMap[handle];
+	shared_ptr<AudioData> data = instance->mAudioMap[handle];
 
 	if (data->type == AudioType::Wave) {
 		shared_ptr<WaveAudio> waveData = static_pointer_cast<WaveAudio>(data);
 
 		IXAudio2SourceVoice* pSourceVoice = nullptr;
-		result = instance->xAudio2->CreateSourceVoice(&pSourceVoice, &waveData->wfex);
+		result = instance->mXAudio2->CreateSourceVoice(&pSourceVoice, &waveData->wfex);
 		assert(SUCCEEDED(result));
 
 		XAUDIO2_BUFFER buf{};
-		buf.pAudioData = waveData->pBuffer;
+		buf.pAudioData = &waveData->buffer[0];
 		buf.AudioBytes = waveData->bufferSize;
 		buf.LoopCount = loop ? XAUDIO2_LOOP_INFINITE : 0;
 		buf.Flags = XAUDIO2_END_OF_STREAM;
@@ -107,44 +106,57 @@ void RAudio::Play(const AudioHandle handle, const float volume, const bool loop)
 		assert(SUCCEEDED(result));
 		result = pSourceVoice->SetVolume(volume);
 		assert(SUCCEEDED(result));
+		result = pSourceVoice->SetFrequencyRatio(pitch);
+		assert(SUCCEEDED(result));
 		result = pSourceVoice->Start();
 		assert(SUCCEEDED(result));
 
-		if (loop) {
-			instance->playingList.push_back({ handle, pSourceVoice });
-		}
+		instance->mPlayingList.push_back({ handle, pSourceVoice });
 	}
 }
 
 void RAudio::Stop(AudioHandle handle)
 {
 	RAudio* instance = GetInstance();
-	std::lock_guard<std::recursive_mutex> lock(GetInstance()->mutex);
-	for (auto itr = instance->playingList.begin(); itr != instance->playingList.end();) {
+	std::lock_guard<std::recursive_mutex> lock(GetInstance()->mMutex);
+	for (auto itr = instance->mPlayingList.begin(); itr != instance->mPlayingList.end();) {
 		PlayingInfo info = *itr;
 		if (info.handle == handle) {
 			info.pSource->Stop();
 			info.pSource->DestroyVoice();
-			itr = instance->playingList.erase(itr);
+			itr = instance->mPlayingList.erase(itr);
 			continue;
 		}
 		itr++;
 	}
 }
 
+bool RAudio::IsPlaying(AudioHandle handle)
+{
+	RAudio* instance = GetInstance();
+	std::lock_guard<std::recursive_mutex> lock(GetInstance()->mMutex);
+	for (auto itr = instance->mPlayingList.begin(); itr != instance->mPlayingList.end();) {
+		PlayingInfo info = *itr;
+		if (info.handle == handle) {
+			
+		}
+	}
+	return false;
+}
+
 void RAudio::InitInternal()
 {
 	HRESULT result;
-	result = XAudio2Create(&xAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR);
+	result = XAudio2Create(&mXAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR);
 	assert(SUCCEEDED(result));
 
-	result = xAudio2->CreateMasteringVoice(&master);
+	result = mXAudio2->CreateMasteringVoice(&mMasteringVoice);
 	assert(SUCCEEDED(result));
 }
 
 void RAudio::FinalInternal()
 {
-	master->DestroyVoice();
-	xAudio2.Reset();
-	audioMap.clear();
+	mMasteringVoice->DestroyVoice();
+	mXAudio2.Reset();
+	mAudioMap.clear();
 }

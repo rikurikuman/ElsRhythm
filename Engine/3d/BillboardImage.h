@@ -7,8 +7,8 @@
 class BillboardImage : public Obj3D
 {
 public:
-	Image3D image;
-	bool billboardY = false;
+	Image3D mImage;
+	bool mUseBillboardY = false;
 
 	BillboardImage() {};
 	BillboardImage(TextureHandle texture, Vector2 size = {1, 1})

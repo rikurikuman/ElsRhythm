@@ -1,61 +1,61 @@
 #include "LightGroup.h"
 
-LightGroup* LightGroup::nowLight = nullptr;
+LightGroup* LightGroup::sNowLight = nullptr;
 
 void LightGroup::SetDefault()
 {
-	change = true;
+	mChangeFlag = true;
 
-	ambientColor = { 1, 1, 1 };
+	mAmbientColor = { 1, 1, 1 };
 	
-	directionalLights[0].active = true;
-	directionalLights[0].lightVec = { 1, -1, 1 };
-	directionalLights[0].color = { 1, 1, 1, 1 };
+	mDirectionalLights[0].mIsActive = true;
+	mDirectionalLights[0].mLightVec = { 1, -1, 1 };
+	mDirectionalLights[0].mColor = { 1, 1, 1, 1 };
 
-	for (int i = 1; i < directionalLightNum; i++) {
-		directionalLights[i].active = false;
+	for (int32_t i = 1; i < DIRECTIONAL_LIGHT_NUM; i++) {
+		mDirectionalLights[i].mIsActive = false;
 	}
 
-	for (int i = 0; i < pointLightNum; i++) {
-		pointLights[i].active = false;
+	for (int32_t i = 0; i < POINT_LIGHT_NUM; i++) {
+		mPointLights[i].mIsActive = false;
 	}
 
-	for (int i = 0; i < spotLightNum; i++) {
-		spotLights[i].active = false;
+	for (int32_t i = 0; i < SPOT_LIGHT_NUM; i++) {
+		mSpotLights[i].mIsActive = false;
 	}
 }
 
 void LightGroup::Update()
 {
-	if (change) {
-		change = false;
+	if (mChangeFlag) {
+		mChangeFlag = false;
 
-		buffer.constMap->ambientColor = ambientColor;
+		mBuffer.mConstMap->ambientColor = mAmbientColor;
 
-		for (int i = 0; i < directionalLightNum; i++) {
-			if (directionalLights[i].active) {
-				directionalLights[i].TransferBuffer(buffer.constMap->directionalLights[i]);
+		for (int32_t i = 0; i < DIRECTIONAL_LIGHT_NUM; i++) {
+			if (mDirectionalLights[i].mIsActive) {
+				mDirectionalLights[i].TransferBuffer(mBuffer.mConstMap->directionalLights[i]);
 			}
 			else {
-				buffer.constMap->directionalLights[i].active = false;
+				mBuffer.mConstMap->directionalLights[i].active = false;
 			}
 		}
 
-		for (int i = 0; i < pointLightNum; i++) {
-			if (pointLights[i].active) {
-				pointLights[i].TransferBuffer(buffer.constMap->pointLights[i]);
+		for (int32_t i = 0; i < POINT_LIGHT_NUM; i++) {
+			if (mPointLights[i].mIsActive) {
+				mPointLights[i].TransferBuffer(mBuffer.mConstMap->pointLights[i]);
 			}
 			else {
-				buffer.constMap->pointLights[i].active = false;
+				mBuffer.mConstMap->pointLights[i].active = false;
 			}
 		}
 
-		for (int i = 0; i < spotLightNum; i++) {
-			if (spotLights[i].active) {
-				spotLights[i].TransferBuffer(buffer.constMap->spotLights[i]);
+		for (int32_t i = 0; i < SPOT_LIGHT_NUM; i++) {
+			if (mSpotLights[i].mIsActive) {
+				mSpotLights[i].TransferBuffer(mBuffer.mConstMap->spotLights[i]);
 			}
 			else {
-				buffer.constMap->spotLights[i].active = false;
+				mBuffer.mConstMap->spotLights[i].active = false;
 			}
 		}
 	}
@@ -63,179 +63,179 @@ void LightGroup::Update()
 
 void LightGroup::SetAmbientColor(Vector3 color)
 {
-	ambientColor = color;
+	mAmbientColor = color;
 }
 
 Vector3 LightGroup::GetAmbientColor()
 {
-	return ambientColor;
+	return mAmbientColor;
 }
 
-void LightGroup::SetDirectionalLightActive(int index, bool active)
+void LightGroup::SetDirectionalLightActive(int32_t index, bool active)
 {
-	assert(0 <= index && index < directionalLightNum);
-	directionalLights[index].active = active;
-	change = true;
+	assert(0 <= index && index < DIRECTIONAL_LIGHT_NUM);
+	mDirectionalLights[index].mIsActive = active;
+	mChangeFlag = true;
 }
 
-bool LightGroup::GetDirectionalLightActive(int index)
+bool LightGroup::GetDirectionalLightActive(int32_t index)
 {
-	assert(0 <= index && index < directionalLightNum);
-	return directionalLights[index].active;
+	assert(0 <= index && index < DIRECTIONAL_LIGHT_NUM);
+	return mDirectionalLights[index].mIsActive;
 }
 
-void LightGroup::SetDirectionalLightVec(int index, Vector3 vec)
+void LightGroup::SetDirectionalLightVec(int32_t index, Vector3 vec)
 {
-	assert(0 <= index && index < directionalLightNum);
-	directionalLights[index].lightVec = vec;
-	change = true;
+	assert(0 <= index && index < DIRECTIONAL_LIGHT_NUM);
+	mDirectionalLights[index].mLightVec = vec;
+	mChangeFlag = true;
 }
 
-Vector3 LightGroup::GetDirectionalLightVec(int index)
+Vector3 LightGroup::GetDirectionalLightVec(int32_t index)
 {
-	assert(0 <= index && index < directionalLightNum);
-	return directionalLights[index].lightVec;
+	assert(0 <= index && index < DIRECTIONAL_LIGHT_NUM);
+	return mDirectionalLights[index].mLightVec;
 }
 
-void LightGroup::SetDirectionalLightColor(int index, Color color)
+void LightGroup::SetDirectionalLightColor(int32_t index, Color color)
 {
-	assert(0 <= index && index < directionalLightNum);
-	directionalLights[index].color = color;
-	change = true;
+	assert(0 <= index && index < DIRECTIONAL_LIGHT_NUM);
+	mDirectionalLights[index].mColor = color;
+	mChangeFlag = true;
 }
 
-Color LightGroup::GetDirectionalLightColor(int index)
+Color LightGroup::GetDirectionalLightColor(int32_t index)
 {
-	assert(0 <= index && index < directionalLightNum);
-	return directionalLights[index].color;
+	assert(0 <= index && index < DIRECTIONAL_LIGHT_NUM);
+	return mDirectionalLights[index].mColor;
 }
 
-void LightGroup::SetPointLightActive(int index, bool active)
+void LightGroup::SetPointLightActive(int32_t index, bool active)
 {
-	assert(0 <= index && index < pointLightNum);
-	pointLights[index].active = active;
-	change = true;
+	assert(0 <= index && index < POINT_LIGHT_NUM);
+	mPointLights[index].mIsActive = active;
+	mChangeFlag = true;
 }
 
-bool LightGroup::GetPointLightActive(int index)
+bool LightGroup::GetPointLightActive(int32_t index)
 {
-	assert(0 <= index && index < pointLightNum);
-	return pointLights[index].active;
+	assert(0 <= index && index < POINT_LIGHT_NUM);
+	return mPointLights[index].mIsActive;
 }
 
-void LightGroup::SetPointLightPos(int index, Vector3 pos)
+void LightGroup::SetPointLightPos(int32_t index, Vector3 pos)
 {
-	assert(0 <= index && index < pointLightNum);
-	pointLights[index].pos = pos;
-	change = true;
+	assert(0 <= index && index < POINT_LIGHT_NUM);
+	mPointLights[index].mPos = pos;
+	mChangeFlag = true;
 }
 
-Vector3 LightGroup::GetPointLightPos(int index)
+Vector3 LightGroup::GetPointLightPos(int32_t index)
 {
-	assert(0 <= index && index < pointLightNum);
-	return pointLights[index].pos;
+	assert(0 <= index && index < POINT_LIGHT_NUM);
+	return mPointLights[index].mPos;
 }
 
-void LightGroup::SetPointLightColor(int index, Color color)
+void LightGroup::SetPointLightColor(int32_t index, Color color)
 {
-	assert(0 <= index && index < pointLightNum);
-	pointLights[index].color = color;
-	change = true;
+	assert(0 <= index && index < POINT_LIGHT_NUM);
+	mPointLights[index].mColor = color;
+	mChangeFlag = true;
 }
 
-Color LightGroup::GetPointLightColor(int index)
+Color LightGroup::GetPointLightColor(int32_t index)
 {
-	assert(0 <= index && index < pointLightNum);
-	return pointLights[index].color;
+	assert(0 <= index && index < POINT_LIGHT_NUM);
+	return mPointLights[index].mColor;
 }
 
-void LightGroup::SetPointLightAtten(int index, Vector3 atten)
+void LightGroup::SetPointLightAtten(int32_t index, Vector3 atten)
 {
-	assert(0 <= index && index < pointLightNum);
-	pointLights[index].atten = atten;
-	change = true;
+	assert(0 <= index && index < POINT_LIGHT_NUM);
+	mPointLights[index].mAtten = atten;
+	mChangeFlag = true;
 }
 
-Vector3 LightGroup::GetPointLightAtten(int index)
+Vector3 LightGroup::GetPointLightAtten(int32_t index)
 {
-	assert(0 <= index && index < pointLightNum);
-	return pointLights[index].atten;
+	assert(0 <= index && index < POINT_LIGHT_NUM);
+	return mPointLights[index].mAtten;
 }
 
-void LightGroup::SetSpotLightActive(int index, bool active)
+void LightGroup::SetSpotLightActive(int32_t index, bool active)
 {
-	assert(0 <= index && index < spotLightNum);
-	spotLights[index].active = active;
-	change = true;
+	assert(0 <= index && index < SPOT_LIGHT_NUM);
+	mSpotLights[index].mIsActive = active;
+	mChangeFlag = true;
 }
 
-bool LightGroup::GetSpotLightActive(int index)
+bool LightGroup::GetSpotLightActive(int32_t index)
 {
-	assert(0 <= index && index < spotLightNum);
-	return spotLights[index].active;
+	assert(0 <= index && index < SPOT_LIGHT_NUM);
+	return mSpotLights[index].mIsActive;
 }
 
-void LightGroup::SetSpotLightPos(int index, Vector3 pos)
+void LightGroup::SetSpotLightPos(int32_t index, Vector3 pos)
 {
-	assert(0 <= index && index < spotLightNum);
-	spotLights[index].pos = pos;
-	change = true;
+	assert(0 <= index && index < SPOT_LIGHT_NUM);
+	mSpotLights[index].mPos = pos;
+	mChangeFlag = true;
 }
 
-Vector3 LightGroup::GetSpotLightPos(int index)
+Vector3 LightGroup::GetSpotLightPos(int32_t index)
 {
-	assert(0 <= index && index < spotLightNum);
-	return spotLights[index].pos;
+	assert(0 <= index && index < SPOT_LIGHT_NUM);
+	return mSpotLights[index].mPos;
 }
 
-void LightGroup::SetSpotLightDirection(int index, Vector3 dir)
+void LightGroup::SetSpotLightDirection(int32_t index, Vector3 dir)
 {
-	assert(0 <= index && index < spotLightNum);
-	spotLights[index].direction = dir;
-	change = true;
+	assert(0 <= index && index < SPOT_LIGHT_NUM);
+	mSpotLights[index].mDirection = dir;
+	mChangeFlag = true;
 }
 
-Vector3 LightGroup::GetSpotLightDirection(int index)
+Vector3 LightGroup::GetSpotLightDirection(int32_t index)
 {
-	assert(0 <= index && index < spotLightNum);
-	return spotLights[index].direction;
+	assert(0 <= index && index < SPOT_LIGHT_NUM);
+	return mSpotLights[index].mDirection;
 }
 
-void LightGroup::SetSpotLightColor(int index, Color color)
+void LightGroup::SetSpotLightColor(int32_t index, Color color)
 {
-	assert(0 <= index && index < spotLightNum);
-	spotLights[index].color = color;
-	change = true;
+	assert(0 <= index && index < SPOT_LIGHT_NUM);
+	mSpotLights[index].mColor = color;
+	mChangeFlag = true;
 }
 
-Color LightGroup::GetSpotLightColor(int index)
+Color LightGroup::GetSpotLightColor(int32_t index)
 {
-	assert(0 <= index && index < spotLightNum);
-	return spotLights[index].color;
+	assert(0 <= index && index < SPOT_LIGHT_NUM);
+	return mSpotLights[index].mColor;
 }
 
-void LightGroup::SetSpotLightAtten(int index, Vector3 atten)
+void LightGroup::SetSpotLightAtten(int32_t index, Vector3 atten)
 {
-	assert(0 <= index && index < spotLightNum);
-	spotLights[index].atten = atten;
-	change = true;
+	assert(0 <= index && index < SPOT_LIGHT_NUM);
+	mSpotLights[index].mAtten = atten;
+	mChangeFlag = true;
 }
 
-Vector3 LightGroup::GetSpotLightAtten(int index)
+Vector3 LightGroup::GetSpotLightAtten(int32_t index)
 {
-	assert(0 <= index && index < spotLightNum);
-	return spotLights[index].atten;
+	assert(0 <= index && index < SPOT_LIGHT_NUM);
+	return mSpotLights[index].mAtten;
 }
 
-void LightGroup::SetSpotLightFactorAngle(int index, Vector2 factorAngle)
+void LightGroup::SetSpotLightFactorAngle(int32_t index, Vector2 factorAngle)
 {
-	assert(0 <= index && index < spotLightNum);
-	spotLights[index].factorAngle = factorAngle;
-	change = true;
+	assert(0 <= index && index < SPOT_LIGHT_NUM);
+	mSpotLights[index].mFactorAngle = factorAngle;
+	mChangeFlag = true;
 }
 
-Vector2 LightGroup::GetSpotLightFactorAngle(int index)
+Vector2 LightGroup::GetSpotLightFactorAngle(int32_t index)
 {
-	assert(0 <= index && index < spotLightNum);
-	return spotLights[index].factorAngle;
+	assert(0 <= index && index < SPOT_LIGHT_NUM);
+	return mSpotLights[index].mFactorAngle;
 }

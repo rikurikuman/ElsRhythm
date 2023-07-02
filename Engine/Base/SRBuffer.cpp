@@ -2,9 +2,9 @@
 #include "RDirectX.h"
 #include <Util.h>
 
-std::recursive_mutex SRBufferAllocator::mutex;
-bool SRBufferAllocator::optAutoDeflag = false;
-bool SRBufferAllocator::optAutoReCreateBuffer = true;
+std::recursive_mutex SRBufferAllocator::sMutex;
+bool SRBufferAllocator::mOptAutoDeflag = false;
+bool SRBufferAllocator::mOptAutoReCreateBuffer = true;
 
 SRBufferAllocator* SRBufferAllocator::GetInstance()
 {
@@ -12,61 +12,61 @@ SRBufferAllocator* SRBufferAllocator::GetInstance()
 	return &instance;
 }
 
-UINT64 Align(UINT64 location, UINT64 align) {
+size_t Align(size_t location, size_t align) {
 	if ((align == 0) || (align & (align - 1))) {
 		return 0;
 	}
 	return (location + (align - 1)) & ~(align - 1);
 }
 
-SRBufferPtr SRBufferAllocator::Alloc(UINT64 needSize, UINT align)
+SRBufferPtr SRBufferAllocator::Alloc(size_t needSize, uint32_t align)
 {
 	SRBufferAllocator* instance = GetInstance();
-	std::lock_guard<std::recursive_mutex> lock(instance->mutex);
+	std::lock_guard<std::recursive_mutex> lock(instance->sMutex);
 
 	MemoryRegion* reg = nullptr;
 
-	reg = _Alloc(needSize, align, optAutoDeflag);
+	reg = _Alloc(needSize, align, mOptAutoDeflag);
 	if (reg == nullptr) return SRBufferPtr();
 
-	instance->regionPtrs.emplace_back();
-	instance->regionPtrs.back().region = reg;
-	instance->regionPtrs.back().memItr = --instance->regionPtrs.end();
-	return SRBufferPtr(&instance->regionPtrs.back());
+	instance->mRegionPtrs.emplace_back();
+	instance->mRegionPtrs.back().region = reg;
+	instance->mRegionPtrs.back().memItr = --instance->mRegionPtrs.end();
+	return SRBufferPtr(&instance->mRegionPtrs.back());
 }
 
 void SRBufferAllocator::Free(SRBufferPtr& ptr)
 {
 	SRBufferAllocator* instance = GetInstance();
-	std::lock_guard<std::recursive_mutex> lock(instance->mutex);
+	std::lock_guard<std::recursive_mutex> lock(instance->sMutex);
 
-	if (ptr.ptr == nullptr || ptr.ptr->region == nullptr) {
+	if (ptr.mPtr == nullptr || ptr.mPtr->region == nullptr) {
 #ifdef _DEBUG
-		OutputDebugStringA(Util::StringFormat("RKEngine WARNING: SRBufferAllocator::Free() : Attempted to free an invalid pointer(%p).\n", ptr.ptr).c_str());
+		OutputDebugStringA(Util::StringFormat("RKEngine WARNING: SRBufferAllocator::Free() : Attempted to free an invalid pointer(%p).\n", ptr.mPtr).c_str());
 #endif
 		return;
 	}
 
 	_Free(ptr);
 	//もっと安全に消せるように何とかする
-	ptr.ptr->region = nullptr;
-	instance->regionPtrs.erase(ptr.ptr->memItr);
-	ptr.ptr = nullptr;
+	ptr.mPtr->region = nullptr;
+	instance->mRegionPtrs.erase(ptr.mPtr->memItr);
+	ptr.mPtr = nullptr;
 }
 
-MemoryRegion* SRBufferAllocator::_Alloc(UINT64 needSize, UINT align, bool deflag)
+MemoryRegion* SRBufferAllocator::_Alloc(size_t needSize, uint32_t align, bool deflag)
 {
 	SRBufferAllocator* instance = GetInstance();
-	std::lock_guard<std::recursive_mutex> lock(instance->mutex);
+	std::lock_guard<std::recursive_mutex> lock(instance->sMutex);
 
 	//確保した領域の先頭アドレスを指すポインタ
 	byte* newLoc = nullptr;
 
 	//空き領域から欲しいサイズが収まる領域を探す
-	for (MemoryRegion& reg : instance->freeRegions) {
+	for (MemoryRegion& reg : instance->mFreeRegions) {
 
 		//要求境界にアライメントする
-		byte* alignedLoc = reinterpret_cast<byte*>(Align(reinterpret_cast<UINT64>(reg.pBegin), align));
+		byte* alignedLoc = reinterpret_cast<byte*>(Align(reinterpret_cast<size_t>(reg.pBegin), align));
 
 		//アライメントに失敗するようならnullのまま返す
 		if (alignedLoc == nullptr) {
@@ -77,7 +77,7 @@ MemoryRegion* SRBufferAllocator::_Alloc(UINT64 needSize, UINT align, bool deflag
 		}
 
 		//アライメントされた後のアドレスから要求サイズが確保できるか確認
-		UINT64 remainSize = UINT64(reg.pEnd - alignedLoc + 1);
+		size_t remainSize = size_t(reg.pEnd - alignedLoc + 1);
 		if (reg.pEnd < alignedLoc || remainSize < needSize) {
 			continue; //できないなら別の空き領域でもう一度
 		}
@@ -94,7 +94,7 @@ MemoryRegion* SRBufferAllocator::_Alloc(UINT64 needSize, UINT align, bool deflag
 			instance->DeFlag();
 			return _Alloc(needSize, align, false);
 		}
-		if (optAutoReCreateBuffer) {
+		if (mOptAutoReCreateBuffer) {
 			//より大きいサイズでバッファを作り直して再確保を試みる
 			instance->ResizeBuffer();
 			return _Alloc(needSize, align, false);
@@ -108,39 +108,39 @@ MemoryRegion* SRBufferAllocator::_Alloc(UINT64 needSize, UINT align, bool deflag
 
 	//空き領域情報を編集する
 	//確保領域の先頭アドレスが含まれている空き領域を探す
-	for (auto itr = instance->freeRegions.begin(); itr != instance->freeRegions.end(); itr++) {
+	for (auto itr = instance->mFreeRegions.begin(); itr != instance->mFreeRegions.end(); itr++) {
 		MemoryRegion& reg = *itr;
 		if (newLoc < reg.pBegin || reg.pEnd < newLoc) {
 			continue;
 		}
 
 		//あれば、空き領域の先頭から確保領域の先頭までを新たな空き領域として追加する
-		if (UINT64(newLoc - reg.pBegin) != 0) {
-			itr = instance->freeRegions.emplace(itr, reg.pBegin, newLoc - 1);
+		if (size_t(newLoc - reg.pBegin) != 0) {
+			itr = instance->mFreeRegions.emplace(itr, reg.pBegin, newLoc - 1);
 			itr++;
 		}
 
 		//あれば、確保領域の末尾から空き領域の末尾までを新たな空き領域として追加する
-		if (UINT64(reg.pEnd - (newLoc + needSize - 1)) != 0) {
-			itr = instance->freeRegions.emplace(itr++, newLoc + needSize, reg.pEnd);
+		if (size_t(reg.pEnd - (newLoc + needSize - 1)) != 0) {
+			itr = instance->mFreeRegions.emplace(itr++, newLoc + needSize, reg.pEnd);
 			itr++;
 		}
 
 		//空き領域削除
-		instance->freeRegions.erase(itr);
+		instance->mFreeRegions.erase(itr);
 		break;
 	}
 
-	instance->usingRegions.push_back(MemoryRegion(newLoc, newLoc + needSize - 1, align));
-	instance->usingRegions.back().memItr = --instance->usingRegions.end();
-	instance->usingBufferSizeCounter += needSize;
-	return &instance->usingRegions.back();
+	instance->mUsingRegions.push_back(MemoryRegion(newLoc, newLoc + needSize - 1, align));
+	instance->mUsingRegions.back().memItr = --instance->mUsingRegions.end();
+	instance->mUsingBufferSizeCounter += needSize;
+	return &instance->mUsingRegions.back();
 }
 
 void SRBufferAllocator::_Free(SRBufferPtr& ptr)
 {
 	SRBufferAllocator* instance = GetInstance();
-	std::lock_guard<std::recursive_mutex> lock(instance->mutex);
+	std::lock_guard<std::recursive_mutex> lock(instance->sMutex);
 
 	//使用中領域から指定アドレスを先頭とする領域を探す
 	//bool regionFound = false;
@@ -159,11 +159,11 @@ void SRBufferAllocator::_Free(SRBufferPtr& ptr)
 	//		break;
 	//	}
 	//}
-	usingRegion = *ptr.ptr->region->memItr;
-	instance->usingRegions.erase(ptr.ptr->region->memItr);
+	usingRegion = *ptr.mPtr->region->memItr;
+	instance->mUsingRegions.erase(ptr.mPtr->region->memItr);
 	//消す時に分かりやすく0xddにする
-	for (byte* ptr = usingRegion.pBegin; ptr <= usingRegion.pEnd; ptr++) {
-		*ptr = 0xdd;
+	for (byte* p = usingRegion.pBegin; p <= usingRegion.pEnd; p++) {
+		*p = 0xdd;
 	}
 
 	//見つからなかったら不正なポインタを解放しようとしてるので怒る
@@ -176,9 +176,9 @@ void SRBufferAllocator::_Free(SRBufferPtr& ptr)
 //	}
 
 	//解放する領域を空き領域に追加する
-	auto prev = instance->freeRegions.end();
-	auto next = instance->freeRegions.end();
-	for (auto itr = instance->freeRegions.begin(); itr != instance->freeRegions.end(); itr++) {
+	auto prev = instance->mFreeRegions.end();
+	auto next = instance->mFreeRegions.end();
+	for (auto itr = instance->mFreeRegions.begin(); itr != instance->mFreeRegions.end(); itr++) {
 		//解放する領域の先頭と連続する一番近い既存の空き領域を探す
 		if (itr->pEnd <= usingRegion.pBegin) {
 			prev = itr;
@@ -193,7 +193,7 @@ void SRBufferAllocator::_Free(SRBufferPtr& ptr)
 
 	//前方領域がある時
 	bool prevMerged = false;
-	if (prev != instance->freeRegions.end()) {
+	if (prev != instance->mFreeRegions.end()) {
 		//完全に連続するなら
 		if (prev->pEnd == usingRegion.pBegin - 1) {
 			//融合する
@@ -205,7 +205,7 @@ void SRBufferAllocator::_Free(SRBufferPtr& ptr)
 
 	//後方領域がある時
 	bool nextMerged = false;
-	if (next != instance->freeRegions.end()) {
+	if (next != instance->mFreeRegions.end()) {
 		//完全に連続するなら
 		if (next->pBegin == usingRegion.pEnd + 1) {
 			//前方領域と融合済みかで分岐して
@@ -213,7 +213,7 @@ void SRBufferAllocator::_Free(SRBufferPtr& ptr)
 				//融合済みなら更に融合
 				prev->pEnd = next->pEnd;
 				prev->size = prev->pEnd - prev->pBegin + 1;
-				instance->freeRegions.erase(next);
+				instance->mFreeRegions.erase(next);
 				prevMerged = true;
 			}
 			else {
@@ -227,32 +227,32 @@ void SRBufferAllocator::_Free(SRBufferPtr& ptr)
 
 	//融合してないなら孤立した領域なので追加する
 	if (!prevMerged && !nextMerged) {
-		if (next != instance->freeRegions.end()) {
+		if (next != instance->mFreeRegions.end()) {
 			//後ろに領域があるならその前に挿入
-			instance->freeRegions.insert(next, MemoryRegion(usingRegion.pBegin, usingRegion.pEnd));
+			instance->mFreeRegions.insert(next, MemoryRegion(usingRegion.pBegin, usingRegion.pEnd));
 		}
 		else {
 			//ないならプッシュ
-			instance->freeRegions.emplace_back(usingRegion.pBegin, usingRegion.pEnd);
+			instance->mFreeRegions.emplace_back(usingRegion.pBegin, usingRegion.pEnd);
 		}
 	}
 
-	instance->usingBufferSizeCounter -= usingRegion.size;
+	instance->mUsingBufferSizeCounter -= usingRegion.size;
 }
 
 void SRBufferAllocator::DeFlag()
 {
-	std::lock_guard<std::recursive_mutex> lock(mutex);
-	freeRegions.clear();
-	freeRegions.emplace_back(pBufferBegin, pBufferEnd);
+	std::lock_guard<std::recursive_mutex> lock(sMutex);
+	mFreeRegions.clear();
+	mFreeRegions.emplace_back(mPtrBufferBegin, mPtrBufferEnd);
 
 	std::map<MemoryRegionPtr*, MemoryRegion> map;
-	for (MemoryRegionPtr& ptr : regionPtrs) {
+	for (MemoryRegionPtr& ptr : mRegionPtrs) {
 		map[&ptr] = MemoryRegion(*ptr.region);
 	}
-	usingRegions.clear();
-	usingBufferSizeCounter = 0;
-	for (MemoryRegionPtr& ptr : regionPtrs) {
+	mUsingRegions.clear();
+	mUsingBufferSizeCounter = 0;
+	for (MemoryRegionPtr& ptr : mRegionPtrs) {
 		MemoryRegion& old = map[&ptr];
 		auto newReg = _Alloc(old.size, old.align, false);
 		if (newReg == nullptr) {
@@ -265,7 +265,7 @@ void SRBufferAllocator::DeFlag()
 		ptr.region = newReg;
 	}
 
-	for (MemoryRegion& reg : freeRegions) {
+	for (MemoryRegion& reg : mFreeRegions) {
 		for (byte* ptr = reg.pBegin; ptr <= reg.pEnd; ptr++) {
 			*ptr = 0xdd;
 		}
@@ -273,7 +273,7 @@ void SRBufferAllocator::DeFlag()
 }
 
 void SRBufferAllocator::ResizeBuffer() {
-	std::lock_guard<std::recursive_mutex> lock(mutex);
+	std::lock_guard<std::recursive_mutex> lock(sMutex);
 
 	// 再度確保
 	Microsoft::WRL::ComPtr<ID3D12Resource> newBuff;
@@ -304,26 +304,26 @@ void SRBufferAllocator::ResizeBuffer() {
 	);
 	assert(SUCCEEDED(result));
 
-	result = newBuff->Map(0, nullptr, (void**)&pBufferBegin); //マッピング
+	result = newBuff->Map(0, nullptr, (void**)&mPtrBufferBegin); //マッピング
 	assert(SUCCEEDED(result));
 
-	pBufferEnd = pBufferBegin + rebufferSize - 1;
+	mPtrBufferEnd = mPtrBufferBegin + rebufferSize - 1;
 
-	freeRegions.clear();
-	freeRegions.emplace_back(pBufferBegin, pBufferEnd);
-	for (byte* ptr = pBufferBegin; ptr <= pBufferEnd; ptr++) {
+	mFreeRegions.clear();
+	mFreeRegions.emplace_back(mPtrBufferBegin, mPtrBufferEnd);
+	for (byte* ptr = mPtrBufferBegin; ptr <= mPtrBufferEnd; ptr++) {
 		*ptr = 0xdd;
 	}
 
 	// 確保終わり、既存データ移行
 
 	std::map<MemoryRegionPtr*, MemoryRegion> map;
-	for (MemoryRegionPtr& ptr : regionPtrs) {
+	for (MemoryRegionPtr& ptr : mRegionPtrs) {
 		map[&ptr] = MemoryRegion(*ptr.region);
 	}
-	usingRegions.clear();
-	usingBufferSizeCounter = 0;
-	for (MemoryRegionPtr& ptr : regionPtrs) {
+	mUsingRegions.clear();
+	mUsingBufferSizeCounter = 0;
+	for (MemoryRegionPtr& ptr : mRegionPtrs) {
 		MemoryRegion& old = map[&ptr];
 		auto newReg = _Alloc(old.size, old.align, false);
 		if (newReg == nullptr) {
@@ -336,17 +336,17 @@ void SRBufferAllocator::ResizeBuffer() {
 		ptr.region = newReg;
 	}
 
-	for (MemoryRegion& reg : freeRegions) {
+	for (MemoryRegion& reg : mFreeRegions) {
 		for (byte* ptr = reg.pBegin; ptr <= reg.pEnd; ptr++) {
 			*ptr = 0xdd;
 		}
 	}
 
-	buffer = newBuff;
+	mBuffer = newBuff;
 }
 
 SRBufferAllocator::SRBufferAllocator() {
-	size_t bufferSize = defSize;//(defSize + 0xff) & ~0xff; //256バイトアラインメント
+	size_t bufferSize = DEFAULT_SIZE;//(defSize + 0xff) & ~0xff; //256バイトアラインメント
 
 	// 確保
 	HRESULT result;
@@ -371,36 +371,36 @@ SRBufferAllocator::SRBufferAllocator() {
 		&cbResourceDesc, //リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&buffer)
+		IID_PPV_ARGS(&mBuffer)
 	);
 	assert(SUCCEEDED(result));
 
-	result = buffer->Map(0, nullptr, (void**)&pBufferBegin); //マッピング
+	result = mBuffer->Map(0, nullptr, (void**)&mPtrBufferBegin); //マッピング
 	assert(SUCCEEDED(result));
 
-	pBufferEnd = pBufferBegin + bufferSize - 1;
+	mPtrBufferEnd = mPtrBufferBegin + bufferSize - 1;
 
-	freeRegions.emplace_back(pBufferBegin, pBufferEnd);
-	for (byte* ptr = pBufferBegin; ptr <= pBufferEnd; ptr++) {
+	mFreeRegions.emplace_back(mPtrBufferBegin, mPtrBufferEnd);
+	for (byte* ptr = mPtrBufferBegin; ptr <= mPtrBufferEnd; ptr++) {
 		*ptr = 0xdd;
 	}
 }
 
 byte* SRBufferPtr::Get() {
-	std::lock_guard<std::recursive_mutex> lock(SRBufferAllocator::mutex);
-	if (ptr != nullptr && ptr->region != nullptr) return ptr->region->pBegin;
+	std::lock_guard<std::recursive_mutex> lock(SRBufferAllocator::sMutex);
+	if (mPtr != nullptr && mPtr->region != nullptr) return mPtr->region->pBegin;
 	return nullptr;
 }
 
 D3D12_GPU_VIRTUAL_ADDRESS SRBufferPtr::GetGPUVirtualAddress() const
 {
-	std::lock_guard<std::recursive_mutex> lock(SRBufferAllocator::mutex);
+	std::lock_guard<std::recursive_mutex> lock(SRBufferAllocator::sMutex);
 	D3D12_GPU_VIRTUAL_ADDRESS address = SRBufferAllocator::GetGPUVirtualAddress();
-	address += static_cast<UINT>(ptr->region->pBegin - SRBufferAllocator::GetBufferAddress());
+	address += static_cast<uint32_t>(mPtr->region->pBegin - SRBufferAllocator::GetBufferAddress());
 	return address;
 }
 
 SRBufferPtr::operator bool() const {
-	std::lock_guard<std::recursive_mutex> lock(SRBufferAllocator::mutex);
-	return ptr != nullptr && ptr->region != nullptr;
+	std::lock_guard<std::recursive_mutex> lock(SRBufferAllocator::sMutex);
+	return mPtr != nullptr && mPtr->region != nullptr;
 }

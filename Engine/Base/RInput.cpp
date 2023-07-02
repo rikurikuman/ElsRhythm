@@ -17,48 +17,48 @@ void RInput::Init() {
 
 void RInput::InitInternal()
 {
-	assert(!initialized);
+	assert(!mIsInitialized);
 
 	HRESULT result;
 
 	result = DirectInput8Create(
 		RWindow::GetWindowClassEx().hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8,
-		(void**)&directInput, nullptr
+		(void**)&mDirectInput, nullptr
 	);
 	assert(SUCCEEDED(result));
 
-	result = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
+	result = mDirectInput->CreateDevice(GUID_SysKeyboard, &mKeyboard, NULL);
 	assert(SUCCEEDED(result));
-	result = directInput->CreateDevice(GUID_SysMouse, &mouse, NULL);
+	result = mDirectInput->CreateDevice(GUID_SysMouse, &mMouse, NULL);
 	assert(SUCCEEDED(result));
 
 	//入力データ形式のセット
-	result = keyboard->SetDataFormat(&c_dfDIKeyboard);
+	result = mKeyboard->SetDataFormat(&c_dfDIKeyboard);
 	assert(SUCCEEDED(result));
-	result = mouse->SetDataFormat(&c_dfDIMouse2);
+	result = mMouse->SetDataFormat(&c_dfDIMouse2);
 	assert(SUCCEEDED(result));
 
 	//排他制御レベルのセット
-	result = keyboard->SetCooperativeLevel(
+	result = mKeyboard->SetCooperativeLevel(
 		RWindow::GetWindowHandle(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE // | DISCL_NOWINKEY //左から、アクティブウィンドウ,専有しない,Winキー無効
 	);
 	assert(SUCCEEDED(result));
-	result = mouse->SetCooperativeLevel(
+	result = mMouse->SetCooperativeLevel(
 		RWindow::GetWindowHandle(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE //左から、アクティブウィンドウ,専有しない
 	);
 	assert(SUCCEEDED(result));
 
-	ZeroMemory(&xInputState, sizeof(XINPUT_STATE));
+	ZeroMemory(&mXInputState, sizeof(XINPUT_STATE));
 	DWORD dresult;
-	dresult = XInputGetState(0, &xInputState);
+	dresult = XInputGetState(0, &mXInputState);
 
 	if (result == ERROR_SUCCESS)
 	{
-		isConnectPad = true;
+		mIsPadConnected = true;
 	}
 	else
 	{
-		isConnectPad = false;
+		mIsPadConnected = false;
 	}
 }
 
@@ -67,131 +67,131 @@ void RInput::Update()
 	RInput* instance = GetInstance();
 
 	//情報の取得開始
-	instance->keyboard->Acquire();
-	instance->mouse->Acquire();
+	instance->mKeyboard->Acquire();
+	instance->mMouse->Acquire();
 
 	//全キーの入力状態を取得する
-	for (int i = 0; i < 256; i++) {
-		instance->oldKeyState[i] = instance->keyState[i];
+	for (int32_t i = 0; i < 256; i++) {
+		instance->mOldKeyState[i] = instance->mKeyState[i];
 	}
-	instance->oldMouseState = instance->mouseState;
-	instance->keyboard->GetDeviceState(sizeof(keyState), instance->keyState);
-	instance->mouse->GetDeviceState(sizeof(mouseState), &instance->mouseState);
+	instance->mOldMouseState = instance->mMouseState;
+	instance->mKeyboard->GetDeviceState(sizeof(mKeyState), instance->mKeyState);
+	instance->mMouse->GetDeviceState(sizeof(mMouseState), &instance->mMouseState);
 
-	instance->oldMousePos = instance->mousePos;
-	instance->mousePos = RWindow::GetInstance()->GetMousePos();
+	instance->mOldMousePos = instance->mMousePos;
+	instance->mMousePos = RWindow::GetInstance()->GetMousePos();
 
-	instance->oldXInputState = instance->xInputState;
-	DWORD dresult = XInputGetState(0, &instance->xInputState);
+	instance->mOldXInputState = instance->mXInputState;
+	DWORD dresult = XInputGetState(0, &instance->mXInputState);
 	if (dresult == ERROR_SUCCESS) {
-		instance->isConnectPad = true;
+		instance->mIsPadConnected = true;
 	}
 	else {
-		instance->isConnectPad = false;
+		instance->mIsPadConnected = false;
 	}
 
-	if ((instance->xInputState.Gamepad.sThumbLX <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
-		instance->xInputState.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
-		(instance->xInputState.Gamepad.sThumbLY <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
-		instance->xInputState.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
+	if ((instance->mXInputState.Gamepad.sThumbLX <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+		instance->mXInputState.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
+		(instance->mXInputState.Gamepad.sThumbLY <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+		instance->mXInputState.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
 	{
-		instance->xInputState.Gamepad.sThumbLX = 0;
-		instance->xInputState.Gamepad.sThumbLY = 0;
+		instance->mXInputState.Gamepad.sThumbLX = 0;
+		instance->mXInputState.Gamepad.sThumbLY = 0;
 	}
 
-	if ((instance->xInputState.Gamepad.sThumbRX <  XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
-		instance->xInputState.Gamepad.sThumbRX > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) &&
-		(instance->xInputState.Gamepad.sThumbRY <  XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
-		instance->xInputState.Gamepad.sThumbRY > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE))
+	if ((instance->mXInputState.Gamepad.sThumbRX <  XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+		instance->mXInputState.Gamepad.sThumbRX > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) &&
+		(instance->mXInputState.Gamepad.sThumbRY <  XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+		instance->mXInputState.Gamepad.sThumbRY > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE))
 	{
-		instance->xInputState.Gamepad.sThumbRX = 0;
-		instance->xInputState.Gamepad.sThumbRY = 0;
+		instance->mXInputState.Gamepad.sThumbRX = 0;
+		instance->mXInputState.Gamepad.sThumbRY = 0;
 	}
 }
 
 bool RInput::GetKey(unsigned char key)
 {
-	return GetInstance()->keyState[key];
+	return GetInstance()->mKeyState[key];
 }
 
 bool RInput::GetKeyUp(unsigned char key)
 {
-	return !GetInstance()->keyState[key] && GetInstance()->oldKeyState[key];
+	return !GetInstance()->mKeyState[key] && GetInstance()->mOldKeyState[key];
 }
 
 bool RInput::GetKeyDown(unsigned char key)
 {
-	return GetInstance()->keyState[key] && !GetInstance()->oldKeyState[key];
+	return GetInstance()->mKeyState[key] && !GetInstance()->mOldKeyState[key];
 }
 
-bool RInput::GetMouseClick(int buttonNum)
+bool RInput::GetMouseClick(int32_t buttonNum)
 {
-	return (GetInstance()->mouseState.rgbButtons[buttonNum] & 0x80) != 0;
+	return (GetInstance()->mMouseState.rgbButtons[buttonNum] & 0x80) != 0;
 }
 
-bool RInput::GetMouseClickUp(int buttonNum)
+bool RInput::GetMouseClickUp(int32_t buttonNum)
 {
-	return (GetInstance()->mouseState.rgbButtons[buttonNum] & 0x80) == 0 && (GetInstance()->oldMouseState.rgbButtons[buttonNum] & 0x80) != 0;
+	return (GetInstance()->mMouseState.rgbButtons[buttonNum] & 0x80) == 0 && (GetInstance()->mOldMouseState.rgbButtons[buttonNum] & 0x80) != 0;
 }
 
-bool RInput::GetMouseClickDown(int buttonNum)
+bool RInput::GetMouseClickDown(int32_t buttonNum)
 {
-	return (GetInstance()->mouseState.rgbButtons[buttonNum] & 0x80) != 0 && (GetInstance()->oldMouseState.rgbButtons[buttonNum] & 0x80) == 0;
+	return (GetInstance()->mMouseState.rgbButtons[buttonNum] & 0x80) != 0 && (GetInstance()->mOldMouseState.rgbButtons[buttonNum] & 0x80) == 0;
 }
 
 Vector2 RInput::GetMousePos()
 {
-	return GetInstance()->mousePos;
+	return GetInstance()->mMousePos;
 }
 
 Vector2 RInput::GetOldMousePos()
 {
-	return GetInstance()->oldMousePos;
+	return GetInstance()->mOldMousePos;
 }
 
 Vector3 RInput::GetMouseMove() {
-	return Vector3((float)GetInstance()->mouseState.lX, (float)GetInstance()->mouseState.lY, (float)GetInstance()->mouseState.lZ);
+	return Vector3((float)GetInstance()->mMouseState.lX, (float)GetInstance()->mMouseState.lY, (float)GetInstance()->mMouseState.lZ);
 }
 
 bool RInput::GetPadConnect()
 {
-	return GetInstance()->isConnectPad;
+	return GetInstance()->mIsPadConnected;
 }
 
-bool RInput::GetPadButton(UINT button)
+bool RInput::GetPadButton(uint32_t button)
 {
-	return GetInstance()->xInputState.Gamepad.wButtons == button;
+	return GetInstance()->mXInputState.Gamepad.wButtons == button;
 }
 
-bool RInput::GetPadButtonUp(UINT button)
+bool RInput::GetPadButtonUp(uint32_t button)
 {
-	return GetInstance()->xInputState.Gamepad.wButtons != button && GetInstance()->oldXInputState.Gamepad.wButtons == button;
+	return GetInstance()->mXInputState.Gamepad.wButtons != button && GetInstance()->mOldXInputState.Gamepad.wButtons == button;
 }
 
-bool RInput::GetPadButtonDown(UINT button)
+bool RInput::GetPadButtonDown(uint32_t button)
 {
-	return GetInstance()->xInputState.Gamepad.wButtons == button && GetInstance()->oldXInputState.Gamepad.wButtons != button;
+	return GetInstance()->mXInputState.Gamepad.wButtons == button && GetInstance()->mOldXInputState.Gamepad.wButtons != button;
 }
 
 Vector2 RInput::GetPadLStick()
 {
-	SHORT x = xInputState.Gamepad.sThumbLX;
-	SHORT y = xInputState.Gamepad.sThumbLY;
+	SHORT x = mXInputState.Gamepad.sThumbLX;
+	SHORT y = mXInputState.Gamepad.sThumbLY;
 
 	return Vector2(static_cast<float>(x) / 32767.0f, static_cast<float>(y) / 32767.0f);
 }
 
 Vector2 RInput::GetPadRStick()
 {
-	SHORT x = xInputState.Gamepad.sThumbRX;
-	SHORT y = xInputState.Gamepad.sThumbRY;
+	SHORT x = mXInputState.Gamepad.sThumbRX;
+	SHORT y = mXInputState.Gamepad.sThumbRY;
 
 	return Vector2(static_cast<float>(x) / 32767.0f, static_cast<float>(y) / 32767.0f);
 }
 
 bool RInput::GetLTriggerDown()
 {
-	if (oldXInputState.Gamepad.bLeftTrigger < 128 && xInputState.Gamepad.bLeftTrigger >= 128)
+	if (mOldXInputState.Gamepad.bLeftTrigger < 128 && mXInputState.Gamepad.bLeftTrigger >= 128)
 	{
 		return true;
 	}
@@ -200,7 +200,7 @@ bool RInput::GetLTriggerDown()
 
 bool RInput::GetRTriggerDown()
 {
-	if (oldXInputState.Gamepad.bRightTrigger < 128 && xInputState.Gamepad.bRightTrigger >= 128)
+	if (mOldXInputState.Gamepad.bRightTrigger < 128 && mXInputState.Gamepad.bRightTrigger >= 128)
 	{
 		return true;
 	}
@@ -209,8 +209,8 @@ bool RInput::GetRTriggerDown()
 
 bool RInput::GetLStickUp()
 {
-	if (oldXInputState.Gamepad.sThumbLY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
-		xInputState.Gamepad.sThumbLY >= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+	if (mOldXInputState.Gamepad.sThumbLY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+		mXInputState.Gamepad.sThumbLY >= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 	{
 		return true;
 	}
@@ -219,8 +219,8 @@ bool RInput::GetLStickUp()
 
 bool RInput::GetLStickDown()
 {
-	if (oldXInputState.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
-		xInputState.Gamepad.sThumbLY <= -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+	if (mOldXInputState.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+		mXInputState.Gamepad.sThumbLY <= -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 	{
 		return true;
 	}
@@ -232,19 +232,19 @@ Vector2 RInput::GetLStick(bool useWASD, bool useArrow)
 	RInput* instance = GetInstance();
 
 	Vector2 pad;
-	pad.x = static_cast<float>(instance->xInputState.Gamepad.sThumbLX) / 32767.0f;
-	pad.y = static_cast<float>(instance->xInputState.Gamepad.sThumbLY) / 32767.0f;
+	pad.x = static_cast<float>(instance->mXInputState.Gamepad.sThumbLX) / 32767.0f;
+	pad.y = static_cast<float>(instance->mXInputState.Gamepad.sThumbLY) / 32767.0f;
 
 	Vector2 wasd;
 	if (useWASD) {
-		wasd.x = static_cast<float>(instance->keyState[DIK_D] - instance->keyState[DIK_A]);
-		wasd.y = static_cast<float>(instance->keyState[DIK_W] - instance->keyState[DIK_S]);
+		wasd.x = static_cast<float>(instance->mKeyState[DIK_D] - instance->mKeyState[DIK_A]);
+		wasd.y = static_cast<float>(instance->mKeyState[DIK_W] - instance->mKeyState[DIK_S]);
 	}
 
 	Vector2 arrow;
 	if (useArrow) {
-		arrow.x = static_cast<float>(instance->keyState[DIK_RIGHT] - instance->keyState[DIK_LEFT]);
-		arrow.y = static_cast<float>(instance->keyState[DIK_UP] - instance->keyState[DIK_DOWN]);
+		arrow.x = static_cast<float>(instance->mKeyState[DIK_RIGHT] - instance->mKeyState[DIK_LEFT]);
+		arrow.y = static_cast<float>(instance->mKeyState[DIK_UP] - instance->mKeyState[DIK_DOWN]);
 	}
 
 	Vector2 result = pad + wasd + arrow;
@@ -257,19 +257,19 @@ Vector2 RInput::GetRStick(bool useWASD, bool useArrow)
 	RInput* instance = GetInstance();
 
 	Vector2 pad;
-	pad.x = static_cast<float>(instance->xInputState.Gamepad.sThumbRX) / 32767.0f;
-	pad.y = static_cast<float>(instance->xInputState.Gamepad.sThumbRY) / 32767.0f;
+	pad.x = static_cast<float>(instance->mXInputState.Gamepad.sThumbRX) / 32767.0f;
+	pad.y = static_cast<float>(instance->mXInputState.Gamepad.sThumbRY) / 32767.0f;
 
 	Vector2 wasd;
 	if (useWASD) {
-		wasd.x = static_cast<float>(instance->keyState[DIK_D] - instance->keyState[DIK_A]);
-		wasd.y = static_cast<float>(instance->keyState[DIK_W] - instance->keyState[DIK_S]);
+		wasd.x = static_cast<float>(instance->mKeyState[DIK_D] - instance->mKeyState[DIK_A]);
+		wasd.y = static_cast<float>(instance->mKeyState[DIK_W] - instance->mKeyState[DIK_S]);
 	}
 
 	Vector2 arrow;
 	if (useArrow) {
-		arrow.x = static_cast<float>(instance->keyState[DIK_RIGHT] - instance->keyState[DIK_LEFT]);
-		arrow.y = static_cast<float>(instance->keyState[DIK_UP] - instance->keyState[DIK_DOWN]);
+		arrow.x = static_cast<float>(instance->mKeyState[DIK_RIGHT] - instance->mKeyState[DIK_LEFT]);
+		arrow.y = static_cast<float>(instance->mKeyState[DIK_UP] - instance->mKeyState[DIK_DOWN]);
 	}
 
 	Vector2 result = pad + wasd + arrow;

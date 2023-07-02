@@ -11,12 +11,12 @@ template <typename T>
 class RConstBuffer
 {
 private:
-	static std::recursive_mutex mutex;
-	static std::map<void*, size_t> countMap;
+	static std::recursive_mutex sMutex;
+	static std::map<void*, size_t> sCountMap;
 
 	static void AddCount(void* p) {
-		std::lock_guard<std::recursive_mutex> lock(mutex);
-		countMap[p]++;
+		std::lock_guard<std::recursive_mutex> lock(sMutex);
+		sCountMap[p]++;
 
 #ifdef _RCONSTBUFFER_DEBUG_
 		OutputDebugString((std::wstring(L"RConstBuffer(") + Util::ConvertStringToWString(Util::StringFormat("%p", p)) + L") Add      : " + std::to_wstring(countMap[p]) + L"\n").c_str());
@@ -24,28 +24,25 @@ private:
 	}
 
 	static void SubtractCount(void* p) {
-		std::lock_guard<std::recursive_mutex> lock(mutex);
-		if (countMap[p] == 0) {
-			int hoge = 0;
-		}
-		countMap[p]--;
+		std::lock_guard<std::recursive_mutex> lock(sMutex);
+		sCountMap[p]--;
 
 #ifdef _RCONSTBUFFER_DEBUG_
 		OutputDebugString((std::wstring(L"RConstBuffer(") + Util::ConvertStringToWString(Util::StringFormat("%p", p)) + L") Subtract : " + std::to_wstring(countMap[p]) + L"\n").c_str());
 #endif
 
-		if (countMap[p] == 0) {
-			countMap.erase(p);
+		if (sCountMap[p] == 0) {
+			sCountMap.erase(p);
 		}
 	}
 
 	static size_t GetCount(void* p) {
-		std::lock_guard<std::recursive_mutex> lock(mutex);
-		auto itr = countMap.find(p);
-		if (itr == countMap.end()) {
+		std::lock_guard<std::recursive_mutex> lock(sMutex);
+		auto itr = sCountMap.find(p);
+		if (itr == sCountMap.end()) {
 			return 0;
 		}
-		return countMap[p];
+		return sCountMap[p];
 	}
 
 	void Init() {
@@ -71,29 +68,29 @@ private:
 			&cbResourceDesc, //リソース設定
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
-			IID_PPV_ARGS(&constBuff)
+			IID_PPV_ARGS(&mConstBuff)
 		);
 		assert(SUCCEEDED(result));
 	}
 
 public:
-	Microsoft::WRL::ComPtr<ID3D12Resource> constBuff = nullptr;
-	T* constMap = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Resource> mConstBuff = nullptr;
+	T* mConstMap = nullptr;
 
 	RConstBuffer() {
 		Init();
 		Map();
-		RConstBuffer::AddCount(constBuff.Get());
+		RConstBuffer::AddCount(mConstBuff.Get());
 	}
 	RConstBuffer(const RConstBuffer& o) {
-		constBuff = o.constBuff;
-		constMap = o.constMap;
-		RConstBuffer::AddCount(constBuff.Get());
+		mConstBuff = o.mConstBuff;
+		mConstMap = o.mConstMap;
+		RConstBuffer::AddCount(mConstBuff.Get());
 	}
 	~RConstBuffer() {
-		if (constBuff != nullptr) {
-			RConstBuffer::SubtractCount(constBuff.Get());
-			if (RConstBuffer::GetCount(constBuff.Get()) == 0) {
+		if (mConstBuff != nullptr) {
+			RConstBuffer::SubtractCount(mConstBuff.Get());
+			if (RConstBuffer::GetCount(mConstBuff.Get()) == 0) {
 				UnMap();
 			}
 		}
@@ -101,30 +98,30 @@ public:
 	
 	RConstBuffer& operator=(const RConstBuffer& o) {
 		if (this != &o) {
-			if (constBuff != nullptr) {
-				RConstBuffer::SubtractCount(constBuff.Get());
+			if (mConstBuff != nullptr) {
+				RConstBuffer::SubtractCount(mConstBuff.Get());
 			}
-			constBuff = o.constBuff;
-			constMap = o.constMap;
-			RConstBuffer::AddCount(constBuff.Get());
+			mConstBuff = o.mConstBuff;
+			mConstMap = o.mConstMap;
+			RConstBuffer::AddCount(mConstBuff.Get());
 		}
 		return *this;
 	}
 
 	void Map() {
 		HRESULT result;
-		result = constBuff->Map(0, nullptr, (void**)&constMap); //マッピング
+		result = mConstBuff->Map(0, nullptr, (void**)&mConstMap); //マッピング
 		assert(SUCCEEDED(result));
 	}
 
 	void UnMap() {
-		constBuff->Unmap(0, nullptr);
-		constMap = nullptr;
+		mConstBuff->Unmap(0, nullptr);
+		mConstMap = nullptr;
 	}
 };
 
 template<typename T>
-std::map<void*, size_t> RConstBuffer<T>::countMap = std::map<void*, size_t>();
+std::map<void*, size_t> RConstBuffer<T>::sCountMap = std::map<void*, size_t>();
 
 template<typename T>
-std::recursive_mutex RConstBuffer<T>::mutex;
+std::recursive_mutex RConstBuffer<T>::sMutex;

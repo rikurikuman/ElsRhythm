@@ -70,7 +70,7 @@ ColResult ColPrimitive2D::CheckHit(Segment seg, Rect rect)
     array<Segment, 4> arr = rect.ToSideArray();
     float nearestHitDistance = 0;
 
-    for (int i = 0; i < 4; i++) {
+    for (int32_t i = 0; i < 4; i++) {
         Segment rectseg = arr[i];
         Vector2 v = rectseg.p - seg.p;
         Vector2 v2 = seg.p - rectseg.p;
@@ -79,7 +79,6 @@ ColResult ColPrimitive2D::CheckHit(Segment seg, Rect rect)
         if ((t >= 0 && t <= 1) && (t2 >= 0 && t2 <= 1)) {
             Vector2 p = rectseg.p + t * rectseg.v;
             Vector2 p2 = seg.p + t2 * seg.v;
-            float test = ((p - seg.p) - seg.v).LengthSq();
             if (true) {
                 if (!result.hit) {
                     result.hit = true;

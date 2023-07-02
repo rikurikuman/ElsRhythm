@@ -6,10 +6,10 @@
 
 void SpriteRenderStage::Init()
 {
-	defParamater.primitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
-	defParamater.renderTargets = { "RenderingImage" };
-	defParamater.rootSignature = SpriteManager::GetInstance()->GetRootSignature().ptr.Get();
-	defParamater.pipelineState = SpriteManager::GetInstance()->GetGraphicsPipeline().ptr.Get();
+	mDefParamater.primitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+	mDefParamater.renderTargets = { "RenderingImage" };
+	mDefParamater.mRootSignature = SpriteManager::GetInstance()->GetRootSignature().mPtr.Get();
+	mDefParamater.pipelineState = SpriteManager::GetInstance()->GetGraphicsPipeline().mPtr.Get();
 }
 
 void SpriteRenderStage::Render()
@@ -19,7 +19,7 @@ void SpriteRenderStage::Render()
 			return a.anchorPoint.z < b.anchorPoint.z;
 		}
 	};
-	std::stable_sort(orders.begin(), orders.end(), sortObj{});
+	std::stable_sort(mOrders.begin(), mOrders.end(), sortObj{});
 
 	AllCall();
 }

@@ -12,84 +12,84 @@ template <typename T>
 class SRConstBuffer
 {
 private:
-	static std::recursive_mutex mutex;
-	static std::unordered_map<const void*, size_t> countMap;
+	static std::recursive_mutex sMutex;
+	static std::unordered_map<const void*, size_t> sCountMap;
 
 	static void AddCount(const void* p) {
-		std::lock_guard<std::recursive_mutex> lock(mutex);
-		countMap[p]++;
+		std::lock_guard<std::recursive_mutex> lock(sMutex);
+		sCountMap[p]++;
 	}
 
 	static void SubtractCount(const void* p) {
-		std::lock_guard<std::recursive_mutex> lock(mutex);
-		countMap[p]--;
+		std::lock_guard<std::recursive_mutex> lock(sMutex);
+		sCountMap[p]--;
 
-		if (countMap[p] == 0) {
-			countMap.erase(p);
+		if (sCountMap[p] == 0) {
+			sCountMap.erase(p);
 		}
 	}
 
 	static size_t GetCount(const void* p) {
-		std::lock_guard<std::recursive_mutex> lock(mutex);
-		auto itr = countMap.find(p);
-		if (itr == countMap.end()) {
+		std::lock_guard<std::recursive_mutex> lock(sMutex);
+		auto itr = sCountMap.find(p);
+		if (itr == sCountMap.end()) {
 			return 0;
 		}
-		return countMap[p];
+		return sCountMap[p];
 	}
 
 	void Init() {
 		//buff = SRBufferAllocator::Alloc(sizeof(T), D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT);
-		buff = SRBufferAllocator::Alloc((sizeof(T) + 0xff) & ~0xff, D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT);
-		*reinterpret_cast<T*>(buff.Get()) = T();
+		mBuff = SRBufferAllocator::Alloc((sizeof(T) + 0xff) & ~0xff, D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT);
+		*reinterpret_cast<T*>(mBuff.Get()) = T();
 	}
 
 public:
-	SRBufferPtr buff;
+	SRBufferPtr mBuff;
 
 	T* Get() {
-		return reinterpret_cast<T*>(buff.Get());
+		return reinterpret_cast<T*>(mBuff.Get());
 	}
 
 	T* operator->() {
-		return reinterpret_cast<T*>(buff.Get());
+		return reinterpret_cast<T*>(mBuff.Get());
 	}
 
 	SRConstBuffer() {
 		Init();
-		SRConstBuffer::AddCount(buff.GetRegionPtr());
+		SRConstBuffer::AddCount(mBuff.GetRegionPtr());
 	}
 	~SRConstBuffer() {
-		if (buff != nullptr) {
-			SRConstBuffer::SubtractCount(buff.GetRegionPtr());
-			if (SRConstBuffer::GetCount(buff.GetRegionPtr()) == 0) {
-				SRBufferAllocator::Free(buff);
+		if (mBuff != nullptr) {
+			SRConstBuffer::SubtractCount(mBuff.GetRegionPtr());
+			if (SRConstBuffer::GetCount(mBuff.GetRegionPtr()) == 0) {
+				SRBufferAllocator::Free(mBuff);
 			}
 		}
 	}
 	
 	//ÉRÉsÅ[
 	SRConstBuffer(const SRConstBuffer& o) {
-		buff = o.buff;
-		SRConstBuffer::AddCount(buff.GetRegionPtr());
+		mBuff = o.mBuff;
+		SRConstBuffer::AddCount(mBuff.GetRegionPtr());
 	}
 	SRConstBuffer& operator=(const SRConstBuffer& o) {
 		if (this != &o) {
-			if (buff != nullptr) {
-				SRConstBuffer::SubtractCount(buff.GetRegionPtr());
-				if (SRConstBuffer::GetCount(buff.GetRegionPtr()) == 0) {
-					SRBufferAllocator::Free(buff);
+			if (mBuff != nullptr) {
+				SRConstBuffer::SubtractCount(mBuff.GetRegionPtr());
+				if (SRConstBuffer::GetCount(mBuff.GetRegionPtr()) == 0) {
+					SRBufferAllocator::Free(mBuff);
 				}
 			}
-			buff = o.buff;
-			SRConstBuffer::AddCount(buff.GetRegionPtr());
+			mBuff = o.mBuff;
+			SRConstBuffer::AddCount(mBuff.GetRegionPtr());
 		}
 		return *this;
 	}
 };
 
 template<typename T>
-std::unordered_map<const void*, size_t> SRConstBuffer<T>::countMap = std::unordered_map<const void*, size_t>();
+std::unordered_map<const void*, size_t> SRConstBuffer<T>::sCountMap = std::unordered_map<const void*, size_t>();
 
 template<typename T>
-std::recursive_mutex SRConstBuffer<T>::mutex;
+std::recursive_mutex SRConstBuffer<T>::sMutex;

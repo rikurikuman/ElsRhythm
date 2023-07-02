@@ -10,29 +10,29 @@ public:
 	VertexBuffer() {};
 
 	//Vertex(Pos)の配列とその大きさで頂点バッファを作る
-	VertexBuffer(VertexP* list, unsigned int size);
+	VertexBuffer(VertexP* list, uint32_t size);
 	//Vertex(Pos)のvectorで頂点バッファを作る
 	VertexBuffer(std::vector<VertexP> list);
 
 	//Vertex(PosNormalUv)の配列とその大きさで頂点バッファを作る
-	VertexBuffer(VertexPNU* list, unsigned int size);
+	VertexBuffer(VertexPNU* list, uint32_t size);
 	//Vertex(PosNormalUv)のvectorで頂点バッファを作る
 	VertexBuffer(std::vector<VertexPNU> list);
 
 	//Vertex(Pos)の配列とその大きさで頂点バッファを作る
-	void Init(VertexP* list, unsigned int size);
+	void Init(VertexP* list, uint32_t size);
 	//Vertex(Pos)のvectorで頂点バッファを作る
 	void Init(std::vector<VertexP> list);
 
 	//Vertex(PosNormalUv)の配列とその大きさで頂点バッファを作る
-	void Init(VertexPNU* list, unsigned int size);
+	void Init(VertexPNU* list, uint32_t size);
 	//Vertex(PosNormalUv)のvectorで頂点バッファを作る
 	void Init(std::vector<VertexPNU> list);
 
 	//Vertex(PosNormalUv)の配列とその大きさで頂点バッファを更新する
-	void Update(VertexPNU* list, unsigned int size);
+	void Update(VertexPNU* list, uint32_t size);
 
-	Microsoft::WRL::ComPtr<ID3D12Resource> buff = nullptr;
-	D3D12_VERTEX_BUFFER_VIEW view{};
+	Microsoft::WRL::ComPtr<ID3D12Resource> mBuff = nullptr;
+	D3D12_VERTEX_BUFFER_VIEW mView{};
 };
 

@@ -4,12 +4,12 @@
 
 class SphereCollider : public ICollider {
 public:
-	ColPrimitive3D::Sphere sphere{};
+	ColPrimitive3D::Sphere mSphere{};
 
 	SphereCollider() {}
 	SphereCollider(Vector3 pos, float r) {
-		sphere.pos = pos;
-		sphere.r = r;
+		mSphere.pos = pos;
+		mSphere.r = r;
 	}
 	virtual std::string GetTypeIndentifier() override {
 		return "SphereCollider";

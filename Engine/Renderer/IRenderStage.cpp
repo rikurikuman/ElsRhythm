@@ -8,25 +8,28 @@ void IRenderStage::AllCall()
 {
 	RenderOrder memo;
 
-	for (RenderOrder& order : orders) {
+	for (RenderOrder& order : mOrders) {
+		//íºëOé¿çsèàóù
+		if(order.preCommand) order.preCommand();
+
 		//é©ìÆê›íËçÄñ⁄ÇÃê›íË
 		if (order.primitiveTopology == D3D_PRIMITIVE_TOPOLOGY_UNDEFINED) {
-			order.primitiveTopology = defParamater.primitiveTopology;
+			order.primitiveTopology = mDefParamater.primitiveTopology;
 		}
 		if (order.renderTargets.empty()) {
-			order.renderTargets = defParamater.renderTargets;
+			order.renderTargets = mDefParamater.renderTargets;
 		}
 		if (order.viewports.empty()) {
-			order.viewports = defParamater.viewports;
+			order.viewports = mDefParamater.viewports;
 		}
 		if (order.scissorRects.empty()) {
-			order.scissorRects = defParamater.scissorRects;
+			order.scissorRects = mDefParamater.scissorRects;
 		}
-		if (order.rootSignature == nullptr) {
-			order.rootSignature = defParamater.rootSignature;
+		if (order.mRootSignature == nullptr) {
+			order.mRootSignature = mDefParamater.mRootSignature;
 		}
 		if (order.pipelineState == nullptr) {
-			order.pipelineState = defParamater.pipelineState;
+			order.pipelineState = mDefParamater.pipelineState;
 		}
 
 		if (memo.primitiveTopology != order.primitiveTopology) {
@@ -57,13 +60,13 @@ void IRenderStage::AllCall()
 				viewport.MaxDepth = vp.maxDepth;
 				vec.push_back(viewport);
 			}
-			RDirectX::GetCommandList()->RSSetViewports(static_cast<UINT>(order.viewports.size()), &vec[0]);
+			RDirectX::GetCommandList()->RSSetViewports(static_cast<uint32_t>(order.viewports.size()), &vec[0]);
 		}
 
 		if (memo.scissorRects != order.scissorRects) {
 			memo.scissorRects = order.scissorRects;
 			std::vector<D3D12_RECT> vec;
-			for (Rect& r : order.scissorRects) {
+			for (RRect& r : order.scissorRects) {
 				D3D12_RECT rect{};
 				rect.left = r.left;
 				rect.right = r.right;
@@ -71,12 +74,12 @@ void IRenderStage::AllCall()
 				rect.bottom = r.bottom;
 				vec.push_back(rect);
 			}
-			RDirectX::GetCommandList()->RSSetScissorRects(static_cast<UINT>(order.scissorRects.size()), &vec[0]);
+			RDirectX::GetCommandList()->RSSetScissorRects(static_cast<uint32_t>(order.scissorRects.size()), &vec[0]);
 		}
 
-		if (memo.rootSignature != order.rootSignature) {
-			memo.rootSignature = order.rootSignature;
-			RDirectX::GetCommandList()->SetGraphicsRootSignature(order.rootSignature);
+		if (memo.mRootSignature != order.mRootSignature) {
+			memo.mRootSignature = order.mRootSignature;
+			RDirectX::GetCommandList()->SetGraphicsRootSignature(order.mRootSignature);
 		}
 
 		if (memo.pipelineState != order.pipelineState) {
@@ -130,7 +133,7 @@ void IRenderStage::AllCall()
 			RDirectX::GetCommandList()->IASetIndexBuffer(&useIndexView);
 		}
 
-		int rootIndex = 0;
+		int32_t rootIndex = 0;
 		for (RootData& data : order.rootData) {
 			if (data.type == RootDataType::DESCRIPTOR_TABLE) {
 				RDirectX::GetCommandList()->SetGraphicsRootDescriptorTable(rootIndex, data.descriptor);
@@ -142,10 +145,10 @@ void IRenderStage::AllCall()
 				RDirectX::GetCommandList()->SetGraphicsRootConstantBufferView(rootIndex, data.addressSRBuff.GetGPUVirtualAddress());
 			}
 			else if (data.type == RootDataType::CAMERA) {
-				RDirectX::GetCommandList()->SetGraphicsRootConstantBufferView(rootIndex, Camera::nowCamera->buff.constBuff->GetGPUVirtualAddress());
+				RDirectX::GetCommandList()->SetGraphicsRootConstantBufferView(rootIndex, Camera::sNowCamera->mBuff.mConstBuff->GetGPUVirtualAddress());
 			}
 			else if (data.type == RootDataType::LIGHT) {
-				RDirectX::GetCommandList()->SetGraphicsRootConstantBufferView(rootIndex, LightGroup::nowLight->buffer.constBuff->GetGPUVirtualAddress());
+				RDirectX::GetCommandList()->SetGraphicsRootConstantBufferView(rootIndex, LightGroup::sNowLight->mBuffer.mConstBuff->GetGPUVirtualAddress());
 			}
 			else {
 #ifdef _DEBUG
@@ -156,10 +159,13 @@ void IRenderStage::AllCall()
 		}
 
 		if (order.indexBuff.IsValid() || order.indexView != nullptr) {
-			RDirectX::GetCommandList()->DrawIndexedInstanced(static_cast<UINT>(order.indexCount), order.instanceCount, 0, 0, 0);
+			RDirectX::GetCommandList()->DrawIndexedInstanced(static_cast<uint32_t>(order.indexCount), order.instanceCount, 0, 0, 0);
 		}
 		else {
-			RDirectX::GetCommandList()->DrawInstanced(static_cast<UINT>(order.indexCount), order.instanceCount, 0, 0);
+			RDirectX::GetCommandList()->DrawInstanced(static_cast<uint32_t>(order.indexCount), order.instanceCount, 0, 0);
 		}
+
+		//íºå„é¿çsèàóù
+		if (order.postCommand) order.postCommand();
 	}
 }

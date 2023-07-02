@@ -26,7 +26,7 @@ namespace ColPrimitive2D {
 		Segment(Vector2 a, Vector2 b) : p(a), v(b - a) {}
 
 		bool operator==(const Segment& a) {
-			return this->p == a.p && this->v == a.v;
+			return p == a.p && v == a.v;
 		}
 	};
 
@@ -51,7 +51,7 @@ namespace ColPrimitive2D {
 		bool hit = false;
 		bool hasHitPos = false;
 		Vector2 hitPos; //衝突点
-		int hitSide = -1; //当たった面(0から順に左右上下)
+		int32_t hitSide = -1; //当たった面(0から順に左右上下)
 		std::bitset<4> hitSideBit = 0; //当たった面(4ビット列、下位から左右上下)
 	};
 

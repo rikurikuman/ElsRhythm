@@ -12,21 +12,21 @@
 class Sprite
 {
 public:
-	Material material;
-	Transform transform;
+	Material mMaterial;
+	Transform mTransform;
 
 private:
-	bool change = false;
-	TextureHandle texture;
-	Vector2 srcPos = { 0, 0 };
-	Vector2 size = { 0, 0 };
-	Vector2 anchor = { 0.5f, 0.5f };
+	bool mChangeFlag = false;
+	TextureHandle mTexture;
+	Vector2 mSrcPos = { 0, 0 };
+	Vector2 mSize = { 0, 0 };
+	Vector2 mAnchor = { 0.5f, 0.5f };
 
-	SRVertexBuffer vertBuff;
-	SRIndexBuffer indexBuff;
-	SRConstBuffer<MaterialBuffer> materialBuff;
-	SRConstBuffer<TransformBuffer> transformBuff;
-	SRConstBuffer<ViewProjectionBuffer> viewProjectionBuff;
+	SRVertexBuffer mVertBuff;
+	SRIndexBuffer mIndexBuff;
+	SRConstBuffer<MaterialBuffer> mMaterialBuff;
+	SRConstBuffer<TransformBuffer> mTransformBuff;
+	SRConstBuffer<ViewProjectionBuffer> mViewProjectionBuff;
 
 	//頂点を弄る
 	void UpdateVertex();
@@ -48,7 +48,7 @@ public:
 	/// <param name="srcY">切り出し位置の左上Y</param>
 	/// <param name="width">切り出し範囲サイズX</param>
 	/// <param name="height">切り出し範囲サイズY</param>
-	void SetTexRect(int srcX, int srcY, int width, int height);
+	void SetTexRect(int32_t srcX, int32_t srcY, int32_t width, int32_t height);
 
 	void Init();
 
@@ -68,11 +68,11 @@ public:
 	}
 
 	RootSignature GetRootSignature() {
-		return rootSignature;
+		return mRootSignature;
 	}
 
 	GraphicsPipeline GetGraphicsPipeline() {
-		return pipelineState;
+		return mPipelineState;
 	}
 
 private:
@@ -80,12 +80,12 @@ private:
 		Init();
 	};
 	~SpriteManager() = default;
-	SpriteManager(const SpriteManager& a) {};
+	SpriteManager(const SpriteManager&) {};
 	SpriteManager& operator=(const SpriteManager&) { return *this; }
 
 	void Init();
 
-	RootSignature rootSignature;
-	GraphicsPipeline pipelineState;
+	RootSignature mRootSignature;
+	GraphicsPipeline mPipelineState;
 };
 

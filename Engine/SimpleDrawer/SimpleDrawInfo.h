@@ -20,9 +20,9 @@ struct DrawCustomData {
 	float radius; //circle‚ÅŽg—p
 
 	bool operator==(const DrawCustomData& l) const {
-		return this->layer == l.layer
-			&& this->fillFlag == l.fillFlag
-			&& this->radius == l.radius;
+		return layer == l.layer
+			&& fillFlag == l.fillFlag
+			&& radius == l.radius;
 	}
 };
 
@@ -32,11 +32,11 @@ namespace std {
 	class hash<DrawCustomData> {
 	public:
 		size_t operator() (const DrawCustomData& o) const {
-			return static_cast<size_t>(
+			return static_cast<size_t>((
 				o.layer * 2.0f +
-				o.fillFlag * 3.0f +
+				static_cast<float>(o.fillFlag) * 3.0f +
 				o.radius * 5.0f
-			);
+			));
 		}
 	};
 }
@@ -63,7 +63,7 @@ struct DrawCircleInfo {
 
 struct DrawCircleVertIndex {
 	std::vector<VertexP> vert;
-	std::vector<UINT> index;
+	std::vector<uint32_t> index;
 };
 
 struct DrawLine3DInfo {

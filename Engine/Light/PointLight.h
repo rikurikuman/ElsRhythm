@@ -13,16 +13,16 @@ public:
 		float pad2; //4byte(total 48)
 	};
 
-	Vector3 pos;
-	Color color;
-	Vector3 atten; //‹——£Œ¸ŠŒW”
-	bool active = false;
+	Vector3 mPos;
+	Color mColor;
+	Vector3 mAtten; //‹——£Œ¸ŠŒW”
+	bool mIsActive = false;
 
 	void TransferBuffer(LightBuffer& buffer) {
-		buffer.active = active;
-		buffer.pos = pos;
-		buffer.color = {color.r, color.g, color.b};
-		buffer.atten = atten;
+		buffer.active = mIsActive;
+		buffer.pos = mPos;
+		buffer.color = {mColor.r, mColor.g, mColor.b};
+		buffer.atten = mAtten;
 	}
 };
 

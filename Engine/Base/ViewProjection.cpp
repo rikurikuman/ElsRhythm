@@ -4,33 +4,33 @@
 
 void ViewProjection::UpdateMatrix()
 {
-	view = Matrix4::View(eye, target, up);
-	if (type == Type::Perspective) {
-		view = Matrix4::View(eye, target, up);
-		projection = Matrix4::PerspectiveProjection(fov, aspect, nearclip, farclip);
+	mView = Matrix4::View(mEye, mTarget, mUpVec);
+	if (mType == Type::Perspective) {
+		mView = Matrix4::View(mEye, mTarget, mUpVec);
+		mProjection = Matrix4::PerspectiveProjection(mFov, mAspect, mNearclip, mFarclip);
 	}
-	else if (type == Type::Orthographic) {
-		Vector3 _eye = eye;
-		_eye.x -= orthoSize.x / 2.0f;
-		_eye.y -= orthoSize.y / 2.0f;
-		Vector3 _target = target;
-		_target.x -= orthoSize.x / 2.0f;
-		_target.y -= orthoSize.y / 2.0f;
-		view = Matrix4::View(_eye, _target, up);
-		projection = Matrix4::OrthoGraphicProjection(0, orthoSize.x, 0, orthoSize.y, nearclip, farclip);
+	else if (mType == Type::Orthographic) {
+		Vector3 _eye = mEye;
+		_eye.x -= mOrthoSize.x / 2.0f;
+		_eye.y -= mOrthoSize.y / 2.0f;
+		Vector3 _target = mTarget;
+		_target.x -= mOrthoSize.x / 2.0f;
+		_target.y -= mOrthoSize.y / 2.0f;
+		mView = Matrix4::View(_eye, _target, mUpVec);
+		mProjection = Matrix4::OrthoGraphicProjection(0, mOrthoSize.x, 0, mOrthoSize.y, mNearclip, mFarclip);
 	}
-	matrix = view * projection;
+	mMatrix = mView * mProjection;
 }
 
-void ViewProjection::Transfer(ViewProjectionBuffer* target)
+void ViewProjection::Transfer(ViewProjectionBuffer* pBuff)
 {
-	target->matrix = this->matrix;
-	target->cameraPos = this->eye;
+	pBuff->matrix = mMatrix;
+	pBuff->cameraPos = mEye;
 }
 
 Vector2 ViewProjection::WorldToScreen(Vector3 wPos)
 {
-	return this->WorldToScreen(wPos,
+	return WorldToScreen(wPos,
 		0, 0,
 		static_cast<float>(RWindow::GetWidth()),
 		static_cast<float>(RWindow::GetHeight()),
@@ -41,7 +41,7 @@ Vector2 ViewProjection::WorldToScreen(Vector3 wPos)
 Vector2 ViewProjection::WorldToScreen(Vector3 wPos, float topLeftX, float topLeftY, float width, float height, float minDepth, float maxDepth)
 {
 	Float4 screenPos = wPos;
-	screenPos *= matrix;
+	screenPos *= mMatrix;
 	screenPos /= screenPos.w;
 	screenPos *= Matrix4::Viewport(
 		topLeftX, topLeftY,

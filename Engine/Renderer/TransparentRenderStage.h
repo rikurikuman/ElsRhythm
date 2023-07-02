@@ -11,6 +11,6 @@ public:
 	virtual void Render() override;
 
 private:
-	GraphicsPipeline pipelineState;
+	GraphicsPipeline mPipelineState;
 };
 

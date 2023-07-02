@@ -2,7 +2,7 @@
 class ISceneTransition
 {
 protected:
-	bool closeFlag = false;
+	bool mIsClosed = false;
 
 public:
 	virtual ~ISceneTransition() {}
@@ -11,13 +11,13 @@ public:
 	virtual void Draw() {};
 
 	//トランジションを開ける
-	virtual void Open() { closeFlag = false; };
+	virtual void Open() { mIsClosed = false; };
 	//トランジションが開ききっているか
-	virtual bool IsOpened() { return !closeFlag; };
+	virtual bool IsOpened() { return !mIsClosed; };
 	//トランジションを閉める
-	virtual void Close() { closeFlag = true; };
+	virtual void Close() { mIsClosed = true; };
 	//トランジションが閉まりきっているか
-	virtual bool IsClosed() { return closeFlag; };
+	virtual bool IsClosed() { return mIsClosed; };
 	//トランジションが動作中か
 	virtual bool InProgress() { return false; };
 };

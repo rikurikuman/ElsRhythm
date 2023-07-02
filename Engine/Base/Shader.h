@@ -9,9 +9,9 @@
 class Shader
 {
 public:
-	Microsoft::WRL::ComPtr<ID3DBlob> shaderBlob;
-	Microsoft::WRL::ComPtr<ID3DBlob> errorBlob;
-	bool succeeded = false;
+	Microsoft::WRL::ComPtr<ID3DBlob> mShaderBlob;
+	Microsoft::WRL::ComPtr<ID3DBlob> mErrorBlob;
+	bool mSucceeded = false;
 
 	Shader() {}
 	Shader(std::string filename, std::string entrypoint, std::string target);
@@ -23,7 +23,7 @@ public:
 private:
 	class ShaderRegister {
 	public:
-		std::unordered_map<std::string, Shader> shaderRegister;
+		std::unordered_map<std::string, Shader> mShaderRegister;
 		static ShaderRegister* GetInstance() {
 			static ShaderRegister reg;
 			return &reg;

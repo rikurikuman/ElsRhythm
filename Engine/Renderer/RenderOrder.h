@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 #include <d3d12.h>
 #include "RootSignature.h"
 #include "GraphicsPipeline.h"
@@ -41,15 +42,14 @@ struct RootData {
 		: type(type), addressSRBuff(ptr) {}
 };
 
-class RenderOrder
+struct RenderOrder
 {
-public:
 	Vector3 anchorPoint;
 	std::vector<std::string> renderTargets;
 	std::vector<Viewport> viewports;
-	std::vector<Rect> scissorRects;
+	std::vector<RRect> scissorRects;
 	D3D_PRIMITIVE_TOPOLOGY primitiveTopology = D3D_PRIMITIVE_TOPOLOGY_UNDEFINED;
-	ID3D12RootSignature* rootSignature = nullptr;
+	ID3D12RootSignature* mRootSignature = nullptr;
 	ID3D12PipelineState* pipelineState = nullptr;
 	SRVertexBuffer vertBuff;
 	SRIndexBuffer indexBuff;
@@ -57,8 +57,22 @@ public:
 	D3D12_VERTEX_BUFFER_VIEW* vertView = nullptr; //SRVertexBufferを使わない場合はこっちにビューを直で
 	D3D12_INDEX_BUFFER_VIEW* indexView = nullptr; //SRIndexBufferを使わない場合はこっちにビューを直で
 	D3D12_VERTEX_BUFFER_VIEW* instanceVertView = nullptr;
-	UINT indexCount = 0;
-	UINT instanceCount = 1;
+	uint32_t indexCount = 0;
+	uint32_t instanceCount = 1;
 	std::vector<RootData> rootData;
+
+	/// <summary>
+	/// この描画の直前に実行してほしい処理を渡すと呼びます
+	/// ラムダ式がおすすめ
+	/// </summary>
+	std::function<void()> preCommand;
+
+	/// <summary>
+	/// この描画の直後に実行してほしい処理を渡すと呼びます
+	/// ラムダ式がおすすめ
+	/// </summary>
+	std::function<void()> postCommand;
+
+	
 };
 

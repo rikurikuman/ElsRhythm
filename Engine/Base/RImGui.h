@@ -21,8 +21,8 @@ public:
 	static void Finalize();
 
 private:
-	ID3D12Device* device = nullptr;
-	ID3D12DescriptorHeap* srvHeap = nullptr;
+	ID3D12Device* mDevicePtr = nullptr;
+	ID3D12DescriptorHeap* mSrvHeapPtr = nullptr;
 
 	void InitInternal();
 	void FinalInternal();

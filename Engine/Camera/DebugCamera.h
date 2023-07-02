@@ -7,14 +7,14 @@
 class DebugCamera : public Camera
 {
 public:
-	bool freeFlag = false;
-	float moveSpeed = 0.2f;
-	float sensitivity = 10.0f;
-	Vector2 angle = { 90, 0 };
+	bool mFreeFlag = false;
+	float mMoveSpeed = 0.2f;
+	float mSensitivity = 10.0f;
+	Vector2 mAngle = { 90, 0 };
 
-	DebugCamera(Vector3 pos, float moveSpeed = 0.2f, float sensitivity = 10.0f) : moveSpeed(moveSpeed), sensitivity(sensitivity) {
-		viewProjection.eye = pos;
-		viewProjection.aspect = (float)RWindow::GetWidth() / RWindow::GetHeight();
+	DebugCamera(Vector3 pos, float moveSpeed = 0.2f, float sensitivity = 10.0f) : mMoveSpeed(moveSpeed), mSensitivity(sensitivity) {
+		mViewProjection.mEye = pos;
+		mViewProjection.mAspect = (float)RWindow::GetWidth() / RWindow::GetHeight();
 	}
 
 	void Update() override;

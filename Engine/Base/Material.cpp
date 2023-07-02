@@ -8,12 +8,12 @@ using namespace std;
 
 bool Material::operator==(const Material& o) const
 {
-    return name == o.name
-        && texture == o.texture
-        && color == o.color
-        && ambient == o.ambient
-        && diffuse == o.diffuse
-        && specular == o.specular;
+    return mName == o.mName
+        && mTexture == o.mTexture
+        && mColor == o.mColor
+        && mAmbient == o.mAmbient
+        && mDiffuse == o.mDiffuse
+        && mSpecular == o.mSpecular;
 }
 
 bool Material::operator!=(const Material& o) const
@@ -23,8 +23,8 @@ bool Material::operator!=(const Material& o) const
 
 void Material::Transfer(MaterialBuffer* target)
 {
-	target->color = color;
-	target->ambient = ambient;
-	target->diffuse = diffuse;
-	target->specular = specular;
+	target->color = mColor;
+	target->ambient = mAmbient;
+	target->diffuse = mDiffuse;
+	target->specular = mSpecular;
 }

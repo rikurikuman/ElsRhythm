@@ -34,13 +34,5 @@ public:
 	/// </summary>
 	/// <param name="target">対象のバッファへのポインタ</param>
 	void Transfer(TransformBuffer* target);
-
-	/// <summary>
-	/// 行列と掛け算してから定数バッファに転送,
-	/// ビュー+射影変換行列を入れて楽する用
-	/// </summary>
-	/// <param name="target">対象のバッファへのポインタ</param>
-	/// <param name="matrix">転送前に掛ける行列</param>
-	void Transfer(TransformBuffer* target, Matrix4 matrix);
 };
 

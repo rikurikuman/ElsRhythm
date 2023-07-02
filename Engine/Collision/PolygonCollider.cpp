@@ -8,7 +8,7 @@ bool PolygonCollider::Collide(ICollider* hit, CollisionInfo* outputInfo)
     if (hit->GetTypeIndentifier() == "SphereCollider") {
         SphereCollider* hitT = static_cast<SphereCollider*>(hit);
 
-        if (ColPrimitive3D::CheckSphereToTriangle(hitT->sphere, this->polygon, &info.closestPos)) {
+        if (ColPrimitive3D::CheckSphereToTriangle(hitT->mSphere, mPolygon, &info.closestPos)) {
             info.hitCollider = hit;
             info.hasClosestPos = true;
             if (outputInfo) {

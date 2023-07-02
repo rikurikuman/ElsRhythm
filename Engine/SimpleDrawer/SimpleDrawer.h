@@ -23,7 +23,7 @@ public:
 	/// <param name="layer">•`‰æ—Dæ“x</param>
 	/// <param name="color">F</param>
 	/// <param name="thickness">ü‚Ì‘¾‚³</param>
-	static void DrawLine(int x1, int y1, int x2, int y2, float layer, Color color, float thickness = 1.0f);
+	static void DrawLine(int32_t x1, int32_t y1, int32_t x2, int32_t y2, float layer, Color color, float thickness = 1.0f);
 
 
 	/// <summary>
@@ -37,7 +37,7 @@ public:
 	/// <param name="color">F</param>
 	/// <param name="fillFlag">“à‘¤‚ğ“h‚è‚Â‚Ô‚·‚©</param>
 	/// <param name="thickness">“h‚è‚Â‚Ô‚³‚È‚¢ê‡‚Ìü‚Ì‘¾‚³</param>
-	static void DrawBox(int x1, int y1, int x2, int y2, float layer, Color color, bool fillFlag, float thickness = 1.0f);
+	static void DrawBox(int32_t x1, int32_t y1, int32_t x2, int32_t y2, float layer, Color color, bool fillFlag, float thickness = 1.0f);
 
 	/// <summary>
 	/// 2D‰æ–Ê‚É‰~‚ğ•`‰æ‚·‚é
@@ -48,9 +48,9 @@ public:
 	/// <param name="color">F</param>
 	/// <param name="fillFlag">“à‘¤‚ğ“h‚è‚Â‚Ô‚·‚©</param>
 	/// <param name="thickness">“h‚è‚Â‚Ô‚³‚È‚¢ê‡‚Ìü‚Ì‘¾‚³</param>
-	static void DrawCircle(int x, int y, int r, float layer, Color color, bool fillFlag, float thickness = 1.0f);
+	static void DrawCircle(int32_t x, int32_t y, int32_t r, float layer, Color color, bool fillFlag, float thickness = 1.0f);
 	
-	static void DrawString(float x, float y, float layer, std::string text, Color color = Color(1.0f, 1.0f, 1.0f, 1.0f), std::string fontTypeFace = "", UINT fontSize = 20, Vector2 anchor = {0, 0});
+	static void DrawString(float x, float y, float layer, std::string text, Color color = Color(1.0f, 1.0f, 1.0f, 1.0f), std::string fontTypeFace = "", uint32_t fontSize = 20, Vector2 anchor = {0, 0});
 
 	//Œã‰ñ‚µ•`‰æ‚É‚æ‚Á‚Ä’ñ‹Ÿ‚³‚ê‚é‚à‚Ì‚ğ‘S•”•`‰æ‚·‚é
 	static void DrawAll();
@@ -63,40 +63,40 @@ private:
 	SimpleDrawer(const SimpleDrawer& a) = default;
 	SimpleDrawer& operator=(const SimpleDrawer&) { return *this; }
 
-	std::list<std::shared_ptr<SimpleDrawInfo>> infoList;
-	std::unordered_map<std::string, std::shared_ptr<SRBufferPtr>> recycleBuffs;
+	std::list<std::shared_ptr<SimpleDrawInfo>> mInfoList;
+	std::unordered_map<std::string, std::shared_ptr<SRBufferPtr>> mRecycleBuffs;
 
-	std::unordered_map<float, std::vector<DrawBoxInfo>> boxInfoMap;
-	std::unordered_map<float, DrawBuffers> boxBuffersMap;
-	RootSignature boxRS;
-	GraphicsPipeline boxPSO;
+	std::unordered_map<float, std::vector<DrawBoxInfo>> mBoxInfoMap;
+	std::unordered_map<float, DrawBuffers> mBoxBuffersMap;
+	RootSignature mBoxRS;
+	GraphicsPipeline mBoxPSO;
 
-	std::unordered_map<float, std::vector<DrawLineInfo>> lineInfoMap;
-	std::unordered_map<float, DrawBuffers> lineBuffersMap;
-	RootSignature lineRS;
-	GraphicsPipeline linePSO;
-	SRConstBuffer<ViewProjectionBuffer> lineVPBuff;
+	std::unordered_map<float, std::vector<DrawLineInfo>> mLineInfoMap;
+	std::unordered_map<float, DrawBuffers> mLineBuffersMap;
+	RootSignature mLineRS;
+	GraphicsPipeline mLinePSO;
+	SRConstBuffer<ViewProjectionBuffer> mLineVPBuff;
 
-	std::unordered_map<DrawCustomData, std::vector<DrawCircleInfo>> circleInfoMap;
-	std::unordered_map<DrawCustomData, DrawCircleVertIndex> circleVertIndexMap;
-	std::unordered_map<DrawCustomData, DrawBuffers> circleBuffersMap;
-	RootSignature circleRS;
-	GraphicsPipeline circlePSO;
-	SRConstBuffer<ViewProjectionBuffer> circleVPBuff;
+	std::unordered_map<DrawCustomData, std::vector<DrawCircleInfo>> mCircleInfoMap;
+	std::unordered_map<DrawCustomData, DrawCircleVertIndex> mCircleVertIndexMap;
+	std::unordered_map<DrawCustomData, DrawBuffers> mCircleBuffersMap;
+	RootSignature mCircleRS;
+	GraphicsPipeline mCirclePSO;
+	SRConstBuffer<ViewProjectionBuffer> mCircleVPBuff;
 	void CalcCircleVertAndIndex(DrawCustomData cData);
 
-	std::unordered_map<float, std::vector<DrawLine3DInfo>> line3DInfoMap;
-	std::unordered_map<float, DrawBuffers> line3DBuffersMap;
-	RootSignature line3DRS;
-	GraphicsPipeline line3DPSO;
+	std::unordered_map<float, std::vector<DrawLine3DInfo>> mLine3DInfoMap;
+	std::unordered_map<float, DrawBuffers> mLine3DBuffersMap;
+	RootSignature mLine3DRS;
+	GraphicsPipeline mLine3DPSO;
 
-	RootSignature rootSignature;
-	GraphicsPipeline pipelineState;
+	RootSignature mRootSignature;
+	GraphicsPipeline mPipelineState;
 
-	RootSignature rootSignatureForString;
-	GraphicsPipeline pipelineStateForString;
+	RootSignature mRootSignatureForString;
+	GraphicsPipeline mPipelineStateForString;
 
-	std::mutex mutex;
+	std::mutex mMutex;
 
 	void Init();
 };

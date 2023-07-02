@@ -1,18 +1,18 @@
 #include "Color.h"
 
-Color::Color(int hexcolor)
+Color::Color(int32_t hexcolor)
 {
-	int r, g, b;
-	this->a = 1;
-	r = hexcolor & 0xff0000;
-	r = r >> 16;
-	g = hexcolor & 0xff00;
-	g = g >> 8;
-	b = hexcolor & 0xff;
+	int32_t r_, g_, b_;
+	a = 1;
+	r_ = hexcolor & 0xff0000;
+	r_ = r_ >> 16;
+	g_ = hexcolor & 0xff00;
+	g_ = g_ >> 8;
+	b_ = hexcolor & 0xff;
 
-	this->r = r / 255.0f;
-	this->g = g / 255.0f;
-	this->b = b / 255.0f;
+	r = r_ / 255.0f;
+	g = g_ / 255.0f;
+	b = b_ / 255.0f;
 }
 
 bool Color::operator==(const Color& o) const
@@ -20,7 +20,7 @@ bool Color::operator==(const Color& o) const
 	return r == o.r && g == o.g && b == o.b && a == o.a;
 }
 
-Color Color::convertFromHSVA(int h, int s, int v, int a)
+Color Color::convertFromHSVA(int32_t h, int32_t s, int32_t v, int32_t a)
 {
 	Color c;
 
@@ -31,11 +31,11 @@ Color Color::convertFromHSVA(int h, int s, int v, int a)
 	if (v < 0) { v = 0; }
 	if (v > 100) { v = 100; }
 
-	s = (int)(255 * s / 100.0f);
-	v = (int)(255 * v / 100.0f);
+	s = (int32_t)(255 * s / 100.0f);
+	v = (int32_t)(255 * v / 100.0f);
 
-	int MAX = v;
-	int MIN = (int)(MAX - ((s / 255.0f) * MAX));
+	int32_t MAX = v;
+	int32_t MIN = (int32_t)(MAX - ((s / 255.0f) * MAX));
 
 	if (h >= 0 && h <= 60) {
 		return Color(MAX / 255.0f, ((h / 60.0f) * (MAX - MIN) + MIN) / 255.0f, MIN / 255.0f, a / 255.0f);

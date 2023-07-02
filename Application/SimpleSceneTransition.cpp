@@ -10,7 +10,7 @@ SimpleSceneTransition::SimpleSceneTransition() {
 
 void SimpleSceneTransition::Update()
 {
-	if (closeFlag) {
+	if (mIsClosed) {
 		if (shutterScale >= 1) {
 			inProgress = false;
 			shutterScale = 1;
@@ -40,11 +40,11 @@ void SimpleSceneTransition::Update()
 	}
 
 	float scale = 15.0f * shutterScale;
-	shutter.transform.position = { RWindow::GetWidth() / 2.0f, RWindow::GetHeight() / 2.0f, 1145141919.0f };
-	shutter.transform.rotation = { 0, 0, Util::AngleToRadian(180 * shutterScale)};
-	shutter.transform.scale = { scale, scale, 1 };
-	shutter.material.color = { 0, 0.5f, 0.7f, shutterAlpha };
-	shutter.transform.UpdateMatrix();
+	shutter.mTransform.position = { RWindow::GetWidth() / 2.0f, RWindow::GetHeight() / 2.0f, 1145141919.0f };
+	shutter.mTransform.rotation = { 0, 0, Util::AngleToRadian(180 * shutterScale)};
+	shutter.mTransform.scale = { scale, scale, 1 };
+	shutter.mMaterial.mColor = { 0, 0.5f, 0.7f, shutterAlpha };
+	shutter.mTransform.UpdateMatrix();
 	shutter.TransferBuffer();
 }
 
@@ -58,24 +58,24 @@ void SimpleSceneTransition::Draw()
 
 void SimpleSceneTransition::Open()
 {
-	closeFlag = false;
+	mIsClosed = false;
 	timer = 0;
 }
 
 bool SimpleSceneTransition::IsOpened()
 {
-	return !closeFlag && !inProgress && timer != 0;
+	return !mIsClosed && !inProgress && timer != 0;
 }
 
 void SimpleSceneTransition::Close()
 {
-	closeFlag = true;
+	mIsClosed = true;
 	timer = 0;
 }
 
 bool SimpleSceneTransition::IsClosed()
 {
-	return closeFlag && !inProgress && timer != 0;
+	return mIsClosed && !inProgress && timer != 0;
 }
 
 bool SimpleSceneTransition::InProgress()

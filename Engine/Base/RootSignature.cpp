@@ -2,18 +2,18 @@
 #include "RDirectX.h"
 #include <vector>
 
-std::unordered_map<std::string, RootSignature> RootSignature::rootSignatureMap;
+std::unordered_map<std::string, RootSignature> RootSignature::sRootSignatureMap;
 
 RootSignature& RootSignature::GetOrCreate(std::string id, RootSignatureDesc desc)
 {
-	auto& map = RootSignature::rootSignatureMap;
+	auto& map = RootSignature::sRootSignatureMap;
 	auto itr = map.find(id);
 	if (itr != map.end()) {
 		return itr->second;
 	}
 
 	RootSignature newRootSignature;
-	newRootSignature.desc = desc;
+	newRootSignature.mDesc = desc;
 	newRootSignature.Create();
 	map[id] = newRootSignature;
 	return map[id];
@@ -26,7 +26,7 @@ void RootSignature::Create()
 	D3D12_ROOT_SIGNATURE_DESC _desc{};
 
 	std::vector<D3D12_ROOT_PARAMETER> rootParams;
-	for (RootParamater& param : desc.RootParamaters) {
+	for (RootParamater& param : mDesc.RootParamaters) {
 		D3D12_ROOT_PARAMETER _param{};
 		_param.ParameterType = param.ParameterType;
 		switch (param.ParameterType) {
@@ -66,16 +66,16 @@ void RootSignature::Create()
 		_desc.NumParameters = 0;
 	}
 	
-	if (desc.StaticSamplers.size() > 0) {
-		_desc.pStaticSamplers = &desc.StaticSamplers[0];
-		_desc.NumStaticSamplers = (UINT)desc.StaticSamplers.size();
+	if (mDesc.StaticSamplers.size() > 0) {
+		_desc.pStaticSamplers = &mDesc.StaticSamplers[0];
+		_desc.NumStaticSamplers = (UINT)mDesc.StaticSamplers.size();
 	}
 	else {
 		_desc.pStaticSamplers = nullptr;
 		_desc.NumStaticSamplers = 0;
 	}
 	
-	_desc.Flags = desc.Flags;
+	_desc.Flags = mDesc.Flags;
 
 	ComPtr<ID3DBlob> rootSigBlob = nullptr;
 	result = D3D12SerializeRootSignature(&_desc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, nullptr);
@@ -84,6 +84,6 @@ void RootSignature::Create()
 	result = RDirectX::GetDevice()->CreateRootSignature(
 		0, rootSigBlob->GetBufferPointer(),
 		rootSigBlob->GetBufferSize(),
-		IID_PPV_ARGS(&ptr));
+		IID_PPV_ARGS(&mPtr));
 	assert(SUCCEEDED(result));
 }

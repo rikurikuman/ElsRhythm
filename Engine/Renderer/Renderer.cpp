@@ -16,16 +16,16 @@ void Renderer::Execute()
 {
 	Renderer* instance = GetInstance();
 	RenderTarget::SetToTexture("RenderingImage");
-	RenderTarget::GetRenderTargetTexture("RenderingImage")->ClearRenderTarget();
-	RenderTarget::GetRenderTargetTexture("RenderingImage")->ClearDepthStencil();
-	for (auto itr = instance->stages.begin(); itr != instance->stages.end(); itr++) {
+	RenderTarget::GetRenderTexture("RenderingImage")->ClearRenderTarget();
+	RenderTarget::GetRenderTexture("RenderingImage")->ClearDepthStencil();
+	for (auto itr = instance->mStages.begin(); itr != instance->mStages.end(); itr++) {
 		IRenderStage* stage = itr->get();
-		if (stage->enabled) stage->Render();
-		stage->orders.clear();
+		if (stage->mFlagEnabled) stage->Render();
+		stage->mOrders.clear();
 	}
 }
 
-void Renderer::DrawCall(std::string stageID, D3D12_VERTEX_BUFFER_VIEW* vertView, D3D12_INDEX_BUFFER_VIEW* indexView, UINT indexCount, const std::vector<RootData>& rootData, Vector3& anchorPoint)
+void Renderer::DrawCall(std::string stageID, D3D12_VERTEX_BUFFER_VIEW* vertView, D3D12_INDEX_BUFFER_VIEW* indexView, uint32_t indexCount, const std::vector<RootData>& rootData, const Vector3& anchorPoint)
 {
 	RenderOrder order;
 	order.anchorPoint = anchorPoint;
@@ -36,7 +36,7 @@ void Renderer::DrawCall(std::string stageID, D3D12_VERTEX_BUFFER_VIEW* vertView,
 	Renderer::DrawCall(stageID, order);
 }
 
-void Renderer::DrawCall(std::string stageID, SRVertexBuffer& vertBuff, SRIndexBuffer& indexBuff, UINT indexCount, const std::vector<RootData>& rootData, Vector3& anchorPoint)
+void Renderer::DrawCall(std::string stageID, SRVertexBuffer& vertBuff, SRIndexBuffer& indexBuff, uint32_t indexCount, const std::vector<RootData>& rootData, const Vector3& anchorPoint)
 {
 	RenderOrder order;
 	order.anchorPoint = anchorPoint;
@@ -47,7 +47,7 @@ void Renderer::DrawCall(std::string stageID, SRVertexBuffer& vertBuff, SRIndexBu
 	Renderer::DrawCall(stageID, order);
 }
 
-void Renderer::DrawCall(std::string stageID, RenderOrder& order)
+void Renderer::DrawCall(std::string stageID, RenderOrder order)
 {
 	Renderer* instance = GetInstance();
 
@@ -58,19 +58,19 @@ void Renderer::DrawCall(std::string stageID, RenderOrder& order)
 		return;
 	}
 
-	for (auto itr = instance->stages.begin(); itr != instance->stages.end(); itr++) {
+	for (auto itr = instance->mStages.begin(); itr != instance->mStages.end(); itr++) {
 		IRenderStage* stage = itr->get();
 		if (stage->GetTypeIndentifier() == stageID) {
 			//未設定の項目をレンダラーの設定で自動で補完する
 			//ここでも未設定のままになった場合はレンダーステージに任せる
-			if(order.renderTargets.empty()) order.renderTargets = instance->renderTargets;
-			if(order.primitiveTopology == D3D_PRIMITIVE_TOPOLOGY_UNDEFINED) order.primitiveTopology = instance->primitiveTopology;
-			if(order.viewports.empty()) order.viewports = instance->viewports;
-			if(order.scissorRects.empty()) order.scissorRects = instance->scissorRects;
-			if(order.rootSignature == nullptr) order.rootSignature = instance->rootSignature;
-			if(order.pipelineState == nullptr) order.pipelineState = instance->pipelineState;
+			if(order.renderTargets.empty()) order.renderTargets = instance->mRenderTargets;
+			if(order.primitiveTopology == D3D_PRIMITIVE_TOPOLOGY_UNDEFINED) order.primitiveTopology = instance->mPrimitiveTopology;
+			if(order.viewports.empty()) order.viewports = instance->mViewports;
+			if(order.scissorRects.empty()) order.scissorRects = instance->mScissorRects;
+			if(order.mRootSignature == nullptr) order.mRootSignature = instance->mRootSignature;
+			if(order.pipelineState == nullptr) order.pipelineState = instance->mPipelineState;
 
-			stage->orders.emplace_back(std::move(order));
+			stage->mOrders.emplace_back(std::move(order));
 			return;
 		}
 	}
@@ -78,11 +78,6 @@ void Renderer::DrawCall(std::string stageID, RenderOrder& order)
 #ifdef _DEBUG
 	OutputDebugStringA(("RKEngine WARNING: Renderer::DrawCall() : RenderStage(" + stageID + ") is not found.\n").c_str());
 #endif
-}
-
-void Renderer::InitRenderStages()
-{
-	Renderer* instance = GetInstance();
 }
 
 void Renderer::RemoveRenderStage(std::string id)
@@ -96,10 +91,10 @@ void Renderer::RemoveRenderStage(std::string id)
 		return;
 	}
 
-	for (auto itr = instance->stages.begin(); itr != instance->stages.end(); itr++) {
+	for (auto itr = instance->mStages.begin(); itr != instance->mStages.end(); itr++) {
 		IRenderStage* stage = itr->get();
 		if (stage->GetTypeIndentifier() == id) {
-			instance->stages.erase(itr);
+			instance->mStages.erase(itr);
 			return;
 		}
 	}
@@ -120,7 +115,7 @@ IRenderStage* Renderer::GetRenderStage(std::string id)
 		return nullptr;
 	}
 
-	for (auto itr = instance->stages.begin(); itr != instance->stages.end(); itr++) {
+	for (auto itr = instance->mStages.begin(); itr != instance->mStages.end(); itr++) {
 		IRenderStage* stage = itr->get();
 		if (stage->GetTypeIndentifier() == id) {
 			return stage;
@@ -143,21 +138,21 @@ void Renderer::SetAllParamaterToAuto()
 	viewport.minDepth = 0.0f;
 	viewport.maxDepth = 1.0f;
 
-	Rect scissorRect{};
+	RRect scissorRect{};
 	scissorRect.left = 0;
 	scissorRect.right = scissorRect.left + RWindow::GetWidth();
 	scissorRect.top = 0;
 	scissorRect.bottom = scissorRect.top + RWindow::GetHeight();
 
-	GetInstance()->viewports.clear();
-	GetInstance()->viewports.push_back(viewport);
-	GetInstance()->scissorRects.clear();
-	GetInstance()->scissorRects.push_back(scissorRect);
+	GetInstance()->mViewports.clear();
+	GetInstance()->mViewports.push_back(viewport);
+	GetInstance()->mScissorRects.clear();
+	GetInstance()->mScissorRects.push_back(scissorRect);
 }
 
 void Renderer::Init()
 {
-	RenderTarget::CreateRenderTargetTexture(RWindow::GetWidth(), RWindow::GetHeight(), { 0, 0, 0, 1 }, "RenderingImage");
+	RenderTarget::CreateRenderTexture(RWindow::GetWidth(), RWindow::GetHeight(), { 0, 0, 0, 1 }, "RenderingImage");
 	
 	AddDefRenderStageBack<BackSpriteRenderStage>();
 	AddDefRenderStageBack<OpaqueRenderStage>();

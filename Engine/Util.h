@@ -1,17 +1,18 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <list>
 #include <stdexcept>
 #include <random>
 #include <chrono>
 
 namespace Util {
 	extern bool debugBool;
-    extern int debugInt;
+    extern int32_t debugInt;
 	constexpr float PI = 3.1415926535897932384626f;
 
-    const int WIN_WIDTH = 1280;
-    const int WIN_HEIGHT = 720;
+    const int32_t WIN_WIDTH = 1280;
+    const int32_t WIN_HEIGHT = 720;
 
     extern std::chrono::high_resolution_clock::time_point memTimePoint;
     extern double memElapsedTime;
@@ -33,7 +34,7 @@ namespace Util {
     template<typename ... Args>
     std::string StringFormat(const std::string& format, Args&& ... args) {
         /* フォーマット後の文字数を算出 */
-        int str_len = std::snprintf(nullptr, 0, format.c_str(), std::forward<Args>(args) ...);
+        int32_t str_len = std::snprintf(nullptr, 0, format.c_str(), std::forward<Args>(args) ...);
 
         /* フォーマット失敗 */
         if (str_len < 0)
@@ -42,16 +43,17 @@ namespace Util {
         }
 
         /* バッファサイズを算出(文字列長 + null文字サイズ) */
-        size_t buffer_size = str_len + sizeof(char);
+        size_t bufferSize = str_len + sizeof(char);
 
         /* バッファサイズ分メモリ確保 */
-        std::unique_ptr<char[]> buffer(new char[buffer_size]);
+        std::vector<char> buffer;
+        buffer.resize(bufferSize);
 
         /* 文字列のフォーマット */
-        std::snprintf(buffer.get(), buffer_size, format.c_str(), args ...);
+        std::snprintf(&buffer[0], bufferSize, format.c_str(), args ...);
 
         /* 文字列をstd::string型に変換して出力 */
-        return std::string(buffer.get(), buffer.get() + str_len);
+        return std::string(&buffer[0], &buffer[0] + str_len);
     }
 
     /*
@@ -72,7 +74,7 @@ namespace Util {
 
     //指定したintがminからmaxの間に収まっていればそのまま、
     //収まっていなければ収めて返す
-    int Clamp(int i, int min, int max);
+    int32_t Clamp(int32_t i, int32_t min, int32_t max);
 
     //指定したfloatがminからmaxの間に収まっていればそのまま、
     //収まっていなければ収めて返す
@@ -93,22 +95,29 @@ namespace Util {
         return false;
     }
 
+    //std::listにsearchが含まれているか調べる
+    template <class T>
+    bool Contains(std::list<T> list, T search) {
+        auto itr = std::find(list.begin(), list.end(), search);
+        return itr != list.end();
+    }
+
     //std::vectorにsearchがいるならそのインデックスを得る
     //ないなら-1
     template <class T>
-    int IndexOf(std::vector<T> vector, T search) {
+    int32_t IndexOf(std::vector<T> vector, T search) {
         auto itr = std::find(vector.begin(), vector.end(), search);
         if (itr == vector.end()) {
             return -1;
         }
-        return static_cast<int>(std::distance(vector.begin(), itr));
+        return static_cast<int32_t>(std::distance(vector.begin(), itr));
     }
 
     //stringをwstringに変換する（MultiByteToWideChar)
     std::wstring ConvertStringToWString(std::string str);
 
     //乱数生成(一様分布)
-    int GetRand(int min, int max);
+    int32_t GetRand(int32_t min, int32_t max);
 
     //乱数生成(一様分布)
     float GetRand(float min, float max);

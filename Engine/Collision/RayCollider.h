@@ -4,18 +4,18 @@
 
 class RayCollider : public ICollider {
 public:
-	ColPrimitive3D::Ray ray{};
-	bool pierce = false;
+	ColPrimitive3D::Ray mRay{};
+	bool mOptPierce = false;
 
 	RayCollider() {}
 	RayCollider(Vector3 start, Vector3 dir) {
-		ray.start = start;
-		ray.dir = dir;
+		mRay.start = start;
+		mRay.dir = dir;
 	}
 	RayCollider(Vector3 start, Vector3 dir, bool pierce) {
-		ray.start = start;
-		ray.dir = dir;
-		this->pierce = pierce;
+		mRay.start = start;
+		mRay.dir = dir;
+		mOptPierce = pierce;
 	}
 	virtual std::string GetTypeIndentifier() override {
 		return "RayCollider";
@@ -25,8 +25,8 @@ public:
 	virtual bool Collide(ICollider* hit, CollisionInfo* outputInfo) override;
 
 private:
-	bool skip = false;
-	float memDis = 0;
-	CollisionInfo memInfo;
-	ICollider* nearest = nullptr;
+	bool mFlagSkip = false;
+	float mMemDis = 0;
+	CollisionInfo mMemInfo;
+	ICollider* mNearest = nullptr;
 };

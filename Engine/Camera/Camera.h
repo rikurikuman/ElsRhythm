@@ -10,18 +10,18 @@ protected:
 	//ViewProjection viewProjection;
 
 public:
-	ViewProjection viewProjection;
-	RConstBuffer<ViewProjectionBuffer> buff;
+	ViewProjection mViewProjection;
+	RConstBuffer<ViewProjectionBuffer> mBuff;
 
 	Camera() {
-		viewProjection.aspect = (float)RWindow::GetWidth() / RWindow::GetHeight();
-		viewProjection.UpdateMatrix();
-		viewProjection.Transfer(buff.constMap);
+		mViewProjection.mAspect = (float)RWindow::GetWidth() / RWindow::GetHeight();
+		mViewProjection.UpdateMatrix();
+		mViewProjection.Transfer(mBuff.mConstMap);
 	}
 	virtual ~Camera() {}
 
 	virtual void Update() {}
 
-	static Camera* nowCamera;
+	static Camera* sNowCamera;
 };
 

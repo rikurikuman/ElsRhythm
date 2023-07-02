@@ -5,20 +5,20 @@
 class Obj3D
 {
 protected:
-	Obj3D* parent = nullptr;
+	Obj3D* mParent = nullptr;
 
 public:
 	virtual ~Obj3D() {}
 
-	Transform transform;
+	Transform mTransform;
 
 	void SetParent(Obj3D* parent) {
-		this->parent = parent;
-		this->transform.parent = &parent->transform;
+		mParent = parent;
+		mTransform.parent = &parent->mTransform;
 	}
 
 	const Obj3D* GetParent() {
-		return parent;
+		return mParent;
 	}
 
 	//各データのバッファへの転送

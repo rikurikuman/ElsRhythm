@@ -4,55 +4,55 @@
 void DebugCamera::Update()
 {
 	if (RInput::GetKeyDown(DIK_LCONTROL)) {
-		freeFlag = !freeFlag;
+		mFreeFlag = !mFreeFlag;
 		return;
 	}
 
-	if (freeFlag) return;
+	if (mFreeFlag) return;
 
 	if (RInput::GetKey(DIK_W)) {
-		viewProjection.eye.x += -moveSpeed * cosf(Util::PI / 180 * angle.x);
-		viewProjection.eye.z += moveSpeed * sinf(Util::PI / 180 * angle.x);
+		mViewProjection.mEye.x += -mMoveSpeed * cosf(Util::PI / 180 * mAngle.x);
+		mViewProjection.mEye.z += mMoveSpeed * sinf(Util::PI / 180 * mAngle.x);
 	}
 	if (RInput::GetKey(DIK_S)) {
-		viewProjection.eye.x += -moveSpeed * cosf(Util::PI / 180 * (angle.x + 180));
-		viewProjection.eye.z += moveSpeed * sinf(Util::PI / 180 * (angle.x + 180));
+		mViewProjection.mEye.x += -mMoveSpeed * cosf(Util::PI / 180 * (mAngle.x + 180));
+		mViewProjection.mEye.z += mMoveSpeed * sinf(Util::PI / 180 * (mAngle.x + 180));
 	}
 	if (RInput::GetKey(DIK_A)) {
-		viewProjection.eye.x += -moveSpeed * cosf(Util::PI / 180 * (angle.x - 90));
-		viewProjection.eye.z += moveSpeed * sinf(Util::PI / 180 * (angle.x - 90));
+		mViewProjection.mEye.x += -mMoveSpeed * cosf(Util::PI / 180 * (mAngle.x - 90));
+		mViewProjection.mEye.z += mMoveSpeed * sinf(Util::PI / 180 * (mAngle.x - 90));
 	}
 	if (RInput::GetKey(DIK_D)) {
-		viewProjection.eye.x += -moveSpeed * cosf(Util::PI / 180 * (angle.x + 90));
-		viewProjection.eye.z += moveSpeed * sinf(Util::PI / 180 * (angle.x + 90));
+		mViewProjection.mEye.x += -mMoveSpeed * cosf(Util::PI / 180 * (mAngle.x + 90));
+		mViewProjection.mEye.z += mMoveSpeed * sinf(Util::PI / 180 * (mAngle.x + 90));
 	}
 	if (RInput::GetKey(DIK_SPACE)) {
-		viewProjection.eye.y += moveSpeed;
+		mViewProjection.mEye.y += mMoveSpeed;
 	}
 	if (RInput::GetKey(DIK_LSHIFT)) {
-		viewProjection.eye.y -= moveSpeed;
+		mViewProjection.mEye.y -= mMoveSpeed;
 	}
 
-	angle.x += RInput::GetMouseMove().x / sensitivity;
-	angle.y -= RInput::GetMouseMove().y / sensitivity;
+	mAngle.x += RInput::GetMouseMove().x / mSensitivity;
+	mAngle.y -= RInput::GetMouseMove().y / mSensitivity;
 
-	if (angle.x >= 360) {
-		angle.x -= 360;
+	if (mAngle.x >= 360) {
+		mAngle.x -= 360;
 	}
-	if (angle.x < 0) {
-		angle.x += 360;
-	}
-
-	if (angle.y >= 90) {
-		angle.y = 89.9f;
-	}
-	if (angle.y <= -90) {
-		angle.y = -89.9f;
+	if (mAngle.x < 0) {
+		mAngle.x += 360;
 	}
 
-	viewProjection.target.x = viewProjection.eye.x + -100 * cosf(Util::PI / 180 * angle.x) * cosf(Util::PI / 180 * angle.y);
-	viewProjection.target.y = viewProjection.eye.y + 100 * sinf(Util::PI / 180 * angle.y);
-	viewProjection.target.z = viewProjection.eye.z + 100 * sinf(Util::PI / 180 * angle.x) * cosf(Util::PI / 180 * angle.y);
+	if (mAngle.y >= 90) {
+		mAngle.y = 89.9f;
+	}
+	if (mAngle.y <= -90) {
+		mAngle.y = -89.9f;
+	}
 
-	viewProjection.UpdateMatrix();
+	mViewProjection.mTarget.x = mViewProjection.mEye.x + -100 * cosf(Util::PI / 180 * mAngle.x) * cosf(Util::PI / 180 * mAngle.y);
+	mViewProjection.mTarget.y = mViewProjection.mEye.y + 100 * sinf(Util::PI / 180 * mAngle.y);
+	mViewProjection.mTarget.z = mViewProjection.mEye.z + 100 * sinf(Util::PI / 180 * mAngle.x) * cosf(Util::PI / 180 * mAngle.y);
+
+	mViewProjection.UpdateMatrix();
 }

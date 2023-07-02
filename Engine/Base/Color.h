@@ -1,17 +1,18 @@
 #pragma once
+#include <cstdint>
 
 struct RGBA {
-	int r;
-	int g;
-	int b;
-	int a;
+	int32_t r;
+	int32_t g;
+	int32_t b;
+	int32_t a;
 };
 
 struct HSVA {
-	int h;
-	int s;
-	int v;
-	int a;
+	int32_t h;
+	int32_t s;
+	int32_t v;
+	int32_t a;
 };
 
 class Color
@@ -24,13 +25,13 @@ public:
 
 	Color() {}
 	Color(float r, float g, float b, float a) : r(r), g(g), b(b), a(a) {}
-	Color(int hexcolor);
+	Color(int32_t hexcolor);
 
 	bool operator==(const Color& o) const;
 
 	static Color convertFromHSVA(HSVA hsva) {
 		return convertFromHSVA(hsva.h, hsva.s, hsva.v, hsva.a);
 	}
-	static Color convertFromHSVA(int h, int s, int v, int a);
+	static Color convertFromHSVA(int32_t h, int32_t s, int32_t v, int32_t a);
 };
 

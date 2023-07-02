@@ -27,12 +27,12 @@ public:
 
 	//Õ“Ë‚µ‚½‘Šè‚ª‚¢‚é‚©‚Ç‚¤‚©‚ğ“¾‚é
 	bool HasCollision() {
-		return hasCollision;
+		return mHasCollision;
 	}
 
-	bool active = false;
-	std::function<void(CollisionInfo)> onCollision;
+	bool mIsActive = false;
+	std::function<void(CollisionInfo)> mFuncOnCollision;
 
 private:
-	bool hasCollision = false;
+	bool mHasCollision = false;
 };

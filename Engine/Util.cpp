@@ -4,7 +4,7 @@
 using namespace std;
 
 bool Util::debugBool = false;
-int Util::debugInt = 0;
+int32_t Util::debugInt = 0;
 
 std::chrono::high_resolution_clock::time_point Util::memTimePoint;
 double Util::memElapsedTime = 0;
@@ -51,7 +51,7 @@ vector<string> Util::StringSplit(string s, string separator)
 	return result;
 }
 
-int Util::Clamp(int i, int min, int max) {
+int32_t Util::Clamp(int32_t i, int32_t min, int32_t max) {
 	if (i < min) { return min; }
 	if (i > max) { return max; }
 	return i;
@@ -71,27 +71,24 @@ double Util::Clamp(double d, double min, double max) {
 
 wstring Util::ConvertStringToWString(string str) {
 	//必要なwchar_t配列長を得る
-	int _arraySize = MultiByteToWideChar(CP_ACP, 0, str.c_str()
+	int32_t _arraySize = MultiByteToWideChar(CP_ACP, 0, str.c_str()
 		, -1, (wchar_t*)NULL, 0);
 
 	//配列を用意する
-	wchar_t* wArray = new wchar_t[_arraySize];
+	std::vector<wchar_t> wArray;
+	wArray.resize(_arraySize);
 
 	//変換してwchar_tの配列にぶち込む
-	MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, wArray
-		, _arraySize);
+	MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, &wArray[0], _arraySize);
 
 	//wstringにする
-	std::wstring wStr(wArray, wArray + _arraySize - 1);
-
-	//配列は罪深いことにnewしてしまったのでdeleteする
-	delete[] wArray;
+	std::wstring wStr(&wArray[0], &wArray.back());
 
 	//おしまい
 	return wStr;
 }
 
-int Util::GetRand(int min, int max)
+int32_t Util::GetRand(int32_t min, int32_t max)
 {
 	std::random_device rd;
 	std::default_random_engine eng(rd());

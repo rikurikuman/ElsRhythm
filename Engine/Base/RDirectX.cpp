@@ -18,27 +18,27 @@ RDirectX* RDirectX::GetInstance() {
 
 ID3D12Device* RDirectX::GetDevice()
 {
-	return GetInstance()->device.Get();
+	return GetInstance()->mDevice.Get();
 }
 
 ID3D12GraphicsCommandList* RDirectX::GetCommandList()
 {
-	return GetInstance()->cmdList.Get();
+	return GetInstance()->mCmdList.Get();
 }
 
 ID3D12DescriptorHeap* RDirectX::GetSRVHeap()
 {
-	return GetInstance()->srvHeap.Get();
+	return GetInstance()->mSrvHeap.Get();
 }
 
 RootSignature RDirectX::GetDefRootSignature()
 {
-	return GetInstance()->rootSignature;
+	return GetInstance()->mRootSignature;
 }
 
 GraphicsPipeline RDirectX::GetDefPipeline()
 {
-	return GetInstance()->pipelineState;
+	return GetInstance()->mPipelineState;
 }
 
 void RDirectX::PreDraw()
@@ -52,8 +52,8 @@ void RDirectX::PreDraw()
 	ID3D12DescriptorHeap* _heap = TextureManager::GetInstance()->GetSRVHeap();
 	RDirectX::GetCommandList()->SetDescriptorHeaps(1, &_heap);
 
-	RDirectX::GetCommandList()->SetGraphicsRootSignature(RDirectX::GetDefRootSignature().ptr.Get());
-	RDirectX::GetCommandList()->SetPipelineState(RDirectX::GetDefPipeline().ptr.Get());
+	RDirectX::GetCommandList()->SetGraphicsRootSignature(RDirectX::GetDefRootSignature().mPtr.Get());
+	RDirectX::GetCommandList()->SetPipelineState(RDirectX::GetDefPipeline().mPtr.Get());
 }
 
 void RDirectX::PostDraw()
@@ -67,7 +67,7 @@ void RDirectX::PostDraw()
 
 size_t RDirectX::GetBackBufferSize()
 {
-	return GetInstance()->backBuffers.size();
+	return GetInstance()->mBackBuffers.size();
 }
 
 void RDirectX::Init() {
@@ -78,15 +78,15 @@ void RDirectX::InitInternal() {
 	HRESULT result;
 
 	//DXGIファクトリー生成
-	result = CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory));
+	result = CreateDXGIFactory(IID_PPV_ARGS(&mDxgiFactory));
 	assert(SUCCEEDED(result));
 
 	vector<ComPtr<IDXGIAdapter4>> adapters;
 	ComPtr<IDXGIAdapter4> tmpAdapter = nullptr;
 
 	//パフォーマンスが高い順に全てのアダプターを列挙する
-	for (UINT i = 0;
-		dxgiFactory->EnumAdapterByGpuPreference(i,
+	for (uint32_t i = 0;
+		mDxgiFactory->EnumAdapterByGpuPreference(i,
 			DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE,
 			IID_PPV_ARGS(&tmpAdapter)) != DXGI_ERROR_NOT_FOUND;
 		i++) {
@@ -120,7 +120,7 @@ void RDirectX::InitInternal() {
 
 	for (size_t i = 0; i < _countof(levels); i++) {
 		//採用したアダプターでデバイスを生成
-		result = D3D12CreateDevice(tmpAdapter.Get(), levels[i], IID_PPV_ARGS(&device));
+		result = D3D12CreateDevice(tmpAdapter.Get(), levels[i], IID_PPV_ARGS(&mDevice));
 		if (result == S_OK) {
 			featureLevel = levels[i];
 			break;
@@ -129,24 +129,24 @@ void RDirectX::InitInternal() {
 
 
 	//コマンドアロケータを生成
-	result = device->CreateCommandAllocator(
+	result = mDevice->CreateCommandAllocator(
 		D3D12_COMMAND_LIST_TYPE_DIRECT,
-		IID_PPV_ARGS(&cmdAllocator));
+		IID_PPV_ARGS(&mCmdAllocator));
 	assert(SUCCEEDED(result));
 
 
 	//コマンドリストを生成
-	result = device->CreateCommandList(0,
+	result = mDevice->CreateCommandList(0,
 		D3D12_COMMAND_LIST_TYPE_DIRECT,
-		cmdAllocator.Get(), nullptr,
-		IID_PPV_ARGS(&cmdList));
+		mCmdAllocator.Get(), nullptr,
+		IID_PPV_ARGS(&mCmdList));
 	assert(SUCCEEDED(result));
 
 
 	//コマンドキュー
 	D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
 	//生成
-	result = device->CreateCommandQueue(&commandQueueDesc, IID_PPV_ARGS(&cmdQueue));
+	result = mDevice->CreateCommandQueue(&commandQueueDesc, IID_PPV_ARGS(&mCmdQueue));
 	assert(SUCCEEDED(result));
 
 
@@ -162,10 +162,10 @@ void RDirectX::InitInternal() {
 	swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 	//生成
 	ComPtr<IDXGISwapChain1> _swapChain1;
-	result = dxgiFactory->CreateSwapChainForHwnd(
-		cmdQueue.Get(), RWindow::GetWindowHandle(), &swapChainDesc, nullptr, nullptr,
+	result = mDxgiFactory->CreateSwapChainForHwnd(
+		mCmdQueue.Get(), RWindow::GetWindowHandle(), &swapChainDesc, nullptr, nullptr,
 		&_swapChain1);
-	_swapChain1.As(&swapChain);
+	_swapChain1.As(&mSwapChain);
 	assert(SUCCEEDED(result));
 
 
@@ -174,28 +174,28 @@ void RDirectX::InitInternal() {
 	rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV; //レンダーターゲットビュー
 	rtvHeapDesc.NumDescriptors = swapChainDesc.BufferCount; //裏表の二つ
 	//生成
-	device->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(&rtvHeap));
+	mDevice->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(&mRtvHeap));
 	assert(SUCCEEDED(result));
 
 
 	//バックバッファ
-	backBuffers.resize(swapChainDesc.BufferCount);
+	mBackBuffers.resize(swapChainDesc.BufferCount);
 
 	//スワップチェーンの全てのバッファに対して処理
-	for (size_t i = 0; i < backBuffers.size(); i++) {
+	for (size_t i = 0; i < mBackBuffers.size(); i++) {
 		//スワップチェーンからバッファを取得
-		swapChain->GetBuffer((UINT)i, IID_PPV_ARGS(&backBuffers[i]));
+		mSwapChain->GetBuffer((UINT)i, IID_PPV_ARGS(&mBackBuffers[i]));
 		//デスクリプタヒープのハンドルを取得
-		D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = rtvHeap->GetCPUDescriptorHandleForHeapStart();
+		D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = mRtvHeap->GetCPUDescriptorHandleForHeapStart();
 		//裏か表かでアドレスをずらす
-		rtvHandle.ptr += i * device->GetDescriptorHandleIncrementSize(rtvHeapDesc.Type);
+		rtvHandle.ptr += i * mDevice->GetDescriptorHandleIncrementSize(rtvHeapDesc.Type);
 		//レンダーターゲットビューの設定
 		D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
 		//シェーダーの計算結果をSRGBに変換して書き込む
 		rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 		rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 		//レンダーターゲットビューの生成
-		device->CreateRenderTargetView(backBuffers[i].Get(), &rtvDesc, rtvHandle);
+		mDevice->CreateRenderTargetView(mBackBuffers[i].Get(), &rtvDesc, rtvHandle);
 	}
 
 
@@ -207,8 +207,8 @@ void RDirectX::InitInternal() {
 	srvHeapDesc.NumDescriptors = kMaxSRVCount;
 
 	//生成
-	srvHeap = nullptr;
-	result = device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvHeap));
+	mSrvHeap = nullptr;
+	result = mDevice->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&mSrvHeap));
 	assert(SUCCEEDED(result));
 
 
@@ -231,13 +231,13 @@ void RDirectX::InitInternal() {
 	depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;
 
 	//バッファ生成
-	result = device->CreateCommittedResource(
+	result = mDevice->CreateCommittedResource(
 		&depthHeapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&depthResourceDesc,
 		D3D12_RESOURCE_STATE_DEPTH_WRITE,
 		&depthClearValue,
-		IID_PPV_ARGS(&depthBuff)
+		IID_PPV_ARGS(&mDepthBuff)
 	);
 	assert(SUCCEEDED(result));
 
@@ -245,23 +245,23 @@ void RDirectX::InitInternal() {
 	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc{};
 	dsvHeapDesc.NumDescriptors = 1;
 	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV; //デプスステンシル
-	result = device->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvHeap));
+	result = mDevice->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&mDsvHeap));
 	assert(SUCCEEDED(result));
 
 	//ビュー生成
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
 	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
-	device->CreateDepthStencilView(
-		depthBuff.Get(),
+	mDevice->CreateDepthStencilView(
+		mDepthBuff.Get(),
 		&dsvDesc,
-		dsvHeap->GetCPUDescriptorHandleForHeapStart()
+		mDsvHeap->GetCPUDescriptorHandleForHeapStart()
 	);
 
 
 	//フェンスの生成
-	UINT64 fenceVal = 0;
-	result = device->CreateFence(fenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
+	size_t fenceVal_ = 0;
+	result = mDevice->CreateFence(fenceVal_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&mFence));
 
 	//ルートシグネチャ
 	// デスクリプタレンジの設定
@@ -311,41 +311,41 @@ void RDirectX::InitInternal() {
 	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL; //ピクセルシェーダーからだけ見える
 
 	// ルートシグネチャの設定
-	rootSignature.desc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-	rootSignature.desc.RootParamaters = rootParams;
-	rootSignature.desc.StaticSamplers = StaticSamplerDescs{samplerDesc};
+	mRootSignature.mDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+	mRootSignature.mDesc.RootParamaters = rootParams;
+	mRootSignature.mDesc.StaticSamplers = StaticSamplerDescs{samplerDesc};
 
-	rootSignature.Create();
+	mRootSignature.Create();
 
 	//Basicシェーダ達の読み込みとコンパイル
-	basicVS = Shader("Shader/BasicVS.hlsl", "main", "vs_5_0");
-	if (!basicVS.succeeded) {
+	mBasicVS = Shader("Shader/BasicVS.hlsl", "main", "vs_5_0");
+	if (!mBasicVS.mSucceeded) {
 		string error;
-		error.resize(basicVS.errorBlob->GetBufferSize());
+		error.resize(mBasicVS.mErrorBlob->GetBufferSize());
 
-		copy_n((char*)basicVS.errorBlob->GetBufferPointer(),
-			basicVS.errorBlob->GetBufferSize(),
+		copy_n((char*)mBasicVS.mErrorBlob->GetBufferPointer(),
+			mBasicVS.mErrorBlob->GetBufferSize(),
 			error.begin());
 		error += "\n";
 		OutputDebugStringA(error.c_str());
 		assert(0);
 	}
 
-	basicPS = Shader("Shader/BasicPS.hlsl", "main", "ps_5_0");
-	if (!basicPS.succeeded) {
+	mBasicPS = Shader("Shader/BasicPS.hlsl", "main", "ps_5_0");
+	if (!mBasicPS.mSucceeded) {
 		string error;
-		error.resize(basicPS.errorBlob->GetBufferSize());
+		error.resize(mBasicPS.mErrorBlob->GetBufferSize());
 
-		copy_n((char*)basicPS.errorBlob->GetBufferPointer(),
-			basicPS.errorBlob->GetBufferSize(),
+		copy_n((char*)mBasicPS.mErrorBlob->GetBufferPointer(),
+			mBasicPS.mErrorBlob->GetBufferSize(),
 			error.begin());
 		error += "\n";
 		OutputDebugStringA(error.c_str());
 		assert(0);
 	}
 
-	Shader::Register("basicVS", basicVS);
-	Shader::Register("basicPS", basicPS);
+	Shader::Register("basicVS", mBasicVS);
+	Shader::Register("basicPS", mBasicPS);
 
 	// グラフィックスパイプライン設定
 	InputLayout inputLayout = {
@@ -367,20 +367,20 @@ void RDirectX::InitInternal() {
 	};
 
 	// シェーダーの設定
-	pipelineState.desc.VS = basicVS;
-	pipelineState.desc.PS = basicPS;
+	mPipelineState.mDesc.VS = mBasicVS;
+	mPipelineState.mDesc.PS = mBasicPS;
 
 	// サンプルマスクの設定
-	pipelineState.desc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK; //標準
+	mPipelineState.mDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK; //標準
 
 	// ラスタライザの設定
-	pipelineState.desc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK; //背面カリング
-	pipelineState.desc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
-	pipelineState.desc.RasterizerState.DepthClipEnable = true;
-	pipelineState.desc.BlendState.AlphaToCoverageEnable = true;
+	mPipelineState.mDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK; //背面カリング
+	mPipelineState.mDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
+	mPipelineState.mDesc.RasterizerState.DepthClipEnable = true;
+	mPipelineState.mDesc.BlendState.AlphaToCoverageEnable = true;
 
 	// ブレンドステート(半透明合成)
-	D3D12_RENDER_TARGET_BLEND_DESC& blenddesc = pipelineState.desc.BlendState.RenderTarget[0];
+	D3D12_RENDER_TARGET_BLEND_DESC& blenddesc = mPipelineState.mDesc.BlendState.RenderTarget[0];
 	blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL; //RGBA全てのチャンネルを描画
 	blenddesc.BlendEnable = true;
 	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;
@@ -391,61 +391,61 @@ void RDirectX::InitInternal() {
 	blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
 
 	// 頂点レイアウトの設定
-	pipelineState.desc.InputLayout = inputLayout;
+	mPipelineState.mDesc.InputLayout = inputLayout;
 
 	// 図形の形状設定
-	pipelineState.desc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+	mPipelineState.mDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 
 	// デプスステンシルステート設定
-	pipelineState.desc.DepthStencilState.DepthEnable = true;
-	pipelineState.desc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
-	pipelineState.desc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
-	pipelineState.desc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
+	mPipelineState.mDesc.DepthStencilState.DepthEnable = true;
+	mPipelineState.mDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	mPipelineState.mDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
+	mPipelineState.mDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
 
 	// その他の設定
-	pipelineState.desc.NumRenderTargets = 1;
-	pipelineState.desc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-	pipelineState.desc.SampleDesc.Count = 1; //1ピクセルにつき1回サンプリング
+	mPipelineState.mDesc.NumRenderTargets = 1;
+	mPipelineState.mDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	mPipelineState.mDesc.SampleDesc.Count = 1; //1ピクセルにつき1回サンプリング
 
 	//セット
-	pipelineState.desc.pRootSignature = rootSignature.ptr.Get();
+	mPipelineState.mDesc.pRootSignature = mRootSignature.mPtr.Get();
 
-	pipelineState.Create();
+	mPipelineState.Create();
 }
 
 UINT RDirectX::GetCurrentBackBufferIndex() {
-	return GetInstance()->swapChain->GetCurrentBackBufferIndex();
+	return GetInstance()->mSwapChain->GetCurrentBackBufferIndex();
 }
 
 ID3D12Resource* RDirectX::GetCurrentBackBufferResource() {
-	return GetInstance()->backBuffers[GetCurrentBackBufferIndex()].Get();
+	return GetInstance()->mBackBuffers[GetCurrentBackBufferIndex()].Get();
 }
 
 D3D12_CPU_DESCRIPTOR_HANDLE RDirectX::GetCurrentBackBufferHandle() {
 	RDirectX* instance = GetInstance();
 
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = instance->rtvHeap->GetCPUDescriptorHandleForHeapStart();
-	rtvHandle.ptr += static_cast<size_t>(GetCurrentBackBufferIndex()) * instance->device->GetDescriptorHandleIncrementSize(instance->rtvHeap->GetDesc().Type);
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = instance->mRtvHeap->GetCPUDescriptorHandleForHeapStart();
+	rtvHandle.ptr += static_cast<size_t>(GetCurrentBackBufferIndex()) * instance->mDevice->GetDescriptorHandleIncrementSize(instance->mRtvHeap->GetDesc().Type);
 
 	return rtvHandle;
 }
 
 D3D12_CPU_DESCRIPTOR_HANDLE RDirectX::GetBackBufferDSVHandle()
 {
-	return GetInstance()->dsvHeap->GetCPUDescriptorHandleForHeapStart();
+	return GetInstance()->mDsvHeap->GetCPUDescriptorHandleForHeapStart();
 }
 
-void RDirectX::OpenResorceBarrier(ID3D12Resource* resource) {
+void RDirectX::OpenResorceBarrier(ID3D12Resource* mResource) {
 	D3D12_RESOURCE_BARRIER barrierDesc{};
-	barrierDesc.Transition.pResource = resource;
+	barrierDesc.Transition.pResource = mResource;
 	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT; //Before:表示から
 	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; //After:描画へ
 	RDirectX::GetCommandList()->ResourceBarrier(1, &barrierDesc);
 }
 
-void RDirectX::CloseResourceBarrier(ID3D12Resource* resource) {
+void RDirectX::CloseResourceBarrier(ID3D12Resource* mResource) {
 	D3D12_RESOURCE_BARRIER barrierDesc{};
-	barrierDesc.Transition.pResource = resource;
+	barrierDesc.Transition.pResource = mResource;
 	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET; //Before:描画から
 	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT; //After:表示へ
 	RDirectX::GetCommandList()->ResourceBarrier(1, &barrierDesc);
@@ -456,9 +456,9 @@ void RDirectX::ClearBackBuffer(Color color)
 	RDirectX* instance = GetInstance();
 
 	FLOAT clearColor[] = { color.r, color.g, color.b, color.r };
-	instance->cmdList->ClearRenderTargetView(GetCurrentBackBufferHandle(), clearColor, 0, nullptr);
-	instance->cmdList->ClearDepthStencilView(
-		instance->dsvHeap->GetCPUDescriptorHandleForHeapStart(),
+	instance->mCmdList->ClearRenderTargetView(GetCurrentBackBufferHandle(), clearColor, 0, nullptr);
+	instance->mCmdList->ClearDepthStencilView(
+		instance->mDsvHeap->GetCPUDescriptorHandleForHeapStart(),
 		D3D12_CLEAR_FLAG_DEPTH,
 		1.0f, 0, 0, nullptr);
 }
@@ -469,21 +469,21 @@ void RDirectX::RunDraw() {
 	RDirectX* instance = GetInstance();
 
 	//命令のクローズ
-	result = instance->cmdList->Close();
+	result = instance->mCmdList->Close();
 	assert(SUCCEEDED(result));
 	//コマンドリストの実行
-	ID3D12CommandList* cmdLists[] = { instance->cmdList.Get() };
-	instance->cmdQueue->ExecuteCommandLists(1, cmdLists);
+	ID3D12CommandList* cmdLists[] = { instance->mCmdList.Get() };
+	instance->mCmdQueue->ExecuteCommandLists(1, cmdLists);
 
 	//フリップ
-	result = instance->swapChain->Present(1, 0);
+	result = instance->mSwapChain->Present(1, 0);
 	assert(SUCCEEDED(result));
 
-	instance->cmdQueue->Signal(instance->fence.Get(), ++instance->fenceVal);
-	if (instance->fence->GetCompletedValue() != instance->fenceVal) {
+	instance->mCmdQueue->Signal(instance->mFence.Get(), ++instance->mFenceVal);
+	if (instance->mFence->GetCompletedValue() != instance->mFenceVal) {
 		HANDLE event = CreateEvent(nullptr, false, false, nullptr);
 		if (event != NULL) {
-			instance->fence->SetEventOnCompletion(instance->fenceVal, event);
+			instance->mFence->SetEventOnCompletion(instance->mFenceVal, event);
 			WaitForSingleObject(event, INFINITE);
 			CloseHandle(event);
 		}
@@ -493,10 +493,10 @@ void RDirectX::RunDraw() {
 	}
 
 	//キューをクリア
-	result = instance->cmdAllocator->Reset();
+	result = instance->mCmdAllocator->Reset();
 	assert(SUCCEEDED(result));
 	// 再びコマンドリストを貯める準備
-	result = instance->cmdList->Reset(instance->cmdAllocator.Get(), nullptr);
+	result = instance->mCmdList->Reset(instance->mCmdAllocator.Get(), nullptr);
 	assert(SUCCEEDED(result));
 
 	TextureManager::EndFrameProcess();

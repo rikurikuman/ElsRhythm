@@ -11,19 +11,19 @@ Shader::Shader(std::string filename, std::string entrypoint, std::string target)
 		entrypoint.c_str(), target.c_str(), //エントリ名、シェーダーモデル指定
 		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, //デバッグ用
 		0,
-		&shaderBlob, &errorBlob);
-	succeeded = SUCCEEDED(result);
+		&mShaderBlob, &mErrorBlob);
+	mSucceeded = SUCCEEDED(result);
 }
 
 void Shader::Register(std::string id, Shader shader)
 {
-	ShaderRegister::GetInstance()->shaderRegister[id] = shader;
+	ShaderRegister::GetInstance()->mShaderRegister[id] = shader;
 }
 
 Shader Shader::GetOrCreate(std::string id, std::string filename, std::string entrypoint, std::string target)
 {
 	Shader res = GetRegistered(id);
-	if (!res.succeeded) {
+	if (!res.mSucceeded) {
 		res = Shader(filename, entrypoint, target);
 		Register(id, res);
 	}
@@ -32,7 +32,7 @@ Shader Shader::GetOrCreate(std::string id, std::string filename, std::string ent
 
 Shader Shader::GetRegistered(std::string id)
 {
-	std::unordered_map<std::string, Shader>& map = ShaderRegister::GetInstance()->shaderRegister;
+	std::unordered_map<std::string, Shader>& map = ShaderRegister::GetInstance()->mShaderRegister;
 	if (map.find(id) == map.end()) {
 		return Shader();
 	}

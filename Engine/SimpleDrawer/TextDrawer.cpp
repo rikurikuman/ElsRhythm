@@ -4,17 +4,17 @@
 
 using namespace std;
 
-FontTexture TextDrawer::GetFontTexture(std::string glyph, std::string fontTypeFace, UINT fontSize, bool useAlign)
+FontTexture TextDrawer::GetFontTexture(std::string glyph, std::string fontTypeFace, uint32_t fontSize, bool useAlign)
 {
 	wstring wGlyph = Util::ConvertStringToWString(glyph);
 	wstring wFontTypeFace = Util::ConvertStringToWString(fontTypeFace);
 	return GetFontTexture(wGlyph, wFontTypeFace, fontSize, useAlign);
 }
 
-FontTexture TextDrawer::GetFontTexture(std::wstring glyph, std::wstring fontTypeFace, UINT fontSize, bool useAlign)
+FontTexture TextDrawer::GetFontTexture(std::wstring glyph, std::wstring fontTypeFace, uint32_t fontSize, bool useAlign)
 {
 	TextDrawer* drawer = GetInstance();
-	lock_guard<recursive_mutex> lock(drawer->mutex);
+	lock_guard<recursive_mutex> lock(drawer->mMutex);
 
 	if (glyph.length() != 1) {
 		return FontTexture();
@@ -22,8 +22,8 @@ FontTexture TextDrawer::GetFontTexture(std::wstring glyph, std::wstring fontType
 
 	Glyph glyphData = { glyph, fontTypeFace, fontSize };
 
-	auto itr = drawer->glyphMap.find(glyphData);
-	if (itr != drawer->glyphMap.end()) {
+	auto itr = drawer->mGlyphMap.find(glyphData);
+	if (itr != drawer->mGlyphMap.end()) {
 		return itr->second;
 	}
 
@@ -35,41 +35,43 @@ FontTexture TextDrawer::GetFontTexture(std::wstring glyph, std::wstring fontType
 
 	HDC hdc = GetDC(NULL);
 	HFONT oldFont = (HFONT)SelectObject(hdc, _font);
-	UINT code = (UINT)*glyph.c_str();
+	uint32_t code = (uint32_t)*glyph.c_str();
 
 #ifdef _DEBUG
 	OutputDebugString((glyph + L"\n").c_str());
 #endif
 
 	DWORD size = GetGlyphOutline(hdc, code, GGO_GRAY4_BITMAP, &gm, 0, NULL, &Mat);
-	BYTE* ptr = new BYTE[size];
+	vector<BYTE> buffer;
+	buffer.resize(size);
 	GetTextMetrics(hdc, &tm);
-	GetGlyphOutline(hdc, code, GGO_GRAY4_BITMAP, &gm, size, ptr, &Mat);
+	GetGlyphOutline(hdc, code, GGO_GRAY4_BITMAP, &gm, size, &buffer[0], &Mat);
 
 	// オブジェクトの開放
 	SelectObject(hdc, oldFont);
 	DeleteObject(_font);
 	ReleaseDC(NULL, hdc);
 
-	int fontWidth = (gm.gmBlackBoxX + 3) / 4 * 4;
-	int fontHeight = size / fontWidth;
+	int32_t fontWidth = (gm.gmBlackBoxX + 3) / 4 * 4;
+	int32_t fontHeight = size / fontWidth;
 
-	int baseLineY = tm.tmAscent;
-	int glyphOriginY = 0;
+	int32_t baseLineY = tm.tmAscent;
+	int32_t glyphOriginY = 0;
 
 	if (useAlign) {
 		glyphOriginY = baseLineY - gm.gmptGlyphOrigin.y;
 		fontHeight = glyphOriginY + fontHeight;
 	}
 
-	int fontDataCount = fontWidth * fontHeight;
+	int32_t fontDataCount = fontWidth * fontHeight;
 
 #ifdef _DEBUG
 	OutputDebugString((wstring(L"fontWidth: ") + to_wstring(fontWidth) + L"(" + to_wstring(gm.gmBlackBoxX) + L")\n").c_str());
 	OutputDebugString((wstring(L"fontHeight: ") + to_wstring(fontHeight) + L"(" + to_wstring(size / fontWidth) + L")\n").c_str());
 #endif
 
-	Color* imageData = new Color[fontDataCount];
+	vector<Color> imageData;
+	imageData.resize(fontDataCount);
 	for (size_t i = 0; i < fontDataCount; i++) {
 		imageData[i] = Color(0, 0, 0, 0);
 	}
@@ -81,7 +83,7 @@ FontTexture TextDrawer::GetFontTexture(std::wstring glyph, std::wstring fontType
 		size_t access = (posY * fontWidth) + posX;
 		assert(access < fontDataCount);
 
-		float grayScale = (float)ptr[i];
+		float grayScale = (float)buffer[i];
 		imageData[access].r = 1.0f;
 		imageData[access].g = 1.0f;
 		imageData[access].b = 1.0f;
@@ -117,28 +119,25 @@ FontTexture TextDrawer::GetFontTexture(std::wstring glyph, std::wstring fontType
 		&textureResourceDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&ftex.texture.resource)
+		IID_PPV_ARGS(&ftex.texture.mResource)
 	);
 	assert(SUCCEEDED(result));
 
-	result = ftex.texture.resource->WriteToSubresource(
+	result = ftex.texture.mResource->WriteToSubresource(
 		0,
 		nullptr,
-		imageData,
+		&imageData[0],
 		sizeof(Color) * fontWidth,
 		sizeof(Color) * fontDataCount
 	);
 	assert(SUCCEEDED(result));
 
-	delete[] ptr;
-	delete[] imageData;
-
-	drawer->glyphMap[glyphData] = ftex;
+	drawer->mGlyphMap[glyphData] = ftex;
 
 	return ftex;
 }
 
-TextureHandle TextDrawer::CreateStringTexture(std::string text, std::string fontTypeFace, UINT fontSize, std::string handle)
+TextureHandle TextDrawer::CreateStringTexture(std::string text, std::string fontTypeFace, uint32_t fontSize, std::string handle)
 {
 	wstring wText = Util::ConvertStringToWString(text);
 	wstring _wTypeFace = Util::ConvertStringToWString(fontTypeFace);
@@ -149,41 +148,44 @@ TextureHandle TextDrawer::CreateStringTexture(std::string text, std::string font
 		glyphlist.push_back(GetFontTexture(wText.substr(i, 1), _wTypeFace, fontSize, true));
 	}
 
-	UINT64 originPos = 0;
-	UINT64 textureWidth = 0;
-	UINT textureHeight = 0;
+	size_t originPos = 0;
+	size_t textureWidth = 0;
+	uint32_t textureHeight = 0;
 
 	for (FontTexture fTex : glyphlist) {
 		originPos += fTex.gm.gmptGlyphOrigin.x;
-		textureWidth += fTex.texture.resource->GetDesc().Width;
+		textureWidth += fTex.texture.mResource->GetDesc().Width;
 		originPos += fTex.gm.gmCellIncX;
 		if (textureWidth < originPos) {
 			textureWidth += originPos - textureWidth;
 		}
 
-		UINT height = fTex.texture.resource->GetDesc().Height;
+		uint32_t height = fTex.texture.mResource->GetDesc().Height;
 		if (textureHeight < height) {
 			textureHeight = height;
 		}
 	}
 
-	UINT64 imageDataCount = textureWidth * textureHeight;
+	size_t imageDataCount = textureWidth * textureHeight;
 
-	Color* imageData = new Color[imageDataCount];
+	vector<Color> imageData;
+	imageData.resize(imageDataCount);
 	for (size_t i = 0; i < imageDataCount; i++) {
 		imageData[i] = Color(0, 0, 0, 0);
 	}
 
-	UINT64 currentPos = 0; //現在の原点位置
+	size_t currentPos = 0; //現在の原点位置
 
 	for (FontTexture tex : glyphlist) {
-		size_t _width = tex.texture.resource->GetDesc().Width;
-		size_t _height = tex.texture.resource->GetDesc().Height;
+		size_t _width = tex.texture.mResource->GetDesc().Width;
+		size_t _height = tex.texture.mResource->GetDesc().Height;
 		size_t _dataCount = _width * _height;
 
-		Color* _image = new Color[_dataCount];
+		vector<Color> _image;
+		_image.resize(_dataCount);
 
-		HRESULT result = tex.texture.resource->ReadFromSubresource(_image, (UINT)(sizeof(Color) * _width), (UINT)(sizeof(Color) * _height), 0, nullptr);
+		HRESULT result;
+		result = tex.texture.mResource->ReadFromSubresource(&_image[0], (UINT)(sizeof(Color) * _width), (UINT)(sizeof(Color) * _height), 0, nullptr);
 		assert(SUCCEEDED(result));
 
 		for (size_t i = 0; i < _dataCount; i++) {
@@ -200,14 +202,12 @@ TextureHandle TextDrawer::CreateStringTexture(std::string text, std::string font
 		}
 
 		currentPos += tex.gm.gmCellIncX;
-
-		delete[] _image;
 	}
 
-	Texture texture = Texture();
+	Texture texture = Texture(D3D12_RESOURCE_STATE_GENERIC_READ);
 
 	// テクスチャバッファ
-	// ヒープ設定
+	// ヒープ設定s
 	D3D12_HEAP_PROPERTIES textureHeapProp{};
 	textureHeapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
 	textureHeapProp.CPUPageProperty =
@@ -231,20 +231,18 @@ TextureHandle TextDrawer::CreateStringTexture(std::string text, std::string font
 		&textureResourceDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&texture.resource)
+		IID_PPV_ARGS(&texture.mResource)
 	);
 	assert(SUCCEEDED(result));
 
-	result = texture.resource->WriteToSubresource(
+	result = texture.mResource->WriteToSubresource(
 		0,
 		nullptr,
-		imageData,
+		&imageData[0],
 		sizeof(Color) * (UINT)textureWidth,
 		sizeof(Color) * (UINT)imageDataCount
 	);
 	assert(SUCCEEDED(result));
-
-	delete[] imageData;
 
 	string _handle = handle;
 	if (_handle.empty()) {
@@ -260,8 +258,8 @@ bool TextDrawer::LoadFontFromFile(std::string path)
 
 void TextDrawer::Init()
 {
-	pipeline = RDirectX::GetDefPipeline();
-	pipeline.desc.DepthStencilState.DepthEnable = true;
-	pipeline.desc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
-	pipeline.Create();
+	mPipeline = RDirectX::GetDefPipeline();
+	mPipeline.mDesc.DepthStencilState.DepthEnable = true;
+	mPipeline.mDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
+	mPipeline.Create();
 }

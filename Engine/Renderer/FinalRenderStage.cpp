@@ -14,15 +14,15 @@ void FinalRenderStage::Init()
 	};
 
 	//頂点インデックスデータ
-	UINT indices[] = {
+	uint32_t indices[] = {
 		0, 1, 2,
 		1, 3, 2
 	};
 
-	vertBuff.Init(vertices, _countof(vertices));
-	indexBuff.Init(indices, _countof(indices));
+	mVertBuff.Init(vertices, _countof(vertices));
+	mIndexBuff.Init(indices, _countof(indices));
 
-	rootSignature = RDirectX::GetDefRootSignature();
+	mRootSignature = RDirectX::GetDefRootSignature();
 
 	// デスクリプタレンジの設定
 	DescriptorRange descriptorRange{};
@@ -38,7 +38,7 @@ void FinalRenderStage::Init()
 	rootParams[0].DescriptorTable = DescriptorRanges{ descriptorRange };
 	rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL; //全シェーダから見える
 
-	rootSignature.desc.RootParamaters = rootParams;
+	mRootSignature.mDesc.RootParamaters = rootParams;
 
 	StaticSamplerDesc samplerDesc{};
 	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
@@ -50,24 +50,24 @@ void FinalRenderStage::Init()
 	samplerDesc.MinLOD = 0.0f; //ミップマップ最小値
 	samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
 	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL; //ピクセルシェーダーからだけ見える
-	rootSignature.desc.StaticSamplers = StaticSamplerDescs{ samplerDesc };
-	rootSignature.Create();
+	mRootSignature.mDesc.StaticSamplers = StaticSamplerDescs{ samplerDesc };
+	mRootSignature.Create();
 
-	pipelineState = RDirectX::GetDefPipeline();
+	mPipelineState = RDirectX::GetDefPipeline();
 
-	pipelineState.desc.VS = Shader("./Shader/FinalVS.hlsl", "main", "vs_5_0");
-	pipelineState.desc.PS = Shader("./Shader/FinalPS.hlsl", "main", "ps_5_0");
+	mPipelineState.mDesc.VS = Shader("./Shader/FinalVS.hlsl", "main", "vs_5_0");
+	mPipelineState.mDesc.PS = Shader("./Shader/FinalPS.hlsl", "main", "ps_5_0");
 
 	// ラスタライザの設定
-	pipelineState.desc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
-	pipelineState.desc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
-	pipelineState.desc.RasterizerState.DepthClipEnable = false;
-	pipelineState.desc.BlendState.AlphaToCoverageEnable = false;
+	mPipelineState.mDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+	mPipelineState.mDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
+	mPipelineState.mDesc.RasterizerState.DepthClipEnable = false;
+	mPipelineState.mDesc.BlendState.AlphaToCoverageEnable = false;
 
-	pipelineState.desc.DepthStencilState.DepthEnable = false;
-	pipelineState.desc.pRootSignature = rootSignature.ptr.Get();
+	mPipelineState.mDesc.DepthStencilState.DepthEnable = false;
+	mPipelineState.mDesc.pRootSignature = mRootSignature.mPtr.Get();
 
-	pipelineState.Create();
+	mPipelineState.Create();
 }
 
 void FinalRenderStage::Render()
@@ -91,11 +91,11 @@ void FinalRenderStage::Render()
 	RDirectX::GetCommandList()->RSSetViewports(1, &viewport);
 	RDirectX::GetCommandList()->RSSetScissorRects(1, &scissorRect);
 
-	RDirectX::GetCommandList()->SetGraphicsRootSignature(rootSignature.ptr.Get());
-	RDirectX::GetCommandList()->SetPipelineState(pipelineState.ptr.Get());
-	RDirectX::GetCommandList()->IASetVertexBuffers(0, 1, &vertBuff.view);
-	RDirectX::GetCommandList()->IASetIndexBuffer(&indexBuff.view);
+	RDirectX::GetCommandList()->SetGraphicsRootSignature(mRootSignature.mPtr.Get());
+	RDirectX::GetCommandList()->SetPipelineState(mPipelineState.mPtr.Get());
+	RDirectX::GetCommandList()->IASetVertexBuffers(0, 1, &mVertBuff.mView);
+	RDirectX::GetCommandList()->IASetIndexBuffer(&mIndexBuff.mView);
 
-	RDirectX::GetCommandList()->SetGraphicsRootDescriptorTable(0, TextureManager::Get(RenderTarget::GetRenderTargetTexture("RenderingImage")->texHandle).gpuHandle);
+	RDirectX::GetCommandList()->SetGraphicsRootDescriptorTable(0, TextureManager::Get(RenderTarget::GetRenderTexture("RenderingImage")->mTexHandle).mGpuHandle);
 	RDirectX::GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
 }

@@ -8,20 +8,20 @@
 class LightGroup
 {
 public:
-	static LightGroup* nowLight;
-	static constexpr int directionalLightNum = 8;
-	static constexpr int pointLightNum = 8;
-	static constexpr int spotLightNum = 8;
+	static LightGroup* sNowLight;
+	static constexpr int32_t DIRECTIONAL_LIGHT_NUM = 8;
+	static constexpr int32_t POINT_LIGHT_NUM = 8;
+	static constexpr int32_t SPOT_LIGHT_NUM = 8;
 
 	struct LightGroupBuffer {
 		Vector3 ambientColor;
 		float pad;
-		DirectionalLight::LightBuffer directionalLights[directionalLightNum];
-		PointLight::LightBuffer pointLights[pointLightNum];
-		SpotLight::LightBuffer spotLights[spotLightNum];
+		DirectionalLight::LightBuffer directionalLights[DIRECTIONAL_LIGHT_NUM];
+		PointLight::LightBuffer pointLights[POINT_LIGHT_NUM];
+		SpotLight::LightBuffer spotLights[SPOT_LIGHT_NUM];
 	};
 
-	RConstBuffer<LightGroupBuffer> buffer;
+	RConstBuffer<LightGroupBuffer> mBuffer;
 
 	LightGroup() {
 		SetDefault();
@@ -40,96 +40,96 @@ public:
 	Vector3 GetAmbientColor();
 
 	//平行光源のアクティブ状態を設定する
-	void SetDirectionalLightActive(int index, bool active);
+	void SetDirectionalLightActive(int32_t index, bool active);
 
 	//平行光源のアクティブ状態を得る
-	bool GetDirectionalLightActive(int index);
+	bool GetDirectionalLightActive(int32_t index);
 
 	//平行光源の方向を設定する
-	void SetDirectionalLightVec(int index, Vector3 vec);
+	void SetDirectionalLightVec(int32_t index, Vector3 vec);
 
 	//平行光源の方向を得る
-	Vector3 GetDirectionalLightVec(int index);
+	Vector3 GetDirectionalLightVec(int32_t index);
 
 	//平行光源の色を設定する
-	void SetDirectionalLightColor(int index, Color color);
+	void SetDirectionalLightColor(int32_t index, Color color);
 
 	//平行光源の色を得る
-	Color GetDirectionalLightColor(int index);
+	Color GetDirectionalLightColor(int32_t index);
 
 	//点光源のアクティブ状態を設定する
-	void SetPointLightActive(int index, bool active);
+	void SetPointLightActive(int32_t index, bool active);
 
 	//点光源のアクティブ状態を得る
-	bool GetPointLightActive(int index);
+	bool GetPointLightActive(int32_t index);
 
 	//点光源の座標を設定する
-	void SetPointLightPos(int index, Vector3 pos);
+	void SetPointLightPos(int32_t index, Vector3 pos);
 
 	//点光源の座標を得る
-	Vector3 GetPointLightPos(int index);
+	Vector3 GetPointLightPos(int32_t index);
 
 	//点光源の色を設定する
-	void SetPointLightColor(int index, Color color);
+	void SetPointLightColor(int32_t index, Color color);
 
 	//点光源の色を得る
-	Color GetPointLightColor(int index);
+	Color GetPointLightColor(int32_t index);
 
 	//点光源の減衰係数を設定する
-	void SetPointLightAtten(int index, Vector3 atten);
+	void SetPointLightAtten(int32_t index, Vector3 atten);
 
 	//点光源の減衰係数を得る
-	Vector3 GetPointLightAtten(int index);
+	Vector3 GetPointLightAtten(int32_t index);
 
 	//スポットライトのアクティブ状態を設定する
-	void SetSpotLightActive(int index, bool active);
+	void SetSpotLightActive(int32_t index, bool active);
 
 	//スポットライトのアクティブ状態を得る
-	bool GetSpotLightActive(int index);
+	bool GetSpotLightActive(int32_t index);
 
 	//スポットライトの座標を設定する
-	void SetSpotLightPos(int index, Vector3 pos);
+	void SetSpotLightPos(int32_t index, Vector3 pos);
 
 	//スポットライトの座標を得る
-	Vector3 GetSpotLightPos(int index);
+	Vector3 GetSpotLightPos(int32_t index);
 
 	//スポットライトの向きを設定する
-	void SetSpotLightDirection(int index, Vector3 dir);
+	void SetSpotLightDirection(int32_t index, Vector3 dir);
 
 	//スポットライトの座標を得る
-	Vector3 GetSpotLightDirection(int index);
+	Vector3 GetSpotLightDirection(int32_t index);
 
 	//スポットライトの色を設定する
-	void SetSpotLightColor(int index, Color color);
+	void SetSpotLightColor(int32_t index, Color color);
 
 	//スポットライトの色を得る
-	Color GetSpotLightColor(int index);
+	Color GetSpotLightColor(int32_t index);
 
 	//スポットライトの減衰係数を設定する
-	void SetSpotLightAtten(int index, Vector3 atten);
+	void SetSpotLightAtten(int32_t index, Vector3 atten);
 
 	//スポットライトの減衰係数を得る
-	Vector3 GetSpotLightAtten(int index);
+	Vector3 GetSpotLightAtten(int32_t index);
 
 	//スポットライトの減衰角度を設定する
-	void SetSpotLightFactorAngle(int index, Vector2 factorAngle);
+	void SetSpotLightFactorAngle(int32_t index, Vector2 factorAngle);
 
 	//スポットライトの減衰角度を得る
-	Vector2 GetSpotLightFactorAngle(int index);
+	Vector2 GetSpotLightFactorAngle(int32_t index);
 
 private:
 	//環境光の色
-	Vector3 ambientColor = { 1, 1, 1 };
+	Vector3 mAmbientColor = { 1, 1, 1 };
 
 	//平行光源配列
-	DirectionalLight directionalLights[directionalLightNum];
+	DirectionalLight mDirectionalLights[DIRECTIONAL_LIGHT_NUM];
 
 	//点光源配列
-	PointLight pointLights[pointLightNum];
+	PointLight mPointLights[POINT_LIGHT_NUM];
 
 	//スポットライト配列
-	SpotLight spotLights[spotLightNum];
+	SpotLight mSpotLights[SPOT_LIGHT_NUM];
 
 	//更新フラグ
-	bool change = false;
+	bool mChangeFlag = false;
 };

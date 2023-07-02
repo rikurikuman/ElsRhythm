@@ -231,9 +231,6 @@
     <ClCompile Include="Engine\Base\Vertex.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Collision\Colliders.cpp">
       <Filter>ソース ファイル\Engine\Collision</Filter>
     </ClCompile>
@@ -251,9 +248,6 @@
     </ClCompile>
     <ClCompile Include="Engine\Base\RenderTarget.cpp">
       <Filter>ソース ファイル\Engine\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\PostEffect\PostEffect.cpp">
-      <Filter>ソース ファイル\Engine\PostEffect</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Renderer\IRenderStage.cpp">
       <Filter>ソース ファイル\Engine\Renderer</Filter>
@@ -297,8 +291,41 @@
     <ClCompile Include="Engine\Math\Float4.cpp">
       <Filter>ソース ファイル\Engine\Math</Filter>
     </ClCompile>
+    <ClCompile Include="Application\Note.cpp">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\BeatUtil.cpp">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ChartFile.cpp">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\RhythmGameController.cpp">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\PostEffect\MultiRenderTest.cpp">
+      <Filter>ソース ファイル\Engine\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\PostEffect\CrossFilter.cpp">
+      <Filter>ソース ファイル\Engine\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\PostEffect\DepthTest.cpp">
+      <Filter>ソース ファイル\Engine\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\CollidersScene.cpp">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ControllerScene.cpp">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
     <ClCompile Include="Application\SimpleSceneTransition.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SpriteScene.cpp">
+      <Filter>ソース ファイル\Application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -390,6 +417,30 @@
       <Filter>シェーダー ファイル</Filter>
     </FxCompile>
     <FxCompile Include="Shader\SimpleMeshVS.hlsl">
+      <Filter>シェーダー ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\DepthTestPS.hlsl">
+      <Filter>シェーダー ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\DepthTestVS.hlsl">
+      <Filter>シェーダー ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\LinearBlurPS.hlsl">
+      <Filter>シェーダー ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\LinearBlurVS.hlsl">
+      <Filter>シェーダー ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\MultiRenderTestAPS.hlsl">
+      <Filter>シェーダー ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\MultiRenderTestAVS.hlsl">
+      <Filter>シェーダー ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\MultiRenderTestBPS.hlsl">
+      <Filter>シェーダー ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\MultiRenderTestBVS.hlsl">
       <Filter>シェーダー ファイル</Filter>
     </FxCompile>
   </ItemGroup>
@@ -559,9 +610,6 @@
     <ClInclude Include="Engine\Base\RenderTarget.h">
       <Filter>ヘッダー ファイル\Engine\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\PostEffect\PostEffect.h">
-      <Filter>ヘッダー ファイル\Engine\PostEffect</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Renderer\IRenderStage.h">
       <Filter>ヘッダー ファイル\Engine\Renderer</Filter>
     </ClInclude>
@@ -610,8 +658,38 @@
     <ClInclude Include="Engine\Math\Float4.h">
       <Filter>ヘッダー ファイル\Engine\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Application\BeatUtil.h">
+      <Filter>ヘッダー ファイル\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ChartFile.h">
+      <Filter>ヘッダー ファイル\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\RhythmGameController.h">
+      <Filter>ヘッダー ファイル\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Note.h">
+      <Filter>ヘッダー ファイル\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\PostEffect\MultiRenderTest.h">
+      <Filter>ヘッダー ファイル\Engine\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\PostEffect\CrossFilter.h">
+      <Filter>ヘッダー ファイル\Engine\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\PostEffect\DepthTest.h">
+      <Filter>ヘッダー ファイル\Engine\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\CollidersScene.h">
+      <Filter>ヘッダー ファイル\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ControllerScene.h">
+      <Filter>ヘッダー ファイル\Application</Filter>
+    </ClInclude>
     <ClInclude Include="Application\SimpleSceneTransition.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SpriteScene.h">
+      <Filter>ヘッダー ファイル\Application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -655,6 +733,15 @@
       <Filter>シェーダー ファイル</Filter>
     </None>
     <None Include="Shader\SimpleMesh.hlsli">
+      <Filter>シェーダー ファイル</Filter>
+    </None>
+    <None Include="Shader\DepthTest.hlsli">
+      <Filter>シェーダー ファイル</Filter>
+    </None>
+    <None Include="Shader\LinearBlur.hlsli">
+      <Filter>シェーダー ファイル</Filter>
+    </None>
+    <None Include="Shader\MultiRenderTest.hlsli">
       <Filter>シェーダー ファイル</Filter>
     </None>
   </ItemGroup>

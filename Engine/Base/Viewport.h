@@ -1,7 +1,6 @@
 #pragma once
-class Viewport
+struct Viewport
 {
-public:
 	float width;
 	float height;
 	float topleftX;

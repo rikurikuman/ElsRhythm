@@ -1,6 +1,11 @@
 #include "Texture.h"
 #include "RDirectX.h"
+
+#pragma warning(push)
+#pragma warning(disable: 26813)
 #include <DirectXTex.h>
+#pragma warning(pop)
+
 #include "Color.h"
 #include "Util.h"
 
@@ -15,11 +20,11 @@ void TextureManager::Init()
 	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
 	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE; //シェーダーから見える
-	srvHeapDesc.NumDescriptors = numSRVDescritors;
+	srvHeapDesc.NumDescriptors = NUM_SRV_DESCRIPTORS;
 
 	//生成
-	srvHeap = nullptr;
-	result = RDirectX::GetDevice()->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvHeap));
+	mSrvHeap = nullptr;
+	result = RDirectX::GetDevice()->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&mSrvHeap));
 	assert(SUCCEEDED(result));
 
 	RegisterInternal(GetEmptyTexture(), "PreRegisteredTex_Empty");
@@ -30,17 +35,15 @@ Texture TextureManager::GetEmptyTexture()
 {
 	HRESULT result;
 
-	Texture texture = Texture();
+	Texture texture = Texture(D3D12_RESOURCE_STATE_GENERIC_READ);
 
 	const size_t textureWidth = 100;
 	const size_t textureHeight = 100;
 	const size_t imageDataCount = textureWidth * textureHeight;
-	Color* imageData = new Color[imageDataCount];
+	vector<Color> imageData;
+	imageData.resize(imageDataCount);
 
 	for (size_t i = 0; i < imageDataCount; i++) {
-		size_t x = i % textureWidth;
-		size_t y = i / textureWidth;
-
 		imageData[i] = Color(1, 1, 1, 1);
 	}
 
@@ -68,19 +71,18 @@ Texture TextureManager::GetEmptyTexture()
 		&textureResourceDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&texture.resource)
+		IID_PPV_ARGS(&texture.mResource)
 	);
 	assert(SUCCEEDED(result));
 
-	result = texture.resource->WriteToSubresource(
+	result = texture.mResource->WriteToSubresource(
 		0,
 		nullptr,
-		imageData,
+		&imageData[0],
 		sizeof(Color) * textureWidth,
 		sizeof(Color) * imageDataCount
 	);
 
-	delete[] imageData;
 	return texture;
 }
 
@@ -88,12 +90,13 @@ Texture TextureManager::GetHogeHogeTexture()
 {
 	HRESULT result;
 
-	Texture texture = Texture();
+	Texture texture = Texture(D3D12_RESOURCE_STATE_GENERIC_READ);
 
 	const size_t textureWidth = 256;
 	const size_t textureHeight = 256;
 	const size_t imageDataCount = textureWidth * textureHeight;
-	Color* imageData = new Color[imageDataCount];
+	vector<Color> imageData;
+	imageData.resize(imageDataCount);
 
 	for (size_t i = 0; i < imageDataCount; i++) {
 		size_t x = i % textureWidth;
@@ -132,31 +135,31 @@ Texture TextureManager::GetHogeHogeTexture()
 		&textureResourceDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&texture.resource)
+		IID_PPV_ARGS(&texture.mResource)
 	);
 	assert(SUCCEEDED(result));
 
-	result = texture.resource->WriteToSubresource(
+	result = texture.mResource->WriteToSubresource(
 		0,
 		nullptr,
-		imageData,
+		&imageData[0],
 		sizeof(Color) * textureWidth,
 		sizeof(Color) * imageDataCount
 	);
 
-	delete[] imageData;
 	return texture;
 }
 
-TextureHandle TextureManager::CreateInternal(const Color color, const UINT64 width, const UINT height, const std::string handle)
+TextureHandle TextureManager::CreateInternal(const Color color, const size_t width, const uint32_t height, const std::string handle)
 {
-	std::lock_guard<std::recursive_mutex> lock(mutex);
+	std::lock_guard<std::recursive_mutex> lock(mMutex);
 	HRESULT result;
 
-	Texture texture = Texture();
+	Texture texture = Texture(D3D12_RESOURCE_STATE_GENERIC_READ);
 
 	const size_t imageDataCount = width * height;
-	Color* imageData = new Color[imageDataCount];
+	vector<Color> imageData;
+	imageData.resize(imageDataCount);
 
 	for (size_t i = 0; i < imageDataCount; i++) {
 		imageData[i] = color;
@@ -186,39 +189,38 @@ TextureHandle TextureManager::CreateInternal(const Color color, const UINT64 wid
 		&textureResourceDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&texture.resource)
+		IID_PPV_ARGS(&texture.mResource)
 	);
 	assert(SUCCEEDED(result));
 
-	result = texture.resource->WriteToSubresource(
+	result = texture.mResource->WriteToSubresource(
 		0,
 		nullptr,
-		imageData,
+		&imageData[0],
 		sizeof(Color) * static_cast<UINT>(width),
 		sizeof(Color) * static_cast<UINT>(imageDataCount)
 	);
 
-	delete[] imageData;
 	return RegisterInternal(texture, handle);
 }
 
-TextureHandle TextureManager::CreateInternal(const Color* pSource, const UINT64 width, const UINT height, const std::string filepath, const std::string handle)
+TextureHandle TextureManager::CreateInternal(const Color* pSource, const size_t width, const uint32_t height, const std::string filepath, const std::string handle)
 {
-	std::lock_guard<std::recursive_mutex> lock(mutex);
+	std::lock_guard<std::recursive_mutex> lock(mMutex);
 	HRESULT result;
 
 	if (!filepath.empty()) {
 		//一回読み込んだことがあるファイルはそのまま返す
-		auto itr = find_if(textureMap.begin(), textureMap.end(), [&](const std::pair<TextureHandle, Texture>& p) {
-			return p.second.filePath == filepath;
+		auto itr = find_if(mTextureMap.begin(), mTextureMap.end(), [&](const std::pair<TextureHandle, Texture>& p) {
+			return p.second.mFilePath == filepath;
 			});
-		if (itr != textureMap.end()) {
+		if (itr != mTextureMap.end()) {
 			return itr->first;
 		}
 	}
 
-	Texture texture = Texture();
-	texture.filePath = filepath;
+	Texture texture = Texture(D3D12_RESOURCE_STATE_GENERIC_READ);
+	texture.mFilePath = filepath;
 
 	// テクスチャバッファ
 	// ヒープ設定
@@ -244,14 +246,14 @@ TextureHandle TextureManager::CreateInternal(const Color* pSource, const UINT64 
 		&textureResourceDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&texture.resource)
+		IID_PPV_ARGS(&texture.mResource)
 	);
 	if (FAILED(result)) {
 		return "FailedTextureHandle";
 	}
 
 	//てんそー
-	result = texture.resource->WriteToSubresource(
+	result = texture.mResource->WriteToSubresource(
 		0,
 		nullptr, //全領域へコピー
 		pSource, //元データアドレス
@@ -267,20 +269,20 @@ TextureHandle TextureManager::CreateInternal(const Color* pSource, const UINT64 
 
 TextureHandle TextureManager::LoadInternal(const std::string filepath, const std::string handle)
 {
-	std::unique_lock<std::recursive_mutex> lock(mutex);
+	std::unique_lock<std::recursive_mutex> lock(mMutex);
 	HRESULT result;
 
 	//一回読み込んだことがあるファイルはそのまま返す
-	auto itr = find_if(textureMap.begin(), textureMap.end(), [&](const std::pair<TextureHandle, Texture>& p) {
-		return p.second.filePath == filepath;
+	auto itr = find_if(mTextureMap.begin(), mTextureMap.end(), [&](const std::pair<TextureHandle, Texture>& p) {
+		return p.second.mFilePath == filepath;
 		});
-	if (itr != textureMap.end()) {
+	if (itr != mTextureMap.end()) {
 		return itr->first;
 	}
 	lock.unlock();
 
-	Texture texture = Texture();
-	texture.filePath = filepath;
+	Texture texture = Texture(D3D12_RESOURCE_STATE_GENERIC_READ);
+	texture.mFilePath = filepath;
 	wstring wfilePath(filepath.begin(), filepath.end());
 
 	// 画像イメージデータ
@@ -337,7 +339,7 @@ TextureHandle TextureManager::LoadInternal(const std::string filepath, const std
 		&textureResourceDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&texture.resource)
+		IID_PPV_ARGS(&texture.mResource)
 	);
 	if (FAILED(result)) {
 		return "FailedTextureHandle";
@@ -347,7 +349,7 @@ TextureHandle TextureManager::LoadInternal(const std::string filepath, const std
 	//全ミップマップについて
 	for (size_t i = 0; i < imgMetadata.mipLevels; i++) {
 		const Image* img = scratchImg.GetImage(i, 0, 0);
-		result = texture.resource->WriteToSubresource(
+		result = texture.mResource->WriteToSubresource(
 			(UINT)i,
 			nullptr, //全領域へコピー
 			img->pixels, //元データアドレス
@@ -364,22 +366,22 @@ TextureHandle TextureManager::LoadInternal(const std::string filepath, const std
 
 TextureHandle TextureManager::LoadInternal(const void* pSource, const size_t size, const std::string filepath, const std::string handle)
 {
-	std::unique_lock<std::recursive_mutex> lock(mutex);
+	std::unique_lock<std::recursive_mutex> lock(mMutex);
 	HRESULT result;
 
 	if (!filepath.empty()) {
 		//一回読み込んだことがあるファイルはそのまま返す
-		auto itr = find_if(textureMap.begin(), textureMap.end(), [&](const std::pair<TextureHandle, Texture>& p) {
-			return p.second.filePath == filepath;
+		auto itr = find_if(mTextureMap.begin(), mTextureMap.end(), [&](const std::pair<TextureHandle, Texture>& p) {
+			return p.second.mFilePath == filepath;
 			});
-		if (itr != textureMap.end()) {
+		if (itr != mTextureMap.end()) {
 			return itr->first;
 		}
 	}
 	lock.unlock();
 
-	Texture texture = Texture();
-	texture.filePath = filepath;
+	Texture texture = Texture(D3D12_RESOURCE_STATE_GENERIC_READ);
+	texture.mFilePath = filepath;
 
 	// 画像イメージデータ
 	TexMetadata imgMetadata{};
@@ -436,7 +438,7 @@ TextureHandle TextureManager::LoadInternal(const void* pSource, const size_t siz
 		&textureResourceDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&texture.resource)
+		IID_PPV_ARGS(&texture.mResource)
 	);
 	if (FAILED(result)) {
 		return "FailedTextureHandle";
@@ -446,7 +448,7 @@ TextureHandle TextureManager::LoadInternal(const void* pSource, const size_t siz
 	//全ミップマップについて
 	for (size_t i = 0; i < imgMetadata.mipLevels; i++) {
 		const Image* img = scratchImg.GetImage(i, 0, 0);
-		result = texture.resource->WriteToSubresource(
+		result = texture.mResource->WriteToSubresource(
 			(UINT)i,
 			nullptr, //全領域へコピー
 			img->pixels, //元データアドレス
@@ -463,33 +465,33 @@ TextureHandle TextureManager::LoadInternal(const void* pSource, const size_t siz
 
 Texture& TextureManager::GetInternal(const TextureHandle& handle)
 {
-	std::lock_guard<std::recursive_mutex> lock(mutex);
+	std::lock_guard<std::recursive_mutex> lock(mMutex);
 	if (handle.empty()) {
-		return textureMap["PreRegisteredTex_Empty"];
+		return mTextureMap["PreRegisteredTex_Empty"];
 	}
 
-	auto itr = textureMap.find(handle);
-	if (itr != textureMap.end()) {
+	auto itr = mTextureMap.find(handle);
+	if (itr != mTextureMap.end()) {
 		return itr->second;
 	}
 	
-	return textureMap["PreRegisteredTex_HogeHoge"];
+	return mTextureMap["PreRegisteredTex_HogeHoge"];
 }
 
 TextureHandle TextureManager::RegisterInternal(Texture texture, TextureHandle handle)
 {
-	std::unique_lock<std::recursive_mutex> lock(mutex);
-	UINT useIndex = -1; 
+	std::unique_lock<std::recursive_mutex> lock(mMutex);
+	uint32_t useIndex = UINT32_MAX;
 
-	auto itr = textureMap.find(handle);
-	if (itr != textureMap.end()) {
-		useIndex = itr->second.heapIndex;
+	auto itr = mTextureMap.find(handle);
+	if (itr != mTextureMap.end()) {
+		useIndex = itr->second.mHeapIndex;
 	}
 	else {
-		for (UINT i = 0; i < TextureManager::numSRVDescritors; i++) {
+		for (UINT i = 0; i < TextureManager::NUM_SRV_DESCRIPTORS; i++) {
 			bool ok = true;
-			for (std::pair<const TextureHandle, Texture>& p : textureMap) {
-				if (p.second.heapIndex == i) {
+			for (std::pair<const TextureHandle, Texture>& p : mTextureMap) {
+				if (p.second.mHeapIndex == i) {
 					ok = false;
 					break;
 				}
@@ -503,70 +505,75 @@ TextureHandle TextureManager::RegisterInternal(Texture texture, TextureHandle ha
 	}
 	lock.unlock();
 
-	if (useIndex == -1) {
+	if (useIndex == UINT32_MAX) {
 		//over
 		return TextureHandle();
 	}
 
 	//シェーダーリソースビュー
-	D3D12_CPU_DESCRIPTOR_HANDLE _cpuHandle = srvHeap->GetCPUDescriptorHandleForHeapStart();
-	D3D12_GPU_DESCRIPTOR_HANDLE _gpuHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
+	D3D12_CPU_DESCRIPTOR_HANDLE _cpuHandle = mSrvHeap->GetCPUDescriptorHandleForHeapStart();
+	D3D12_GPU_DESCRIPTOR_HANDLE _gpuHandle = mSrvHeap->GetGPUDescriptorHandleForHeapStart();
 	size_t incrementSize = RDirectX::GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	_cpuHandle.ptr += useIndex * incrementSize;
 	_gpuHandle.ptr += useIndex * incrementSize;
-	texture.cpuHandle = _cpuHandle;
-	texture.gpuHandle = _gpuHandle;
-	texture.heapIndex = useIndex;
+	texture.mCpuHandle = _cpuHandle;
+	texture.mGpuHandle = _gpuHandle;
+	texture.mHeapIndex = useIndex;
 
 	//シェーダーリソースビュー設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
-	srvDesc.Format = texture.resource->GetDesc().Format;
+	srvDesc.Format = texture.mResource->GetDesc().Format;
+	if (srvDesc.Format == DXGI_FORMAT_R32_TYPELESS) {
+		srvDesc.Format = DXGI_FORMAT_R32_FLOAT;
+	}
 	srvDesc.Shader4ComponentMapping =
 		D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-	srvDesc.Texture2D.MipLevels = texture.resource->GetDesc().MipLevels;
+	srvDesc.Texture2D.MipLevels = texture.mResource->GetDesc().MipLevels;
 
 	//生成
-	RDirectX::GetDevice()->CreateShaderResourceView(texture.resource.Get(), &srvDesc, _cpuHandle);
+	RDirectX::GetDevice()->CreateShaderResourceView(texture.mResource.Get(), &srvDesc, _cpuHandle);
 
 	if (handle.empty()) {
 		handle = "NoNameHandle_" + to_string(useIndex);
 	}
 
+	texture.mResource->SetName(Util::ConvertStringToWString(handle).c_str());
+
 	lock.lock();
-	textureMap[handle] = texture;
+	mTextureMap[handle] = texture;
 	return handle;
 }
 
 void TextureManager::UnRegisterInternal(const TextureHandle& handle)
 {
-	std::lock_guard<std::recursive_mutex> lock(mutex);
-	textureMap.erase(handle);
+	std::lock_guard<std::recursive_mutex> lock(mMutex);
+	mTextureMap.erase(handle);
 }
 
 void TextureManager::UnRegisterAtEndFrameInternal(const TextureHandle& handle)
 {
-	std::lock_guard<std::recursive_mutex> lock(mutex);
-	unregisterScheduledList.push_back(handle);
+	std::lock_guard<std::recursive_mutex> lock(mMutex);
+	mUnregisterScheduledList.push_back(handle);
 }
 
 void TextureManager::EndFrameProcessInternal()
 {
-	std::lock_guard<std::recursive_mutex> lock(mutex);
-	for (TextureHandle& handle : unregisterScheduledList) {
+	std::lock_guard<std::recursive_mutex> lock(mMutex);
+	for (TextureHandle& handle : mUnregisterScheduledList) {
 		UnRegisterInternal(handle);
 	}
 
-	unregisterScheduledList.clear();
+	mUnregisterScheduledList.clear();
 }
 
-TextureHandle TextureManager::Create(const Color color, const UINT64 width, const UINT height, const std::string handle)
+TextureHandle TextureManager::Create(const Color color, const size_t width, const uint32_t height, const std::string handle)
 {
 	TextureManager* manager = TextureManager::GetInstance();
 	return manager->CreateInternal(color, width, height, handle);
 }
 
-TextureHandle TextureManager::Create(const Color* pSource, const UINT64 width, const UINT height, const std::string filepath, const std::string handle)
+TextureHandle TextureManager::Create(const Color* pSource, const size_t width, const uint32_t height, const std::string filepath, const std::string handle)
 {
 	TextureManager* manager = TextureManager::GetInstance();
 	return manager->CreateInternal(pSource, width, height, filepath, handle);
@@ -616,5 +623,49 @@ void TextureManager::EndFrameProcess()
 void TextureManager::UnRegisterAll()
 {
 	TextureManager* manager = TextureManager::GetInstance();
-	manager->textureMap.clear();
+	manager->mTextureMap.clear();
+}
+
+void Texture::ChangeResourceState(D3D12_RESOURCE_STATES state)
+{
+	if (mState == state) return;
+	D3D12_RESOURCE_BARRIER barrierDesc{};
+	barrierDesc.Transition.pResource = mResource.Get();
+	barrierDesc.Transition.StateBefore = mState;
+	barrierDesc.Transition.StateAfter = state;
+
+	RDirectX::GetCommandList()->ResourceBarrier(1, &barrierDesc);
+	mState = state;
+}
+
+void Texture::Copy(Texture* dest, RRect srcRect, Vector2 destPos)
+{
+	D3D12_TEXTURE_COPY_LOCATION locA{};
+	locA.Type = D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX;
+	locA.pResource = mResource.Get();
+
+	locA.SubresourceIndex = 0;
+	D3D12_TEXTURE_COPY_LOCATION locB{};
+	locB.Type = D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX;
+	locB.pResource = dest->mResource.Get();
+	locB.SubresourceIndex = 0;
+
+	D3D12_BOX box{};
+	box.left = srcRect.left;
+	box.right = srcRect.right;
+	box.top = srcRect.top;
+	box.bottom = srcRect.bottom;
+	box.front = 0;
+	box.back = 1;
+
+	D3D12_RESOURCE_STATES oldStateA = mState;
+	D3D12_RESOURCE_STATES oldStateB = dest->mState;
+
+	ChangeResourceState(D3D12_RESOURCE_STATE_COPY_SOURCE);
+	dest->ChangeResourceState(D3D12_RESOURCE_STATE_COPY_DEST);
+	
+	RDirectX::GetCommandList()->CopyTextureRegion(&locB, 0, 0, 0, &locA, &box);
+
+	ChangeResourceState(oldStateA);
+	dest->ChangeResourceState(oldStateB);
 }

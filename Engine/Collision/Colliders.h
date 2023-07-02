@@ -17,10 +17,10 @@ class Colliders final {
 public:
 	template <typename ColliderType, typename ...Args>
 	static Collider<ColliderType> Create(Args ...args) {
-		std::lock_guard<std::recursive_mutex> lock(instance.mutex);
+		std::lock_guard<std::recursive_mutex> lock(sInstance.mMutex);
 
-		instance.colList.emplace_back(std::make_unique<ColliderType>(args...));
-		return Collider<ColliderType>(static_cast<ColliderType*>(instance.colList.back().get()));
+		sInstance.mColList.emplace_back(std::make_unique<ColliderType>(args...));
+		return Collider<ColliderType>(static_cast<ColliderType*>(sInstance.mColList.back().get()));
 	}
 
 	static void Update();
@@ -35,14 +35,14 @@ public:
 	class ColListAccessor {
 		friend class Colliders;
 	public:
-		std::unique_lock<std::recursive_mutex> lock;
-		std::list<std::unique_ptr<ICollider>>* list;
+		std::unique_lock<std::recursive_mutex> mLock;
+		std::list<std::unique_ptr<ICollider>>* mList;
 
-		ColListAccessor() : lock(instance.mutex), list(&instance.colList) {}
+		ColListAccessor() : mLock(sInstance.mMutex), mList(&sInstance.mColList) {}
 	};
 
 private:
-	static Colliders instance;
+	static Colliders sInstance;
 
 	Colliders() {};
 	~Colliders() {}
@@ -51,8 +51,8 @@ private:
 	Colliders(const Colliders&& a) = delete;
 	Colliders& operator=(const Colliders&&) = delete;
 
-	std::recursive_mutex mutex;
-	std::list<std::unique_ptr<ICollider>> colList;
+	std::recursive_mutex mMutex;
+	std::list<std::unique_ptr<ICollider>> mColList;
 };
 
 /*
@@ -73,23 +73,23 @@ public:
 	Collider() {}
 
 private: //Collidersを介さないと新規生成はできないように(コピーとかはええで)
-	ColliderType* data = nullptr;
+	ColliderType* mData = nullptr;
 
 	//コンストラクタ
-	Collider(ColliderType* data) : data(data) {
+	Collider(ColliderType* data) : mData(data) {
 		AddCount(data);
 	}
 
 public:
 	//デストラクタ
 	~Collider() {
-		if (data) {
-			SubtractCount(data);
-			if (GetCount(data) == 0) {
+		if (mData) {
+			SubtractCount(mData);
+			if (GetCount(mData) == 0) {
 				//全参照消滅、削除する処理をここに
-				Colliders::instance.colList.remove_if(
+				Colliders::sInstance.mColList.remove_if(
 					[&](std::unique_ptr<ICollider>& o) {
-						return o.get() == data;
+						return o.get() == mData;
 					});
 			}
 		}
@@ -97,112 +97,112 @@ public:
 	//コピーコンストラクタ
 	Collider(const Collider& o) {
 		if (this != &o) {
-			if (data) {
-				SubtractCount(data);
-				if (GetCount(data) == 0) {
+			if (mData) {
+				SubtractCount(mData);
+				if (GetCount(mData) == 0) {
 					//全参照消滅、削除する処理をここに
-					Colliders::instance.colList.remove_if(
+					Colliders::sInstance.mColList.remove_if(
 						[&](std::unique_ptr<ICollider>& o) {
-							return o.get() == data;
+							return o.get() == mData;
 						});
 				}
 			}
 		}
-		data = o.data;
-		AddCount(data);
+		mData = o.mData;
+		AddCount(mData);
 	}
 	//コピー代入演算子
 	Collider& operator=(const Collider& o) {
 		if (this != &o) {
-			if (data) {
-				SubtractCount(data);
-				if (GetCount(data) == 0) {
+			if (mData) {
+				SubtractCount(mData);
+				if (GetCount(mData) == 0) {
 					//全参照消滅、削除する処理をここに
-					Colliders::instance.colList.remove_if(
+					Colliders::sInstance.mColList.remove_if(
 						[&](std::unique_ptr<ICollider>& o) {
-							return o.get() == data;
+							return o.get() == mData;
 						});
 				}
 			}
-			data = o.data;
-			AddCount(data);
+			mData = o.mData;
+			AddCount(mData);
 		}
 		return *this;
 	}
 	//ムーブコンストラクタ
 	Collider(Collider&& o) noexcept {
 		if (this != &o) {
-			if (data) {
-				SubtractCount(data);
-				if (GetCount(data) == 0) {
+			if (mData) {
+				SubtractCount(mData);
+				if (GetCount(mData) == 0) {
 					//全参照消滅、削除する処理をここに
-					Colliders::instance.colList.remove_if(
+					Colliders::sInstance.mColList.remove_if(
 						[&](std::unique_ptr<ICollider>& o) {
-							return o.get() == data;
+							return o.get() == mData;
 						});
 				}
 			}
-			data = o.data;
-			o.data = nullptr;
+			mData = o.mData;
+			o.mData = nullptr;
 		}
 	}
 	//ムーブ代入演算子
 	Collider& operator=(Collider&& o) noexcept {
 		if (this != &o) {
-			if (data) {
-				SubtractCount(data);
-				if (GetCount(data) == 0) {
+			if (mData) {
+				SubtractCount(mData);
+				if (GetCount(mData) == 0) {
 					//全参照消滅、削除する処理をここに
-					Colliders::instance.colList.remove_if(
+					Colliders::sInstance.mColList.remove_if(
 						[&](std::unique_ptr<ICollider>& o) {
-							return o.get() == data;
+							return o.get() == mData;
 						});
 				}
 			}
-			data = o.data;
-			o.data = nullptr;
+			mData = o.mData;
+			o.mData = nullptr;
 		}
 		return *this;
 	}
 
 	operator bool() const {
-		return data != nullptr;
+		return mData != nullptr;
 	}
 
 	ColliderType* operator->() {
-		return data;
+		return mData;
 	}
 
 private:
-	static std::recursive_mutex mutex;
-	static std::map<void*, size_t> countMap;
+	static std::recursive_mutex mMutex;
+	static std::map<void*, size_t> mCountMap;
 
 	static void AddCount(void* p) {
-		std::lock_guard<std::recursive_mutex> lock(mutex);
-		countMap[p]++;
+		std::lock_guard<std::recursive_mutex> lock(mMutex);
+		mCountMap[p]++;
 	}
 
 	static void SubtractCount(void* p) {
-		std::lock_guard<std::recursive_mutex> lock(mutex);
-		countMap[p]--;
+		std::lock_guard<std::recursive_mutex> lock(mMutex);
+		mCountMap[p]--;
 
-		if (countMap[p] == 0) {
-			countMap.erase(p);
+		if (mCountMap[p] == 0) {
+			mCountMap.erase(p);
 		}
 	}
 
 	static size_t GetCount(void* p) {
-		std::lock_guard<std::recursive_mutex> lock(mutex);
-		auto itr = countMap.find(p);
-		if (itr == countMap.end()) {
+		std::lock_guard<std::recursive_mutex> lock(mMutex);
+		auto itr = mCountMap.find(p);
+		if (itr == mCountMap.end()) {
 			return 0;
 		}
-		return countMap[p];
+		return mCountMap[p];
 	}
 };
 
 template<typename ColliderType>
-std::map<void*, size_t> Collider<ColliderType>::countMap = std::map<void*, size_t>();
+std::map<void*, size_t> Collider<ColliderType>::mCountMap = std::map<void*, size_t>();
 
 template<typename ColliderType>
-std::recursive_mutex Collider<ColliderType>::mutex;
+std::recursive_mutex Collider<ColliderType>::mMutex;

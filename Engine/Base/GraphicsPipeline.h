@@ -35,14 +35,14 @@ struct PipelineStateDesc {
 class GraphicsPipeline
 {
 public:
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> ptr = nullptr;
-    PipelineStateDesc desc{};
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> mPtr = nullptr;
+    PipelineStateDesc mDesc{};
 
 	void Create();
 
     static GraphicsPipeline& GetOrCreate(std::string id, PipelineStateDesc desc);
 
 private:
-    static std::unordered_map<std::string, GraphicsPipeline> pipelineMap;
+    static std::unordered_map<std::string, GraphicsPipeline> sPipelineMap;
 };
 

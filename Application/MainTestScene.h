@@ -4,8 +4,9 @@
 #include "DebugCamera.h"
 #include "ModelObj.h"
 #include "Sprite.h"
-#include "PostEffect.h"
 #include "SRConstBuffer.h"
+#include <ChartFile.h>
+#include <RhythmGameController.h>
 
 class MainTestScene : public IScene
 {
@@ -17,24 +18,9 @@ public:
 	void Draw() override;
 
 private:
-	struct TestObj {
-	public:
-		ModelObj obj;
-		Vector3 speed;
-		float timer;
-	};
-
 	DebugCamera camera = DebugCamera({0, 0, -5});
 	LightGroup light;
 
-	ModelObj sphere;
-	ModelObj sphere2;
-	Sprite sprite;
-	Sprite sprite2;
-
-	std::list<TestObj> testObjList;
-
-	PostEffect hoge;
-
-	float timer = 0;
+	ChartFile chartFile;
+	RhythmGameController gameController;
 };

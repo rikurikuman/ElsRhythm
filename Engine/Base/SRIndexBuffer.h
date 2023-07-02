@@ -4,70 +4,66 @@
 
 class SRIndexBuffer {
 private:
-	class IndexBufferData {
-	public:
+	struct IndexBufferData {
 		size_t count = 0;
-		UINT dataSize = 0;
-		UINT indexCount = 0;
+		uint32_t dataSize = 0;
+		uint32_t indexCount = 0;
 		SRBufferPtr buff;
 	};
 
-	static std::recursive_mutex mutex;
+	static std::recursive_mutex mMutex;
 
 public:
 	SRIndexBuffer() {};
 
 	~SRIndexBuffer() {
-		std::lock_guard<std::recursive_mutex> lock(SRBufferAllocator::GetInstance()->mutex);
-		std::lock_guard<std::recursive_mutex> lock2(mutex);
-		if (data != nullptr) {
-			data->count--;
-			if (data->count == 0) {
-				SRBufferAllocator::Free(data->buff);
-				delete data;
+		std::lock_guard<std::recursive_mutex> lock(SRBufferAllocator::GetInstance()->sMutex);
+		std::lock_guard<std::recursive_mutex> lock2(mMutex);
+		if (mData != nullptr) {
+			mData->count--;
+			if (mData->count == 0) {
+				SRBufferAllocator::Free(mData->buff);
 			}
 		}
 	}
 
 	//ÉRÉsÅ[ëŒçÙ
 	SRIndexBuffer(const SRIndexBuffer& o) {
-		std::lock_guard<std::recursive_mutex> lock(mutex);
-		if (data != nullptr) {
-			data->count--;
-			if (data->count == 0) {
-				SRBufferAllocator::Free(data->buff);
-				delete data;
+		std::lock_guard<std::recursive_mutex> lock(mMutex);
+		if (mData != nullptr) {
+			mData->count--;
+			if (mData->count == 0) {
+				SRBufferAllocator::Free(mData->buff);
 			}
 		}
-		data = o.data;
-		if (data != nullptr) data->count++;
+		mData = o.mData;
+		if (mData != nullptr) mData->count++;
 	}
 
 	SRIndexBuffer& operator=(const SRIndexBuffer& o) {
-		std::lock_guard<std::recursive_mutex> lock(mutex);
+		std::lock_guard<std::recursive_mutex> lock(mMutex);
 		if (this != &o) {
-			if (data != nullptr) {
-				data->count--;
-				if (data->count == 0) {
-					SRBufferAllocator::Free(data->buff);
-					delete data;
+			if (mData != nullptr) {
+				mData->count--;
+				if (mData->count == 0) {
+					SRBufferAllocator::Free(mData->buff);
 				}
 			}
-			data = o.data;
-			if (data != nullptr) data->count++;
+			mData = o.mData;
+			if (mData != nullptr) mData->count++;
 		}
 		return *this;
 	}
 
-	SRIndexBuffer(UINT* list, UINT size);
-	SRIndexBuffer(std::vector<UINT> list);
+	SRIndexBuffer(uint32_t* list, uint32_t size);
+	SRIndexBuffer(std::vector<uint32_t> list);
 
-	void Init(UINT* list, UINT size);
-	void Init(std::vector<UINT> list);
+	void Init(uint32_t* list, uint32_t size);
+	void Init(std::vector<uint32_t> list);
 
 	bool IsValid() {
-		std::lock_guard<std::recursive_mutex> lock(mutex);
-		return this->data != nullptr && this->data->buff.GetRegionPtr() != nullptr && this->data->buff.GetRegionPtr()->region != nullptr;
+		std::lock_guard<std::recursive_mutex> lock(mMutex);
+		return mData != nullptr && mData->buff.GetRegionPtr() != nullptr && mData->buff.GetRegionPtr()->region != nullptr;
 	}
 
 	operator bool() {
@@ -75,8 +71,8 @@ public:
 	}
 
 	D3D12_INDEX_BUFFER_VIEW GetIndexView();
-	UINT GetIndexCount();
+	uint32_t GetIndexCount();
 
 private:
-	IndexBufferData* data = nullptr;
+	std::shared_ptr<IndexBufferData> mData = nullptr;
 };

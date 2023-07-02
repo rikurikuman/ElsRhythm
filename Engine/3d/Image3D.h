@@ -10,53 +10,52 @@
 class Image3D final : public Obj3D
 {
 private:
-	TextureHandle texture;
-	Vector2 scale = { 1, 1 };
-	Vector2 size = { 1, 1 };
-	bool forceSize = false;
+	TextureHandle mTexture;
+	Vector2 mScale = { 1, 1 };
+	Vector2 mSize = { 1, 1 };
+	bool mForceSize = false;
 
 public:
-	Material material;
+	Material mMaterial;
 	//TransformÇÕObj3DÇ…Ç†ÇÈ
 
-	SRVertexBuffer vertBuff;
-	SRIndexBuffer indexBuff;
-	SRConstBuffer<MaterialBuffer> materialBuff;
-	SRConstBuffer<TransformBuffer> transformBuff;
-	SRConstBuffer<ViewProjectionBuffer> viewProjectionBuff;
+	SRVertexBuffer mVertBuff;
+	SRIndexBuffer mIndexBuff;
+	SRConstBuffer<MaterialBuffer> mMaterialBuff;
+	SRConstBuffer<TransformBuffer> mTransformBuff;
+	SRConstBuffer<ViewProjectionBuffer> mViewProjectionBuff;
 
 	Image3D() {};
 
 	Image3D(TextureHandle texture, Vector2 size = {1, 1}, bool forceSize = false);
 
-	void SetTexture(TextureHandle tex) {
-		texture = tex;
-		if (!forceSize) {
+	void SetTexture(TextureHandle texture) {
+		mTexture = texture;
+		if (!mForceSize) {
 			Texture tex = TextureManager::Get(texture);
-			this->size.x = tex.resource->GetDesc().Width / (float)tex.resource->GetDesc().Height * size.x;
-			this->size.y = size.y;
+			mSize.x = tex.mResource->GetDesc().Width / (float)tex.mResource->GetDesc().Height * mSize.x;
 		}
 	}
 
 	TextureHandle GetTexture() {
-		return texture;
+		return mTexture;
 	}
 
 	void SetSize(Vector2 size, bool forceSize = false) {
-		this->forceSize = forceSize;
+		mForceSize = forceSize;
 		if (forceSize) {
-			this->size = size;
+			mSize = size;
 		}
 		else {
-			scale = size;
-			Texture tex = TextureManager::Get(texture);
-			this->size.x = tex.resource->GetDesc().Width / (float)tex.resource->GetDesc().Height * scale.x;
-			this->size.y = scale.y;
+			mScale = size;
+			Texture tex = TextureManager::Get(mTexture);
+			mSize.x = tex.mResource->GetDesc().Width / (float)tex.mResource->GetDesc().Height * mScale.x;
+			mSize.y = mScale.y;
 		}
 	}
 
 	Vector2 GetSize() {
-		return size;
+		return mSize;
 	}
 
 	//èâä˙âªèàóù

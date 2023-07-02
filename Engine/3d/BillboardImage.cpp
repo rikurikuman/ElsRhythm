@@ -2,15 +2,15 @@
 
 void BillboardImage::Init(TextureHandle texture, Vector2 size)
 {
-	image = Image3D(texture, size, false);
-	image.SetParent(this);
+	mImage = Image3D(texture, size, false);
+	mImage.SetParent(this);
 }
 
 void BillboardImage::Update(const ViewProjection& vp)
 {
-	Matrix4 mat = vp.view;
+	Matrix4 mat = vp.mView;
 	mat = -mat;
-	if (billboardY) {
+	if (mUseBillboardY) {
 		Vector3 yVec = Vector3( 0, 1, 0 ).GetNormalize();
 		Vector3 xVec = Vector3(mat[0][0], mat[0][1], mat[0][2]).GetNormalize();
 		Vector3 zVec = xVec.Cross(yVec).GetNormalize();
@@ -28,22 +28,22 @@ void BillboardImage::Update(const ViewProjection& vp)
 	mat[3][2] = 0;
 	mat[3][3] = 1;
 
-	transform.UpdateMatrix();
-	transform.matrix = mat * transform.matrix;
+	mTransform.UpdateMatrix();
+	mTransform.matrix = mat * mTransform.matrix;
 
-	image.transform.UpdateMatrix();
+	mImage.mTransform.UpdateMatrix();
 	TransferBuffer(vp);
 }
 
 void BillboardImage::TransferBuffer(ViewProjection v) {
-	image.TransferBuffer(v);
+	mImage.TransferBuffer(v);
 }
 
 void BillboardImage::Draw() {
-	image.Draw();
+	mImage.Draw();
 }
 
 void BillboardImage::DrawCommands()
 {
-	image.DrawCommands();
+	mImage.DrawCommands();
 }

@@ -39,8 +39,8 @@ public:
 	/// <param name="list">計算する頂点群</param>
 	/// <param name="indexlist">インデックスリスト（三角形、全て時計回りであること）</param>
 	/// <param name="indexcount">インデックスの数</param>
-	static void CalcNormalVec(VertexPNU list[], const unsigned int indexlist[], const unsigned int indexcount);
+	static void CalcNormalVec(VertexPNU list[], const uint32_t indexlist[], const uint32_t indexcount);
 
-	static void CalcNormalVec(std::vector<VertexPNU> list, std::vector<unsigned int> indexlist);
+	static void CalcNormalVec(std::vector<VertexPNU> list, std::vector<uint32_t> indexlist);
 };
 

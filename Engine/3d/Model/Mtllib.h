@@ -5,7 +5,7 @@
 class Mtllib
 {
 public:
-	std::vector<Material> materials;
+	std::vector<Material> mMaterials;
 
 	static Mtllib Load(std::string filepath, std::string filename);
 };

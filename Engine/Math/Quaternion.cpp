@@ -9,7 +9,7 @@ Quaternion::Quaternion(float x, float y, float z, float w)
 
 bool Quaternion::operator==(const Quaternion& rq) const
 {
-	return this->Dot(rq) > 0.99999f;
+	return Dot(rq) > 0.99999f;
 }
 
 Quaternion Quaternion::operator+(const Quaternion& rq) const
@@ -89,7 +89,7 @@ Quaternion& Quaternion::operator*=(const Quaternion& rq)
 
 Quaternion& Quaternion::Inverse()
 {
-	*this = this->GetConjugate() / (x * x + y * y + z * z + w * w);
+	*this = GetConjugate() / (x * x + y * y + z * z + w * w);
 	return *this;
 }
 
@@ -102,9 +102,9 @@ Quaternion Quaternion::GetInverse() const
 
 Quaternion& Quaternion::Conjugate()
 {
-	this->x = -this->x;
-	this->y = -this->y;
-	this->z = -this->z;
+	x = -x;
+	y = -y;
+	z = -z;
 	return *this;
 }
 
@@ -120,10 +120,10 @@ Quaternion Quaternion::GetConjugate() const
 Quaternion& Quaternion::Normalize()
 {
 	float norm = sqrtf(x * x + y * y + z * z + w * w);
-	this->x /= norm;
-	this->y /= norm;
-	this->z /= norm;
-	this->w /= norm;
+	x /= norm;
+	y /= norm;
+	z /= norm;
+	w /= norm;
 	return *this;
 }
 
@@ -208,8 +208,8 @@ Quaternion Quaternion::FromRotationMatrix(const Matrix4& mat)
 	elem[2] = -mat[0][0] - mat[1][1] + mat[2][2] + 1;
 	elem[3] =  mat[0][0] + mat[1][1] + mat[2][2] + 1;
 
-	int biggestIndex = 0;
-	for (int i = 1; i < 4; i++) {
+	int32_t biggestIndex = 0;
+	for (int32_t i = 1; i < 4; i++) {
 		if (elem[i] > elem[biggestIndex]) {
 			biggestIndex = i;
 		}

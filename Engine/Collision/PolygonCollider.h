@@ -5,26 +5,26 @@
 class PolygonCollider : public ICollider {
 public:
 	//ポリゴン情報、各頂点は時計回りで指定されていること
-	ColPrimitive3D::Triangle polygon{};
+	ColPrimitive3D::Triangle mPolygon{};
 
 	PolygonCollider() {}
 	PolygonCollider(Vector3 posA, Vector3 posB, Vector3 posC) {
-		polygon.p0 = posA;
-		polygon.p1 = posB;
-		polygon.p2 = posC;
+		mPolygon.p0 = posA;
+		mPolygon.p1 = posB;
+		mPolygon.p2 = posC;
 
 		Vector3 v1 = posB - posA;
 		Vector3 v2 = posC - posB;
 
 		Vector3 normal = v1.Cross(v2);
 		normal.Normalize();
-		polygon.normal = normal;
+		mPolygon.normal = normal;
 	}
 	PolygonCollider(Vector3 posA, Vector3 posB, Vector3 posC, Vector3 normal) {
-		polygon.p0 = posA;
-		polygon.p1 = posB;
-		polygon.p2 = posC;
-		polygon.normal = normal;
+		mPolygon.p0 = posA;
+		mPolygon.p1 = posB;
+		mPolygon.p2 = posC;
+		mPolygon.normal = normal;
 	}
 
 	virtual std::string GetTypeIndentifier() override {

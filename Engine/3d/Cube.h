@@ -8,8 +8,8 @@ public:
 		Front, Left, Back, Right, Top, Bottom
 	};
 
-	Image3D faces[6];
-	Vector2 size = { 1, 1 };
+	Image3D mFaces[6];
+	Vector2 mSize = { 1, 1 };
 
 	Cube() {};
 	Cube(TextureHandle texture, Vector2 size = {1, 1}, bool forceSize = false);

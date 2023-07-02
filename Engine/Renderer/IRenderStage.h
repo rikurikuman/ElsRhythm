@@ -15,7 +15,7 @@ public:
 
 	void AllCall();
 
-	bool enabled = true;
-	RenderOrder defParamater;
-	std::vector<RenderOrder> orders;
+	RenderOrder mDefParamater;
+	bool mFlagEnabled = true;
+	std::vector<RenderOrder> mOrders;
 };

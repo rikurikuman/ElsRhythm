@@ -10,7 +10,7 @@ void TestRenderStage::Render()
 			return a.anchorPoint.z < b.anchorPoint.z;
 		}
 	};
-	std::stable_sort(orders.begin(), orders.end(), sortObj{});
+	std::stable_sort(mOrders.begin(), mOrders.end(), sortObj{});
 
 	AllCall();
 }

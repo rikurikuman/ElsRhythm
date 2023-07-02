@@ -29,14 +29,14 @@ struct RootSignatureDesc {
 class RootSignature
 {
 public:
-	Microsoft::WRL::ComPtr<ID3D12RootSignature> ptr = nullptr;
-    RootSignatureDesc desc{};
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> mPtr = nullptr;
+    RootSignatureDesc mDesc{};
 
 	void Create();
 
     static RootSignature& GetOrCreate(std::string id, RootSignatureDesc desc);
 
 private:
-    static std::unordered_map<std::string, RootSignature> rootSignatureMap;
+    static std::unordered_map<std::string, RootSignature> sRootSignatureMap;
 };
 

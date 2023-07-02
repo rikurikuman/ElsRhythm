@@ -31,37 +31,37 @@ Mtllib Mtllib::Load(std::string filepath, std::string filename)
 
         if (key == "newmtl") { //マテリアル定義（お名前はここから）
             if (loading != Material()) {
-                data.materials.push_back(loading);
+                data.mMaterials.push_back(loading);
             }
             loading = Material();
-            line_stream >> loading.name;
+            line_stream >> loading.mName;
         }
 
         if (key == "Ka") { //環境光
-            line_stream >> loading.ambient.x;
-            line_stream >> loading.ambient.y;
-            line_stream >> loading.ambient.z;
+            line_stream >> loading.mAmbient.x;
+            line_stream >> loading.mAmbient.y;
+            line_stream >> loading.mAmbient.z;
         }
 
         if (key == "Kd") { //拡散反射光
-            line_stream >> loading.diffuse.x;
-            line_stream >> loading.diffuse.y;
-            line_stream >> loading.diffuse.z;
+            line_stream >> loading.mDiffuse.x;
+            line_stream >> loading.mDiffuse.y;
+            line_stream >> loading.mDiffuse.z;
         }
 
         if (key == "Ks") { //鏡面反射光
-            line_stream >> loading.specular.x;
-            line_stream >> loading.specular.y;
-            line_stream >> loading.specular.z;
+            line_stream >> loading.mSpecular.x;
+            line_stream >> loading.mSpecular.y;
+            line_stream >> loading.mSpecular.z;
         }
 
         if (key == "map_Kd") { //テクスチャ指定
             string texfile;
             line_stream >> texfile;
-            loading.texture = TextureManager::Load(filepath + texfile);
+            loading.mTexture = TextureManager::Load(filepath + texfile);
         }
     }
 
-    data.materials.push_back(loading);
+    data.mMaterials.push_back(loading);
     return data;
 }

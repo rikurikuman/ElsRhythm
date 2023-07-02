@@ -16,10 +16,10 @@ public:
 	virtual void Render() override;
 
 private:
-	VertexBuffer vertBuff;
-	IndexBuffer indexBuff;
+	VertexBuffer mVertBuff;
+	IndexBuffer mIndexBuff;
 
-	RootSignature rootSignature;
-	GraphicsPipeline pipelineState;
+	RootSignature mRootSignature;
+	GraphicsPipeline mPipelineState;
 };
 

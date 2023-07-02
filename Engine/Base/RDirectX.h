@@ -18,23 +18,23 @@ using namespace Microsoft::WRL;
 class RDirectX
 {
 private:
-	ComPtr<ID3D12Device> device = nullptr;
-	ComPtr<IDXGIFactory7> dxgiFactory = nullptr;
-	ComPtr<IDXGISwapChain4> swapChain = nullptr;
-	ComPtr<ID3D12CommandAllocator> cmdAllocator = nullptr;
-	ComPtr<ID3D12GraphicsCommandList> cmdList = nullptr;
-	ComPtr<ID3D12CommandQueue> cmdQueue = nullptr;
-	ComPtr<ID3D12DescriptorHeap> rtvHeap = nullptr;
-	ComPtr<ID3D12DescriptorHeap> srvHeap = nullptr;
-	std::vector<ComPtr<ID3D12Resource>> backBuffers;
-	ComPtr<ID3D12Resource> depthBuff = nullptr;
-	ComPtr<ID3D12DescriptorHeap> dsvHeap;
-	ComPtr<ID3D12Fence> fence = nullptr;
-	UINT64 fenceVal = 0;
-	Shader basicVS;
-	Shader basicPS;
-	RootSignature rootSignature;
-	GraphicsPipeline pipelineState;
+	ComPtr<ID3D12Device> mDevice = nullptr;
+	ComPtr<IDXGIFactory7> mDxgiFactory = nullptr;
+	ComPtr<IDXGISwapChain4> mSwapChain = nullptr;
+	ComPtr<ID3D12CommandAllocator> mCmdAllocator = nullptr;
+	ComPtr<ID3D12GraphicsCommandList> mCmdList = nullptr;
+	ComPtr<ID3D12CommandQueue> mCmdQueue = nullptr;
+	ComPtr<ID3D12DescriptorHeap> mRtvHeap = nullptr;
+	ComPtr<ID3D12DescriptorHeap> mSrvHeap = nullptr;
+	std::vector<ComPtr<ID3D12Resource>> mBackBuffers;
+	ComPtr<ID3D12Resource> mDepthBuff = nullptr;
+	ComPtr<ID3D12DescriptorHeap> mDsvHeap;
+	ComPtr<ID3D12Fence> mFence = nullptr;
+	size_t mFenceVal = 0;
+	Shader mBasicVS;
+	Shader mBasicPS;
+	RootSignature mRootSignature;
+	GraphicsPipeline mPipelineState;
 
 public:
 	//DirectX初期化
@@ -47,7 +47,7 @@ public:
 	//コマンドリストを取得する
 	static ID3D12GraphicsCommandList* GetCommandList();
 
-	//ほぼImGui専用みたいになってるsrvHeapをプレゼント
+	//ほぼImGui専用みたいになってるmSrvHeapをプレゼント
 	static ID3D12DescriptorHeap* GetSRVHeap();
 
 	//基本ルートシグネチャを取得する
@@ -78,10 +78,10 @@ public:
 	static D3D12_CPU_DESCRIPTOR_HANDLE GetBackBufferDSVHandle();
 
 	//リソースバリアをPRESENT->RENDER_TARGETにする処理
-	static void OpenResorceBarrier(ID3D12Resource* resource);
+	static void OpenResorceBarrier(ID3D12Resource* mResource);
 
 	//リソースバリアをRENDER_TARGET->PRESENTにする処理
-	static void CloseResourceBarrier(ID3D12Resource* resource);
+	static void CloseResourceBarrier(ID3D12Resource* mResource);
 
 	//バックバッファをクリアする
 	static void ClearBackBuffer(Color color);
@@ -95,7 +95,7 @@ private:
 	RDirectX(const RDirectX& a) = delete;
 	RDirectX& operator=(const RDirectX&) = delete;
 
-	D3D12_CPU_DESCRIPTOR_HANDLE nowRtvHandle = {};
+	D3D12_CPU_DESCRIPTOR_HANDLE mNowRtvHandle = {};
 
 	void InitInternal();
 };

@@ -32,8 +32,8 @@ Matrix4::Matrix4()
 
 Matrix4::Matrix4(DirectX::XMMATRIX matrix)
 {
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
+	for (int32_t i = 0; i < 4; i++) {
+		for (int32_t j = 0; j < 4; j++) {
 			m[i][j] = matrix.r[i].m128_f32[j];
 		}
 	}
@@ -60,8 +60,8 @@ Matrix4 Matrix4::operator-() const
 	Matrix4 temp;
 	float mat[4][8] = {0};
 
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
+	for (int32_t i = 0; i < 4; i++) {
+		for (int32_t j = 0; j < 4; j++) {
 			mat[i][j] = m[i][j];
 		}
 	}
@@ -71,12 +71,12 @@ Matrix4 Matrix4::operator-() const
 	mat[2][6] = 1;
 	mat[3][7] = 1;
 
-	for (int n = 0; n < 4; n++) {
+	for (int32_t n = 0; n < 4; n++) {
 		//Å‘å‚Ìâ‘Î’l‚ð’Tõ‚·‚é(‚Æ‚è‚ ‚¦‚¸‘ÎÛ¬•ª‚ðÅ‘å‚Æ‰¼’è‚µ‚Ä‚¨‚­)
 		float max = abs(mat[n][n]);
-		int maxIndex = n;
+		int32_t maxIndex = n;
 
-		for (int i = n + 1; i < 4; i++) {
+		for (int32_t i = n + 1; i < 4; i++) {
 			if (abs(mat[i][n]) > max) {
 				max = abs(mat[i][n]);
 				maxIndex = i;
@@ -90,7 +90,7 @@ Matrix4 Matrix4::operator-() const
 
 		//“ü‚ê‘Ö‚¦
 		if (n != maxIndex) {
-			for (int i = 0; i < 8; i++) {
+			for (int32_t i = 0; i < 8; i++) {
 				float f = mat[maxIndex][i];
 				mat[maxIndex][i] = mat[n][i];
 				mat[n][i] = f;
@@ -101,26 +101,26 @@ Matrix4 Matrix4::operator-() const
 		float mul = 1 / mat[n][n];
 
 		//Š|‚¯‚é
-		for (int i = 0; i < 8; i++) {
+		for (int32_t i = 0; i < 8; i++) {
 			mat[n][i] *= mul;
 		}
 
 		//‘¼‘S•”0‚É‚·‚é
-		for (int i = 0; i < 4; i++) {
+		for (int32_t i = 0; i < 4; i++) {
 			if (n == i) {
 				continue;
 			}
 
-			float mul = -mat[i][n];
+			mul = -mat[i][n];
 
-			for (int j = 0; j < 8; j++) {
+			for (int32_t j = 0; j < 8; j++) {
 				mat[i][j] += mat[n][j] * mul;
 			}
 		}
 	}
 
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
+	for (int32_t i = 0; i < 4; i++) {
+		for (int32_t j = 0; j < 4; j++) {
 			temp[i][j] = mat[i][j + 4];
 		}
 	}
@@ -131,8 +131,8 @@ Matrix4 Matrix4::operator-() const
 bool Matrix4::operator==(const Matrix4& a) const
 {
 	bool ok = true;
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
+	for (int32_t i = 0; i < 4; i++) {
+		for (int32_t j = 0; j < 4; j++) {
 			if (m[i][j] != a[i][j]) {
 				ok = false;
 			}
@@ -169,8 +169,8 @@ Matrix4 Matrix4::operator*(const Matrix4& a) const
 
 Matrix4& Matrix4::operator+=(const Matrix4& a)
 {
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
+	for (int32_t i = 0; i < 4; i++) {
+		for (int32_t j = 0; j < 4; j++) {
 			m[i][j] += a[i][j];
 		}
 	}
@@ -179,8 +179,8 @@ Matrix4& Matrix4::operator+=(const Matrix4& a)
 
 Matrix4& Matrix4::operator-=(const Matrix4& a)
 {
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
+	for (int32_t i = 0; i < 4; i++) {
+		for (int32_t j = 0; j < 4; j++) {
 			m[i][j] -= a[i][j];
 		}
 	}
@@ -190,10 +190,10 @@ Matrix4& Matrix4::operator-=(const Matrix4& a)
 Matrix4& Matrix4::operator*=(const Matrix4& a)
 {
 	Matrix4 temp(*this);
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
+	for (int32_t i = 0; i < 4; i++) {
+		for (int32_t j = 0; j < 4; j++) {
 			float f = 0;
-			for (int k = 0; k < 4; k++) {
+			for (int32_t k = 0; k < 4; k++) {
 				f += temp.m[i][k] * a[k][j];
 			}
 			m[i][j] = f;
@@ -204,8 +204,8 @@ Matrix4& Matrix4::operator*=(const Matrix4& a)
 
 Matrix4& Matrix4::Transpose()
 {
-	for (int i = 0; i < 4; i++) {
-		for (int j = i; j < 4; j++) {
+	for (int32_t i = 0; i < 4; i++) {
+		for (int32_t j = i; j < 4; j++) {
 			float f = m[i][j];
 			m[i][j] = m[j][i];
 			m[j][i] = f;

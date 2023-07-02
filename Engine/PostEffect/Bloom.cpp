@@ -14,71 +14,94 @@ Bloom::Bloom()
 	};
 
 	//頂点インデックスデータ
-	UINT indices[] = {
+	uint32_t indices[] = {
 		0, 1, 2,
 		1, 3, 2
 	};
 
-	vertBuff.Init(vertices, _countof(vertices));
-	indexBuff.Init(indices, _countof(indices));
+	mVertBuff.Init(vertices, _countof(vertices));
+	mIndexBuff.Init(indices, _countof(indices));
 
-	RenderTarget::CreateRenderTargetTexture(1280, 720, 0x000000, "BloomA");
-	RenderTarget::CreateRenderTargetTexture(1280, 720, 0x000000, "BloomB");
+	RenderTarget::CreateRenderTexture(1280, 720, 0x000000, "BloomA");
+	RenderTarget::CreateRenderTexture(1280, 720, 0x000000, "BloomB");
 }
 
 void Bloom::Draw()
 {
-	RenderTarget::GetRenderTargetTexture("BloomA")->ClearRenderTarget();
-	RenderTarget::GetRenderTargetTexture("BloomA")->ClearDepthStencil();
-	RenderTarget::GetRenderTargetTexture("BloomB")->ClearRenderTarget();
-	RenderTarget::GetRenderTargetTexture("BloomB")->ClearDepthStencil();
+	*mConstBuff.Get() = mSetting;
 
-	//RenderOrder orderA;
-	//orderA.primitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
-	//orderA.vertBuff = vertBuff;
-	//orderA.indexBuff = indexBuff;
-	//orderA.indexCount = indexBuff.GetIndexCount();
-	//orderA.anchorPoint = Vector3(0, 0, 0);
-	//orderA.rootSignature = GetRootSignature().ptr.Get();
-	//orderA.pipelineState = GetGraphicsPipelineA().ptr.Get();
-	//orderA.renderTargets = { "BloomA" };
-	//orderA.rootData = {
-	//	{ TextureManager::Get(texture).gpuHandle }
-	//};
-	//Renderer::DrawCall("PostEffect", orderA);
+	RenderTarget::GetRenderTexture("BloomA")->ClearRenderTarget();
+	RenderTarget::GetRenderTexture("BloomA")->ClearDepthStencil();
+	RenderTarget::GetRenderTexture("BloomB")->ClearRenderTarget();
+	RenderTarget::GetRenderTexture("BloomB")->ClearDepthStencil();
+
+	RenderOrder orderA;
+	orderA.primitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+	orderA.vertBuff = mVertBuff;
+	orderA.indexBuff = mIndexBuff;
+	orderA.indexCount = mIndexBuff.GetIndexCount();
+	orderA.anchorPoint = Vector3(0, 0, 0);
+	orderA.mRootSignature = GetRootSignatureA().mPtr.Get();
+	orderA.pipelineState = GetGraphicsPipelineA().mPtr.Get();
+	orderA.renderTargets = { "BloomA" };
+	orderA.rootData = {
+		{ TextureManager::Get(RenderTarget::GetRenderTexture("RenderingImage")->mTexHandle).mGpuHandle }
+	};
+	if (mLevel == 1) {
+		orderA.postCommand = [&] {
+			Texture& texSrc = RenderTarget::GetRenderTexture("BloomA")->GetTexture();
+			Texture& texDest = RenderTarget::GetRenderTexture("RenderingImage")->GetTexture();
+
+			texSrc.Copy(&texDest, RRect(0, 1280, 0, 720));
+		};
+	}
+	Renderer::DrawCall("PostEffect", orderA);
 
 	RenderOrder orderB;
 	orderB.primitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
-	orderB.vertBuff = vertBuff;
-	orderB.indexBuff = indexBuff;
-	orderB.indexCount = indexBuff.GetIndexCount();
+	orderB.vertBuff = mVertBuff;
+	orderB.indexBuff = mIndexBuff;
+	orderB.indexCount = mIndexBuff.GetIndexCount();
 	orderB.anchorPoint = Vector3(0, 0, 0);
-	orderB.rootSignature = GetRootSignature().ptr.Get();
-	orderB.pipelineState = GetGraphicsPipelineB().ptr.Get();
+	orderB.mRootSignature = GetRootSignatureB().mPtr.Get();
+	orderB.pipelineState = GetGraphicsPipelineB().mPtr.Get();
 	orderB.renderTargets = { "BloomB" };
 	orderB.rootData = {
-		{ TextureManager::Get(RenderTarget::GetRenderTargetTexture("RenderingImage")->texHandle).gpuHandle}
+		{ TextureManager::Get(RenderTarget::GetRenderTexture("BloomA")->mTexHandle).mGpuHandle},
+		{ RootDataType::SRBUFFER_CBV, mConstBuff.mBuff }
 	};
-	Renderer::DrawCall("PostEffect", orderB);
+	if (mLevel >= 2) {
+		if (mLevel == 2) {
+			orderB.postCommand = [&] {
+				Texture& texSrc = RenderTarget::GetRenderTexture("BloomB")->GetTexture();
+				Texture& texDest = RenderTarget::GetRenderTexture("RenderingImage")->GetTexture();
+
+				texSrc.Copy(&texDest, RRect(0, 1280, 0, 720));
+			};
+		}
+		Renderer::DrawCall("PostEffect", orderB);
+	}
 
 	RenderOrder orderC;
 	orderC.primitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
-	orderC.vertBuff = vertBuff;
-	orderC.indexBuff = indexBuff;
-	orderC.indexCount = indexBuff.GetIndexCount();
+	orderC.vertBuff = mVertBuff;
+	orderC.indexBuff = mIndexBuff;
+	orderC.indexCount = mIndexBuff.GetIndexCount();
 	orderC.anchorPoint = Vector3(0, 0, 0);
-	orderC.rootSignature = GetRootSignature().ptr.Get();
-	orderC.pipelineState = GetGraphicsPipelineC().ptr.Get();
+	orderC.mRootSignature = GetRootSignatureA().mPtr.Get();
+	orderC.pipelineState = GetGraphicsPipelineC().mPtr.Get();
 	orderC.renderTargets = { "RenderingImage" };
 	orderC.rootData = {
-		{ TextureManager::Get(RenderTarget::GetRenderTargetTexture("BloomB")->texHandle).gpuHandle}
+		{ TextureManager::Get(RenderTarget::GetRenderTexture("BloomB")->mTexHandle).mGpuHandle}
 	};
-	Renderer::DrawCall("PostEffect", orderC);
+	if (mLevel >= 3) {
+		Renderer::DrawCall("PostEffect", orderC);
+	}
 }
 
-RootSignature& Bloom::GetRootSignature()
+RootSignature& Bloom::GetRootSignatureA()
 {
-	RootSignatureDesc desc = RDirectX::GetDefRootSignature().desc;
+	RootSignatureDesc desc = RDirectX::GetDefRootSignature().mDesc;
 
 	DescriptorRange descriptorRange{};
 	descriptorRange.NumDescriptors = 1; //一度の描画に使うテクスチャが1枚なので1
@@ -104,12 +127,47 @@ RootSignature& Bloom::GetRootSignature()
 	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL; //ピクセルシェーダーからだけ見える
 	desc.StaticSamplers = StaticSamplerDescs{ samplerDesc };
 
-	return RootSignature::GetOrCreate("Bloom", desc);
+	return RootSignature::GetOrCreate("BloomA", desc);
+}
+
+RootSignature& Bloom::GetRootSignatureB()
+{
+	RootSignatureDesc desc = RDirectX::GetDefRootSignature().mDesc;
+
+	DescriptorRange descriptorRange{};
+	descriptorRange.NumDescriptors = 1; //一度の描画に使うテクスチャが1枚なので1
+	descriptorRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	descriptorRange.BaseShaderRegister = 0; //テクスチャレジスタ0番
+	descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+	RootParamaters rootParams(2);
+	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE; //デスクリプタテーブル
+	rootParams[0].DescriptorTable = DescriptorRanges{ descriptorRange };
+	rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL; //全シェーダから見える
+	rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParams[1].Descriptor.RegisterSpace = 0;
+	rootParams[1].Descriptor.ShaderRegister = 0;
+	rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+	desc.RootParamaters = rootParams;
+
+	StaticSamplerDesc samplerDesc{};
+	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
+	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
+	samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
+	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK; //ボーダーの時は黒
+	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR; //リニア補間
+	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX; //ミップマップ最大値
+	samplerDesc.MinLOD = 0.0f; //ミップマップ最小値
+	samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL; //ピクセルシェーダーからだけ見える
+	desc.StaticSamplers = StaticSamplerDescs{ samplerDesc };
+
+	return RootSignature::GetOrCreate("BloomB", desc);
 }
 
 GraphicsPipeline& Bloom::GetGraphicsPipelineA()
 {
-	PipelineStateDesc desc = RDirectX::GetDefPipeline().desc;
+	PipelineStateDesc desc = RDirectX::GetDefPipeline().mDesc;
 
 	desc.InputLayout = {
 		{
@@ -139,13 +197,13 @@ GraphicsPipeline& Bloom::GetGraphicsPipelineA()
 
 	desc.VS = Shader::GetOrCreate("BloomA_VS", "Shader/BrightCutVS.hlsl", "main", "vs_5_0");
 	desc.PS = Shader::GetOrCreate("BloomA_PS", "Shader/BrightCutPS.hlsl", "main", "ps_5_0");
-	desc.pRootSignature = GetRootSignature().ptr.Get();
+	desc.pRootSignature = GetRootSignatureA().mPtr.Get();
 	return GraphicsPipeline::GetOrCreate("BloomA", desc);
 }
 
 GraphicsPipeline& Bloom::GetGraphicsPipelineB()
 {
-	PipelineStateDesc desc = RDirectX::GetDefPipeline().desc;
+	PipelineStateDesc desc = RDirectX::GetDefPipeline().mDesc;
 
 	desc.InputLayout = {
 		{
@@ -175,13 +233,13 @@ GraphicsPipeline& Bloom::GetGraphicsPipelineB()
 
 	desc.VS = Shader::GetOrCreate("BloomB_VS", "Shader/GaussianBlurVS.hlsl", "main", "vs_5_0");
 	desc.PS = Shader::GetOrCreate("BloomB_PS", "Shader/GaussianBlurPS.hlsl", "main", "ps_5_0");
-	desc.pRootSignature = GetRootSignature().ptr.Get();
+	desc.pRootSignature = GetRootSignatureB().mPtr.Get();
 	return GraphicsPipeline::GetOrCreate("BloomB", desc);
 }
 
 GraphicsPipeline& Bloom::GetGraphicsPipelineC()
 {
-	PipelineStateDesc desc = RDirectX::GetDefPipeline().desc;
+	PipelineStateDesc desc = RDirectX::GetDefPipeline().mDesc;
 
 	desc.InputLayout = {
 		{
@@ -210,6 +268,6 @@ GraphicsPipeline& Bloom::GetGraphicsPipelineC()
 	blenddesc.DestBlend = D3D12_BLEND_ONE;
 	desc.VS = Shader::GetOrCreate("BloomC_VS", "Shader/BloomVS.hlsl", "main", "vs_5_0");
 	desc.PS = Shader::GetOrCreate("BloomC_PS", "Shader/BloomPS.hlsl", "main", "ps_5_0");
-	desc.pRootSignature = GetRootSignature().ptr.Get();
+	desc.pRootSignature = GetRootSignatureA().mPtr.Get();
 	return GraphicsPipeline::GetOrCreate("BloomC", desc);
 }
