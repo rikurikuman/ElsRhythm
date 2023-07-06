@@ -77,7 +77,7 @@ AudioHandle RAudio::Load(const std::string filepath, std::string handle)
 	return handle;
 }
 
-void RAudio::Play(const AudioHandle handle, const float volume, const float pitch, const bool loop)
+void RAudio::Play(const AudioHandle handle, float volume, float pitch, bool loop)
 {
 	RAudio* instance = GetInstance();
 	HRESULT result;
@@ -89,6 +89,16 @@ void RAudio::Play(const AudioHandle handle, const float volume, const float pitc
 
 	shared_ptr<AudioData> data = instance->mAudioMap[handle];
 
+	if (
+		(data->samplePlayLength == 0 && data->samplePlayBegin != 0) // PlayLength‚ª0‚È‚çPlayBegin‚Í0‚Å‚È‚¯‚ê‚Î‚È‚ç‚È‚¢
+		&& (data->sampleLoopBegin >= data->samplePlayBegin + data->samplePlayLength) //LoopBegin‚ÍPlayBegin + PlayLength–¢–ž‚Å‚È‚¯‚ê‚Î‚È‚ç‚È‚¢
+		&& (data->sampleLoopBegin + data->sampleLoopLength <= data->samplePlayBegin) //LoopBegin + LoopLength‚ÍPlayBegin‚æ‚è‘å‚«‚­‚È‚¯‚ê‚Î‚È‚ç‚È‚¢
+		&& (data->sampleLoopBegin + data->sampleLoopLength >= data->samplePlayBegin + data->samplePlayLength) //LoopBegin + LoopLength‚ÍPlayBegin + PlayLength–¢–ž‚Å‚È‚¯‚ê‚Î‚È‚ç‚È‚¢
+		) {
+		Util::DebugLog("ERROR: RAudio::Play() : Invalid Audio PlaySetting.");
+		return;
+	}
+
 	if (data->type == AudioType::Wave) {
 		shared_ptr<WaveAudio> waveData = static_pointer_cast<WaveAudio>(data);
 
@@ -99,6 +109,12 @@ void RAudio::Play(const AudioHandle handle, const float volume, const float pitc
 		XAUDIO2_BUFFER buf{};
 		buf.pAudioData = &waveData->buffer[0];
 		buf.AudioBytes = waveData->bufferSize;
+		buf.PlayBegin = waveData->samplePlayBegin;
+		buf.PlayLength = waveData->samplePlayLength;
+		if (loop) {
+			buf.LoopBegin = waveData->sampleLoopBegin;
+			buf.LoopLength = waveData->sampleLoopLength;
+		}
 		buf.LoopCount = loop ? XAUDIO2_LOOP_INFINITE : 0;
 		buf.Flags = XAUDIO2_END_OF_STREAM;
 
@@ -111,7 +127,7 @@ void RAudio::Play(const AudioHandle handle, const float volume, const float pitc
 		result = pSourceVoice->Start();
 		assert(SUCCEEDED(result));
 
-		instance->mPlayingList.push_back({ handle, pSourceVoice });
+		instance->mPlayingList.push_back({ handle, pSourceVoice, loop });
 	}
 }
 
@@ -138,10 +154,124 @@ bool RAudio::IsPlaying(AudioHandle handle)
 	for (auto itr = instance->mPlayingList.begin(); itr != instance->mPlayingList.end();) {
 		PlayingInfo info = *itr;
 		if (info.handle == handle) {
-			
+			XAUDIO2_VOICE_STATE state{};
+			info.pSource->GetState(&state);
+			if (state.BuffersQueued == 0) {
+				itr = instance->mPlayingList.erase(itr);
+				continue;
+			}
+			return true;
 		}
 	}
 	return false;
+}
+
+float RAudio::GetCurrentPosition(AudioHandle handle) {
+	RAudio* instance = GetInstance();
+
+	std::lock_guard<std::recursive_mutex> lock(GetInstance()->mMutex);
+	if (instance->mAudioMap.find(handle) == instance->mAudioMap.end()) {
+		Util::DebugLog("ERROR: RAudio::GetCurrentPosition() : Audio[" + handle + "] is not found.");
+		return 0;
+	}
+
+	shared_ptr<AudioData> data = instance->mAudioMap[handle];
+	uint32_t samplePerSec = 0;
+	if (data->type == AudioType::Wave) {
+		shared_ptr<WaveAudio> waveData = static_pointer_cast<WaveAudio>(data);
+		samplePerSec = waveData->wfex.nSamplesPerSec;
+	}
+	else {
+		Util::DebugLog("ERROR: RAudio::SetPlayRange() : Audio[" + handle + "] is unknown AudioType.");
+		return 0;
+	}
+	
+	for (auto itr = instance->mPlayingList.begin(); itr != instance->mPlayingList.end();) {
+		PlayingInfo info = *itr;
+		if (info.handle == handle) {
+			XAUDIO2_VOICE_STATE state{};
+			info.pSource->GetState(&state);
+			if (state.BuffersQueued == 0) {
+				itr = instance->mPlayingList.erase(itr);
+				continue;
+			}
+
+			uint64_t totalSample = state.SamplesPlayed;
+
+			if (info.loop) {
+				totalSample += data->samplePlayBegin;
+
+				while (totalSample >= data->sampleLoopBegin + data->sampleLoopLength) {
+					totalSample -= data->sampleLoopLength;
+				}
+				return totalSample / static_cast<float>(samplePerSec);
+			}
+			else {
+				return (data->samplePlayBegin + totalSample) / static_cast<float>(samplePerSec);
+			}
+		}
+	}
+	return 0;
+}
+
+void RAudio::SetPlayRange(AudioHandle handle, float startPos, float endPos)
+{
+	if (endPos != 0 && startPos >= endPos) return;
+
+	RAudio* instance = GetInstance();
+
+	std::lock_guard<std::recursive_mutex> lock(GetInstance()->mMutex);
+	if (instance->mAudioMap.find(handle) == instance->mAudioMap.end()) {
+		Util::DebugLog("ERROR: RAudio::SetPlayRange() : Audio[" + handle + "] is not found.");
+		return;
+	}
+
+	shared_ptr<AudioData> data = instance->mAudioMap[handle];
+
+	if (data->type == AudioType::Wave) {
+		shared_ptr<WaveAudio> waveData = static_pointer_cast<WaveAudio>(data);
+
+		waveData->samplePlayBegin = static_cast<uint32_t>(startPos * waveData->wfex.nSamplesPerSec);
+		
+		if (endPos == 0) {
+			waveData->samplePlayLength = (waveData->bufferSize / (waveData->wfex.wBitsPerSample / 8) / waveData->wfex.nChannels) - waveData->samplePlayBegin;
+		}
+		else {
+			waveData->samplePlayLength = static_cast<uint32_t>((endPos - startPos) * waveData->wfex.nSamplesPerSec);
+		}
+		return;
+	}
+	Util::DebugLog("ERROR: RAudio::SetPlayRange() : Audio[" + handle + "] is unknown AudioType.");
+}
+
+void RAudio::SetLoopRange(AudioHandle handle, float startPos, float endPos)
+{
+	if (endPos != 0 && startPos >= endPos) return;
+
+	RAudio* instance = GetInstance();
+
+	std::lock_guard<std::recursive_mutex> lock(GetInstance()->mMutex);
+	if (instance->mAudioMap.find(handle) == instance->mAudioMap.end()) {
+		Util::DebugLog("ERROR: RAudio::SetLoopRange() : Audio[" + handle + "] is not found.");
+		return;
+	}
+
+	shared_ptr<AudioData> data = instance->mAudioMap[handle];
+
+	if (data->type == AudioType::Wave) {
+		shared_ptr<WaveAudio> waveData = static_pointer_cast<WaveAudio>(data);
+
+		waveData->sampleLoopBegin = static_cast<uint32_t>(startPos * waveData->wfex.nSamplesPerSec);
+
+		if (endPos == 0) {
+			waveData->sampleLoopLength = (waveData->bufferSize / (waveData->wfex.wBitsPerSample / 8) / waveData->wfex.nChannels) - waveData->sampleLoopBegin;
+		}
+		else {
+			waveData->sampleLoopLength = static_cast<uint32_t>((endPos - startPos) * waveData->wfex.nSamplesPerSec);
+		}
+		return;
+	}
+	Util::DebugLog("ERROR: RAudio::SetLoopRange() : Audio[" + handle + "] is unknown AudioType.");
 }
 
 void RAudio::InitInternal()

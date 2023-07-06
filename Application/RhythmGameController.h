@@ -4,6 +4,7 @@
 #include "ChartFile.h"
 #include <RWindow.h>
 #include <ModelObj.h>
+#include <RAudio.h>
 
 class RhythmGameController
 {
@@ -14,7 +15,7 @@ public:
 	bool startedMusicStream = false;
 	bool autoplay = false;
 
-	int32_t musicHandle = -1;
+	AudioHandle audioHandle;
 	MusicDesc music;
 
 	float scrollSpeed = 9;

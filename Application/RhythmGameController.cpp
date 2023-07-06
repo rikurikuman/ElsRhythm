@@ -105,7 +105,7 @@ void RhythmGameController::DrawMeasureLine()
 		float posY = posJudgeLine - (GetPosition(music.ConvertBeatToMiliSeconds(change.first)) - nowPosY);
 
 		if (posY < -80 || posY > 50) {
-			break;
+			continue;
 		}
 
 		if (lineObjIndex == lineModelObjs.size()) {
@@ -126,7 +126,7 @@ void RhythmGameController::Reset()
 	playing = false;
 	startedMusicStream = false;
 
-	musicHandle = -1;
+	audioHandle = "";
 	music = MusicDesc();
 
 	scrollChange.clear();
@@ -204,8 +204,8 @@ void RhythmGameController::Update()
 
 		if (ImGui::Button("Reset")) {
 			playing = false;
-			//TODO:StopSoundMem(musicHandle);
-			//TODO:SetSoundCurrentTime(0, musicHandle);
+			RAudio::Stop(audioHandle);
+			RAudio::SetPlayRange(audioHandle, 0, 0);
 			startedMusicStream = false;
 			chart.Load();
 			Load();
@@ -220,41 +220,41 @@ void RhythmGameController::Update()
 		ImGui::Text(Util::StringFormat("Beat:%d:%d", beat.measure, beat.beat + 1).c_str());
 		if (ImGui::Button("+1M##Beat")) {
 			playing = false;
-			//TODO:StopSoundMem(musicHandle);
+			RAudio::Stop(audioHandle);
 			Beat beat = music.ConvertMiliSecondsToBeat(time);
 			time += music.GetMeasureLength(beat.measure);
 			if (startedMusicStream) {
-				//TODO:SetSoundCurrentTime(time - offsetStream, musicHandle);
+				RAudio::SetPlayRange(audioHandle, (time - offsetStream) / 1000.0f, 0);
 			}
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("+1B##Beat")) {
 			playing = false;
-			//TODO:StopSoundMem(musicHandle);
+			RAudio::Stop(audioHandle);
 			Beat beat = music.ConvertMiliSecondsToBeat(time);
 			time += music.GetMeasureLength(beat.measure) / beat.LPB;
 			if (startedMusicStream) {
-				//TODO:SetSoundCurrentTime(time - offsetStream, musicHandle);
+				RAudio::SetPlayRange(audioHandle, (time - offsetStream) / 1000.0f, 0);
 			}
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("-1B##Beat")) {
 			playing = false;
-			//TODO:StopSoundMem(musicHandle);
+			RAudio::Stop(audioHandle);
 			Beat beat = music.ConvertMiliSecondsToBeat(time);
 			time -= music.GetMeasureLength(beat.measure) / beat.LPB;
 			if (startedMusicStream) {
-				//TODO:SetSoundCurrentTime(time - offsetStream, musicHandle);
+				RAudio::SetPlayRange(audioHandle, (time - offsetStream) / 1000.0f, 0);
 			}
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("-1M##Beat")) {
 			playing = false;
-			//TODO:StopSoundMem(musicHandle);
+			RAudio::Stop(audioHandle);
 			Beat beat = music.ConvertMiliSecondsToBeat(time);
 			time -= music.GetMeasureLength(beat.measure);
 			if (startedMusicStream) {
-				//TODO:SetSoundCurrentTime(time - offsetStream, musicHandle);
+				RAudio::SetPlayRange(audioHandle, (time - offsetStream) / 1000.0f, 0);
 			}
 		}
 		ImGui::Text(Util::StringFormat("Scroll:%.1f * %.2f", scrollSpeed, GetScroll(time)).c_str());
@@ -275,23 +275,23 @@ void RhythmGameController::Update()
 	}
 
 	if (playing) {
-		//TODO:
-		/*if (musicHandle != -1 && CheckSoundMem(musicHandle)) {
-			time = offsetStream + GetSoundCurrentTime(musicHandle);
+		if (!audioHandle.empty() && RAudio::IsPlaying(audioHandle)) {
+			time = offsetStream + RAudio::GetCurrentPosition(audioHandle) * 1000.0f;
 		}
 		else {
-			time += deltaMiliTime;
-			if (musicHandle != -1 && !startedMusicStream && time >= offsetStream) {
+			time += TimeManager::deltaMiliTime;
+			if (!audioHandle.empty() && !startedMusicStream && time >= offsetStream) {
 				startedMusicStream = true;
-				SetSoundCurrentTime(time - offsetStream, musicHandle);
-				PlaySoundMem(musicHandle, DX_PLAYTYPE_BACK, false);
+				RAudio::SetPlayRange(audioHandle, (time - offsetStream) / 1000.0f, 0);
+				RAudio::Play(audioHandle);
 			}
-		}*/
+		}
 		time += TimeManager::deltaMiliTime;
 	}
 	else {
-		if (musicHandle != -1) {
-			//TODO:StopSoundMem(musicHandle);
+		if (!audioHandle.empty()) {
+			RAudio::Stop(audioHandle);
+			startedMusicStream = false;
 		}
 	}
 
@@ -412,7 +412,7 @@ void RhythmGameController::Update()
 void RhythmGameController::Load()
 {
 	if (!chart.audiopath.empty()) {
-		//TODO:musicHandle = LoadSoundMem(chart.audiopath.c_str());
+		audioHandle = RAudio::Load(chart.audiopath.c_str());
 	}
 
 	offsetStream = chart.audioOffset;

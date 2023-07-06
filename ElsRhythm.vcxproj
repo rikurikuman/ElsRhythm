@@ -173,6 +173,7 @@
     <ClCompile Include="Application\RhythmGameController.cpp" />
     <ClCompile Include="Application\Note.cpp" />
     <ClCompile Include="Application\SimpleSceneTransition.cpp" />
+    <ClCompile Include="Application\SoundScene.cpp" />
     <ClCompile Include="Application\SpriteScene.cpp" />
     <ClCompile Include="Engine\Base\RenderTarget.cpp" />
     <ClCompile Include="Engine\Base\SRIndexBuffer.cpp" />
@@ -536,6 +537,7 @@
     <ClInclude Include="Application\RhythmGameController.h" />
     <ClInclude Include="Application\Note.h" />
     <ClInclude Include="Application\SimpleSceneTransition.h" />
+    <ClInclude Include="Application\SoundScene.h" />
     <ClInclude Include="Application\SpriteScene.h" />
     <ClInclude Include="Engine\Base\Rect.h" />
     <ClInclude Include="Engine\Base\RenderTarget.h" />

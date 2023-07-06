@@ -35,6 +35,7 @@
 #include <SRBuffer.h>
 #include <CollidersScene.h>
 #include <ControllerScene.h>
+#include <SoundScene.h>
 
 using namespace std;
 using namespace DirectX;
@@ -185,7 +186,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 			ImGui::NewLine();
 			ImGui::Text("SceneManager");
 			static int32_t sceneNum = 0;
-			const char* scenes[] = { "RhythmGameTest", "ControllerTest", "CollidersTest" };
+			const char* scenes[] = { "RhythmGameTest", "ControllerTest", "CollidersTest", "SoundTest" };
 			ImGui::Combo("##SceneNumCombo", &sceneNum, scenes, IM_ARRAYSIZE(scenes));
 			ImGui::SameLine();
 			if (ImGui::Button("Go!!!")) {
@@ -199,6 +200,9 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 						break;
 					case 2:
 						SceneManager::Change<CollidersScene, SimpleSceneTransition>();
+						break;
+					case 3:
+						SceneManager::Change<SoundScene, SimpleSceneTransition>();
 						break;
 					}
 				}

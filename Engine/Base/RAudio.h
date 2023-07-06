@@ -12,6 +12,7 @@
 #pragma comment(lib,"xaudio2.lib")
 
 typedef std::string AudioHandle;
+typedef std::string PlayingAudioHandle;
 
 struct ChunkHeader
 {
@@ -38,6 +39,10 @@ enum class AudioType {
 struct AudioData {
 	std::string filepath;
 	AudioType type{};
+	uint32_t samplePlayBegin = 0;
+	uint32_t samplePlayLength = 0;
+	uint32_t sampleLoopBegin = 0;
+	uint32_t sampleLoopLength = 0;
 };
 
 struct WaveAudio : public AudioData
@@ -45,25 +50,6 @@ struct WaveAudio : public AudioData
 	WAVEFORMATEX wfex{};
 	std::vector<BYTE> buffer;
 	uint32_t bufferSize = 0;
-};
-
-class RVoiceCallBack : public IXAudio2VoiceCallback
-{
-public:
-	HANDLE mStreamEndEventHandle;
-	RVoiceCallBack() : mStreamEndEventHandle(CreateEvent(NULL, FALSE, FALSE, NULL)) {}
-	~RVoiceCallBack() { CloseHandle(mStreamEndEventHandle); }
-
-	//再生終了時イベント
-	void OnStreamEnd() { SetEvent(mStreamEndEventHandle); }
-
-	//未使用イベント
-	void OnVoiceProcessingPassEnd() {}
-	void OnVoiceProcessingPassStart(UINT32 SamplesRequired) {}
-	void OnBufferEnd(void* pBufferContext) {}
-	void OnBufferStart(void* pBufferContext) {}
-	void OnLoopEnd(void* pBufferContext) {}
-	void OnVoiceError(void* pBufferContext, HRESULT Error) {}
 };
 
 class RAudio
@@ -83,9 +69,13 @@ public:
 	}
 
 	static AudioHandle Load(const std::string filepath, std::string handle = "");
-	static void Play(AudioHandle handle, const float volume = 1.0f, const float pitch = 1.0f, const bool loop = false);
+	static void Play(AudioHandle handle, float volume = 1.0f, float pitch = 1.0f, bool loop = false);
 	static void Stop(AudioHandle handle);
 	static bool IsPlaying(AudioHandle handle);
+	static float GetCurrentPosition(AudioHandle handle);
+
+	static void SetPlayRange(AudioHandle handle, float startPos, float endPos);
+	static void SetLoopRange(AudioHandle handle, float startPos, float endPos);
 
 private:
 	Microsoft::WRL::ComPtr<IXAudio2> mXAudio2;
@@ -93,10 +83,12 @@ private:
 
 	std::recursive_mutex mMutex;
 	std::map<AudioHandle, std::shared_ptr<AudioData>> mAudioMap;
+	std::map<PlayingAudioHandle, std::shared_ptr<AudioData>> mPlayingAudioMap;
 
 	struct PlayingInfo {
 		AudioHandle handle;
 		IXAudio2SourceVoice* pSource;
+		bool loop = false;
 	};
 	std::list<PlayingInfo> mPlayingList;
 

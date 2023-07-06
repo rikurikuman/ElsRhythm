@@ -43,7 +43,7 @@ FontTexture TextDrawer::GetFontTexture(std::wstring glyph, std::wstring fontType
 
 	DWORD size = GetGlyphOutline(hdc, code, GGO_GRAY4_BITMAP, &gm, 0, NULL, &Mat);
 	vector<BYTE> buffer;
-	buffer.resize(size);
+	buffer.resize(size == 0 ? 1 : size);
 	GetTextMetrics(hdc, &tm);
 	GetGlyphOutline(hdc, code, GGO_GRAY4_BITMAP, &gm, size, &buffer[0], &Mat);
 
