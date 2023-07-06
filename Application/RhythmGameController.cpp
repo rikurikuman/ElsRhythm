@@ -286,7 +286,6 @@ void RhythmGameController::Update()
 				RAudio::Play(audioHandle);
 			}
 		}
-		time += TimeManager::deltaMiliTime;
 	}
 	else {
 		if (!audioHandle.empty()) {
@@ -330,7 +329,7 @@ void RhythmGameController::Update()
 
 		if (playing) {
 			if (note.judged && note.judgeDiff <= judgePerfect && (music.ConvertBeatToMiliSeconds(note.beat) - time) <= 0) {
-				//TODO:PlaySE("JudgePerfect");
+				RAudio::Play("JudgePerfect");
 				//TODO:ShowJudgeText(posX + laneWidth / 2, posJudgeLine, "Perfect!", 0xffff00);
 				for (int32_t i = 0; i < 12; i++) {
 					ParticleExplode::Spawn({ posX, 0, 0 }, 0xffe32e, (360.0f / 12) + (360.0f / 12 * i), 10, 15, 0.5f);
@@ -356,7 +355,7 @@ void RhythmGameController::Update()
 								}
 							}
 							else if (diffB <= judgeHit) {
-								//TODO:PlaySE("JudgeHit");
+								RAudio::Play("JudgeHit");
 								//TODO:ShowJudgeText(posX + laneWidth / 2, posJudgeLine, "Hit", 0x00ff00);
 								//TODO:ShowJudgeText(posX + laneWidth / 2, posJudgeLine + 20, StringFormat("%+.1f", diffA) + "ms", diffA > 0 ? 0xff0000 : 0x00ffff);
 								for (int32_t i = 0; i < 12; i++) {
@@ -367,7 +366,7 @@ void RhythmGameController::Update()
 								continue;
 							}
 							else {
-								//TODO:PlaySE("JudgeMiss");
+								RAudio::Play("JudgeMiss");
 								//TODO:ShowJudgeText(posX + laneWidth / 2, posJudgeLine, "Hoge", 0xaaaaaa);
 								countJudgeMiss++;
 								removeNotes.push_back(note);
@@ -378,7 +377,7 @@ void RhythmGameController::Update()
 				}
 
 				if (diffA >= judgeHit * 2) {
-					//TODO:PlaySE("JudgeMiss");
+					RAudio::Play("JudgeMiss");
 					//TODO:ShowJudgeText(posX + laneWidth / 2, posJudgeLine, "Hoge", 0xaaaaaa);
 					countJudgeMiss++;
 					removeNotes.push_back(note);

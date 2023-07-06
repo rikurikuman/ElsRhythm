@@ -43,6 +43,10 @@ MainTestScene::MainTestScene()
 	camera.mFreeFlag = true;
 	camera.mViewProjection.UpdateMatrix();
 
+	RAudio::Load("Resources/Sound/Judge_Perfect.wav", "JudgePerfect");
+	RAudio::Load("Resources/Sound/Judge_Hit.wav", "JudgeHit");
+	RAudio::Load("Resources/Sound/Judge_Miss.wav", "JudgeMiss");
+
 	chartFile = ChartFile("Charts/aleph-0.kasu");
 	chartFile.Load();
 	gameController.chart = chartFile;

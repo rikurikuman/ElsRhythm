@@ -162,6 +162,7 @@ bool RAudio::IsPlaying(AudioHandle handle)
 			}
 			return true;
 		}
+		itr++;
 	}
 	return false;
 }
@@ -210,6 +211,7 @@ float RAudio::GetCurrentPosition(AudioHandle handle) {
 				return (data->samplePlayBegin + totalSample) / static_cast<float>(samplePerSec);
 			}
 		}
+		itr++;
 	}
 	return 0;
 }
