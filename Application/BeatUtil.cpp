@@ -168,6 +168,9 @@ Beat MusicDesc::ConvertMiliSecondsToBeat(const float& miliSec)
 	float whole = GetWholeNoteLength(nowBeat);
 	Meter meter = GetMeter(nowBeat);
 
+	result.beat = static_cast<int32_t>(result.beat * (meter.beatLength / static_cast<float>(result.LPB)));
+	result.LPB = meter.beatLength;
+
 	float remain = miliSec - ConvertBeatToMiliSeconds(nowBeat);
 
 	int32_t remainMeasure = static_cast<int32_t>(remain / ((whole / meter.beatLength) * meter.beatAmount));

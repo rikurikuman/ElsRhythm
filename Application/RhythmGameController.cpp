@@ -217,7 +217,7 @@ void RhythmGameController::Update()
 		ImGui::InputFloat("Time", &time);
 		ImGui::Text(Util::StringFormat("BPM:%.2f", music.GetBPM(beat)).c_str());
 		ImGui::Text(Util::StringFormat("Meter:%d/%d", music.GetMeter(beat).beatAmount, music.GetMeter(beat).beatLength).c_str());
-		ImGui::Text(Util::StringFormat("Beat:%d:%d", beat.measure, beat.beat + 1).c_str());
+		ImGui::Text(Util::StringFormat("Beat:%d:%d(%d)", beat.measure, beat.beat + 1, beat.LPB).c_str());
 		if (ImGui::Button("+1M##Beat")) {
 			playing = false;
 			RAudio::Stop(audioHandle);
