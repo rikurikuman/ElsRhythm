@@ -64,6 +64,8 @@ public:
 		GetInstance()->InitInternal();
 	}
 
+	static void Update();
+
 	static void Final() {
 		GetInstance()->FinalInternal();
 	}
@@ -76,6 +78,10 @@ public:
 
 	static void SetPlayRange(AudioHandle handle, float startPos, float endPos);
 	static void SetLoopRange(AudioHandle handle, float startPos, float endPos);
+
+	static size_t GetPlayingSoundCount() {
+		return GetInstance()->mPlayingList.size();
+	}
 
 private:
 	Microsoft::WRL::ComPtr<IXAudio2> mXAudio2;

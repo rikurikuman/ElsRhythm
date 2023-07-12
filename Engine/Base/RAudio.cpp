@@ -147,6 +147,22 @@ void RAudio::Stop(AudioHandle handle)
 	}
 }
 
+void RAudio::Update()
+{
+	RAudio* instance = GetInstance();
+	std::lock_guard<std::recursive_mutex> lock(GetInstance()->mMutex);
+	for (auto itr = instance->mPlayingList.begin(); itr != instance->mPlayingList.end();) {
+		PlayingInfo info = *itr;
+		XAUDIO2_VOICE_STATE state{};
+		info.pSource->GetState(&state);
+		if (state.BuffersQueued == 0) {
+			itr = instance->mPlayingList.erase(itr);
+			continue;
+		}
+		itr++;
+	}
+}
+
 bool RAudio::IsPlaying(AudioHandle handle)
 {
 	RAudio* instance = GetInstance();

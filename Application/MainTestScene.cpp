@@ -83,7 +83,9 @@ void MainTestScene::Draw()
 
 	std::array<int32_t, 4> laneKeys = { DIK_F, DIK_G, DIK_H, DIK_J };
 	for (int32_t i = 0; i < 4; i++) {
-		if (RInput::GetKey(laneKeys[i])) {
+		if (RInput::GetKey(laneKeys[i])
+			|| (i == 2 && RInput::GetMouseClick(0))
+			|| (i == 3 && RInput::GetMouseClick(1))) {
 			inputlines[i].TransferBuffer(Camera::sNowCamera->mViewProjection);
 			inputlines[i].Draw();
 		}

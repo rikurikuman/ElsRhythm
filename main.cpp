@@ -133,6 +133,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		}
 
 		RInput::Update();
+		RAudio::Update();
 
 		SceneManager::Update();
 

@@ -343,7 +343,10 @@ void RhythmGameController::Update()
 				float diffB = abs(diffA);
 
 				if (existNearby[note.lane] && nearbyNotes[note.lane] == note) {
-					if (RInput::GetKeyDown(laneKey[note.lane]) || (autoplay && diffA >= -judgeUltimatePerfect)) {
+					if (RInput::GetKeyDown(laneKey[note.lane]) 
+						|| (note.lane == 2 && RInput::GetMouseClickDown(0))
+						|| (note.lane == 3 && RInput::GetMouseClickDown(1))
+						|| (autoplay && diffA >= -judgeUltimatePerfect)) {
 						if (diffB <= judgeHit * 2) {
 							note.judged = true;
 							note.judgeDiff = diffB;
@@ -360,6 +363,16 @@ void RhythmGameController::Update()
 								//TODO:ShowJudgeText(posX + laneWidth / 2, posJudgeLine + 20, StringFormat("%+.1f", diffA) + "ms", diffA > 0 ? 0xff0000 : 0x00ffff);
 								for (int32_t i = 0; i < 12; i++) {
 									ParticleExplode::Spawn({ posX, 0, 0 }, 0x77ff5e, (360.0f / 12) + (360.0f / 12 * i), 5, 15, 0.5f);
+								}
+								if (diffA > 0) {
+									for (int32_t i = 0; i < 3; i++) {
+										ParticleExplode::Spawn({ posX, 0, 0 }, 0xff0000, (360.0f / 3) + (360.0f / 3 * i), 5, 15, 0.5f);
+									}
+								}
+								else {
+									for (int32_t i = 0; i < 3; i++) {
+										ParticleExplode::Spawn({ posX, 0, 0 }, 0x0000ff, (360.0f / 3) + (360.0f / 3 * i), 5, 15, 0.5f);
+									}
 								}
 								countJudgeHit++;
 								removeNotes.push_back(note);
@@ -406,6 +419,11 @@ void RhythmGameController::Update()
 	}
 
 	DrawMeasureLine();
+
+	SimpleDrawer::DrawString(60, 100, 0, Util::StringFormat("BPM:%.2f", music.GetBPM(beat)), {1, 1, 1, 1}, "", 80);
+	SimpleDrawer::DrawString(60, 180, 0, Util::StringFormat("Perfect:%d", countJudgePerfect));
+	SimpleDrawer::DrawString(60, 200, 0, Util::StringFormat("Hit:%d", countJudgeHit));
+	SimpleDrawer::DrawString(60, 220, 0, Util::StringFormat("Hoge:%d", countJudgeMiss));
 }
 
 void RhythmGameController::Load()
