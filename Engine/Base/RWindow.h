@@ -26,6 +26,8 @@ private:
 	HWND mWndHandle{};
 	MSG mMsg{};
 
+	bool mMouseCursorLock = false;
+
 	void InitInternal();
 
 public:
@@ -88,4 +90,13 @@ public:
 	static void SetAbsMousePos(int32_t posX, int32_t posY);
 
 	static void SetMouseHideFlag(bool hide);
+
+	/// <summary>
+	/// マウスカーソルのロック
+	/// 非表示にしたうえで画面中央に固定します
+	/// </summary>
+	/// <param name="lock">ロックするかどうか</param>
+	static void SetMouseLock(bool lock) {
+		GetInstance()->mMouseCursorLock = lock;
+	}
 };

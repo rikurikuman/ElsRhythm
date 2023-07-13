@@ -5,6 +5,7 @@
 #include <RWindow.h>
 #include <ModelObj.h>
 #include <RAudio.h>
+#include <ArcNoteObj.h>
 
 class RhythmGameController
 {
@@ -26,6 +27,7 @@ public:
 	std::list<Note> remainNotes;
 
 	std::vector<ModelObj> noteModelObjs;
+	std::vector<ArcNoteObj> arcNoteObjs;
 	std::vector<ModelObj> lineModelObjs;
 
 	int32_t countJudgePerfect = 0;

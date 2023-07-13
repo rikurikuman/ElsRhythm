@@ -51,6 +51,15 @@ void RWindow::ProcessMessage()
 		TranslateMessage(&instance->mMsg); //キー入力メッセージ処理
 		DispatchMessage(&instance->mMsg);
 	}
+
+	if (GetForegroundWindow() == RWindow::GetWindowHandle() 
+		&& instance->mMouseCursorLock) {
+		RWindow::SetMouseHideFlag(true);
+		RWindow::SetMousePos(RWindow::GetWidth() / 2, RWindow::GetHeight() / 2);
+	}
+	else {
+		RWindow::SetMouseHideFlag(false);
+	}
 }
 
 Vector2 RWindow::GetMousePos()

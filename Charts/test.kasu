@@ -21,7 +21,28 @@
 		{"beat": {"measure": 10, "beat": 0, "lpb":16}, "scroll": 1.0}
 	],
 	"notes": [
-		{"beat": {"measure": 0, "beat": 0,"lpb": 16}, "lane": 0},
+		{
+			"type": 2,
+			"beat": {"measure": 0, "beat": 0, "lpb": 16},
+			"pos": {"x": 5.0, "y": 1.0},
+			"controlpoints": [
+				{
+					"beat": {"measure": 0, "beat": 4, "lpb": 16},
+					"pos": {"x": -5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 0, "beat": 8, "lpb": 16},
+					"pos": {"x": 3.0, "y": 5.0}
+				},
+				{
+					"beat": {"measure": 0, "beat": 10, "lpb": 16},
+					"pos": {"x": -1.0, "y": 1.0}
+				}
+			],
+			"endbeat": {"measure": 0, "beat": 12, "lpb": 16},
+			"endpos": {"x": 0.0, "y": 1.0}
+		},
+		{"beat": {"measure": 0, "beat": 0,"lpb": 16}, "lane": 3},
 		{"beat": {"measure": 0, "beat": 2,"lpb": 16}, "lane": 1},
 		{"beat": {"measure": 0, "beat": 3,"lpb": 16}, "lane": 2},
 		{"beat": {"measure": 0, "beat": 4,"lpb": 16}, "lane": 1},

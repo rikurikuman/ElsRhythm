@@ -114,6 +114,12 @@ double Util::GetRand(double min, double max)
 
 float Util::GetRatio(float a, float b, float p)
 {
+	if (a > b) {
+		float temp = b;
+		b = a;
+		a = temp;
+	}
+
 	float size = b - a;
 	if (size == 0) {
 		return 1.0f;

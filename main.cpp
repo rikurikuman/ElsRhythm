@@ -20,6 +20,7 @@
 #include "SimpleSceneTransition.h"
 #include "RImGui.h"
 #include "MainTestScene.h"
+#include "GameScene.h"
 
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
@@ -103,9 +104,13 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	TextureManager::Load("Resources/loadingMark.png", "LoadingMark");
 
-	SceneManager::Set<MainTestScene>();
+	TextureManager::Load("Resources/hogetest.png", "hogetest");
+
+	SceneManager::Set<GameScene>();
 
 	DebugCamera camera({ 0, 0, -10 });
+
+	TimeManager::targetFPS = 120;
 
 	//////////////////////////////////////
 
@@ -119,13 +124,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		RImGui::NewFrame();
 
 		if (Util::instanceof<DebugCamera>(*Camera::sNowCamera)
-			&& GetForegroundWindow() == RWindow::GetWindowHandle()
 			&& !dynamic_cast<DebugCamera*>(Camera::sNowCamera)->mFreeFlag) {
-			RWindow::SetMouseHideFlag(true);
-			RWindow::SetMousePos(RWindow::GetWidth() / 2, RWindow::GetHeight() / 2);
+			RWindow::SetMouseLock(true);
 		}
 		else {
-			RWindow::SetMouseHideFlag(false);
+			RWindow::SetMouseLock(false);
 		}
 
 		if (RInput::GetKeyDown(DIK_F5)) {
@@ -187,22 +190,25 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 			ImGui::NewLine();
 			ImGui::Text("SceneManager");
 			static int32_t sceneNum = 0;
-			const char* scenes[] = { "RhythmGameTest", "ControllerTest", "CollidersTest", "SoundTest" };
+			const char* scenes[] = { "RhythmGameTest", "MainTest", "ControllerTest", "CollidersTest", "SoundTest" };
 			ImGui::Combo("##SceneNumCombo", &sceneNum, scenes, IM_ARRAYSIZE(scenes));
 			ImGui::SameLine();
 			if (ImGui::Button("Go!!!")) {
 				if (!SceneManager::IsSceneChanging()) {
 					switch (sceneNum) {
 					case 0:
-						SceneManager::Change<MainTestScene, SimpleSceneTransition>();
+						SceneManager::Change<GameScene, SimpleSceneTransition>();
 						break;
 					case 1:
-						SceneManager::Change<ControllerScene, SimpleSceneTransition>();
+						SceneManager::Change<MainTestScene, SimpleSceneTransition>();
 						break;
 					case 2:
-						SceneManager::Change<CollidersScene, SimpleSceneTransition>();
+						SceneManager::Change<ControllerScene, SimpleSceneTransition>();
 						break;
 					case 3:
+						SceneManager::Change<CollidersScene, SimpleSceneTransition>();
+						break;
+					case 4:
 						SceneManager::Change<SoundScene, SimpleSceneTransition>();
 						break;
 					}

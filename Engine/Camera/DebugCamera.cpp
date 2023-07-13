@@ -55,4 +55,6 @@ void DebugCamera::Update()
 	mViewProjection.mTarget.z = mViewProjection.mEye.z + 100 * sinf(Util::PI / 180 * mAngle.x) * cosf(Util::PI / 180 * mAngle.y);
 
 	mViewProjection.UpdateMatrix();
+	mBuff.mConstMap->cameraPos = mViewProjection.mEye;
+	mBuff.mConstMap->matrix = mViewProjection.mMatrix;
 }

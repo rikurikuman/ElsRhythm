@@ -192,7 +192,7 @@
     <ClCompile Include="Engine\Light\LightGroup.cpp">
       <Filter>ソース ファイル\Engine\Light</Filter>
     </ClCompile>
-    <ClCompile Include="Application\MainTestScene.cpp">
+    <ClCompile Include="Application\GameScene.cpp">
       <Filter>ソース ファイル\Application</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Light\SpotLight.cpp">
@@ -334,6 +334,12 @@
       <Filter>ソース ファイル\Application</Filter>
     </ClCompile>
     <ClCompile Include="Application\SoundScene.cpp">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\MainTestScene.cpp">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ArcNoteObj.cpp">
       <Filter>ソース ファイル\Application</Filter>
     </ClCompile>
   </ItemGroup>
@@ -559,7 +565,7 @@
     <ClInclude Include="Engine\Light\PointLight.h">
       <Filter>ヘッダー ファイル\Engine\Light</Filter>
     </ClInclude>
-    <ClInclude Include="Application\MainTestScene.h">
+    <ClInclude Include="Application\GameScene.h">
       <Filter>ヘッダー ファイル\Application</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Light\SpotLight.h">
@@ -707,6 +713,12 @@
       <Filter>ヘッダー ファイル\Application</Filter>
     </ClInclude>
     <ClInclude Include="Application\SoundScene.h">
+      <Filter>ヘッダー ファイル\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\MainTestScene.h">
+      <Filter>ヘッダー ファイル\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ArcNoteObj.h">
       <Filter>ヘッダー ファイル\Application</Filter>
     </ClInclude>
   </ItemGroup>

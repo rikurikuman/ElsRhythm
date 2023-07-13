@@ -175,16 +175,128 @@ void from_json(const json& j, Meter& o)
 
 void to_json(json& j, const Note& o)
 {
-	j["beat"] = o.beat;
-	j["lane"] = o.lane;
+	j["type"] = static_cast<int32_t>(o.type);
+	switch (o.type) {
+	case Note::Types::Tap:
+		j["beat"] = o.mainBeat;
+		j["lane"] = o.lane;
+		break;
+	case Note::Types::Hold:
+		j["beat"] = o.mainBeat;
+		j["endbeat"] = o.subBeat;
+		j["lane"] = o.lane;
+		break;
+	case Note::Types::Arc:
+		j["beat"] = o.mainBeat;
+		j["pos"] = o.mainPos;
+		j["endbeat"] = o.subBeat;
+		j["endpos"] = o.subPos;
+		for (Note::ControlPoint cp : o.controlPoints) {
+			j["controlpoints"].push_back(cp);
+		}
+		break;
+	default:
+		break;
+	}
 }
 
 void from_json(const json& j, Note& o)
 {
+	if (j.find("type") != j.end()) {
+		o.type = static_cast<Note::Types>(j.at("type").get<int32_t>());
+	}
+	else {
+		o.type = Note::Types::Tap;
+	}
+
+	switch (o.type) {
+	case Note::Types::Tap:
+		if (j.find("beat") != j.end()) {
+			o.mainBeat = j.at("beat").get<Beat>();
+		}
+		if (j.find("lane") != j.end()) {
+			o.lane = j.at("lane").get<int32_t>();
+		}
+		break;
+	case Note::Types::Hold:
+		if (j.find("beat") != j.end()) {
+			o.mainBeat = j.at("beat").get<Beat>();
+		}
+		if (j.find("lane") != j.end()) {
+			o.lane = j.at("lane").get<int32_t>();
+		}
+		if (j.find("endbeat") != j.end()) {
+			o.subBeat = j.at("endbeat").get<Beat>();
+		}
+		else {
+			o.subBeat = o.mainBeat;
+		}
+		break;
+	case Note::Types::Arc:
+		if (j.find("beat") != j.end()) {
+			o.mainBeat = j.at("beat").get<Beat>();
+		}
+		if (j.find("pos") != j.end()) {
+			o.mainPos = j.at("pos").get<Vector3>();
+		}
+		if (j.find("endbeat") != j.end()) {
+			o.subBeat = j.at("endbeat").get<Beat>();
+		}
+		else {
+			o.subBeat = o.mainBeat;
+		}
+		if (j.find("endpos") != j.end()) {
+			o.subPos = j.at("endpos").get<Vector3>();
+		}
+		else {
+			o.subPos = o.mainPos;
+		}
+		if (j.find("controlpoints") != j.end()) {
+			json controlPoints = j["controlpoints"];
+			for (json::iterator itr = controlPoints.begin(); itr != controlPoints.end(); itr++) {
+				json obj = *itr;
+
+				o.controlPoints.push_back(obj.get<Note::ControlPoint>());
+			}
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+void to_json(json& j, const Note::ControlPoint& o)
+{
+	j["beat"] = o.beat;
+	j["pos"] = o.pos;
+}
+
+void from_json(const json& j, Note::ControlPoint& o)
+{
 	if (j.find("beat") != j.end()) {
 		o.beat = j.at("beat").get<Beat>();
 	}
-	if (j.find("lane") != j.end()) {
-		o.lane = j.at("lane").get<int32_t>();
+	if (j.find("pos") != j.end()) {
+		o.pos = j.at("pos").get<Vector3>();
+	}
+}
+
+void to_json(json& j, const Vector3& o)
+{
+	j["x"] = o.x;
+	j["y"] = o.y;
+	if (o.z != 0) j["z"] = o.z;
+}
+
+void from_json(const json& j, Vector3& o)
+{
+	if (j.find("x") != j.end()) {
+		o.x = j.at("x");
+	}
+	if (j.find("y") != j.end()) {
+		o.y = j.at("y");
+	}
+	if (j.find("z") != j.end()) {
+		o.z = j.at("z");
 	}
 }
