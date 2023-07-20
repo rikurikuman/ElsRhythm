@@ -55,10 +55,27 @@ void RWindow::ProcessMessage()
 	if (GetForegroundWindow() == RWindow::GetWindowHandle() 
 		&& instance->mMouseCursorLock) {
 		RWindow::SetMouseHideFlag(true);
-		RWindow::SetMousePos(RWindow::GetWidth() / 2, RWindow::GetHeight() / 2);
+
+		int32_t xPos_absolute, yPos_absolute;
+
+		WINDOWINFO windowInfo{};
+
+		//ウィンドウの位置を取得
+		windowInfo.cbSize = sizeof(WINDOWINFO);
+		GetWindowInfo(RWindow::GetWindowHandle(), &windowInfo);
+
+		//マウスの移動先の絶対座標（モニター左上からの座標）
+		xPos_absolute = RWindow::GetWidth() / 2 + windowInfo.rcWindow.left;
+		yPos_absolute = RWindow::GetHeight() / 2 + windowInfo.rcWindow.top + 35; //ウィンドウのタイトルバーの分（35px）をプラス
+
+		SetCursorPos(xPos_absolute, yPos_absolute);
+
+		RECT rect{ xPos_absolute, yPos_absolute, xPos_absolute, yPos_absolute };
+		ClipCursor(&rect);
 	}
 	else {
 		RWindow::SetMouseHideFlag(false);
+		ClipCursor(NULL);
 	}
 }
 
