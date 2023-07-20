@@ -1,25 +1,10 @@
 {
 	"audiooffset": 0.0,
-    "audiopath": "./Charts/Song_of_Yobikomikun.wav",
-	"basebpm" : 131,
+	"basebpm" : 150,
 	"basemeter":  {
 		"amount" : 4,
 		"length" : 4
 	},
-	"scrollchange": [
-		{"beat": {"measure": 7, "beat": 0, "lpb":16}, "scroll": 0.5},
-		{"beat": {"measure": 7, "beat": 2, "lpb":16}, "scroll": 0.25},
-		{"beat": {"measure": 7, "beat": 4, "lpb":16}, "scroll": 0.125},
-		{"beat": {"measure": 7, "beat": 6, "lpb":16}, "scroll": 0.0625},
-		{"beat": {"measure": 7, "beat": 8, "lpb":16}, "scroll": 0.0},
-		{"beat": {"measure": 7, "beat": 10, "lpb":16}, "scroll": -2.0},
-		{"beat": {"measure": 7, "beat": 11, "lpb":16}, "scroll": 2.0},
-		{"beat": {"measure": 7, "beat": 12, "lpb":16}, "scroll": 1.0},
-		{"beat": {"measure": 8, "beat": 12, "lpb":16}, "scroll": 0.25},
-		{"beat": {"measure": 9, "beat": 0, "lpb":16}, "scroll": 1.0},
-		{"beat": {"measure": 9, "beat": 12, "lpb":16}, "scroll": 0.25},
-		{"beat": {"measure": 10, "beat": 0, "lpb":16}, "scroll": 1.0}
-	],
 	"notes": [
 		{
 			"type": 2,
@@ -32,118 +17,63 @@
 				},
 				{
 					"beat": {"measure": 0, "beat": 8, "lpb": 16},
-					"pos": {"x": 3.0, "y": 5.0}
+					"pos": {"x": 5.0, "y": 1.0}
 				},
 				{
-					"beat": {"measure": 0, "beat": 10, "lpb": 16},
-					"pos": {"x": -1.0, "y": 1.0}
+					"beat": {"measure": 0, "beat": 12, "lpb": 16},
+					"pos": {"x": -5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 1, "beat": 0, "lpb": 16},
+					"pos": {"x": 5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 1, "beat": 4, "lpb": 16},
+					"pos": {"x": 5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 1, "beat": 4, "lpb": 16},
+					"pos": {"x": -5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 1, "beat": 8, "lpb": 16},
+					"pos": {"x": -5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 1, "beat": 8, "lpb": 16},
+					"pos": {"x": 5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 1, "beat": 12, "lpb": 16},
+					"pos": {"x": 5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 1, "beat": 12, "lpb": 16},
+					"pos": {"x": -5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 2, "beat": 0, "lpb": 16},
+					"pos": {"x": -5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 2, "beat": 0, "lpb": 16},
+					"pos": {"x": 5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 2, "beat": 8, "lpb": 16},
+					"pos": {"x": 5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 2, "beat": 8, "lpb": 16},
+					"pos": {"x": -5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 3, "beat": 8, "lpb": 16},
+					"pos": {"x": 0.0, "y": 5.0}
 				}
 			],
-			"endbeat": {"measure": 0, "beat": 12, "lpb": 16},
-			"endpos": {"x": 0.0, "y": 1.0}
-		},
-		{"beat": {"measure": 0, "beat": 0,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 0, "beat": 2,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 0, "beat": 3,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 0, "beat": 4,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 0, "beat": 6,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 0, "beat": 8,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 0, "beat": 10,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 0, "beat": 12,"lpb": 16}, "lane": 3},
-		
-		{"beat": {"measure": 1, "beat": 0,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 1, "beat": 2,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 1, "beat": 3,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 1, "beat": 4,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 1, "beat": 6,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 1, "beat": 8,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 1, "beat": 10,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 1, "beat": 12,"lpb": 16}, "lane": 0},
-		
-		{"beat": {"measure": 2, "beat": 0,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 2, "beat": 2,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 2, "beat": 4,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 2, "beat": 6,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 2, "beat": 8,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 2, "beat": 8,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 2, "beat": 14,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 2, "beat": 14,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 3, "beat": 0,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 3, "beat": 0,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 3, "beat": 6,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 3, "beat": 8,"lpb": 16}, "lane": 0},
-		
-		{"beat": {"measure": 4, "beat": 0,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 4, "beat": 2,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 4, "beat": 4,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 4, "beat": 6,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 4, "beat": 8,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 4, "beat": 8,"lpb": 16}, "lane": 2},
-		
-		{"beat": {"measure": 5, "beat": 0,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 5, "beat": 2,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 5, "beat": 4,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 5, "beat": 6,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 5, "beat": 8,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 5, "beat": 8,"lpb": 16}, "lane": 3},
-		
-		{"beat": {"measure": 6, "beat": 0,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 6, "beat": 2,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 6, "beat": 4,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 6, "beat": 6,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 6, "beat": 8,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 6, "beat": 12,"lpb": 16}, "lane": 0},
-		
-		{"beat": {"measure": 7, "beat": 12,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 7, "beat": 12,"lpb": 16}, "lane": 2},
-		
-		{"beat": {"measure": 8, "beat": 0,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 8, "beat": 0,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 8, "beat": 2,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 8, "beat": 3,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 8, "beat": 4,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 8, "beat": 5,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 8, "beat": 6,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 8, "beat": 8,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 8, "beat": 9,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 8, "beat": 10,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 8, "beat": 12,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 8, "beat": 12,"lpb": 16}, "lane": 3},
-		
-		{"beat": {"measure": 9, "beat": 0,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 9, "beat": 0,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 9, "beat": 2,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 9, "beat": 3,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 9, "beat": 4,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 9, "beat": 5,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 9, "beat": 6,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 9, "beat": 8,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 9, "beat": 9,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 9, "beat": 10,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 9, "beat": 12,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 9, "beat": 12,"lpb": 16}, "lane": 3},
-		
-		{"beat": {"measure": 10, "beat": 0,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 10, "beat": 1,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 10, "beat": 2,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 10, "beat": 3,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 10, "beat": 4,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 10, "beat": 5,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 10, "beat": 6,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 10, "beat": 7,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 10, "beat": 8,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 10, "beat": 8,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 10, "beat": 10,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 10, "beat": 11,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 10, "beat": 12,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 10, "beat": 14,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 10, "beat": 14,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 11, "beat": 0,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 11, "beat": 0,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 11, "beat": 2,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 11, "beat": 3,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 11, "beat": 4,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 11, "beat": 6,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 11, "beat": 8,"lpb": 16}, "lane": 0}
+			"endbeat": {"measure": 4, "beat": 0, "lpb": 16},
+			"endpos": {"x": 0.0, "y": 5.0}
+		}
 	]
 }

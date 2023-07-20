@@ -215,8 +215,23 @@
 		{"beat": {"measure": 147, "beat": 0, "lpb":1}, "scroll": 5}
 	],
 	"notes": [
-		{"beat": {"measure": 6, "beat": 0, "lpb": 1}, "lane": 1},
-		{"beat": {"measure": 6, "beat": 0, "lpb": 1}, "lane": 2},
+		{
+			"type": 2,
+			"beat": {"measure": 0, "beat": 0, "lpb": 4},
+			"pos": {"x": -5.0, "y": 5.0},
+			"controlpoints": [
+				{
+					"beat": {"measure": 6, "beat": 0, "lpb": 16},
+					"pos": {"x": 5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 6, "beat": 0, "lpb": 16},
+					"pos": {"x": -5.0, "y": 1.0}
+				}
+			],
+			"endbeat": {"measure": 6, "beat": 4, "lpb": 16},
+			"endpos": {"x": -5.0, "y": 1.0}
+		},
 		
 		{"beat": {"measure": 8, "beat": 2, "lpb": 4}, "lane": 1},
 		
@@ -242,8 +257,19 @@
 		{"beat": {"measure": 10, "beat":  12, "lpb": 16}, "lane": 0},
 		{"beat": {"measure": 10, "beat":  12, "lpb": 16}, "lane": 3},
 		
-		{"beat": {"measure": 11, "beat":  0, "lpb": 16}, "lane": 1},
-		{"beat": {"measure": 11, "beat":  0, "lpb": 16}, "lane": 2},
+		{
+			"type": 2,
+			"beat": {"measure": 11, "beat": 0, "lpb": 4},
+			"pos": {"x": -5.0, "y": 1.0},
+			"controlpoints": [
+				{
+					"beat": {"measure": 11, "beat": 0, "lpb": 16},
+					"pos": {"x": 5.0, "y": 1.0}
+				}
+			],
+			"endbeat": {"measure": 11, "beat": 1, "lpb": 16},
+			"endpos": {"x": 5.0, "y": 1.0}
+		},
 		
 		{"beat": {"measure": 11, "beat":  4, "lpb": 16}, "lane": 1},
 		{"beat": {"measure": 11, "beat":  6, "lpb": 16}, "lane": 2},
@@ -251,14 +277,35 @@
 		
 		{"beat": {"measure": 11, "beat":  12, "lpb": 16}, "lane": 2},
 		
-		{"beat": {"measure": 12, "beat":  0, "lpb": 16}, "lane": 2},
-		{"beat": {"measure": 12, "beat":  0, "lpb": 16}, "lane": 3},
-		
-		{"beat": {"measure": 12, "beat":  6, "lpb": 16}, "lane": 1},
-		{"beat": {"measure": 12, "beat":  6, "lpb": 16}, "lane": 2},
-		
-		{"beat": {"measure": 12, "beat":  12, "lpb": 16}, "lane": 0},
-		{"beat": {"measure": 12, "beat":  12, "lpb": 16}, "lane": 1},
+		{
+			"type": 2,
+			"beat": {"measure": 12, "beat": 0, "lpb": 16},
+			"pos": {"x": 5.0, "y": 1.0},
+			"controlpoints": [
+				{
+					"beat": {"measure": 12, "beat": 0, "lpb": 16},
+					"pos": {"x": -5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 12, "beat": 6, "lpb": 16},
+					"pos": {"x": 5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 12, "beat": 6, "lpb": 16},
+					"pos": {"x": -5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 12, "beat": 12, "lpb": 16},
+					"pos": {"x": 5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 12, "beat": 12, "lpb": 16},
+					"pos": {"x": -5.0, "y": 1.0}
+				}
+			],
+			"endbeat": {"measure": 12, "beat": 13, "lpb": 16},
+			"endpos": {"x": -5.0, "y": 1.0}
+		},
 		
 		{"beat": {"measure": 13, "beat":  0, "lpb": 16}, "lane": 0},
 		{"beat": {"measure": 13, "beat":  2, "lpb": 16}, "lane": 1},
@@ -284,14 +331,35 @@
 		{"beat": {"measure": 15, "beat":  12, "lpb": 16}, "lane": 0},
 		{"beat": {"measure": 15, "beat":  12, "lpb": 16}, "lane": 3},
 		
-		{"beat": {"measure": 16, "beat":  0, "lpb": 16}, "lane": 0},
-		{"beat": {"measure": 16, "beat":  0, "lpb": 16}, "lane": 1},
-		
-		{"beat": {"measure": 16, "beat":  6, "lpb": 16}, "lane": 1},
-		{"beat": {"measure": 16, "beat":  6, "lpb": 16}, "lane": 2},
-		
-		{"beat": {"measure": 16, "beat":  12, "lpb": 16}, "lane": 2},
-		{"beat": {"measure": 16, "beat":  12, "lpb": 16}, "lane": 3},
+		{
+			"type": 2,
+			"beat": {"measure": 16, "beat": 0, "lpb": 16},
+			"pos": {"x": -5.0, "y": 1.0},
+			"controlpoints": [
+				{
+					"beat": {"measure": 16, "beat": 0, "lpb": 16},
+					"pos": {"x": 5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 16, "beat": 6, "lpb": 16},
+					"pos": {"x": -5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 16, "beat": 6, "lpb": 16},
+					"pos": {"x": 5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 16, "beat": 12, "lpb": 16},
+					"pos": {"x": -5.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 16, "beat": 12, "lpb": 16},
+					"pos": {"x": 5.0, "y": 1.0}
+				}
+			],
+			"endbeat": {"measure": 16, "beat": 13, "lpb": 16},
+			"endpos": {"x": 5.0, "y": 1.0}
+		},
 		
 		{"beat": {"measure": 17, "beat":  0, "lpb": 16}, "lane": 3},
 		{"beat": {"measure": 17, "beat":  2, "lpb": 16}, "lane": 2},
@@ -313,12 +381,38 @@
 		{"beat": {"measure": 19, "beat":  12, "lpb": 16}, "lane": 2},
 		{"beat": {"measure": 19, "beat":  12, "lpb": 16}, "lane": 3},
 		
-		{"beat": {"measure": 20, "beat":  0, "lpb": 16}, "lane": 3},
-		{"beat": {"measure": 20, "beat":  2, "lpb": 16}, "lane": 2},
-		{"beat": {"measure": 20, "beat":  6, "lpb": 16}, "lane": 0},
-		{"beat": {"measure": 20, "beat":  8, "lpb": 16}, "lane": 1},
-		{"beat": {"measure": 20, "beat":  12, "lpb": 16}, "lane": 2},
-		{"beat": {"measure": 20, "beat":  12, "lpb": 16}, "lane": 3},
+		{
+			"type": 2,
+			"beat": {"measure": 20, "beat": 0, "lpb": 16},
+			"pos": {"x": -8.0, "y": 1.0},
+			"controlpoints": [
+				{
+					"beat": {"measure": 20, "beat": 0, "lpb": 16},
+					"pos": {"x": 8.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 20, "beat": 6, "lpb": 16},
+					"pos": {"x": 8.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 20, "beat": 6, "lpb": 16},
+					"pos": {"x": -8.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 20, "beat": 12, "lpb": 16},
+					"pos": {"x": -8.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 20, "beat": 12, "lpb": 16},
+					"pos": {"x": 8.0, "y": 1.0}
+				}
+			],
+			"endbeat": {"measure": 20, "beat": 13, "lpb": 16},
+			"endpos": {"x": 8.0, "y": 1.0}
+		},
+		
+		{"beat": {"measure": 20, "beat":  4, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 20, "beat":  10, "lpb": 16}, "lane": 1},
 		
 		{"beat": {"measure": 21, "beat":  0, "lpb": 16}, "lane": 0},
 		{"beat": {"measure": 21, "beat":  2, "lpb": 16}, "lane": 1},
@@ -347,12 +441,38 @@
 		{"beat": {"measure": 23, "beat":  12, "lpb": 16}, "lane": 1},
 		{"beat": {"measure": 23, "beat":  12, "lpb": 16}, "lane": 0},
 		
-		{"beat": {"measure": 24, "beat":  0, "lpb": 16}, "lane": 1},
-		{"beat": {"measure": 24, "beat":  2, "lpb": 16}, "lane": 0},
-		{"beat": {"measure": 24, "beat":  6, "lpb": 16}, "lane": 2},
-		{"beat": {"measure": 24, "beat":  8, "lpb": 16}, "lane": 3},
-		{"beat": {"measure": 24, "beat":  12, "lpb": 16}, "lane": 0},
-		{"beat": {"measure": 24, "beat":  12, "lpb": 16}, "lane": 1},
+		{
+			"type": 2,
+			"beat": {"measure": 24, "beat": 0, "lpb": 16},
+			"pos": {"x": 8.0, "y": 1.0},
+			"controlpoints": [
+				{
+					"beat": {"measure": 24, "beat": 0, "lpb": 16},
+					"pos": {"x": -8.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 24, "beat": 6, "lpb": 16},
+					"pos": {"x": -8.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 24, "beat": 6, "lpb": 16},
+					"pos": {"x": 8.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 24, "beat": 12, "lpb": 16},
+					"pos": {"x": 8.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 24, "beat": 12, "lpb": 16},
+					"pos": {"x": -8.0, "y": 1.0}
+				}
+			],
+			"endbeat": {"measure": 24, "beat": 13, "lpb": 16},
+			"endpos": {"x": -8.0, "y": 1.0}
+		},
+		
+		{"beat": {"measure": 24, "beat":  4, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 24, "beat":  10, "lpb": 16}, "lane": 2},
 		
 		{"beat": {"measure": 25, "beat":  0, "lpb": 16}, "lane": 3},
 		{"beat": {"measure": 25, "beat":  2, "lpb": 16}, "lane": 2},

@@ -35,7 +35,7 @@ GameScene::GameScene()
 		inputlines[i].mTransform.position = { -6.0f + 4.0f * i, -0.05f, 0 };
 		inputlines[i].mTransform.scale = { 4.0f, 0.1f, 160.0f };
 		inputlines[i].mTransform.UpdateMatrix();
-		inputlines[i].mTuneMaterial.mColor = { 0.4f, 0.4f, 0.4f, 0.5f };
+		inputlines[i].mTuneMaterial.mColor = { 0.4f, 0.4f, 0.4f, 0.2f };
 	}
 
 	camera.mViewProjection.mEye = { 0, 11.0f, -12.0f };
@@ -47,7 +47,7 @@ GameScene::GameScene()
 	RAudio::Load("Resources/Sound/Judge_Hit.wav", "JudgeHit");
 	RAudio::Load("Resources/Sound/Judge_Miss.wav", "JudgeMiss");
 
-	chartFile = ChartFile("Charts/test.kasu");
+	chartFile = ChartFile("Charts/aleph-0.kasu");
 	chartFile.Load();
 	gameController.chart = chartFile;
 	gameController.Load();

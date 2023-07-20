@@ -60,5 +60,10 @@ public:
 	static constexpr float judgeUltimatePerfect = 25;
 	static constexpr float judgePerfect = 50;
 	static constexpr float judgeHit = 100;
+
+private:
+	bool CheckArcInput(Beat& arcStartBeat, Beat& arcEndBeat, Vector3& arcStartPos, Vector3& arcEndPos);
+	void JudgeRightAngleArc(Note& note);
+	Vector3 GetNowArcPos(Note& note);
 };
 

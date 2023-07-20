@@ -178,6 +178,7 @@ void RhythmGameController::Init()
 void RhythmGameController::Update()
 {
 	if (Util::debugBool) {
+		RWindow::SetMouseLock(true);
 		if (RInput::GetKey(DIK_LSHIFT) || RInput::GetKey(DIK_RSHIFT)) {
 			if (RInput::GetKeyDown(DIK_LEFT)) {
 				scrollSpeed -= 1.0f;
@@ -196,6 +197,9 @@ void RhythmGameController::Update()
 				scrollSpeed += 0.1f;
 			}
 		}
+	}
+	else {
+		RWindow::SetMouseLock(false);
 	}
 
 	{
@@ -331,6 +335,7 @@ void RhythmGameController::Update()
 
 	std::list<Note> removeNotes;
 	for (Note& note : remainNotes) {
+		//ノーツの位置計算
 		float posX = laneCenter + (-laneWidth * 2 + laneWidth * note.lane + laneWidth / 2);
 		if (!note.posCalced) {
 			if (note.type == Note::Types::Tap || note.type == Note::Types::Hold) {
@@ -357,6 +362,7 @@ void RhythmGameController::Update()
 		}
 		float posZ = posJudgeLine - (note.mainPos.z - nowPosY);
 
+		//入力判定
 		if (playing) {
 			if (note.type == Note::Types::Tap) {
 				if (note.judgeFlag && note.judgeDiff <= judgePerfect && (music.ConvertBeatToMiliSeconds(note.mainBeat) - time) <= 0) {
@@ -430,32 +436,100 @@ void RhythmGameController::Update()
 				}
 			}
 			else if (note.type == Note::Types::Arc) {
-				//現在のアークの節を取得する
-				Beat arcStartBeat = note.mainBeat;
-				Beat arcEndBeat = note.subBeat;
+				bool checkArcInputFlag = false;
+
+				//全てのアークの節に対して
+				Beat arcStartBeat, arcEndBeat;
 				Vector3 arcStartPos, arcEndPos;
+				arcStartBeat = note.mainBeat;
 				arcStartPos = note.mainPos;
-				arcEndPos = note.subPos;
 				for (auto& cp : note.controlPoints) {
-					if (music.ConvertBeatToMiliSeconds(arcStartBeat) < music.ConvertBeatToMiliSeconds(cp.beat)
-						&& music.ConvertBeatToMiliSeconds(cp.beat) < time) {
-						arcStartBeat = cp.beat;
-						arcStartPos = cp.pos;
+					arcEndBeat = cp.beat;
+					arcEndPos = cp.pos;
+					if (CheckArcInput(arcStartBeat, arcEndBeat, arcStartPos, arcEndPos)) {
+						checkArcInputFlag = true;
 					}
+
+					arcStartBeat = arcEndBeat;
+					arcStartPos = arcEndPos;
 				}
-				for (auto& cp : note.controlPoints) {
-					if (music.ConvertBeatToMiliSeconds(arcStartBeat) < music.ConvertBeatToMiliSeconds(cp.beat)
-						&& music.ConvertBeatToMiliSeconds(cp.beat) < music.ConvertBeatToMiliSeconds(arcEndBeat)) {
-						arcEndBeat = cp.beat;
-						arcEndPos = cp.pos;
+				arcEndBeat = note.subBeat;
+				arcEndPos = note.subPos;
+				if (CheckArcInput(arcStartBeat, arcEndBeat, arcStartPos, arcEndPos)) {
+					checkArcInputFlag = true;
+				}
+
+				//アークに対して正しい入力をしているなら時間を記録してあげる
+				if (checkArcInputFlag) {
+					note.judgeFlag = true;
+					note.HoldTime = time;
+				}
+				else {
+					//猶予フレームを超えたなら終わり
+					if (abs(time - note.HoldTime) > judgeHit * 3) {
+						note.judgeFlag = false;
+						note.HoldTime = time;
 					}
 				}
 
+				if (note.judgeFlag) {
+					for (int32_t i = 0; i < 4; i++) {
+						ParticleExplode::Spawn(GetNowArcPos(note), 0xffe32e, (360.0f / 4) + (360.0f / 4 * i) + 45.0f, 5, 15, 0.5f);
+					}
+				}
+				
+				//一定間隔ごとに触れているか見てPerfectかMissに加算する
+				float diffArcStart = time - music.ConvertBeatToMiliSeconds(note.mainBeat);
+				if (diffArcStart >= 0) {
+					float arcPoint = music.ConvertBeatToMiliSeconds(note.mainBeat);
+
+					while (arcPoint <= music.ConvertBeatToMiliSeconds(note.subBeat)) {
+						if (arcPoint <= note.judgeTime) {
+							arcPoint += music.ConvertBeatToMiliSeconds({ 0, 1, 8 });
+							continue;
+						}
+
+						float diff = time - arcPoint;
+
+						if (diff >= 0) {
+							if (note.judgeFlag) {
+								countJudgePerfect++;
+								note.judgeTime = arcPoint;
+								for (int32_t i = 0; i < 12; i++) {
+									ParticleExplode::Spawn(GetNowArcPos(note), 0xffe32e, (360.0f / 12) + (360.0f / 12 * i), 5, 15, 0.5f);
+								}
+							}
+							else {
+								countJudgeMiss++;
+								note.judgeTime = arcPoint;
+								for (int32_t i = 0; i < 12; i++) {
+									ParticleExplode::Spawn(GetNowArcPos(note), 0xff0000, (360.0f / 12) + (360.0f / 12 * i), 5, 15, 0.5f);
+								}
+							}
+						}
+						else {
+							break;
+						}
+
+						arcPoint += music.ConvertBeatToMiliSeconds({ 0, 1, 8 });
+					}
+				}
+
+				//終わってたら終わり
+				if (music.ConvertBeatToMiliSeconds(note.subBeat) < time) {
+					note.judgeTime = music.ConvertBeatToMiliSeconds(note.subBeat);
+					removeNotes.push_back(note);
+				}
+
+				//直角の処理
+				JudgeRightAngleArc(note);
+
+				//続けて制御点毎の処理
 				if (false) {
 
 				}
 				else {
-					float diffA = time - music.ConvertBeatToMiliSeconds(note.mainBeat);
+					/*float diffA = time - music.ConvertBeatToMiliSeconds(note.mainBeat);
 					float diffB = abs(diffA);
 
 					if (music.ConvertBeatToMiliSeconds(note.subBeat) < time) {
@@ -488,11 +562,12 @@ void RhythmGameController::Update()
 						else {
 							note.judgeFlag = false;
 						}
-					}
+					}*/
 				}
 			}
 		}
 
+		//描画！？
 		if (note.type == Note::Types::Tap) {
 			if (posZ < -80 || posZ > 50) {
 				continue;
@@ -511,32 +586,55 @@ void RhythmGameController::Update()
 		
 		if (note.type == Note::Types::Arc) {
 			Vector3 prevPos = note.mainPos;
-			
+
 			Vector3 startPos;
 			Vector3 endPos;
 
-			for (auto& cp : note.controlPoints) {
-				startPos = prevPos;
-				endPos = cp.pos;
-				startPos.z = posJudgeLine + (prevPos.z - nowPosY);
-				endPos.z = posJudgeLine + (cp.pos.z - nowPosY);
+			Beat checkBeat;
+			auto itr = note.controlPoints.begin();
 
-				if (cp.beat < note.judgeBeat) {
-					prevPos = cp.pos;
-					continue;
+			while (true) {
+				startPos = prevPos;
+				if (itr != note.controlPoints.end()) {
+					endPos = itr->pos;
+					checkBeat = itr->beat;
+				}
+				else {
+					endPos = note.subPos;
+					checkBeat = note.subBeat;
+				}
+
+				startPos.z = posJudgeLine + (startPos.z - nowPosY);
+				endPos.z = posJudgeLine + (endPos.z - nowPosY);
+
+				if (music.ConvertBeatToMiliSeconds(checkBeat) <= note.judgeTime) {
+					if (itr != note.controlPoints.end()) {
+						prevPos = itr->pos;
+						itr++;
+						continue;
+					}
+					else {
+						break;
+					}
 				}
 
 				if (startPos.z > 80 || endPos.z < -50) {
-					prevPos = cp.pos;
-					continue;
+					if (itr != note.controlPoints.end()) {
+						prevPos = itr->pos;
+						itr++;
+						continue;
+					}
+					else {
+						break;
+					}
 				}
 
-				if (startPos.z < -50) {
-					float ratio = Util::GetRatio(startPos.z, endPos.z, -50);
+				if (note.judgeFlag && startPos.z <= posJudgeLine && endPos.z >= posJudgeLine) {
+					float ratio = Util::GetRatio(startPos.z, endPos.z, posJudgeLine);
 					startPos = startPos + (endPos - startPos) * ratio;
 				}
-				else if (note.judgeFlag && startPos.z < posJudgeLine && endPos.z > posJudgeLine) {
-					float ratio = Util::GetRatio(startPos.z, endPos.z, posJudgeLine);
+				else if (startPos.z < -50) {
+					float ratio = Util::GetRatio(startPos.z, endPos.z, -50);
 					startPos = startPos + (endPos - startPos) * ratio;
 				}
 
@@ -551,40 +649,24 @@ void RhythmGameController::Update()
 				ArcNoteObj& obj = arcNoteObjs[arcObjIndex];
 				obj.mStartPos = startPos;
 				obj.mGoalPos = endPos;
+				if (music.ConvertBeatToMiliSeconds(note.mainBeat) <= time
+					&& !note.judgeFlag) {
+					obj.mMaterial.mColor = { 1, 0, 1, 0.5f };
+				}
+				else {
+					obj.mMaterial.mColor = { 1, 0, 1, 0.8f };
+				}
 				obj.TransferBuffer(Camera::sNowCamera->mViewProjection);
 				obj.Draw();
 				arcObjIndex++;
-				prevPos = cp.pos;
+				if (itr != note.controlPoints.end()) {
+					prevPos = itr->pos;
+					itr++;
+				}
+				else {
+					break;
+				}
 			}
-
-			startPos = prevPos;
-			endPos = note.subPos;
-			startPos.z = posJudgeLine + (prevPos.z - nowPosY);
-			endPos.z = posJudgeLine + (note.subPos.z - nowPosY);
-
-			if (startPos.z > 80 || endPos.z < -50) {
-				continue;
-			}
-
-			if (startPos.z < -50) {
-				float ratio = Util::GetRatio(startPos.z, endPos.z, -50);
-				startPos = startPos + (endPos - startPos) * ratio;
-			}
-
-			if (endPos.z > 80) {
-				float ratio = Util::GetRatio(startPos.z, endPos.z, 80);
-				endPos = startPos + (endPos - startPos) * ratio;
-			}
-
-			if (arcObjIndex == arcNoteObjs.size()) {
-				arcNoteObjs.emplace_back();
-			}
-			ArcNoteObj& obj = arcNoteObjs[arcObjIndex];
-			obj.mStartPos = startPos;
-			obj.mGoalPos = endPos;
-			obj.TransferBuffer(Camera::sNowCamera->mViewProjection);
-			obj.Draw();
-			arcObjIndex++;
 		}
 	}
 
@@ -624,4 +706,165 @@ void RhythmGameController::Save()
 
 	chart.notes = notes;
 	chart.Save();
+}
+
+bool RhythmGameController::CheckArcInput(Beat& arcStartBeat, Beat& arcEndBeat, Vector3& arcStartPos, Vector3& arcEndPos)
+{
+	//判定
+	float diffA = time - music.ConvertBeatToMiliSeconds(arcStartBeat);
+	float diffB = abs(diffA);
+
+	Vector3 diffArcDir = (arcEndPos - arcStartPos);
+	bool checkMouseDir = (diffArcDir.x == 0
+		|| (RInput::GetMouseMove().x != 0 && RInput::GetMouseMove().x * diffArcDir.x >= 0))
+		&& (diffArcDir.y == 0
+			|| (RInput::GetMouseMove().y != 0 && RInput::GetMouseMove().y * diffArcDir.y < 0));
+
+	if (checkMouseDir || autoplay) {
+		if (diffA < 0) {
+			if (diffB <= judgeHit) {
+				return true;
+			}
+		}
+		else {
+			diffA = time - music.ConvertBeatToMiliSeconds(arcEndBeat);
+			diffB = abs(diffA);
+
+			if (diffA >= 0) {
+				if (diffB <= judgeHit) {
+					return true;
+				}
+			}
+			else {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+void RhythmGameController::JudgeRightAngleArc(Note& note)
+{
+	Beat arcStartBeat, arcEndBeat;
+	Vector3 arcStartPos, arcEndPos;
+	float arcStartTime = 0;
+	arcStartBeat = note.mainBeat;
+	arcStartPos = note.mainPos;
+	arcStartTime = music.ConvertBeatToMiliSeconds(arcStartBeat);
+
+	auto itr = note.controlPoints.begin();
+	while (true) {
+		if (itr != note.controlPoints.end()) {
+			arcEndBeat = itr->beat;
+			arcEndPos = itr->pos;
+		}
+		else {
+			arcEndBeat = note.subBeat;
+			arcEndPos = note.subPos;
+		}
+
+		if (arcStartTime <= note.judgeTimeB) {
+			arcStartBeat = arcEndBeat;
+			arcStartPos = arcEndPos;
+			arcStartTime = music.ConvertBeatToMiliSeconds(arcStartBeat);
+			if (itr != note.controlPoints.end()) {
+				itr++;
+				continue;
+			}
+			else {
+				break;
+			}
+		}
+
+		Vector3 diffPos = arcEndPos - arcStartPos;
+		if (arcStartBeat == arcEndBeat) {
+			float diffA = time - arcStartTime;
+			float diffB = abs(diffA);
+
+			if (arcStartTime <= time) {
+				if (CheckArcInput(arcStartBeat, arcEndBeat, arcStartPos, arcEndPos)
+					|| (note.judgeFlagB && note.judgeDiff <= judgeHit)) {
+					countJudgePerfect++;
+					note.judgeFlagB = false;
+					note.judgeTimeB = arcStartTime;
+					RAudio::Play("JudgePerfect");
+					for (float t = 0; t < 1; t += 0.05f) {
+						float fx = 1 - powf(1 - t, 3);
+
+						Vector3 pos = arcStartPos * (1 - fx) + arcEndPos * fx;
+						float speed = 30 * (1 - fx) + 10 * fx;
+						pos.z = 0;
+						float ang = Util::RadianToAngle(atan2f(diffPos.y, diffPos.x));
+						ParticleExplode::Spawn(pos, 0xffe32e, ang + 180 + 30, speed, 30, 0.25f);
+						ParticleExplode::Spawn(pos, 0xffe32e, ang + 180 - 30, speed, 30, 0.25f);
+					}
+				}
+				else if (diffB > judgeHit) {
+					countJudgeMiss++;
+					note.judgeFlagB = false;
+					note.judgeTimeB = arcStartTime;
+					RAudio::Play("JudgeMiss");
+				}
+			}
+			else {
+				//先行入力
+				if (CheckArcInput(arcStartBeat, arcEndBeat, arcStartPos, arcEndPos)) {
+					note.judgeFlagB = true;
+					note.judgeDiff = diffB;
+				}
+			}
+		}
+
+		arcStartBeat = arcEndBeat;
+		arcStartPos = arcEndPos;
+		arcStartTime = music.ConvertBeatToMiliSeconds(arcStartBeat);
+		if (itr != note.controlPoints.end()) {
+			itr++;
+			continue;
+		}
+		else {
+			break;
+		}
+	}
+}
+
+Vector3 RhythmGameController::GetNowArcPos(Note& note)
+{
+	//現在のアークの節を取得する
+	Beat arcStartBeat = note.mainBeat;
+	Beat arcEndBeat = note.subBeat;
+	Vector3 arcStartPos, arcEndPos;
+	arcStartPos = note.mainPos;
+	arcEndPos = note.subPos;
+	auto itr = note.controlPoints.begin();
+	for (itr = note.controlPoints.begin(); itr != note.controlPoints.end();) {
+		if (music.ConvertBeatToMiliSeconds(arcStartBeat) <= music.ConvertBeatToMiliSeconds(itr->beat)
+			&& music.ConvertBeatToMiliSeconds(itr->beat) < time) {
+			arcStartBeat = itr->beat;
+			arcStartPos = itr->pos;
+			itr++;
+		}
+		else {
+			break;
+		}
+	}
+	if (itr != note.controlPoints.end()) {
+		arcEndBeat = itr->beat;
+		arcEndPos = itr->pos;
+	}
+	else {
+		arcEndBeat = note.subBeat;
+		arcEndPos = note.subPos;
+	}
+
+	arcStartPos.z = 0;
+	arcEndPos.z = 0;
+
+	float ratio = Util::GetRatio(
+		music.ConvertBeatToMiliSeconds(arcStartBeat),
+		music.ConvertBeatToMiliSeconds(arcEndBeat),
+		time);
+
+	return arcStartPos + (arcEndPos - arcStartPos) * ratio;
 }

@@ -258,6 +258,10 @@ void from_json(const json& j, Note& o)
 
 				o.controlPoints.push_back(obj.get<Note::ControlPoint>());
 			}
+
+			std::stable_sort(o.controlPoints.begin(), o.controlPoints.end(), [](Note::ControlPoint const& lhs, Note::ControlPoint const& rhs) {
+				return lhs.beat < rhs.beat;
+			});
 		}
 		break;
 	default:

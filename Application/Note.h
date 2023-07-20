@@ -23,12 +23,17 @@ public:
 	Beat subBeat = { 0, 0, 1 };
 	Vector3 mainPos = { 0, 0, 0 };
 	Vector3 subPos = { 0, 0, 0 };
+
+	//これはBeatが早い順にソートされているものとします！！！
 	std::vector<ControlPoint> controlPoints;
 
 	int32_t lane = 0;
 	bool judgeFlag = false;
-	Beat judgeBeat = { 0, 0, 1 };
+	bool judgeFlagB = false; //2個目が欲しいことがあるので別枠（ほんとはやだ）
+	float judgeTime = 0;
+	float judgeTimeB = 0; //2個目が欲しいことがあるので別枠（ほんとはやだ）
 	float judgeDiff = 0;
+	float HoldTime = 0; //ホールド判定用で別枠
 
 	bool posCalced = false;
 	float posZMem = 0;

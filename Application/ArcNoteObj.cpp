@@ -88,7 +88,6 @@ void ArcNoteObj::TransferBuffer(ViewProjection viewprojection)
 	mVertBuff.Update(mVertices);
 	mIndexBuff.Init(indices);
 	mTransformBuff->matrix = Matrix4();
-	mMaterial.mColor = { 1, 0, 1, 0.5f };
 	mMaterial.Transfer(mMaterialBuff.Get());
 }
 
