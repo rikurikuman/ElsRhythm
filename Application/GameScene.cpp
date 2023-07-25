@@ -46,6 +46,7 @@ GameScene::GameScene()
 	RAudio::Load("Resources/Sound/Judge_Perfect.wav", "JudgePerfect");
 	RAudio::Load("Resources/Sound/Judge_Hit.wav", "JudgeHit");
 	RAudio::Load("Resources/Sound/Judge_Miss.wav", "JudgeMiss");
+	RAudio::Load("Resources/Sound/VerticalSlash.wav", "VerticalSlash");
 
 	chartFile = ChartFile("Charts/aleph-0.kasu");
 	chartFile.Load();

@@ -293,7 +293,7 @@ void RhythmGameController::Update()
 			if (!audioHandle.empty() && !startedMusicStream && time >= offsetStream) {
 				startedMusicStream = true;
 				RAudio::SetPlayRange(audioHandle, (time - offsetStream) / 1000.0f, 0);
-				RAudio::Play(audioHandle);
+				RAudio::Play(audioHandle, 0.5f);
 			}
 		}
 	}
@@ -792,6 +792,7 @@ void RhythmGameController::JudgeRightAngleArc(Note& note)
 					note.judgeFlagB = false;
 					note.judgeTimeB = arcStartTime;
 					RAudio::Play("JudgePerfect");
+					RAudio::Play("VerticalSlash");
 					for (float t = 0; t < 1; t += 0.05f) {
 						float fx = 1 - powf(1 - t, 3);
 

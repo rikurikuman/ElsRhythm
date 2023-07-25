@@ -234,18 +234,28 @@
 		},
 		
 		{"beat": {"measure": 8, "beat": 2, "lpb": 4}, "lane": 1},
-	
-		{"beat": {"measure": 9, "beat":  0, "lpb": 4}, "lane": 1},
 		
-		{"beat": {"measure": 9, "beat":  1, "lpb": 4}, "lane": 2},
-		{"beat": {"measure": 9, "beat":  2, "lpb": 4}, "lane": 2},
+		{"beat": {"measure": 8, "beat": 12, "lpb": 16}, "lane": 0},
+		{"beat": {"measure": 8, "beat": 13, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 8, "beat": 14, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 8, "beat": 15, "lpb": 16}, "lane": 3},
+		{"beat": {"measure": 9, "beat":  0, "lpb": 16}, "lane": 1},
 		
-		{"beat": {"measure": 10, "beat": 0, "lpb": 4}, "lane": 0},
-		{"beat": {"measure": 10, "beat": 0, "lpb": 4}, "lane": 3},
+		{"beat": {"measure": 9, "beat":  4, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 9, "beat":  6, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 9, "beat":  8, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 9, "beat":  10, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 9, "beat":  12, "lpb": 16}, "lane": 2},
+		
+		{"beat": {"measure": 10, "beat": 0, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 10, "beat": 0, "lpb": 16}, "lane": 2},
 		
 		{"beat": {"measure": 10, "beat":  4, "lpb": 16}, "lane": 1},
 		{"beat": {"measure": 10, "beat":  6, "lpb": 16}, "lane": 2},
 		{"beat": {"measure": 10, "beat":  8, "lpb": 16}, "lane": 1},
+		
+		{"beat": {"measure": 10, "beat":  12, "lpb": 16}, "lane": 0},
+		{"beat": {"measure": 10, "beat":  12, "lpb": 16}, "lane": 3},
 		
 		{
 			"type": 2,
@@ -261,9 +271,11 @@
 			"endpos": {"x": 5.0, "y": 1.0}
 		},
 		
-		{"beat": {"measure": 11, "beat":  1, "lpb": 4}, "lane": 1},
-		{"beat": {"measure": 11, "beat":  2, "lpb": 4}, "lane": 2},
-		{"beat": {"measure": 11, "beat":  3, "lpb": 4}, "lane": 1},
+		{"beat": {"measure": 11, "beat":  4, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 11, "beat":  6, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 11, "beat":  8, "lpb": 16}, "lane": 1},
+		
+		{"beat": {"measure": 11, "beat":  12, "lpb": 16}, "lane": 2},
 		
 		{
 			"type": 2,
@@ -295,34 +307,29 @@
 			"endpos": {"x": -5.0, "y": 1.0}
 		},
 		
-		{"beat": {"measure": 13, "beat":  0, "lpb": 4}, "lane": 0},
-		{"beat": {"measure": 13, "beat":  1, "lpb": 4}, "lane": 1},
-		{"beat": {"measure": 13, "beat":  2, "lpb": 4}, "lane": 2},
-		{"beat": {"measure": 13, "beat":  3, "lpb": 4}, "lane": 3},
+		{"beat": {"measure": 13, "beat":  0, "lpb": 16}, "lane": 0},
+		{"beat": {"measure": 13, "beat":  2, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 13, "beat":  4, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 13, "beat":  6, "lpb": 16}, "lane": 3},
 		
+		{"beat": {"measure": 13, "beat":  8, "lpb": 16}, "lane": 0},
+		{"beat": {"measure": 13, "beat":  12, "lpb": 16}, "lane": 3},
 		{"beat": {"measure": 14, "beat":  0, "lpb": 16}, "lane": 1},
 		{"beat": {"measure": 14, "beat":  0, "lpb": 16}, "lane": 2},
 		
-		{"beat": {"measure": 14, "beat":  2, "lpb": 4}, "lane": 0},
-		{"beat": {"measure": 14, "beat":  2, "lpb": 4}, "lane": 3},
+		{"beat": {"measure": 14, "beat":  6, "lpb": 16}, "lane": 3},
+		{"beat": {"measure": 14, "beat":  8, "lpb": 16}, "lane": 0},
+		{"beat": {"measure": 14, "beat":  12, "lpb": 16}, "lane": 0},
 		
-		{
-			"type": 2,
-			"beat": {"measure": 15, "beat": 0, "lpb": 4},
-			"pos": {"x": 5.0, "y": 1.0},
-			"controlpoints": [
-				{
-					"beat": {"measure": 15, "beat": 0, "lpb": 16},
-					"pos": {"x": -5.0, "y": 1.0}
-				}
-			],
-			"endbeat": {"measure": 15, "beat": 1, "lpb": 16},
-			"endpos": {"x": -5.0, "y": 1.0}
-		},
+		{"beat": {"measure": 15, "beat": 0, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 15, "beat": 0, "lpb": 16}, "lane": 2},
 		
-		{"beat": {"measure": 15, "beat":  1, "lpb": 4}, "lane": 2},
-		{"beat": {"measure": 15, "beat":  2, "lpb": 4}, "lane": 1},
-		{"beat": {"measure": 15, "beat":  3, "lpb": 4}, "lane": 2},
+		{"beat": {"measure": 15, "beat":  4, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 15, "beat":  6, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 15, "beat":  8, "lpb": 16}, "lane": 2},
+		
+		{"beat": {"measure": 15, "beat":  12, "lpb": 16}, "lane": 0},
+		{"beat": {"measure": 15, "beat":  12, "lpb": 16}, "lane": 3},
 		
 		{
 			"type": 2,
@@ -354,25 +361,25 @@
 			"endpos": {"x": 5.0, "y": 1.0}
 		},
 		
-		{"beat": {"measure": 17, "beat":  0, "lpb": 4}, "lane": 3},
-		{"beat": {"measure": 17, "beat":  1, "lpb": 4}, "lane": 2},
-		{"beat": {"measure": 17, "beat":  2, "lpb": 4}, "lane": 1},
-		{"beat": {"measure": 17, "beat":  3, "lpb": 4}, "lane": 0},
+		{"beat": {"measure": 17, "beat":  0, "lpb": 16}, "lane": 3},
+		{"beat": {"measure": 17, "beat":  2, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 17, "beat":  4, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 17, "beat":  6, "lpb": 16}, "lane": 0},
 		
+		{"beat": {"measure": 17, "beat":  8, "lpb": 16}, "lane": 3},
+		{"beat": {"measure": 17, "beat":  12, "lpb": 16}, "lane": 0},
 		{"beat": {"measure": 18, "beat":  0, "lpb": 16}, "lane": 1},
 		{"beat": {"measure": 18, "beat":  0, "lpb": 16}, "lane": 2},
 		
-		{"beat": {"measure": 19, "beat":  0, "lpb": 4}, "lane": 1},
-		{"beat": {"measure": 19, "beat":  0, "lpb": 4}, "lane": 2},
+		{"beat": {"measure": 19, "beat":  0, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 19, "beat":  0, "lpb": 16}, "lane": 2},
 		
-		{"beat": {"measure": 19, "beat":  1, "lpb": 4}, "lane": 1},
-		{"beat": {"measure": 19, "beat":  1, "lpb": 4}, "lane": 2},
-		
-		{"beat": {"measure": 19, "beat":  2, "lpb": 4}, "lane": 0},
-		{"beat": {"measure": 19, "beat":  2, "lpb": 4}, "lane": 3},
-		
-		{"beat": {"measure": 19, "beat":  3, "lpb": 4}, "lane": 0},
-		{"beat": {"measure": 19, "beat":  3, "lpb": 4}, "lane": 3},
+		{"beat": {"measure": 19, "beat":  4, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 19, "beat":  6, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 19, "beat":  8, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 19, "beat":  10, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 19, "beat":  12, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 19, "beat":  12, "lpb": 16}, "lane": 3},
 		
 		{
 			"type": 2,
@@ -404,20 +411,35 @@
 			"endpos": {"x": 8.0, "y": 1.0}
 		},
 		
-		{"beat": {"measure": 21, "beat":  0, "lpb": 4}, "lane": 0},
-		{"beat": {"measure": 21, "beat":  1, "lpb": 4}, "lane": 3},
-		{"beat": {"measure": 21, "beat":  2, "lpb": 4}, "lane": 1},
-		{"beat": {"measure": 21, "beat":  3, "lpb": 4}, "lane": 2},
+		{"beat": {"measure": 20, "beat":  4, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 20, "beat":  10, "lpb": 16}, "lane": 1},
+		
+		{"beat": {"measure": 21, "beat":  0, "lpb": 16}, "lane": 0},
+		{"beat": {"measure": 21, "beat":  2, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 21, "beat":  4, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 21, "beat":  6, "lpb": 16}, "lane": 3},
+		{"beat": {"measure": 21, "beat":  8, "lpb": 16}, "lane": 0},
+		{"beat": {"measure": 21, "beat":  8, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 21, "beat":  12, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 21, "beat":  12, "lpb": 16}, "lane": 3},
 		{"beat": {"measure": 22, "beat":  0, "lpb": 16}, "lane": 0},
-		{"beat": {"measure": 22, "beat":  0, "lpb": 16}, "lane": 3},
+		{"beat": {"measure": 22, "beat":  0, "lpb": 16}, "lane": 1},
 		
-		{"beat": {"measure": 22, "beat":  2, "lpb": 4}, "lane": 0},
-		{"beat": {"measure": 22, "beat":  2, "lpb": 4}, "lane": 3},
+		{"beat": {"measure": 22, "beat":  4, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 22, "beat":  6, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 22, "beat":  8, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 22, "beat":  10, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 22, "beat":  12, "lpb": 16}, "lane": 1},
 		
-		{"beat": {"measure": 23, "beat":  0, "lpb": 4}, "lane": 3},
-		{"beat": {"measure": 23, "beat":  1, "lpb": 4}, "lane": 0},
-		{"beat": {"measure": 23, "beat":  2, "lpb": 4}, "lane": 2},
-		{"beat": {"measure": 23, "beat":  3, "lpb": 4}, "lane": 1},
+		{"beat": {"measure": 23, "beat":  0, "lpb": 16}, "lane": 0},
+		{"beat": {"measure": 23, "beat":  0, "lpb": 16}, "lane": 3},
+		
+		{"beat": {"measure": 23, "beat":  4, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 23, "beat":  6, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 23, "beat":  8, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 23, "beat":  10, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 23, "beat":  12, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 23, "beat":  12, "lpb": 16}, "lane": 0},
 		
 		{
 			"type": 2,
@@ -449,51 +471,99 @@
 			"endpos": {"x": -8.0, "y": 1.0}
 		},
 		
-		{"beat": {"measure": 25, "beat":  0, "lpb": 4}, "lane": 3},
-		{"beat": {"measure": 25, "beat":  0, "lpb": 4}, "lane": 0},
-		{"beat": {"measure": 25, "beat":  1, "lpb": 4}, "lane": 3},
-		{"beat": {"measure": 25, "beat":  1, "lpb": 4}, "lane": 0},
-		{"beat": {"measure": 25, "beat":  2, "lpb": 4}, "lane": 1},
-		{"beat": {"measure": 25, "beat":  2, "lpb": 4}, "lane": 2},
-		{"beat": {"measure": 25, "beat":  3, "lpb": 4}, "lane": 1},
-		{"beat": {"measure": 25, "beat":  3, "lpb": 4}, "lane": 2},
-		{"beat": {"measure": 26, "beat":  0, "lpb": 16}, "lane": 1},
-		{"beat": {"measure": 26, "beat":  0, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 24, "beat":  4, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 24, "beat":  10, "lpb": 16}, "lane": 2},
 		
-		{"beat": {"measure": 26, "beat":  8, "lpb": 16}, "lane": 0},
-		{"beat": {"measure": 26, "beat":  8, "lpb": 16}, "lane": 3},
+		{"beat": {"measure": 25, "beat":  0, "lpb": 16}, "lane": 3},
+		{"beat": {"measure": 25, "beat":  2, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 25, "beat":  4, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 25, "beat":  6, "lpb": 16}, "lane": 0},
+		{"beat": {"measure": 25, "beat":  8, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 25, "beat":  8, "lpb": 16}, "lane": 3},
+		{"beat": {"measure": 25, "beat":  12, "lpb": 16}, "lane": 0},
+		{"beat": {"measure": 25, "beat":  12, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 26, "beat":  0, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 26, "beat":  0, "lpb": 16}, "lane": 3},
+		
+		{"beat": {"measure": 26, "beat":  8, "lpb": 16}, "lane": 1},
+		{"beat": {"measure": 26, "beat":  8, "lpb": 16}, "lane": 2},
 		
 		{"beat": {"measure": 27, "beat":  0, "lpb": 16}, "lane": 1},
 		{"beat": {"measure": 27, "beat":  0, "lpb": 16}, "lane": 2},
 		
 		{"beat": {"measure": 27, "beat":  5, "lpb": 16}, "lane": 0},
+		{"beat": {"measure": 27, "beat":  6, "lpb": 16}, "lane": 0},
 		{"beat": {"measure": 27, "beat":  13, "lpb": 32}, "lane": 0},
 		
 		{"beat": {"measure": 27, "beat":  8, "lpb": 16}, "lane": 0},
 		{"beat": {"measure": 27, "beat":  19, "lpb": 32}, "lane": 0},
 		{"beat": {"measure": 27, "beat":  10, "lpb": 16}, "lane": 0},
 		
+		{
+			"type": 2,
+			"beat": {"measure": 27, "beat": 24, "lpb": 32},
+			"pos": {"x": 0.0, "y": 1.0},
+			"controlpoints": [
+				{
+					"beat": {"measure": 27, "beat": 25, "lpb": 32},
+					"pos": {"x": 5.0, "y": 5.0}
+				},
+				{
+					"beat": {"measure": 27, "beat": 26, "lpb": 32},
+					"pos": {"x": 0.0, "y": 1.0}
+				},
+				{
+					"beat": {"measure": 27, "beat": 27, "lpb": 32},
+					"pos": {"x": -5.0, "y": 5.0}
+				}
+			],
+			"endbeat": {"measure": 27, "beat": 28, "lpb": 32},
+			"endpos": {"x": 0.0, "y": 1.0}
+		},
+		
 		{"beat": {"measure": 28, "beat":  0, "lpb": 32}, "lane": 0},
+		{"beat": {"measure": 28, "beat":  1, "lpb": 32}, "lane": 1},
 		{"beat": {"measure": 28, "beat":  2, "lpb": 32}, "lane": 2},
+		{"beat": {"measure": 28, "beat":  3, "lpb": 32}, "lane": 3},
 		{"beat": {"measure": 28, "beat":  4, "lpb": 32}, "lane": 3},
+		{"beat": {"measure": 28, "beat":  5, "lpb": 32}, "lane": 2},
 		{"beat": {"measure": 28, "beat":  6, "lpb": 32}, "lane": 1},
+		{"beat": {"measure": 28, "beat":  7, "lpb": 32}, "lane": 0},
 		{"beat": {"measure": 28, "beat":  8, "lpb": 32}, "lane": 0},
+		{"beat": {"measure": 28, "beat":  9, "lpb": 32}, "lane": 1},
 		{"beat": {"measure": 28, "beat":  10, "lpb": 32}, "lane": 2},
+		{"beat": {"measure": 28, "beat":  11, "lpb": 32}, "lane": 3},
 		{"beat": {"measure": 28, "beat":  12, "lpb": 32}, "lane": 3},
+		{"beat": {"measure": 28, "beat":  13, "lpb": 32}, "lane": 2},
 		{"beat": {"measure": 28, "beat":  14, "lpb": 32}, "lane": 1},
+		{"beat": {"measure": 28, "beat":  15, "lpb": 32}, "lane": 0},
 		{"beat": {"measure": 28, "beat":  16, "lpb": 32}, "lane": 0},
+		{"beat": {"measure": 28, "beat":  17, "lpb": 32}, "lane": 2},
 		{"beat": {"measure": 28, "beat":  18, "lpb": 32}, "lane": 1},
+		{"beat": {"measure": 28, "beat":  19, "lpb": 32}, "lane": 3},
 		{"beat": {"measure": 28, "beat":  20, "lpb": 32}, "lane": 3},
+		{"beat": {"measure": 28, "beat":  21, "lpb": 32}, "lane": 1},
 		{"beat": {"measure": 28, "beat":  22, "lpb": 32}, "lane": 2},
+		{"beat": {"measure": 28, "beat":  23, "lpb": 32}, "lane": 0},
 		{"beat": {"measure": 28, "beat":  24, "lpb": 32}, "lane": 0},
+		{"beat": {"measure": 28, "beat":  25, "lpb": 32}, "lane": 0},
 		{"beat": {"measure": 28, "beat":  26, "lpb": 32}, "lane": 3},
-		{"beat": {"measure": 28, "beat":  28, "lpb": 32}, "lane": 0},
-		{"beat": {"measure": 28, "beat":  29, "lpb": 32}, "lane": 1},
-		{"beat": {"measure": 28, "beat":  30, "lpb": 32}, "lane": 2},
-		{"beat": {"measure": 28, "beat":  31, "lpb": 32}, "lane": 3},
+		{"beat": {"measure": 28, "beat":  27, "lpb": 32}, "lane": 3},
+		{"beat": {"measure": 28, "beat":  56, "lpb": 64}, "lane": 0},
+		{"beat": {"measure": 28, "beat":  57, "lpb": 64}, "lane": 1},
+		{"beat": {"measure": 28, "beat":  58, "lpb": 64}, "lane": 2},
+		{"beat": {"measure": 28, "beat":  59, "lpb": 64}, "lane": 3},
+		{"beat": {"measure": 28, "beat":  60, "lpb": 64}, "lane": 0},
+		{"beat": {"measure": 28, "beat":  61, "lpb": 64}, "lane": 1},
+		{"beat": {"measure": 28, "beat":  62, "lpb": 64}, "lane": 2},
+		{"beat": {"measure": 28, "beat":  63, "lpb": 64}, "lane": 3},
 		
 		{"beat": {"measure": 30, "beat":  1, "lpb": 64}, "lane": 1},
 		{"beat": {"measure": 30, "beat":  1, "lpb": 64}, "lane": 2},
+		
+		{"beat": {"measure": 35, "beat":  12, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 36, "beat":  0, "lpb": 16}, "lane": 2},
+		{"beat": {"measure": 36, "beat":  0, "lpb": 16}, "lane": 3},
 		
 		{
 			"type": 2,
@@ -578,12 +648,23 @@
 		},
 		
 		{"beat": {"measure": 36, "beat":  2, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 36, "beat":  3, "lpb": 8}, "lane": 1},
 		{"beat": {"measure": 36, "beat":  4, "lpb": 8}, "lane": 0},
-		{"beat": {"measure": 36, "beat":  6, "lpb": 8}, "lane": 0},
 		
-		{"beat": {"measure": 37, "beat":  2, "lpb": 8}, "lane": 3},
-		{"beat": {"measure": 37, "beat":  4, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 36, "beat":  6, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 36, "beat":  6, "lpb": 8}, "lane": 1},
+		
+		{"beat": {"measure": 37, "beat":  0, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 37, "beat":  1, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 37, "beat":  2, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 37, "beat":  3, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 37, "beat":  4, "lpb": 8}, "lane": 2},
+		
+		{"beat": {"measure": 37, "beat":  6, "lpb": 8}, "lane": 2},
 		{"beat": {"measure": 37, "beat":  6, "lpb": 8}, "lane": 3},
+		
+		{"beat": {"measure": 38, "beat":  0, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 38, "beat":  1, "lpb": 8}, "lane": 1},
 		
 		{"beat": {"measure": 38, "beat":  3, "lpb": 8}, "lane": 2},
 		{"beat": {"measure": 38, "beat":  4, "lpb": 8}, "lane": 1},
@@ -673,23 +754,39 @@
 			"endpos": {"x": -9.0, "y": 1.0}
 		},
 		
+		{"beat": {"measure": 40, "beat":  0, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 40, "beat":  0, "lpb": 8}, "lane": 1},
+		
 		{"beat": {"measure": 40, "beat":  2, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 40, "beat":  3, "lpb": 8}, "lane": 2},
 		{"beat": {"measure": 40, "beat":  4, "lpb": 8}, "lane": 3},
+		
+		{"beat": {"measure": 40, "beat":  6, "lpb": 8}, "lane": 2},
 		{"beat": {"measure": 40, "beat":  6, "lpb": 8}, "lane": 3},
 		
-		{"beat": {"measure": 41, "beat":  1, "lpb": 4}, "lane": 0},
-		{"beat": {"measure": 41, "beat":  2, "lpb": 4}, "lane": 0},
-		{"beat": {"measure": 41, "beat":  3, "lpb": 4}, "lane": 0},
+		{"beat": {"measure": 41, "beat":  0, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 41, "beat":  1, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 41, "beat":  2, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 41, "beat":  3, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 41, "beat":  4, "lpb": 8}, "lane": 1},
 		
+		{"beat": {"measure": 41, "beat":  6, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 41, "beat":  6, "lpb": 8}, "lane": 1},
+		
+		{"beat": {"measure": 42, "beat":  0, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 42, "beat":  1, "lpb": 8}, "lane": 2},
 		{"beat": {"measure": 42, "beat":  3, "lpb": 8}, "lane": 1},
 		{"beat": {"measure": 42, "beat":  4, "lpb": 8}, "lane": 2},
 		
 		{"beat": {"measure": 42, "beat":  6, "lpb": 8}, "lane": 1},
 		{"beat": {"measure": 42, "beat":  6, "lpb": 8}, "lane": 2},
 
-		{"beat": {"measure": 44, "beat":  0, "lpb": 4}, "lane": 1},
-		{"beat": {"measure": 44, "beat":  1, "lpb": 4}, "lane": 2},
-		{"beat": {"measure": 44, "beat":  2, "lpb": 4}, "lane": 1},
+		{"beat": {"measure": 44, "beat":  0, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 44, "beat":  0, "lpb": 8}, "lane": 1},
+		
+		{"beat": {"measure": 44, "beat":  2, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 44, "beat":  3, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 44, "beat":  4, "lpb": 8}, "lane": 3},
 		
 		{
 			"type": 2,
@@ -705,9 +802,11 @@
 			"endpos": {"x": 9.0, "y": 1.0}
 		},
 		
-		{"beat": {"measure": 45, "beat":  0, "lpb": 4}, "lane": 2},
-		{"beat": {"measure": 45, "beat":  1, "lpb": 4}, "lane": 1},
-		{"beat": {"measure": 45, "beat":  2, "lpb": 4}, "lane": 2},
+		{"beat": {"measure": 45, "beat":  0, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 45, "beat":  1, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 45, "beat":  2, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 45, "beat":  3, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 45, "beat":  4, "lpb": 8}, "lane": 3},
 		
 		{
 			"type": 2,
@@ -723,9 +822,11 @@
 			"endpos": {"x": 9.0, "y": 1.0}
 		},
 		
-		{"beat": {"measure": 46, "beat":  0, "lpb": 4}, "lane": 1},
-		{"beat": {"measure": 46, "beat":  1, "lpb": 4}, "lane": 2},
-		{"beat": {"measure": 46, "beat":  2, "lpb": 4}, "lane": 1},
+		{"beat": {"measure": 46, "beat":  0, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 46, "beat":  1, "lpb": 8}, "lane": 2},
+
+		{"beat": {"measure": 46, "beat":  3, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 46, "beat":  4, "lpb": 8}, "lane": 3},
 		
 		{
 			"type": 2,
@@ -741,23 +842,24 @@
 			"endpos": {"x": 9.0, "y": 1.0}
 		},
 		
-		{"beat": {"measure": 47, "beat":  0, "lpb": 8}, "lane": 1},
 		{"beat": {"measure": 47, "beat":  0, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 47, "beat":  0, "lpb": 8}, "lane": 3},
 		
-		{"beat": {"measure": 47, "beat":  2, "lpb": 8}, "lane": 1},
 		{"beat": {"measure": 47, "beat":  2, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 47, "beat":  2, "lpb": 8}, "lane": 3},
 		
-		{"beat": {"measure": 47, "beat":  4, "lpb": 8}, "lane": 1},
 		{"beat": {"measure": 47, "beat":  4, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 47, "beat":  4, "lpb": 8}, "lane": 3},
 		
-		{"beat": {"measure": 47, "beat":  6, "lpb": 8}, "lane": 1},
 		{"beat": {"measure": 47, "beat":  6, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 47, "beat":  6, "lpb": 8}, "lane": 3},
 		
-		{"beat": {"measure": 48, "beat":  0, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 48, "beat":  0, "lpb": 8}, "lane": 2},
 		{"beat": {"measure": 48, "beat":  0, "lpb": 8}, "lane": 3},
 		
-		{"beat": {"measure": 48, "beat":  1, "lpb": 4}, "lane": 1},
-		{"beat": {"measure": 48, "beat":  2, "lpb": 4}, "lane": 2},
+		{"beat": {"measure": 48, "beat":  2, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 48, "beat":  3, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 48, "beat":  4, "lpb": 8}, "lane": 0},
 		
 		{
 			"type": 2,
@@ -773,9 +875,11 @@
 			"endpos": {"x": -9.0, "y": 1.0}
 		},
 		
-		{"beat": {"measure": 49, "beat":  0, "lpb": 4}, "lane": 1},
-		{"beat": {"measure": 49, "beat":  1, "lpb": 4}, "lane": 2},
-		{"beat": {"measure": 49, "beat":  2, "lpb": 4}, "lane": 1},
+		{"beat": {"measure": 49, "beat":  0, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 49, "beat":  1, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 49, "beat":  2, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 49, "beat":  3, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 49, "beat":  4, "lpb": 8}, "lane": 0},
 		
 		{
 			"type": 2,
@@ -791,9 +895,10 @@
 			"endpos": {"x": -9.0, "y": 1.0}
 		},
 		
-		{"beat": {"measure": 50, "beat":  0, "lpb": 4}, "lane": 2},
-		{"beat": {"measure": 50, "beat":  1, "lpb": 4}, "lane": 1},
-		{"beat": {"measure": 50, "beat":  2, "lpb": 4}, "lane": 2},
+		{"beat": {"measure": 50, "beat":  0, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 50, "beat":  1, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 50, "beat":  3, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 50, "beat":  4, "lpb": 8}, "lane": 0},
 		
 		{
 			"type": 2,
@@ -809,94 +914,110 @@
 			"endpos": {"x": -9.0, "y": 1.0}
 		},
 		
+		{"beat": {"measure": 51, "beat":  0, "lpb": 8}, "lane": 0},
 		{"beat": {"measure": 51, "beat":  0, "lpb": 8}, "lane": 1},
-		{"beat": {"measure": 51, "beat":  0, "lpb": 8}, "lane": 2},
 		
+		{"beat": {"measure": 51, "beat":  2, "lpb": 8}, "lane": 0},
 		{"beat": {"measure": 51, "beat":  2, "lpb": 8}, "lane": 1},
-		{"beat": {"measure": 51, "beat":  2, "lpb": 8}, "lane": 2},
 		
+		{"beat": {"measure": 51, "beat":  4, "lpb": 8}, "lane": 0},
 		{"beat": {"measure": 51, "beat":  4, "lpb": 8}, "lane": 1},
-		{"beat": {"measure": 51, "beat":  4, "lpb": 8}, "lane": 2},
 		
+		{"beat": {"measure": 51, "beat":  6, "lpb": 8}, "lane": 0},
 		{"beat": {"measure": 51, "beat":  6, "lpb": 8}, "lane": 1},
-		{"beat": {"measure": 51, "beat":  6, "lpb": 8}, "lane": 2},
 		
 		{"beat": {"measure": 52, "beat":  0, "lpb": 8}, "lane": 0},
-		{"beat": {"measure": 52, "beat":  0, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 52, "beat":  0, "lpb": 8}, "lane": 1},
 		
-		{"beat": {"measure": 52, "beat":  2, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 52, "beat":  2, "lpb": 8}, "lane": 3},
 		{"beat": {"measure": 52, "beat":  3, "lpb": 8}, "lane": 2},
 		{"beat": {"measure": 52, "beat":  4, "lpb": 8}, "lane": 1},
 		
-		{"beat": {"measure": 52, "beat":  6, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 52, "beat":  6, "lpb": 8}, "lane": 2},
 		{"beat": {"measure": 52, "beat":  6, "lpb": 8}, "lane": 3},
 		
-		{"beat": {"measure": 53, "beat":  0, "lpb": 8}, "lane": 2},
-		{"beat": {"measure": 53, "beat":  1, "lpb": 8}, "lane": 1},
-		{"beat": {"measure": 53, "beat":  2, "lpb": 8}, "lane": 2},
-		{"beat": {"measure": 53, "beat":  3, "lpb": 8}, "lane": 1},
-		{"beat": {"measure": 53, "beat":  4, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 53, "beat":  0, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 53, "beat":  1, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 53, "beat":  2, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 53, "beat":  3, "lpb": 8}, "lane": 0},
 		
-		{"beat": {"measure": 53, "beat":  6, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 53, "beat":  4, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 53, "beat":  4, "lpb": 8}, "lane": 3},
+		
+		{"beat": {"measure": 53, "beat":  6, "lpb": 8}, "lane": 1},
 		{"beat": {"measure": 53, "beat":  6, "lpb": 8}, "lane": 3},
 		
-		{"beat": {"measure": 54, "beat":  0, "lpb": 8}, "lane": 1},
-		{"beat": {"measure": 54, "beat":  1, "lpb": 8}, "lane": 2},
-		{"beat": {"measure": 54, "beat":  2, "lpb": 8}, "lane": 1},
-		{"beat": {"measure": 54, "beat":  3, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 54, "beat":  0, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 54, "beat":  1, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 54, "beat":  2, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 54, "beat":  3, "lpb": 8}, "lane": 3},
+		
+		{"beat": {"measure": 54, "beat":  4, "lpb": 8}, "lane": 0},
 		{"beat": {"measure": 54, "beat":  4, "lpb": 8}, "lane": 1},
 		
 		{"beat": {"measure": 54, "beat":  6, "lpb": 8}, "lane": 0},
-		{"beat": {"measure": 54, "beat":  6, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 54, "beat":  6, "lpb": 8}, "lane": 2},
 		
 		{"beat": {"measure": 55, "beat":  0, "lpb": 8}, "lane": 0},
 		{"beat": {"measure": 55, "beat":  0, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 55, "beat":  0, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 55, "beat":  0, "lpb": 8}, "lane": 3},
 		
 		{"beat": {"measure": 55, "beat":  2, "lpb": 8}, "lane": 2},
-		{"beat": {"measure": 55, "beat":  2, "lpb": 8}, "lane": 3},
-		{"beat": {"measure": 55, "beat":  4, "lpb": 8}, "lane": 0},
-		{"beat": {"measure": 55, "beat":  4, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 55, "beat":  3, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 55, "beat":  4, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 55, "beat":  5, "lpb": 8}, "lane": 1},
 		{"beat": {"measure": 55, "beat":  6, "lpb": 8}, "lane": 2},
-		{"beat": {"measure": 55, "beat":  6, "lpb": 8}, "lane": 3},
 		
 		{"beat": {"measure": 56, "beat":  0, "lpb": 8}, "lane": 0},
 		{"beat": {"measure": 56, "beat":  0, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 56, "beat":  0, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 56, "beat":  0, "lpb": 8}, "lane": 3},
 		
-		{"beat": {"measure": 56, "beat":  2, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 56, "beat":  2, "lpb": 8}, "lane": 0},
 		{"beat": {"measure": 56, "beat":  3, "lpb": 8}, "lane": 1},
 		{"beat": {"measure": 56, "beat":  4, "lpb": 8}, "lane": 2},
 		
 		{"beat": {"measure": 56, "beat":  6, "lpb": 8}, "lane": 0},
-		{"beat": {"measure": 56, "beat":  6, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 56, "beat":  6, "lpb": 8}, "lane": 1},
 		
-		{"beat": {"measure": 57, "beat":  0, "lpb": 8}, "lane": 1},
-		{"beat": {"measure": 57, "beat":  1, "lpb": 8}, "lane": 2},
-		{"beat": {"measure": 57, "beat":  2, "lpb": 8}, "lane": 1},
-		{"beat": {"measure": 57, "beat":  3, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 57, "beat":  0, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 57, "beat":  1, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 57, "beat":  2, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 57, "beat":  3, "lpb": 8}, "lane": 3},
+		
+		{"beat": {"measure": 57, "beat":  4, "lpb": 8}, "lane": 0},
 		{"beat": {"measure": 57, "beat":  4, "lpb": 8}, "lane": 1},
 		
 		{"beat": {"measure": 57, "beat":  6, "lpb": 8}, "lane": 0},
-		{"beat": {"measure": 57, "beat":  6, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 57, "beat":  6, "lpb": 8}, "lane": 2},
 		
-		{"beat": {"measure": 58, "beat":  0, "lpb": 8}, "lane": 2},
-		{"beat": {"measure": 58, "beat":  1, "lpb": 8}, "lane": 1},
-		{"beat": {"measure": 58, "beat":  2, "lpb": 8}, "lane": 2},
-		{"beat": {"measure": 58, "beat":  3, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 58, "beat":  0, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 58, "beat":  1, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 58, "beat":  2, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 58, "beat":  3, "lpb": 8}, "lane": 0},
+		
+		{"beat": {"measure": 58, "beat":  4, "lpb": 8}, "lane": 3},
 		{"beat": {"measure": 58, "beat":  4, "lpb": 8}, "lane": 2},
 		
-		{"beat": {"measure": 58, "beat":  6, "lpb": 8}, "lane": 0},
 		{"beat": {"measure": 58, "beat":  6, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 58, "beat":  6, "lpb": 8}, "lane": 1},
 		
 		{"beat": {"measure": 59, "beat":  0, "lpb": 8}, "lane": 0},
 		{"beat": {"measure": 59, "beat":  0, "lpb": 8}, "lane": 1},
-		{"beat": {"measure": 59, "beat":  2, "lpb": 8}, "lane": 2},
-		{"beat": {"measure": 59, "beat":  2, "lpb": 8}, "lane": 3},
-		{"beat": {"measure": 59, "beat":  4, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 59, "beat":  0, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 59, "beat":  0, "lpb": 8}, "lane": 3},
+		
+		{"beat": {"measure": 59, "beat":  2, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 59, "beat":  3, "lpb": 8}, "lane": 2},
 		{"beat": {"measure": 59, "beat":  4, "lpb": 8}, "lane": 1},
-		{"beat": {"measure": 59, "beat":  6, "lpb": 8}, "lane": 2},
-		{"beat": {"measure": 59, "beat":  6, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 59, "beat":  5, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 59, "beat":  6, "lpb": 8}, "lane": 1},
+		
 		{"beat": {"measure": 60, "beat":  0, "lpb": 8}, "lane": 0},
 		{"beat": {"measure": 60, "beat":  0, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 60, "beat":  0, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 60, "beat":  0, "lpb": 8}, "lane": 3},
 		
 		{
 			"type": 2,
@@ -1281,123 +1402,61 @@
 		{"beat": {"measure": 67, "beat":  6, "lpb": 8}, "lane": 2},
 		{"beat": {"measure": 67, "beat":  6, "lpb": 8}, "lane": 3},
 		
-		{
-			"type": 2,
-			"beat": {"measure": 68, "beat": 0, "lpb": 4},
-			"pos": {"x": -6.0, "y": 1.0},
-			"controlpoints": [
-				{
-					"beat": {"measure": 68, "beat": 1, "lpb": 4},
-					"pos": {"x": 6.0, "y": 1.0}
-				}
-			],
-			"endbeat": {"measure": 68, "beat": 2, "lpb": 4},
-			"endpos": {"x": -6.0, "y": 1.0}
-		},
+		{"beat": {"measure": 68, "beat":  0, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 68, "beat":  1, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 68, "beat":  2, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 68, "beat":  3, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 68, "beat":  4, "lpb": 8}, "lane": 1},
 		
-		{
-			"type": 2,
-			"beat": {"measure": 69, "beat": 0, "lpb": 4},
-			"pos": {"x": 6.0, "y": 2.0},
-			"controlpoints": [
-				{
-					"beat": {"measure": 69, "beat": 1, "lpb": 4},
-					"pos": {"x": -6.0, "y": 2.0}
-				}
-			],
-			"endbeat": {"measure": 69, "beat": 2, "lpb": 4},
-			"endpos": {"x": 6.0, "y": 2.0}
-		},
+		{"beat": {"measure": 69, "beat":  0, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 69, "beat":  1, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 69, "beat":  2, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 69, "beat":  3, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 69, "beat":  4, "lpb": 8}, "lane": 2},
 		
-		{
-			"type": 2,
-			"beat": {"measure": 70, "beat": 0, "lpb": 4},
-			"pos": {"x": -6.0, "y": 3.0},
-			"controlpoints": [
-				{
-					"beat": {"measure": 70, "beat": 1, "lpb": 4},
-					"pos": {"x": 6.0, "y": 3.0}
-				}
-			],
-			"endbeat": {"measure": 70, "beat": 2, "lpb": 4},
-			"endpos": {"x": -6.0, "y": 3.0}
-		},
+		{"beat": {"measure": 70, "beat":  0, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 70, "beat":  1, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 70, "beat":  2, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 70, "beat":  3, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 70, "beat":  4, "lpb": 8}, "lane": 1},
 		
-		{
-			"type": 2,
-			"beat": {"measure": 71, "beat": 0, "lpb": 4},
-			"pos": {"x": 6.0, "y": 4.0},
-			"controlpoints": [
-				{
-					"beat": {"measure": 71, "beat": 1, "lpb": 4},
-					"pos": {"x": -6.0, "y": 4.0}
-				}
-			],
-			"endbeat": {"measure": 71, "beat": 2, "lpb": 4},
-			"endpos": {"x": 6.0, "y": 4.0}
-		},
+		{"beat": {"measure": 71, "beat":  0, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 71, "beat":  1, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 71, "beat":  2, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 71, "beat":  3, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 71, "beat":  4, "lpb": 8}, "lane": 2},
 		
-		{
-			"type": 2,
-			"beat": {"measure": 72, "beat": 0, "lpb": 4},
-			"pos": {"x": -9.0, "y": 5.0},
-			"controlpoints": [
-				{
-					"beat": {"measure": 72, "beat": 1, "lpb": 4},
-					"pos": {"x": 9.0, "y": 5.0}
-				}
-			],
-			"endbeat": {"measure": 72, "beat": 2, "lpb": 4},
-			"endpos": {"x": -9.0, "y": 5.0}
-		},
+		{"beat": {"measure": 72, "beat":  0, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 72, "beat":  1, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 72, "beat":  2, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 72, "beat":  3, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 72, "beat":  4, "lpb": 8}, "lane": 0},
 		
-		{
-			"type": 2,
-			"beat": {"measure": 73, "beat": 0, "lpb": 4},
-			"pos": {"x": 9.0, "y": 5.0},
-			"controlpoints": [
-				{
-					"beat": {"measure": 73, "beat": 1, "lpb": 4},
-					"pos": {"x": -9.0, "y": 5.0}
-				}
-			],
-			"endbeat": {"measure": 73, "beat": 2, "lpb": 4},
-			"endpos": {"x": 9.0, "y": 5.0}
-		},
+		{"beat": {"measure": 73, "beat":  0, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 73, "beat":  1, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 73, "beat":  2, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 73, "beat":  3, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 73, "beat":  4, "lpb": 8}, "lane": 3},
 		
-		{
-			"type": 2,
-			"beat": {"measure": 74, "beat": 0, "lpb": 8},
-			"pos": {"x": 12.0, "y": 5.0},
-			"controlpoints": [
-				{
-					"beat": {"measure": 74, "beat": 1, "lpb": 8},
-					"pos": {"x": -12.0, "y": 5.0}
-				},
-				{
-					"beat": {"measure": 74, "beat": 2, "lpb": 8},
-					"pos": {"x": 12.0, "y": 5.0}
-				},
-				{
-					"beat": {"measure": 74, "beat": 3, "lpb": 8},
-					"pos": {"x": -12.0, "y": 5.0}
-				},
-				{
-					"beat": {"measure": 74, "beat": 4, "lpb": 8},
-					"pos": {"x": 12.0, "y": 5.0}
-				},
-				{
-					"beat": {"measure": 74, "beat": 5, "lpb": 8},
-					"pos": {"x": -12.0, "y": 5.0}
-				},
-				{
-					"beat": {"measure": 74, "beat": 6, "lpb": 8},
-					"pos": {"x": 12.0, "y": 5.0}
-				}
-			],
-			"endbeat": {"measure": 74, "beat": 7, "lpb": 8},
-			"endpos": {"x": -12.0, "y": 5.0}
-		},
+		{"beat": {"measure": 74, "beat":  0, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 74, "beat":  0, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 74, "beat":  1, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 74, "beat":  1, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 74, "beat":  2, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 74, "beat":  2, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 74, "beat":  3, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 74, "beat":  3, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 74, "beat":  4, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 74, "beat":  4, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 74, "beat":  5, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 74, "beat":  5, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 74, "beat":  6, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 74, "beat":  6, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 74, "beat":  7, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 74, "beat":  7, "lpb": 8}, "lane": 3},
+		
+		{"beat": {"measure": 75, "beat":  0, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 75, "beat":  0, "lpb": 8}, "lane": 2},
 		
 		{"beat": {"measure": 79, "beat":  0, "lpb": 4}, "lane": 3},
 		{"beat": {"measure": 79, "beat":  1, "lpb": 4}, "lane": 0},
@@ -1419,7 +1478,11 @@
 		{"beat": {"measure": 84, "beat":  3, "lpb": 4}, "lane": 2},
 		
 		{"beat": {"measure": 85, "beat":  0, "lpb": 8}, "lane": 0},
-		{"beat": {"measure": 85, "beat":  3, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 85, "beat":  1, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 85, "beat":  2, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 85, "beat":  3, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 85, "beat":  4, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 85, "beat":  5, "lpb": 8}, "lane": 2},
 		{"beat": {"measure": 86, "beat":  0, "lpb": 8}, "lane": 0},
 		{"beat": {"measure": 86, "beat":  0, "lpb": 8}, "lane": 1},
 		
@@ -1427,7 +1490,11 @@
 		{"beat": {"measure": 90, "beat":  0, "lpb": 8}, "lane": 1},
 		
 		{"beat": {"measure": 90, "beat":  2, "lpb": 8}, "lane": 3},
-		{"beat": {"measure": 90, "beat":  5, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 90, "beat":  3, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 90, "beat":  4, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 90, "beat":  5, "lpb": 8}, "lane": 3},
+		{"beat": {"measure": 90, "beat":  6, "lpb": 8}, "lane": 0},
+		{"beat": {"measure": 90, "beat":  7, "lpb": 8}, "lane": 1},
 		{"beat": {"measure": 91, "beat":  0, "lpb": 8}, "lane": 2},
 		{"beat": {"measure": 91, "beat":  0, "lpb": 8}, "lane": 3},
 		
@@ -1435,7 +1502,11 @@
 		{"beat": {"measure": 93, "beat":  0, "lpb": 8}, "lane": 3},
 		
 		{"beat": {"measure": 94, "beat":  0, "lpb": 8}, "lane": 2},
-		{"beat": {"measure": 94, "beat":  3, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 94, "beat":  1, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 94, "beat":  2, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 94, "beat":  3, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 94, "beat":  4, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 94, "beat":  5, "lpb": 8}, "lane": 2},
 		{"beat": {"measure": 95, "beat":  0, "lpb": 8}, "lane": 0},
 		{"beat": {"measure": 95, "beat":  0, "lpb": 8}, "lane": 1},
 		
@@ -1443,7 +1514,11 @@
 		{"beat": {"measure": 99, "beat":  0, "lpb": 8}, "lane": 1},
 		
 		{"beat": {"measure": 99, "beat":  2, "lpb": 8}, "lane": 1},
-		{"beat": {"measure": 99, "beat":  5, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 99, "beat":  3, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 99, "beat":  4, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 99, "beat":  5, "lpb": 8}, "lane": 1},
+		{"beat": {"measure": 99, "beat":  6, "lpb": 8}, "lane": 2},
+		{"beat": {"measure": 99, "beat":  7, "lpb": 8}, "lane": 1},
 		{"beat": {"measure": 100, "beat":  0, "lpb": 8}, "lane": 2},
 		{"beat": {"measure": 100, "beat":  0, "lpb": 8}, "lane": 3},
 		
