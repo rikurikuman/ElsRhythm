@@ -8,6 +8,8 @@ void TransparentRenderStage::Init()
 	// ラスタライザの設定
 	mPipelineState.mDesc.BlendState.AlphaToCoverageEnable = false;
 
+	D3D12_RENDER_TARGET_BLEND_DESC& blenddesc = mPipelineState.mDesc.BlendState.RenderTarget[0];
+
 	mPipelineState.mDesc.DepthStencilState.DepthEnable = true;
 	mPipelineState.mDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
 	mPipelineState.mDesc.pRootSignature = RDirectX::GetDefRootSignature().mPtr.Get();

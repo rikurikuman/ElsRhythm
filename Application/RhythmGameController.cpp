@@ -515,10 +515,8 @@ void RhythmGameController::Update()
 					}
 				}
 
-				//終わってたら終わり
-				if (music.ConvertBeatToMiliSeconds(note.subBeat) < time) {
-					note.judgeTime = music.ConvertBeatToMiliSeconds(note.subBeat);
-					removeNotes.push_back(note);
+				if (note.judgeFlag) {
+					note.judgeTime = time;
 				}
 
 				//直角の処理
@@ -563,6 +561,11 @@ void RhythmGameController::Update()
 							note.judgeFlag = false;
 						}
 					}*/
+				}
+
+				//終わってたら終わり
+				if (music.ConvertBeatToMiliSeconds(note.subBeat) < time) {
+					removeNotes.push_back(note);
 				}
 			}
 		}
