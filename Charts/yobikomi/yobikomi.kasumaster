@@ -1,0 +1,10 @@
+{
+	"hard": {
+		"displayname": "Song of Yobikomikun",
+		"composer": "ほげーた",
+		"bpm": "131",
+		"level": 10.4,
+		"chartpath": "./yobikomi.kasu",
+		"musicpath": "./Song_of_Yobikomikun.wav"
+	}
+}

@@ -7,6 +7,11 @@
 #include <Renderer.h>
 #include <RImGui.h>
 #include <ParticleObject.h>
+#include <SceneManager.h>
+#include <TitleScene.h>
+#include <SimpleSceneTransition.h>
+
+std::string GameScene::sChartName;
 
 GameScene::GameScene()
 {
@@ -48,7 +53,7 @@ GameScene::GameScene()
 	RAudio::Load("Resources/Sound/Judge_Miss.wav", "JudgeMiss");
 	RAudio::Load("Resources/Sound/VerticalSlash.wav", "VerticalSlash");
 
-	chartFile = ChartFile("Charts/aleph-0.kasu");
+	chartFile = ChartFile("Charts/" + sChartName);
 	chartFile.Load();
 	gameController.chart = chartFile;
 	gameController.Load();
@@ -61,6 +66,8 @@ void GameScene::Init()
 	LightGroup::sNowLight = &light;
 
 	ParticleObject::Clear();
+	gameController.time = -6000;
+	gameController.playing = true;
 }
 
 void GameScene::Update()
@@ -69,6 +76,11 @@ void GameScene::Update()
 	camera.Update();
 	gameController.Update();
 	ParticleObject::ManageParticleObject(true);
+
+	if (RInput::GetKey(DIK_ESCAPE)) {
+		gameController.playing = false;
+		if(!SceneManager::IsSceneChanging()) SceneManager::Change<TitleScene, SimpleSceneTransition>();
+	}
 }
 
 void GameScene::Draw()

@@ -20,10 +20,8 @@
 #include "SimpleSceneTransition.h"
 #include "RImGui.h"
 #include "MainTestScene.h"
+#include "TitleScene.h"
 #include "GameScene.h"
-
-#pragma comment(lib, "d3d12.lib")
-#pragma comment(lib, "dxgi.lib")
 
 #define _CRTDBG_MAP_ALLOC
 #include <cstdlib>
@@ -106,11 +104,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	TextureManager::Load("Resources/hogetest.png", "hogetest");
 
-	SceneManager::Set<GameScene>();
+	SceneManager::Set<TitleScene>();
 
 	DebugCamera camera({ 0, 0, -10 });
 
-	TimeManager::targetFPS = 120;
+	TimeManager::targetFPS = 60;
 
 	//////////////////////////////////////
 
@@ -157,7 +155,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		Renderer::Execute();
 
 		//Ç◊ÇÒÇËÅI
-		{
+		if (Util::debugBool) {
 			ImGui::SetNextWindowSize({ 400, 380 });
 
 			ImGuiWindowFlags window_flags = 0;
@@ -190,25 +188,29 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 			ImGui::NewLine();
 			ImGui::Text("SceneManager");
 			static int32_t sceneNum = 0;
-			const char* scenes[] = { "RhythmGameTest", "MainTest", "ControllerTest", "CollidersTest", "SoundTest" };
+			const char* scenes[] = { "Title", "RhythmGameTest", "MainTest", "ControllerTest", "CollidersTest", "SoundTest" };
 			ImGui::Combo("##SceneNumCombo", &sceneNum, scenes, IM_ARRAYSIZE(scenes));
 			ImGui::SameLine();
 			if (ImGui::Button("Go!!!")) {
 				if (!SceneManager::IsSceneChanging()) {
 					switch (sceneNum) {
 					case 0:
-						SceneManager::Change<GameScene, SimpleSceneTransition>();
+						SceneManager::Change<TitleScene, SimpleSceneTransition>();
 						break;
 					case 1:
-						SceneManager::Change<MainTestScene, SimpleSceneTransition>();
+						GameScene::sChartName = "test.kasu";
+						SceneManager::Change<GameScene, SimpleSceneTransition>();
 						break;
 					case 2:
-						SceneManager::Change<ControllerScene, SimpleSceneTransition>();
+						SceneManager::Change<MainTestScene, SimpleSceneTransition>();
 						break;
 					case 3:
-						SceneManager::Change<CollidersScene, SimpleSceneTransition>();
+						SceneManager::Change<ControllerScene, SimpleSceneTransition>();
 						break;
 					case 4:
+						SceneManager::Change<CollidersScene, SimpleSceneTransition>();
+						break;
+					case 5:
 						SceneManager::Change<SoundScene, SimpleSceneTransition>();
 						break;
 					}
@@ -233,10 +235,6 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		bufferLockInDrawing.unlock();
 
 		TimeManager::Update();
-
-		if (RInput::GetKey(DIK_ESCAPE)) {
-			break;
-		}
 	}
 
 	SceneManager::Finalize();

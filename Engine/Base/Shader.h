@@ -4,8 +4,6 @@
 #include <string>
 #include <unordered_map>
 
-#pragma comment(lib, "d3dcompiler.lib")
-
 class Shader
 {
 public:

@@ -41,7 +41,15 @@ public:
 	Note() {}
 
 	bool operator==(const Note& note) const {
-		return mainBeat == note.mainBeat && lane == note.lane && judgeFlag == note.judgeFlag && judgeDiff == note.judgeDiff;
+		return mainBeat == note.mainBeat
+			&& subBeat == note.subBeat
+			&& mainPos == note.mainPos
+			&& subPos == note.subPos
+			&& lane == note.lane
+			&& judgeFlag == note.judgeFlag
+			&& judgeFlagB == note.judgeFlagB
+			&& judgeDiff == note.judgeDiff
+			&& HoldTime == note.HoldTime;
 	}
 
 	bool operator<(const Note& note) const {

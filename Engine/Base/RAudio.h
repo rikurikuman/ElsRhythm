@@ -9,8 +9,6 @@
 #include <mutex>
 #include "Util.h"
 
-#pragma comment(lib,"xaudio2.lib")
-
 typedef std::string AudioHandle;
 typedef std::string PlayingAudioHandle;
 

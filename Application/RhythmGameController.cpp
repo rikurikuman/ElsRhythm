@@ -178,7 +178,6 @@ void RhythmGameController::Init()
 void RhythmGameController::Update()
 {
 	if (Util::debugBool) {
-		RWindow::SetMouseLock(true);
 		if (RInput::GetKey(DIK_LSHIFT) || RInput::GetKey(DIK_RSHIFT)) {
 			if (RInput::GetKeyDown(DIK_LEFT)) {
 				scrollSpeed -= 1.0f;
@@ -197,12 +196,14 @@ void RhythmGameController::Update()
 				scrollSpeed += 0.1f;
 			}
 		}
-	}
-	else {
 		RWindow::SetMouseLock(false);
 	}
+	else {
+		
+		RWindow::SetMouseLock(true);
+	}
 
-	{
+	if (Util::debugBool) {
 		Beat beat = music.ConvertMiliSecondsToBeat(time);
 
 		ImGui::SetNextWindowSize({ 400, 400 });

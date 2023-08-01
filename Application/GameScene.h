@@ -17,6 +17,8 @@ public:
 	void Update() override;
 	void Draw() override;
 
+	static std::string sChartName;
+
 private:
 	DebugCamera camera = DebugCamera({0, 0, -5});
 	LightGroup light;
