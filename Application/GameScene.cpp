@@ -48,6 +48,8 @@ GameScene::GameScene()
 	camera.mFreeFlag = true;
 	camera.mViewProjection.UpdateMatrix();
 
+	TextureManager::Load("./Resources/judgeText.png", "judgeText");
+
 	RAudio::Load("Resources/Sound/Judge_Perfect.wav", "JudgePerfect");
 	RAudio::Load("Resources/Sound/Judge_Hit.wav", "JudgeHit");
 	RAudio::Load("Resources/Sound/Judge_Miss.wav", "JudgeMiss");

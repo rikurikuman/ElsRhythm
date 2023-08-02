@@ -36,7 +36,6 @@ public:
 	float HoldTime = 0; //ホールド判定用で別枠
 
 	bool posCalced = false;
-	float posZMem = 0;
 
 	Note() {}
 

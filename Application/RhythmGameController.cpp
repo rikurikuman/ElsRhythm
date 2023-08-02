@@ -5,6 +5,7 @@
 #include <RImGui.h>
 #include <Camera.h>
 #include <ParticleExplode.h>
+#include <ParticleSprite.h>
 
 float RhythmGameController::GetScroll(float miliSec)
 {
@@ -368,6 +369,7 @@ void RhythmGameController::Update()
 			if (note.type == Note::Types::Tap) {
 				if (note.judgeFlag && note.judgeDiff <= judgePerfect && (music.ConvertBeatToMiliSeconds(note.mainBeat) - time) <= 0) {
 					RAudio::Play("JudgePerfect");
+					ParticleSprite::Spawn({posX, 0, 0}, "judgeText", RRect(9, 250, 10, 55), {0.5f, 0.5f}, {1, 1, 1, 1}, 90, 50, 0, 0.5f, 0.5f, 0.2f);
 					//TODO:ShowJudgeText(posX + laneWidth / 2, posJudgeLine, "Perfect!", 0xffff00);
 					for (int32_t i = 0; i < 12; i++) {
 						ParticleExplode::Spawn({ posX, 0, 0 }, 0xffe32e, (360.0f / 12) + (360.0f / 12 * i), 10, 15, 0.5f);
@@ -397,7 +399,7 @@ void RhythmGameController::Update()
 								}
 								else if (diffB <= judgeHit) {
 									RAudio::Play("JudgeHit");
-									//TODO:ShowJudgeText(posX + laneWidth / 2, posJudgeLine, "Hit", 0x00ff00);
+									ParticleSprite::Spawn({ posX, 0, 0 }, "judgeText", RRect(9, 103, 69, 114), { 0.5f, 0.5f }, { 1, 1, 1, 1 }, 90, 50, 0, 0.5f, 0.5f, 0.2f);
 									//TODO:ShowJudgeText(posX + laneWidth / 2, posJudgeLine + 20, StringFormat("%+.1f", diffA) + "ms", diffA > 0 ? 0xff0000 : 0x00ffff);
 									for (int32_t i = 0; i < 12; i++) {
 										ParticleExplode::Spawn({ posX, 0, 0 }, 0x77ff5e, (360.0f / 12) + (360.0f / 12 * i), 5, 15, 0.5f);
@@ -418,7 +420,7 @@ void RhythmGameController::Update()
 								}
 								else {
 									RAudio::Play("JudgeMiss");
-									//TODO:ShowJudgeText(posX + laneWidth / 2, posJudgeLine, "Hoge", 0xaaaaaa);
+									ParticleSprite::Spawn({ posX, 0, 0 }, "judgeText", RRect(10, 128, 128, 176), { 0.5f, 0.5f }, { 1, 1, 1, 1 }, 90, 50, 0, 0.5f, 0.5f, 0.2f);
 									countJudgeMiss++;
 									removeNotes.push_back(note);
 									continue;
@@ -429,7 +431,7 @@ void RhythmGameController::Update()
 
 					if (diffA >= judgeHit * 2) {
 						RAudio::Play("JudgeMiss");
-						//TODO:ShowJudgeText(posX + laneWidth / 2, posJudgeLine, "Hoge", 0xaaaaaa);
+						ParticleSprite::Spawn({ posX, 0, 0 }, "judgeText", RRect(10, 128, 128, 176), { 0.5f, 0.5f }, { 1, 1, 1, 1 }, 90, 50, 0, 0.5f, 0.5f, 0.2f);
 						countJudgeMiss++;
 						removeNotes.push_back(note);
 						continue;
@@ -496,6 +498,7 @@ void RhythmGameController::Update()
 							if (note.judgeFlag) {
 								countJudgePerfect++;
 								note.judgeTime = arcPoint;
+								ParticleSprite::Spawn(GetNowArcPos(note), "judgeText", RRect(9, 250, 10, 55), { 0.5f, 0.5f }, { 1, 1, 1, 1 }, 90, 30, 0, 0.5f, 0.5f, 0.2f);
 								for (int32_t i = 0; i < 12; i++) {
 									ParticleExplode::Spawn(GetNowArcPos(note), 0xffe32e, (360.0f / 12) + (360.0f / 12 * i), 5, 15, 0.5f);
 								}
@@ -503,6 +506,7 @@ void RhythmGameController::Update()
 							else {
 								countJudgeMiss++;
 								note.judgeTime = arcPoint;
+								ParticleSprite::Spawn(GetNowArcPos(note), "judgeText", RRect(10, 128, 128, 176), { 0.5f, 0.5f }, { 1, 1, 1, 1 }, 90, 30, 0, 0.5f, 0.5f, 0.2f);
 								for (int32_t i = 0; i < 12; i++) {
 									ParticleExplode::Spawn(GetNowArcPos(note), 0xff0000, (360.0f / 12) + (360.0f / 12 * i), 5, 15, 0.5f);
 								}
@@ -792,6 +796,7 @@ void RhythmGameController::JudgeRightAngleArc(Note& note)
 					countJudgePerfect++;
 					note.judgeFlagB = false;
 					note.judgeTimeB = arcStartTime;
+					ParticleSprite::Spawn({ (arcStartPos.x + arcEndPos.x) / 2.0f, (arcStartPos.y + arcEndPos.y) / 2.0f, 0 }, "judgeText", RRect(9, 250, 10, 55), { 0.5f, 0.5f }, { 1, 1, 1, 1 }, 90, 20, 0, 0.5f, 0.5f, 0.2f); RAudio::Play("JudgePerfect");
 					RAudio::Play("JudgePerfect");
 					RAudio::Play("VerticalSlash");
 					for (float t = 0; t < 1; t += 0.05f) {
@@ -809,6 +814,7 @@ void RhythmGameController::JudgeRightAngleArc(Note& note)
 					countJudgeMiss++;
 					note.judgeFlagB = false;
 					note.judgeTimeB = arcStartTime;
+					ParticleSprite::Spawn({ (arcStartPos.x + arcEndPos.x) / 2.0f, (arcStartPos.y + arcEndPos.y) / 2.0f, 0 }, "judgeText", RRect(10, 128, 128, 176), { 0.5f, 0.5f }, { 1, 1, 1, 1 }, 90, 20, 0, 0.5f, 0.5f, 0.2f);
 					RAudio::Play("JudgeMiss");
 				}
 			}
