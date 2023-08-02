@@ -468,10 +468,12 @@ void RhythmGameController::Update()
 					note.HoldTime = time;
 				}
 				else {
-					//猶予フレームを超えたなら終わり
-					if (abs(time - note.HoldTime) > judgeHit * 3) {
-						note.judgeFlag = false;
-						note.HoldTime = time;
+					if (note.judgeFlag) {
+						//猶予フレームを超えたなら終わり
+						if (abs(time - note.HoldTime) > judgeHit * 3) {
+							note.judgeFlag = false;
+							note.HoldTime = time;
+						}
 					}
 				}
 
@@ -595,6 +597,8 @@ void RhythmGameController::Update()
 		if (note.type == Note::Types::Arc) {
 			Vector3 prevPos = note.mainPos;
 
+			float startTime = 0;
+			float endTime = music.ConvertBeatToMiliSeconds(note.mainBeat);
 			Vector3 startPos;
 			Vector3 endPos;
 
@@ -603,6 +607,7 @@ void RhythmGameController::Update()
 
 			while (true) {
 				startPos = prevPos;
+				startTime = endTime;
 				if (itr != note.controlPoints.end()) {
 					endPos = itr->pos;
 					checkBeat = itr->beat;
@@ -611,11 +616,12 @@ void RhythmGameController::Update()
 					endPos = note.subPos;
 					checkBeat = note.subBeat;
 				}
+				endTime = music.ConvertBeatToMiliSeconds(checkBeat);
 
 				startPos.z = posJudgeLine + (startPos.z - nowPosY);
 				endPos.z = posJudgeLine + (endPos.z - nowPosY);
 
-				if (music.ConvertBeatToMiliSeconds(checkBeat) <= note.judgeTime) {
+				if (endTime <= note.judgeTime) {
 					if (itr != note.controlPoints.end()) {
 						prevPos = itr->pos;
 						itr++;
@@ -635,6 +641,12 @@ void RhythmGameController::Update()
 					else {
 						break;
 					}
+				}
+
+				//判定済みの所までは常に進める
+				if (startTime <= note.HoldTime && note.HoldTime <= endTime) {
+					float ratio = Util::GetRatio(startTime, endTime, note.HoldTime);
+					startPos = startPos + (endPos - startPos) * ratio;
 				}
 
 				if (note.judgeFlag && startPos.z <= posJudgeLine && endPos.z >= posJudgeLine) {
@@ -842,6 +854,9 @@ void RhythmGameController::JudgeRightAngleArc(Note& note)
 
 Vector3 RhythmGameController::GetNowArcPos(Note& note)
 {
+	if (time < music.ConvertBeatToMiliSeconds(note.mainBeat)) {
+		return note.mainPos;
+	}
 	//現在のアークの節を取得する
 	Beat arcStartBeat = note.mainBeat;
 	Beat arcEndBeat = note.subBeat;
