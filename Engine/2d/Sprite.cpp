@@ -125,7 +125,6 @@ void Sprite::Draw()
 		Renderer::DrawCall("Sprite", mVertBuff, mIndexBuff, 6, rootData, mTransform.position);
 	}
 	else {
-		mTransform.position.z *= -1;
 		Renderer::DrawCall("BackSprite", mVertBuff, mIndexBuff, 6, rootData, mTransform.position);
 	}
 }

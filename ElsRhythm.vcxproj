@@ -101,6 +101,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application\ArcNoteObj.cpp" />
+    <ClCompile Include="Application\BackGround.cpp" />
     <ClCompile Include="Application\BeatUtil.cpp" />
     <ClCompile Include="Application\ChartFile.cpp" />
     <ClCompile Include="Application\CollidersScene.cpp" />
@@ -109,6 +110,7 @@
     <ClCompile Include="Application\ParticleExplode.cpp" />
     <ClCompile Include="Application\ParticleObject.cpp" />
     <ClCompile Include="Application\ParticleSprite.cpp" />
+    <ClCompile Include="Application\ParticleSprite3D.cpp" />
     <ClCompile Include="Application\RhythmGameController.cpp" />
     <ClCompile Include="Application\Note.cpp" />
     <ClCompile Include="Application\SimpleSceneTransition.cpp" />
@@ -409,6 +411,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\ArcNoteObj.h" />
+    <ClInclude Include="Application\BackGround.h" />
     <ClInclude Include="Application\BeatUtil.h" />
     <ClInclude Include="Application\ChartFile.h" />
     <ClInclude Include="Application\CollidersScene.h" />
@@ -417,6 +420,7 @@
     <ClInclude Include="Application\ParticleExplode.h" />
     <ClInclude Include="Application\ParticleObject.h" />
     <ClInclude Include="Application\ParticleSprite.h" />
+    <ClInclude Include="Application\ParticleSprite3D.h" />
     <ClInclude Include="Application\RhythmGameController.h" />
     <ClInclude Include="Application\Note.h" />
     <ClInclude Include="Application\SimpleSceneTransition.h" />

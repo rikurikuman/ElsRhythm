@@ -17,6 +17,7 @@ public:
 	std::map<Beat, float> scrollChange;
 
 	std::list<Note> notes;
+	int32_t noteCount = 0;
 
 	ChartFile() {}
 	ChartFile(std::string path) : path(path) {}

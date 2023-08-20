@@ -35,6 +35,7 @@
 #include <CollidersScene.h>
 #include <ControllerScene.h>
 #include <SoundScene.h>
+#include <ParticleObject.h>
 
 using namespace std;
 using namespace DirectX;
@@ -70,7 +71,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	RAudio::Init();
 
 	TimeManager::Init();
-
+	
 	SRBufferAllocator::GetInstance();
 
 #ifdef _DEBUG
@@ -106,9 +107,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	SceneManager::Set<TitleScene>();
 
+	ParticleObject::Clear();
+
 	DebugCamera camera({ 0, 0, -10 });
 
-	TimeManager::targetFPS = 60;
+	TimeManager::targetFPS = 120;
 
 	//////////////////////////////////////
 

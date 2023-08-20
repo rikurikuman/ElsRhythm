@@ -9,6 +9,7 @@
 #include <SceneManager.h>
 #include <GameScene.h>
 #include <SimpleSceneTransition.h>
+#include <ParticleObject.h>
 
 TitleScene::TitleScene()
 {
@@ -29,6 +30,7 @@ void TitleScene::Init()
 {
 	Camera::sNowCamera = &camera;
 	LightGroup::sNowLight = &light;
+	ParticleObject::Clear();
 }
 
 void TitleScene::Update()

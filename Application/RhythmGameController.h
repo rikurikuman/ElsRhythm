@@ -30,6 +30,9 @@ public:
 	std::vector<ArcNoteObj> arcNoteObjs;
 	std::vector<ModelObj> lineModelObjs;
 
+	int32_t score = 0;
+	int32_t combo = 0;
+	int32_t maxCombo = 0;
 	int32_t countJudgePerfect = 0;
 	int32_t countJudgeHit = 0;
 	int32_t countJudgeMiss = 0;

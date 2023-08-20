@@ -271,10 +271,12 @@ void RhythmGameController::Update()
 		}
 		ImGui::Text(Util::StringFormat("Scroll:%.1f * %.2f", scrollSpeed, GetScroll(time)).c_str());
 		ImGui::Spacing();
+		ImGui::Text(Util::StringFormat("Score:%d", score).c_str());
 		ImGui::Text(Util::StringFormat("Perfect:%d", countJudgePerfect).c_str());
 		ImGui::Text(Util::StringFormat("Hit:%d", countJudgeHit).c_str());
 		ImGui::Text(Util::StringFormat("Hoge:%d", countJudgeMiss).c_str());
 		ImGui::Text(Util::StringFormat("(RemainNotes:%d)", remainNotes.size()).c_str());
+		ImGui::Text(Util::StringFormat("(NotesCount:%d)", chart.noteCount).c_str());
 
 		ImGui::Separator();
 
@@ -375,6 +377,7 @@ void RhythmGameController::Update()
 						ParticleExplode::Spawn({ posX, 0, 0 }, 0xffe32e, (360.0f / 12) + (360.0f / 12 * i), 10, 15, 0.5f);
 					}
 					countJudgePerfect++;
+					combo++;
 					removeNotes.push_back(note);
 					continue;
 				}
@@ -415,6 +418,7 @@ void RhythmGameController::Update()
 										}
 									}
 									countJudgeHit++;
+									combo++;
 									removeNotes.push_back(note);
 									continue;
 								}
@@ -422,6 +426,7 @@ void RhythmGameController::Update()
 									RAudio::Play("JudgeMiss");
 									ParticleSprite::Spawn({ posX, 0, 0 }, "judgeText", RRect(10, 128, 128, 176), { 0.5f, 0.5f }, { 1, 1, 1, 1 }, 90, 50, 0, 0.5f, 0.5f, 0.2f);
 									countJudgeMiss++;
+									combo = 0;
 									removeNotes.push_back(note);
 									continue;
 								}
@@ -433,6 +438,7 @@ void RhythmGameController::Update()
 						RAudio::Play("JudgeMiss");
 						ParticleSprite::Spawn({ posX, 0, 0 }, "judgeText", RRect(10, 128, 128, 176), { 0.5f, 0.5f }, { 1, 1, 1, 1 }, 90, 50, 0, 0.5f, 0.5f, 0.2f);
 						countJudgeMiss++;
+						combo = 0;
 						removeNotes.push_back(note);
 						continue;
 					}
@@ -499,6 +505,7 @@ void RhythmGameController::Update()
 						if (diff >= 0) {
 							if (note.judgeFlag) {
 								countJudgePerfect++;
+								combo++;
 								note.judgeTime = arcPoint;
 								ParticleSprite::Spawn(GetNowArcPos(note), "judgeText", RRect(9, 250, 10, 55), { 0.5f, 0.5f }, { 1, 1, 1, 1 }, 90, 30, 0, 0.5f, 0.5f, 0.2f);
 								for (int32_t i = 0; i < 12; i++) {
@@ -507,6 +514,7 @@ void RhythmGameController::Update()
 							}
 							else {
 								countJudgeMiss++;
+								combo = 0;
 								note.judgeTime = arcPoint;
 								ParticleSprite::Spawn(GetNowArcPos(note), "judgeText", RRect(10, 128, 128, 176), { 0.5f, 0.5f }, { 1, 1, 1, 1 }, 90, 30, 0, 0.5f, 0.5f, 0.2f);
 								for (int32_t i = 0; i < 12; i++) {
@@ -696,10 +704,29 @@ void RhythmGameController::Update()
 
 	DrawMeasureLine();
 
-	SimpleDrawer::DrawString(60, 100, 0, Util::StringFormat("BPM:%.2f", music.GetBPM(beat)), {1, 1, 1, 1}, "", 80);
-	SimpleDrawer::DrawString(60, 180, 0, Util::StringFormat("Perfect:%d", countJudgePerfect));
-	SimpleDrawer::DrawString(60, 200, 0, Util::StringFormat("Hit:%d", countJudgeHit));
-	SimpleDrawer::DrawString(60, 220, 0, Util::StringFormat("Hoge:%d", countJudgeMiss));
+	//スコア計算
+	if (countJudgePerfect == chart.noteCount) {
+		score = 10000000;
+	}
+	else {
+		int32_t monoScore = 10000000 / chart.noteCount;
+		score = monoScore * countJudgePerfect + (monoScore / 2) * countJudgeHit;
+	}
+
+	maxCombo = max(combo, maxCombo);
+
+	SimpleDrawer::DrawString(1280, 0, 0, "Score", { 1, 1, 1, 1 }, "", 25, { 1, 0 });
+	SimpleDrawer::DrawString(1024, 20, 0, Util::StringFormat("%08d", score), { 1, 1, 1, 1 }, "", 60);
+	SimpleDrawer::DrawString(20, 20, 0, Util::StringFormat("BPM:%.2f", music.GetBPM(beat)), {1, 1, 1, 1}, "", 60);
+	SimpleDrawer::DrawString(20, 80, 0, Util::StringFormat("Perfect:%d", countJudgePerfect), {1, 1, 1, 1}, "", 25);
+	SimpleDrawer::DrawString(20, 100, 0, Util::StringFormat("Hit:%d", countJudgeHit), { 1, 1, 1, 1 }, "", 25);
+	SimpleDrawer::DrawString(20, 120, 0, Util::StringFormat("Hoge:%d", countJudgeMiss), { 1, 1, 1, 1 }, "", 25);
+
+	if (combo != 0) {
+		SimpleDrawer::DrawString(1070, 240, 0, "Combo", {1, 0.3f, 0, 1}, "", 25);
+		SimpleDrawer::DrawString(1070, 260, 0, Util::StringFormat("%d", combo), { 1, 0.3f, 0, 1 }, "", 80);
+	}
+	SimpleDrawer::DrawString(1260, 80, 0, Util::StringFormat("MaxCombo:%d", maxCombo), { 1, 1, 1, 1 }, "", 25, {1, 0});
 }
 
 void RhythmGameController::Load()
@@ -806,6 +833,7 @@ void RhythmGameController::JudgeRightAngleArc(Note& note)
 				if (CheckArcInput(arcStartBeat, arcEndBeat, arcStartPos, arcEndPos)
 					|| (note.judgeFlagB && note.judgeDiff <= judgeHit)) {
 					countJudgePerfect++;
+					combo++;
 					note.judgeFlagB = false;
 					note.judgeTimeB = arcStartTime;
 					ParticleSprite::Spawn({ (arcStartPos.x + arcEndPos.x) / 2.0f, (arcStartPos.y + arcEndPos.y) / 2.0f, 0 }, "judgeText", RRect(9, 250, 10, 55), { 0.5f, 0.5f }, { 1, 1, 1, 1 }, 90, 20, 0, 0.5f, 0.5f, 0.2f); RAudio::Play("JudgePerfect");
@@ -824,6 +852,7 @@ void RhythmGameController::JudgeRightAngleArc(Note& note)
 				}
 				else if (diffB > judgeHit) {
 					countJudgeMiss++;
+					combo = 0;
 					note.judgeFlagB = false;
 					note.judgeTimeB = arcStartTime;
 					ParticleSprite::Spawn({ (arcStartPos.x + arcEndPos.x) / 2.0f, (arcStartPos.y + arcEndPos.y) / 2.0f, 0 }, "judgeText", RRect(10, 128, 128, 176), { 0.5f, 0.5f }, { 1, 1, 1, 1 }, 90, 20, 0, 0.5f, 0.5f, 0.2f);

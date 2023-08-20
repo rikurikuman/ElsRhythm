@@ -348,6 +348,12 @@
     <ClCompile Include="Application\ParticleSprite.cpp">
       <Filter>ソース ファイル\Application</Filter>
     </ClCompile>
+    <ClCompile Include="Application\BackGround.cpp">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ParticleSprite3D.cpp">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\TestVS.hlsl">
@@ -731,6 +737,12 @@
       <Filter>ヘッダー ファイル\Application</Filter>
     </ClInclude>
     <ClInclude Include="Application\ParticleSprite.h">
+      <Filter>ヘッダー ファイル\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\BackGround.h">
+      <Filter>ヘッダー ファイル\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ParticleSprite3D.h">
       <Filter>ヘッダー ファイル\Application</Filter>
     </ClInclude>
   </ItemGroup>

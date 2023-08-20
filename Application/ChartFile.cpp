@@ -82,6 +82,57 @@ bool ChartFile::Load()
 			return false;
 		}
 
+		noteCount = 0;
+		for (Note& note : notes) {
+			switch (note.type) {
+			case Note::Types::Tap:
+				noteCount++;
+				break;
+			case Note::Types::Arc:
+				Beat arcStartBeat, arcEndBeat;
+				Vector3 arcStartPos, arcEndPos;
+				float arcStartTime = 0;
+				arcStartBeat = note.mainBeat;
+				arcStartPos = note.mainPos;
+				arcStartTime = music.ConvertBeatToMiliSeconds(arcStartBeat);
+
+				auto itr = note.controlPoints.begin();
+				while (true) {
+					if (itr != note.controlPoints.end()) {
+						arcEndBeat = itr->beat;
+						arcEndPos = itr->pos;
+					}
+					else {
+						arcEndBeat = note.subBeat;
+						arcEndPos = note.subPos;
+					}
+
+					Vector3 diffPos = arcEndPos - arcStartPos;
+					if (arcStartBeat == arcEndBeat) {
+						noteCount++;
+					}
+
+					arcStartBeat = arcEndBeat;
+					arcStartPos = arcEndPos;
+					arcStartTime = music.ConvertBeatToMiliSeconds(arcStartBeat);
+					if (itr != note.controlPoints.end()) {
+						itr++;
+						continue;
+					}
+					else {
+						break;
+					}
+				}
+
+				float arcPoint = music.ConvertBeatToMiliSeconds(note.mainBeat);
+				while (arcPoint <= music.ConvertBeatToMiliSeconds(note.subBeat)) {
+					noteCount++;
+					arcPoint += music.ConvertBeatToMiliSeconds({ 0, 1, 8 });
+				}
+				break;
+			}
+		}
+
 		return true;
 	}
 	else {
