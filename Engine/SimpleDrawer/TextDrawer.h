@@ -21,6 +21,7 @@ public:
 	static FontTexture GetFontTexture(std::wstring glyph, std::wstring fontTypeFace, uint32_t fontSize, bool useAlign = false);
 
 	static TextureHandle CreateStringTexture(std::string text, std::string fontTypeFace, uint32_t fontSize, std::string handle = "");
+	static TextureHandle CreateStringTexture(std::wstring text, std::string fontTypeFace, uint32_t fontSize, std::string handle = "");
 
 	static bool LoadFontFromFile(std::string path);
 

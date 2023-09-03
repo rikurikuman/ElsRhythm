@@ -114,7 +114,10 @@ namespace Util {
     }
 
     //stringをwstringに変換する（MultiByteToWideChar)
-    std::wstring ConvertStringToWString(std::string str);
+    std::wstring ConvertStringToWString(std::string str, uint32_t codePage = 0);
+
+    //wstringをstringに変換する（WideCharToMultiByte)
+    std::string ConvertWStringToString(std::wstring wstr);
 
     //乱数生成(一様分布)
     int32_t GetRand(int32_t min, int32_t max);

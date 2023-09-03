@@ -143,37 +143,12 @@ void SRBufferAllocator::_Free(SRBufferPtr& ptr)
 	std::lock_guard<std::recursive_mutex> lock(instance->sMutex);
 
 	//使用中領域から指定アドレスを先頭とする領域を探す
-	//bool regionFound = false;
-	MemoryRegion usingRegion;
-	//for (auto itr = instance->usingRegions.begin(); itr != instance->usingRegions.end(); itr++) {
-	//	if (itr->pBegin == ptr) {
-	//		//見つけたら覚えて、消す
-	//		regionFound = true;
-	//		usingRegion = *itr;
-	//		instance->usingRegions.erase(itr);
-
-	//		//消す時に分かりやすく0xddにする
-	//		for (byte* ptr = usingRegion.pBegin; ptr <= usingRegion.pEnd; ptr++) {
-	//			*ptr = 0xdd;
-	//		}
-	//		break;
-	//	}
-	//}
-	usingRegion = *ptr.mPtr->region->memItr;
+	MemoryRegion usingRegion = *ptr.mPtr->region->memItr;
 	instance->mUsingRegions.erase(ptr.mPtr->region->memItr);
 	//消す時に分かりやすく0xddにする
 	for (byte* p = usingRegion.pBegin; p <= usingRegion.pEnd; p++) {
 		*p = 0xdd;
 	}
-
-	//見つからなかったら不正なポインタを解放しようとしてるので怒る
-//	if (!regionFound) {
-//		//けど今は警告出力してreturnでいいや
-//#ifdef _DEBUG
-//		OutputDebugStringA(Util::StringFormat("RKEngine WARNING: SRBufferAllocator::Free() : Attempted to free an invalid pointer(%p).\n", ptr).c_str());
-//#endif
-//		return;
-//	}
 
 	//解放する領域を空き領域に追加する
 	auto prev = instance->mFreeRegions.end();

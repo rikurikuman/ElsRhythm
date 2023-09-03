@@ -34,6 +34,16 @@ SceneManager::SceneManager() {
 	mLoadingMark = Sprite(TextureManager::Load("Resources/loadingMark.png", "LoadingMark"));
 }
 
+SceneManager::~SceneManager()
+{
+	mChangeScene = nullptr;
+
+	if (mNowScene != nullptr) {
+		mNowScene->Finalize();
+		mNowScene = nullptr;
+	}
+}
+
 void SceneManager::Update() {
 	SceneManager* instance = GetInstance();
 

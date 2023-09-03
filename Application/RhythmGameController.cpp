@@ -174,6 +174,11 @@ void RhythmGameController::Init()
 	}
 
 	remainNotes.sort();
+
+	remainEvents.clear();
+	for (auto& e : events) {
+		remainEvents[e.first] = e.second;
+	}
 }
 
 void RhythmGameController::Update()
@@ -281,7 +286,26 @@ void RhythmGameController::Update()
 		ImGui::Separator();
 
 		ImGui::Checkbox("AutoPlay", &autoplay);
-		if (ImGui::Button("Play")) playing = true;
+		if (ImGui::Button("Play")) {
+			for (auto itr = remainNotes.begin(); itr != remainNotes.end();) {
+				Note& note = *itr;
+				if (music.ConvertBeatToMiliSeconds(note.mainBeat) < time) {
+					itr = remainNotes.erase(itr);
+					continue;
+				}
+				itr++;
+			}
+
+			for (auto itr = remainEvents.begin(); itr != remainEvents.end();) {
+				auto& e = *itr;
+				if (music.ConvertBeatToMiliSeconds(e.first) < time) {
+					itr = remainEvents.erase(itr);
+					continue;
+				}
+				itr++;
+			}
+			playing = true;
+		}
 		ImGui::SameLine();
 		if (ImGui::Button("Stop")) playing = false;
 
@@ -299,6 +323,23 @@ void RhythmGameController::Update()
 				RAudio::SetPlayRange(audioHandle, (time - offsetStream) / 1000.0f, 0);
 				RAudio::Play(audioHandle, 0.5f);
 			}
+		}
+
+		for (auto itr = remainEvents.begin(); itr != remainEvents.end();) {
+			if (music.ConvertBeatToMiliSeconds(itr->first) < time) {
+				for (Event& e : itr->second) {
+					EventSystem::TriggerEvent(e);
+				}
+				itr = remainEvents.erase(itr);
+				continue;
+			}
+			itr++;
+		}
+
+		if ((remainNotes.empty() && !RAudio::IsPlaying(audioHandle))
+			|| EventSystem::HasTriggeredEvent("finish")) {
+			RAudio::Stop(audioHandle);
+			finished = true;
 		}
 	}
 	else {
@@ -372,7 +413,6 @@ void RhythmGameController::Update()
 				if (note.judgeFlag && note.judgeDiff <= judgePerfect && (music.ConvertBeatToMiliSeconds(note.mainBeat) - time) <= 0) {
 					RAudio::Play("JudgePerfect");
 					ParticleSprite::Spawn({posX, 0, 0}, "judgeText", RRect(9, 250, 10, 55), {0.5f, 0.5f}, {1, 1, 1, 1}, 90, 50, 0, 0.5f, 0.5f, 0.2f);
-					//TODO:ShowJudgeText(posX + laneWidth / 2, posJudgeLine, "Perfect!", 0xffff00);
 					for (int32_t i = 0; i < 12; i++) {
 						ParticleExplode::Spawn({ posX, 0, 0 }, 0xffe32e, (360.0f / 12) + (360.0f / 12 * i), 10, 15, 0.5f);
 					}
@@ -395,10 +435,7 @@ void RhythmGameController::Update()
 								note.judgeDiff = diffB;
 
 								if (diffB <= judgePerfect) {
-									//何もしない
-									if (Util::debugBool) {
-										//TODO:ShowJudgeText(posX + laneWidth / 2, posJudgeLine + 20, StringFormat("%+.1f", diffA) + "ms", diffA > 0 ? 0xff0000 : 0x00ffff);
-									}
+									//何もしない...んだけどこの書き方あほすぎんか
 								}
 								else if (diffB <= judgeHit) {
 									RAudio::Play("JudgeHit");
@@ -537,47 +574,8 @@ void RhythmGameController::Update()
 				//直角の処理
 				JudgeRightAngleArc(note);
 
-				//続けて制御点毎の処理
-				if (false) {
-
-				}
-				else {
-					/*float diffA = time - music.ConvertBeatToMiliSeconds(note.mainBeat);
-					float diffB = abs(diffA);
-
-					if (music.ConvertBeatToMiliSeconds(note.subBeat) < time) {
-						removeNotes.push_back(note);
-					}
-
-					if (diffA > 0) {
-						Vector3 diffArcDir = (arcEndPos - arcStartPos);
-						bool checkMouseDir = (diffArcDir.x == 0
-							|| (RInput::GetMouseMove().x != 0 && RInput::GetMouseMove().x * diffArcDir.x >= 0))
-							&& (diffArcDir.y == 0
-								|| (RInput::GetMouseMove().y != 0 && RInput::GetMouseMove().y * diffArcDir.y < 0));
-
-						if (checkMouseDir
-							|| (autoplay && diffA >= -judgeUltimatePerfect)) {
-							note.judgeFlag = true;
-							note.judgeDiff = diffB;
-							note.judgeBeat = arcStartBeat;
-
-							float timeA = music.ConvertBeatToMiliSeconds(arcStartBeat);
-							float timeB = music.ConvertBeatToMiliSeconds(arcEndBeat);
-							float ratio = Util::GetRatio(timeA, timeB, time);
-
-							Vector3 nowArcPos = arcStartPos + (arcEndPos - arcStartPos) * ratio;
-
-							for (int32_t i = 0; i < 12; i++) {
-								ParticleExplode::Spawn({nowArcPos.x, nowArcPos.y, 0}, 0xffe32e, (360.0f / 12) + (360.0f / 12 * i), 10, 15, 0.5f);
-							}
-						}
-						else {
-							note.judgeFlag = false;
-						}
-					}*/
-				}
-
+				//TODO:続けて制御点毎の処理
+				
 				//終わってたら終わり
 				if (music.ConvertBeatToMiliSeconds(note.subBeat) < time) {
 					removeNotes.push_back(note);
@@ -742,6 +740,7 @@ void RhythmGameController::Load()
 	cacheScrollPos.clear();
 
 	notes = chart.notes;
+	events = chart.events;
 }
 
 void RhythmGameController::Save()

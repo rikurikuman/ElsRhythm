@@ -101,8 +101,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application\ArcNoteObj.cpp" />
-    <ClCompile Include="Application\BackGround.cpp" />
+    <ClCompile Include="Application\BackGroundSelector.cpp" />
     <ClCompile Include="Application\BeatUtil.cpp" />
+    <ClCompile Include="Application\BGSimple.cpp" />
     <ClCompile Include="Application\ChartFile.cpp" />
     <ClCompile Include="Application\CollidersScene.cpp" />
     <ClCompile Include="Application\ControllerScene.cpp" />
@@ -111,6 +112,7 @@
     <ClCompile Include="Application\ParticleObject.cpp" />
     <ClCompile Include="Application\ParticleSprite.cpp" />
     <ClCompile Include="Application\ParticleSprite3D.cpp" />
+    <ClCompile Include="Application\ResultScene.cpp" />
     <ClCompile Include="Application\RhythmGameController.cpp" />
     <ClCompile Include="Application\Note.cpp" />
     <ClCompile Include="Application\SimpleSceneTransition.cpp" />
@@ -148,6 +150,7 @@
     <ClCompile Include="Engine\Renderer\TransparentRenderStage.cpp" />
     <ClCompile Include="Engine\Scene\ISceneFactory.cpp" />
     <ClCompile Include="Engine\Light\LightGroup.cpp" />
+    <ClCompile Include="Application\EventSystem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Application\GameScene.cpp" />
     <ClCompile Include="Engine\Base\Material.cpp" />
@@ -411,7 +414,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\ArcNoteObj.h" />
-    <ClInclude Include="Application\BackGround.h" />
+    <ClInclude Include="Application\BackGroundSelector.h" />
+    <ClInclude Include="Application\BGSimple.h" />
+    <ClInclude Include="Application\IBackGround.h" />
     <ClInclude Include="Application\BeatUtil.h" />
     <ClInclude Include="Application\ChartFile.h" />
     <ClInclude Include="Application\CollidersScene.h" />
@@ -421,6 +426,7 @@
     <ClInclude Include="Application\ParticleObject.h" />
     <ClInclude Include="Application\ParticleSprite.h" />
     <ClInclude Include="Application\ParticleSprite3D.h" />
+    <ClInclude Include="Application\ResultScene.h" />
     <ClInclude Include="Application\RhythmGameController.h" />
     <ClInclude Include="Application\Note.h" />
     <ClInclude Include="Application\SimpleSceneTransition.h" />
@@ -501,6 +507,7 @@
     <ClInclude Include="Engine\Collision\RayCollider.h" />
     <ClInclude Include="Engine\Collision\SphereCollider.h" />
     <ClInclude Include="Engine\Base\SRVertexBuffer.h" />
+    <ClInclude Include="Application\EventSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\Basic.hlsli">

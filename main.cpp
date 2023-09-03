@@ -22,6 +22,7 @@
 #include "MainTestScene.h"
 #include "TitleScene.h"
 #include "GameScene.h"
+#include "ResultScene.h"
 
 #define _CRTDBG_MAP_ALLOC
 #include <cstdlib>
@@ -36,6 +37,7 @@
 #include <ControllerScene.h>
 #include <SoundScene.h>
 #include <ParticleObject.h>
+#include "EventSystem.h"
 
 using namespace std;
 using namespace DirectX;
@@ -111,7 +113,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	DebugCamera camera({ 0, 0, -10 });
 
-	TimeManager::targetFPS = 120;
+	TimeManager::targetFPS = 60;
 
 	//////////////////////////////////////
 
@@ -191,7 +193,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 			ImGui::NewLine();
 			ImGui::Text("SceneManager");
 			static int32_t sceneNum = 0;
-			const char* scenes[] = { "Title", "RhythmGameTest", "MainTest", "ControllerTest", "CollidersTest", "SoundTest" };
+			const char* scenes[] = { "Title", "RhythmGameTest", "ResultTest", "MainTest", "ControllerTest", "CollidersTest", "SoundTest" };
 			ImGui::Combo("##SceneNumCombo", &sceneNum, scenes, IM_ARRAYSIZE(scenes));
 			ImGui::SameLine();
 			if (ImGui::Button("Go!!!")) {
@@ -205,15 +207,18 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 						SceneManager::Change<GameScene, SimpleSceneTransition>();
 						break;
 					case 2:
-						SceneManager::Change<MainTestScene, SimpleSceneTransition>();
+						SceneManager::Change<ResultScene, SimpleSceneTransition>();
 						break;
 					case 3:
-						SceneManager::Change<ControllerScene, SimpleSceneTransition>();
+						SceneManager::Change<MainTestScene, SimpleSceneTransition>();
 						break;
 					case 4:
-						SceneManager::Change<CollidersScene, SimpleSceneTransition>();
+						SceneManager::Change<ControllerScene, SimpleSceneTransition>();
 						break;
 					case 5:
+						SceneManager::Change<CollidersScene, SimpleSceneTransition>();
+						break;
+					case 6:
 						SceneManager::Change<SoundScene, SimpleSceneTransition>();
 						break;
 					}
@@ -237,6 +242,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		RDirectX::PostDraw();
 		bufferLockInDrawing.unlock();
 
+		EventSystem::Clear();
 		TimeManager::Update();
 	}
 

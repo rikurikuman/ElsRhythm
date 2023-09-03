@@ -76,6 +76,31 @@ bool ChartFile::Load()
 					notes.push_back(obj.get<Note>());
 				}
 			}
+
+			json _bgName = j["bg"];
+			if (!_bgName.is_null()) {
+				bgName = _bgName.get<std::string>();
+			}
+
+			events.clear();
+			json _events = j["event"];
+			if (!_events.is_null()) {
+				for (json::iterator itr = _events.begin(); itr != _events.end(); itr++) {
+					json obj = *itr;
+
+					if (!obj["beat"].is_null() && !obj["name"].is_null()) {
+						Event event;
+
+						event.name = obj["name"].get<std::string>();
+						if (obj["paramInt"].is_number_integer()) event.paramInt = obj["paramInt"].get<int>();
+						if (obj["paramFloat"].is_number_float()) event.paramFloat = obj["paramFloat"].get<float>();
+						if (obj["paramBool"].is_boolean()) event.paramBool = obj["paramBool"].get<bool>();
+						if (obj["paramString"].is_string()) event.paramString = obj["paramString"].get<std::string>();
+
+						events[obj["beat"].get<Beat>()].push_back(event);
+					}
+				}
+			}
 		}
 		catch (json::exception e) {
 			Util::DebugLog(e.what());

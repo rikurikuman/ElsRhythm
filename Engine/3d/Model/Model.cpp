@@ -38,45 +38,6 @@ void ModelMesh::CalcSmoothedNormals()
 
         v.normal = result;
     }
-
-    /*assert(indices.size() % 3 == 0);
-    for (uint32_t i = 0; i < indices.size() / 3; i++) {
-        uint32_t index0 = indices[i * 3 + 0];
-        uint32_t index1 = indices[i * 3 + 1];
-        uint32_t index2 = indices[i * 3 + 2];
-
-        Vector3 p0 = vertexs[index0].pos;
-        Vector3 p1 = vertexs[index1].pos;
-        Vector3 p2 = vertexs[index2].pos;
-
-        Vector3 v1 = p1 - p0;
-        Vector3 v2 = p2 - p0;
-
-        Vector3 normal = v1.Cross(v2);
-        normal.Normalize();
-
-        smoothData[p0].push_back(normal);
-        smoothData[p1].push_back(normal);
-        smoothData[p2].push_back(normal);
-    }
-
-    for (auto itr = smoothData.begin(); itr != smoothData.end(); itr++) {
-        Vector3 target = itr->first;
-        vector<Vector3> normals = itr->second;
-
-        Vector3 result = { 0, 0, 0 };
-        for (Vector3 n : normals) {
-            result += n;
-        }
-        result /= static_cast<float>(normals.size());
-        result.Normalize();
-
-        for (VertexPNU& v : vertexs) {
-            if (v.pos == target) {
-                v.normal = result;
-            }
-        }
-    }*/
 }
 
 ModelHandle Model::Load(string filepath, string filename, ModelHandle handle, bool smooth)

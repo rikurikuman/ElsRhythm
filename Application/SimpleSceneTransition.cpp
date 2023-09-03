@@ -52,7 +52,6 @@ void SimpleSceneTransition::Draw()
 {
 	if (shutterScale != 0) {
 		shutter.Draw();
-		//SimpleDrawer::DrawBox(0, 0, (float)RWindow::GetWidth(), (float)RWindow::GetHeight() * shutterPos, Color(0, 0.5f, 0.5f, 1), true);
 	}
 }
 

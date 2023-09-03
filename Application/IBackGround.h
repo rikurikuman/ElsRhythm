@@ -1,8 +1,8 @@
 #pragma once
-class BackGround
+class IBackGround
 {
 public:
-	virtual ~BackGround() {}
+	virtual ~IBackGround() {}
 
 	virtual void Update() {}
 	virtual void Draw() {}

@@ -11,6 +11,9 @@
 #include <TitleScene.h>
 #include <SimpleSceneTransition.h>
 #include <ParticleSprite3D.h>
+#include <ResultScene.h>
+#include <BackGroundSelector.h>
+#include <codecvt>
 
 std::string GameScene::sChartName;
 
@@ -44,15 +47,20 @@ GameScene::GameScene()
 		inputlines[i].mTuneMaterial.mColor = { 0.4f, 0.4f, 0.4f, 0.2f };
 	}
 
-	backGround = Sprite(TextureManager::Load("./Resources/bg.png"), {0.0f, 0.0f});
-	backGround.mTransform.position = { 0, 0, -100 };
-	backGround.mTransform.UpdateMatrix();
-
 	tempoVeil = Sprite(TextureManager::Load("./Resources/veil.png", "tempoVeil"), {0.0f, 0.0f});
 	tempoVeil.mMaterial.mColor = { 0.05f, 0.4f, 1.0f, 0.5f };
 	tempoVeil.mTransform.position = { 0, RWindow::GetHeight() / 1.0f, 0};
 	tempoVeil.mTransform.scale = { RWindow::GetWidth() / 300.0f, -1.0f, 1.0f };
 	tempoVeil.mTransform.UpdateMatrix();
+
+	tutorialText.mTransform.position = { RWindow::GetWidth() / 2.0f, 80, 5 };
+	tutorialText.mTransform.UpdateMatrix();
+
+	tutorialBack = Sprite(TextureManager::Load("./Resources/veil.png", "tempoVeil"), { 0.0f, 0.0f });
+	tutorialBack.mMaterial.mColor = { 0.0f, 0.0f, 0.0f, 0.5f };
+	tutorialBack.mTransform.position = { 0, 0, 0 };
+	tutorialBack.mTransform.scale = { RWindow::GetWidth() / 300.0f, 1.0f, 1.0f };
+	tutorialBack.mTransform.UpdateMatrix();
 
 	camera.mViewProjection.mEye = { 0, 11.0f, -12.0f };
 	camera.mAngle = { 90, -25 };
@@ -72,6 +80,7 @@ GameScene::GameScene()
 	gameController.chart = chartFile;
 	gameController.Load();
 	gameController.Init();
+	BackGroundSelector::Select(chartFile.bgName);
 }
 
 void GameScene::Init()
@@ -82,6 +91,11 @@ void GameScene::Init()
 	ParticleObject::Clear();
 	gameController.time = -6000;
 	gameController.playing = true;
+}
+
+void GameScene::Finalize()
+{
+	ParticleObject::Clear();
 }
 
 void GameScene::Update()
@@ -104,23 +118,49 @@ void GameScene::Update()
 		veilTimer -= whole / 2;
 	}
 
-	shotTimer += TimeManager::deltaTime;
+	if(gameController.finished) finishTimer += TimeManager::deltaTime;
+	if (finishTimer >= 2.0f) {
+		ResultScene::sScore = gameController.score;
+		ResultScene::sCountPerfect = gameController.countJudgePerfect;
+		ResultScene::sCountHit = gameController.countJudgeHit;
+		ResultScene::sCountMiss = gameController.countJudgeMiss;
+		if (!SceneManager::IsSceneChanging()) SceneManager::Change<ResultScene, SimpleSceneTransition>();
+	}
 
-	if (shotTimer >= 0.15f) {
-		if (shotCount % 2 == 0) {
-			ParticleSprite3D::Spawn({ -20, 0, 80 }, "ParticleCircle", RRect(0, 64, 0, 64), { 0.5f, 0.5f }, { 1, 0, 1, 1 }, { 0, 0, -1 }, 150, 150, 0.5f, 0.5f, 5.0f);
-			ParticleSprite3D::Spawn({ 20, 0, 80 }, "ParticleCircle", RRect(0, 64, 0, 64), { 0.5f, 0.5f }, { 1, 0, 1, 1 }, { 0, 0, -1 }, 150, 150, 0.5f, 0.5f, 5.0f);
-			}
+	BackGroundSelector::Update();
+
+	for (Event& e : EventSystem::GetTriggeredEvents("tutorial")) {
+		std::wstring wStr = Util::ConvertStringToWString(e.paramString, CP_UTF8);
+
+		tutorialText.SetTexture(TextDrawer::CreateStringTexture(wStr, "", 32, "tutorialtext"));
+		tutorialText.SetAnchor({ 0.5f, 0.5f });
+		tutorialAliveTime = e.paramFloat;
+	}
+
+	if (tutorialAliveTime != 0) {
+		tutorialTimer += TimeManager::deltaTime;
+
+		if ((tutorialAliveTime - tutorialTimer) < 1.0f) {
+			float t = max(0.0f, min(1.0f, (tutorialAliveTime - tutorialTimer) / 1.0f));
+
+			float fx = 1 - powf(1 - t, 4);
+
+			tutorialText.mMaterial.mColor = { 1, 1, 1, 1.0f * fx };
+			tutorialBack.mMaterial.mColor = { 0, 0, 0, 2.0f * fx };
+		}
 		else {
-			ParticleSprite3D::Spawn({ -12, 6, 80 }, "ParticleCircle", RRect(0, 64, 0, 64), { 0.5f, 0.5f }, { 0, 1, 0, 1 }, { 0, 0, -1 }, 150, 150, 0.5f, 0.5f, 5.0f);
-			ParticleSprite3D::Spawn({ 12, 6, 80 }, "ParticleCircle", RRect(0, 64, 0, 64), { 0.5f, 0.5f }, { 0, 1, 0, 1 }, { 0, 0, -1 }, 150, 150, 0.5f, 0.5f, 5.0f);
+			float t = min(1.0f,  tutorialTimer / 1.0f);
+
+			float fx = 1 - powf(1 - t, 4);
+
+			tutorialText.mMaterial.mColor = { 1, 1, 1, 1.0f * fx };
+			tutorialBack.mMaterial.mColor = { 0, 0, 0, 2.0f * fx };
 		}
 
-		ParticleSprite3D::Spawn({ 25, 3, 80 }, "ParticleCircle", RRect(0, 64, 0, 64), { 0.5f, 0.5f }, { 0, 1, 1, 1 }, { 0, 0, -1 }, 150, 150, 0.5f, 0.5f, 5.0f);
-		ParticleSprite3D::Spawn({ -25, 3, 80 }, "ParticleCircle", RRect(0, 64, 0, 64), { 0.5f, 0.5f }, { 0, 1, 1, 1 }, { 0, 0, -1 }, 150, 150, 0.5f, 0.5f, 5.0f);
-
-		shotTimer = 0;
-		shotCount++;
+		if (tutorialTimer >= tutorialAliveTime) {
+			tutorialTimer = 0;
+			tutorialAliveTime = 0;
+		}
 	}
 }
 
@@ -145,8 +185,15 @@ void GameScene::Draw()
 		}
 	}
 
-	backGround.TransferBuffer();
-	backGround.Draw();
 	tempoVeil.TransferBuffer();
 	tempoVeil.Draw();
+
+	BackGroundSelector::Draw();
+
+	if (tutorialAliveTime != 0) {
+		tutorialText.TransferBuffer();
+		tutorialBack.TransferBuffer();
+		tutorialText.Draw();
+		tutorialBack.Draw();
+	}
 }

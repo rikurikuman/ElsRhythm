@@ -69,23 +69,43 @@ double Util::Clamp(double d, double min, double max) {
 	return d;
 }
 
-wstring Util::ConvertStringToWString(string str) {
+wstring Util::ConvertStringToWString(string str, uint32_t codePage) {
 	//必要なwchar_t配列長を得る
-	int32_t _arraySize = MultiByteToWideChar(CP_ACP, 0, str.c_str()
+	int32_t _arraySize = MultiByteToWideChar(codePage, 0, str.c_str()
 		, -1, (wchar_t*)NULL, 0);
 
 	//配列を用意する
 	std::vector<wchar_t> wArray;
-	wArray.resize(_arraySize);
+	wArray.resize(max(1, _arraySize));
 
 	//変換してwchar_tの配列にぶち込む
-	MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, &wArray[0], _arraySize);
+	MultiByteToWideChar(codePage, 0, str.c_str(), -1, &wArray[0], _arraySize);
 
 	//wstringにする
 	std::wstring wStr(&wArray[0], &wArray.back());
 
 	//おしまい
 	return wStr;
+}
+
+std::string Util::ConvertWStringToString(std::wstring wstr)
+{
+	//必要なchar配列長を得る
+	int32_t _arraySize = WideCharToMultiByte(CP_OEMCP, 0, wstr.c_str()
+		, -1, (char*)NULL, 0, NULL, NULL);
+
+	//配列を用意する
+	std::vector<char> sArray;
+	sArray.resize(max(1, _arraySize));
+
+	//変換してchar_tの配列にぶち込む
+	WideCharToMultiByte(CP_OEMCP, 0, wstr.c_str(), -1, &sArray[0], _arraySize, NULL, NULL);
+
+	//stringにする
+	std::string str(&sArray[0], &sArray.back());
+
+	//おしまい
+	return str;
 }
 
 int32_t Util::GetRand(int32_t min, int32_t max)

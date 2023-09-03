@@ -6,18 +6,34 @@
 #include "Sprite.h"
 #include "SRConstBuffer.h"
 
-class TitleScene : public IScene
+class ResultScene : public IScene
 {
 public:
-	TitleScene();
+	ResultScene();
 
 	void Init() override;
 	void Update() override;
 	void Draw() override;
 
+	static int32_t sScore;
+	static int32_t sCountPerfect;
+	static int32_t sCountHit;
+	static int32_t sCountMiss;
+
 private:
 	Camera camera = Camera();
 	LightGroup light;
+
+	int32_t step = 0;
+	float timer = 0;
+
+	Sprite rankTextA;
+	Sprite rankTextB;
+	Sprite scoreTextA;
+	Sprite scoreTextB;
+	Sprite countPerfectText;
+	Sprite countHitText;
+	Sprite countMissText;
 
 	struct Button {
 		Vector2 pos;
@@ -31,7 +47,6 @@ private:
 		void Draw();
 	};
 
-	Button goEasyButton{};
-	Button goHardButton{};
-	Button goTutorialButton{};
+	Button goRetryButton{};
+	Button goTitleButton{};
 };

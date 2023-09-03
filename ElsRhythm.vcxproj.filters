@@ -100,6 +100,12 @@
     <Filter Include="ソース ファイル\Engine\PostEffect">
       <UniqueIdentifier>{2145520c-0241-4a75-9291-09a5f691f3d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Application\BackGround">
+      <UniqueIdentifier>{6d682983-3243-4315-bfd9-444a6a618ab4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Application\BackGround">
+      <UniqueIdentifier>{bb89f56d-4bb0-4e9c-b8db-cebcd924837a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\2d\Sprite.cpp">
@@ -348,11 +354,20 @@
     <ClCompile Include="Application\ParticleSprite.cpp">
       <Filter>ソース ファイル\Application</Filter>
     </ClCompile>
-    <ClCompile Include="Application\BackGround.cpp">
-      <Filter>ソース ファイル\Application</Filter>
-    </ClCompile>
     <ClCompile Include="Application\ParticleSprite3D.cpp">
       <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ResultScene.cpp">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\BGSimple.cpp">
+      <Filter>ソース ファイル\Application\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\EventSystem.cpp">
+      <Filter>ソース ファイル\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\BackGroundSelector.cpp">
+      <Filter>ソース ファイル\Application\BackGround</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -739,10 +754,22 @@
     <ClInclude Include="Application\ParticleSprite.h">
       <Filter>ヘッダー ファイル\Application</Filter>
     </ClInclude>
-    <ClInclude Include="Application\BackGround.h">
+    <ClInclude Include="Application\ParticleSprite3D.h">
       <Filter>ヘッダー ファイル\Application</Filter>
     </ClInclude>
-    <ClInclude Include="Application\ParticleSprite3D.h">
+    <ClInclude Include="Application\ResultScene.h">
+      <Filter>ヘッダー ファイル\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\IBackGround.h">
+      <Filter>ヘッダー ファイル\Application\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\BackGroundSelector.h">
+      <Filter>ヘッダー ファイル\Application\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\BGSimple.h">
+      <Filter>ヘッダー ファイル\Application\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\EventSystem.h">
       <Filter>ヘッダー ファイル\Application</Filter>
     </ClInclude>
   </ItemGroup>

@@ -39,7 +39,6 @@ private:
 	}
 
 	void Init() {
-		//buff = SRBufferAllocator::Alloc(sizeof(T), D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT);
 		mBuff = SRBufferAllocator::Alloc((sizeof(T) + 0xff) & ~0xff, D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT);
 		*reinterpret_cast<T*>(mBuff.Get()) = T();
 	}

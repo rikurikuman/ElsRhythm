@@ -14,6 +14,7 @@ public:
 
 	bool playing = false;
 	bool startedMusicStream = false;
+	bool finished = false;
 	bool autoplay = false;
 
 	AudioHandle audioHandle;
@@ -22,6 +23,9 @@ public:
 	float scrollSpeed = 9;
 	std::map<Beat, float> scrollChange;
 	std::map<Beat, float> cacheScrollPos;
+
+	std::map<Beat, std::vector<Event>> events;
+	std::map<Beat, std::vector<Event>> remainEvents;
 
 	std::list<Note> notes;
 	std::list<Note> remainNotes;
@@ -60,8 +64,8 @@ public:
 	static constexpr float laneWidth = 4;
 	static constexpr float scrollBase = 0.01f;
 
-	static constexpr float judgeUltimatePerfect = 25;
-	static constexpr float judgePerfect = 50;
+	static constexpr float judgeUltimatePerfect = 40;
+	static constexpr float judgePerfect = 80;
 	static constexpr float judgeHit = 100;
 
 private:

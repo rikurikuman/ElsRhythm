@@ -1,4 +1,5 @@
 {
+	"bg": "Simple",
 	"audiooffset": -4940.0,
     "audiopath": "./Charts/Aleph-0.wav",
 	"basebpm" : 250,

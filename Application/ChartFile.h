@@ -3,6 +3,7 @@
 #include <BeatUtil.h>
 #include <Note.h>
 #include <string>
+#include "EventSystem.h"
 
 class ChartFile
 {
@@ -18,6 +19,9 @@ public:
 
 	std::list<Note> notes;
 	int32_t noteCount = 0;
+
+	std::string bgName;
+	std::map<Beat, std::vector<Event>> events;
 
 	ChartFile() {}
 	ChartFile(std::string path) : path(path) {}

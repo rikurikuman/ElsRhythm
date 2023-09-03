@@ -251,6 +251,119 @@ TextureHandle TextDrawer::CreateStringTexture(std::string text, std::string font
 	return TextureManager::Register(texture, _handle);
 }
 
+TextureHandle TextDrawer::CreateStringTexture(std::wstring text, std::string fontTypeFace, uint32_t fontSize, std::string handle)
+{
+	wstring _wTypeFace = Util::ConvertStringToWString(fontTypeFace);
+
+	list<FontTexture> glyphlist;
+
+	for (size_t i = 0; i < text.size(); i++) {
+		glyphlist.push_back(GetFontTexture(text.substr(i, 1), _wTypeFace, fontSize, true));
+	}
+
+	size_t originPos = 0;
+	size_t textureWidth = 0;
+	uint32_t textureHeight = 0;
+
+	for (FontTexture fTex : glyphlist) {
+		originPos += fTex.gm.gmptGlyphOrigin.x;
+		textureWidth += fTex.texture.mResource->GetDesc().Width;
+		originPos += fTex.gm.gmCellIncX;
+		if (textureWidth < originPos) {
+			textureWidth += originPos - textureWidth;
+		}
+
+		uint32_t height = fTex.texture.mResource->GetDesc().Height;
+		if (textureHeight < height) {
+			textureHeight = height;
+		}
+	}
+
+	size_t imageDataCount = textureWidth * textureHeight;
+
+	vector<Color> imageData;
+	imageData.resize(imageDataCount);
+	for (size_t i = 0; i < imageDataCount; i++) {
+		imageData[i] = Color(0, 0, 0, 0);
+	}
+
+	size_t currentPos = 0; //現在の原点位置
+
+	for (FontTexture tex : glyphlist) {
+		size_t _width = tex.texture.mResource->GetDesc().Width;
+		size_t _height = tex.texture.mResource->GetDesc().Height;
+		size_t _dataCount = _width * _height;
+
+		vector<Color> _image;
+		_image.resize(_dataCount);
+
+		HRESULT result;
+		result = tex.texture.mResource->ReadFromSubresource(&_image[0], (UINT)(sizeof(Color) * _width), (UINT)(sizeof(Color) * _height), 0, nullptr);
+		assert(SUCCEEDED(result));
+
+		for (size_t i = 0; i < _dataCount; i++) {
+			size_t posX = currentPos + tex.gm.gmptGlyphOrigin.x + (i % _width);
+			size_t posY = i / _width;
+
+			size_t access = (posY * textureWidth) + posX;
+			assert(access < imageDataCount);
+
+			imageData[access].r = _image[i].r;
+			imageData[access].g = _image[i].g;
+			imageData[access].b = _image[i].b;
+			imageData[access].a = _image[i].a;
+		}
+
+		currentPos += tex.gm.gmCellIncX;
+	}
+
+	Texture texture = Texture(D3D12_RESOURCE_STATE_GENERIC_READ);
+
+	// テクスチャバッファ
+	// ヒープ設定s
+	D3D12_HEAP_PROPERTIES textureHeapProp{};
+	textureHeapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
+	textureHeapProp.CPUPageProperty =
+		D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
+	textureHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
+	// リソース設定
+	D3D12_RESOURCE_DESC textureResourceDesc{};
+	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+	textureResourceDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	textureResourceDesc.Width = textureWidth;
+	textureResourceDesc.Height = textureHeight;
+	textureResourceDesc.DepthOrArraySize = 1;
+	textureResourceDesc.MipLevels = 1;
+	textureResourceDesc.SampleDesc.Count = 1;
+
+	HRESULT result;
+	//生成
+	result = RDirectX::GetDevice()->CreateCommittedResource(
+		&textureHeapProp,
+		D3D12_HEAP_FLAG_NONE,
+		&textureResourceDesc,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(&texture.mResource)
+	);
+	assert(SUCCEEDED(result));
+
+	result = texture.mResource->WriteToSubresource(
+		0,
+		nullptr,
+		&imageData[0],
+		sizeof(Color) * (UINT)textureWidth,
+		sizeof(Color) * (UINT)imageDataCount
+	);
+	assert(SUCCEEDED(result));
+
+	string _handle = handle;
+	if (_handle.empty()) {
+		_handle = "NoNameStringTextureHandle_" + fontTypeFace + "_" + to_string(fontSize) + Util::ConvertWStringToString(text);
+	}
+	return TextureManager::Register(texture, _handle);
+}
+
 bool TextDrawer::LoadFontFromFile(std::string path)
 {
 	return AddFontResourceEx(Util::ConvertStringToWString(path).c_str(), FR_PRIVATE, NULL) != 0;

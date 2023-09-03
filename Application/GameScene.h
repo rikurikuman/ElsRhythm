@@ -14,6 +14,7 @@ public:
 	GameScene();
 
 	void Init() override;
+	void Finalize() override;
 	void Update() override;
 	void Draw() override;
 
@@ -28,14 +29,17 @@ private:
 	std::array<ModelObj, 3> lines;
 	std::array<ModelObj, 4> inputlines;
 
-	Sprite backGround;
-
 	Sprite tempoVeil;
 	float veilTimer = 0;
 
-	float shotTimer = 0;
-	int32_t shotCount = 0;
-
 	ChartFile chartFile;
 	RhythmGameController gameController;
+	float finishTimer = 0;
+
+
+	//チュートリアル
+	Sprite tutorialText;
+	Sprite tutorialBack;
+	float tutorialTimer = 0;
+	float tutorialAliveTime = 0;
 };

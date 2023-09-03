@@ -559,52 +559,6 @@ void SimpleDrawer::CalcCircleVertAndIndex(DrawCustomData cData) {
 		indices.push_back(static_cast<uint32_t>(vertices.size() - 1));
 	}
 
-	//sin, cosを使わない手法
-	//(intの計算ループの方が早いだろうから速度意識するならこっちか？)
-	/*int32_t cx = 0;
-	int32_t cy = r;
-	int32_t d = 1 - r;
-	int32_t dH = 3;
-	int32_t dD = 5 - 2 * r;
-
-	for (cx = 0; cx <= cy; cx++) {
-		if (d < 0) {
-			d += dH;
-			dH += 2;
-			dD += 2;
-		}
-		else {
-			d += dD;
-			dH += 2;
-			dD += 4;
-			--cy;
-		}
-
-		vertices.push_back(VertexP({ static_cast<float>(cy), static_cast<float>(cx), 0 }));
-		vertices.push_back(VertexP({ static_cast<float>(cx), static_cast<float>(cy), 0 }));
-		vertices.push_back(VertexP({ static_cast<float>(-cx), static_cast<float>(cy), 0 }));
-		vertices.push_back(VertexP({ static_cast<float>(-cy), static_cast<float>(cx), 0 }));
-		vertices.push_back(VertexP({ static_cast<float>(-cy), static_cast<float>(-cx), 0 }));
-		vertices.push_back(VertexP({ static_cast<float>(-cx), static_cast<float>(-cy), 0 }));
-		vertices.push_back(VertexP({ static_cast<float>(cx), static_cast<float>(-cy), 0 }));
-		vertices.push_back(VertexP({ static_cast<float>(cy), static_cast<float>(-cx), 0 }));
-	}
-	vertices.push_back(VertexP({ 0, 0, 0 }));
-
-	for (int32_t i = 0; i < 8; i++) {
-		uint32_t index = i;
-		uint32_t count = 0;
-
-		while (count < vertices.size() / 8 - 1) {
-			indices.push_back(index);
-			indices.push_back(index + 8);
-			indices.push_back(static_cast<uint32_t>(vertices.size() - 1));
-			index += 8;
-			count++;
-		}
-	}
-	indices.push_back(0);*/
-
 	instance->mCircleVertIndexMap[cData].vert = vertices;
 	instance->mCircleVertIndexMap[cData].index = indices;
 	instance->mCircleBuffersMap[cData].vert.Init(vertices);

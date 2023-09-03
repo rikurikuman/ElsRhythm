@@ -24,6 +24,10 @@ TitleScene::TitleScene()
 	goHardButton.pos = Vector2(RWindow::GetWidth() / 2.0f + 200, RWindow::GetHeight() / 2.0f);
 	goHardButton.size = Vector2(150, 100);
 	goHardButton.color = { 1, 0, 0, 1 };
+
+	goTutorialButton.pos = Vector2(RWindow::GetWidth() / 2.0f, RWindow::GetHeight() - 120.0f);
+	goTutorialButton.size = Vector2(150, 40);
+	goTutorialButton.color = { 1, 1, 1, 1 };
 }
 
 void TitleScene::Init()
@@ -40,6 +44,7 @@ void TitleScene::Update()
 
 	goEasyButton.Update();
 	goHardButton.Update();
+	goTutorialButton.Update();
 
 	if (goEasyButton.isClick) {
 		if (!SceneManager::IsSceneChanging()) {
@@ -53,6 +58,12 @@ void TitleScene::Update()
 			SceneManager::Change<GameScene, SimpleSceneTransition>();
 		}
 	}
+	if (goTutorialButton.isClick) {
+		if (!SceneManager::IsSceneChanging()) {
+			GameScene::sChartName = "test.kasu";
+			SceneManager::Change<GameScene, SimpleSceneTransition>();
+		}
+	}
 }
 
 void TitleScene::Draw()
@@ -62,6 +73,8 @@ void TitleScene::Draw()
 	SimpleDrawer::DrawString(goEasyButton.pos.x, goEasyButton.pos.y, 5, "やさしめモード", { 0, 0, 0, 1 }, "", 32, { 0.5f, 0.5f });
 	goHardButton.Draw();
 	SimpleDrawer::DrawString(goHardButton.pos.x, goHardButton.pos.y, 5, "つよすぎモード", { 0, 0, 0, 1 }, "", 32, { 0.5f, 0.5f });
+	goTutorialButton.Draw();
+	SimpleDrawer::DrawString(goTutorialButton.pos.x, goTutorialButton.pos.y, 5, "チュートリアル", { 0, 0, 0, 1 }, "", 32, { 0.5f, 0.5f });
 }
 
 void TitleScene::Button::Update()

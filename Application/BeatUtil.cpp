@@ -1,5 +1,4 @@
 #include "BeatUtil.h"
-//#include "SoundManager.h"
 
 void MusicDesc::Init()
 {
@@ -128,24 +127,6 @@ float MusicDesc::ConvertBeatToMiliSeconds(const Beat& beat)
 	
 	return beattime;
 }
-
-//float MusicDesc::ConvertBeatToMiliSeconds(const Beat& beat) {
-//	float beattime = 0;
-//
-//	//‘S‰¹•„‚Ì’·‚³‚ğ“¾‚éiƒ~ƒŠ•bj
-//	float whole = ((60 / baseBPM) * 1000.0f) * 4.0f;
-//
-//	//1¬ß‚Ì’·‚³‚ğ“¾‚é
-//	float measure = (whole / baseMeter.beatLength) * baseMeter.beatAmount;
-//
-//	//¬ß•ª‚ÌŠÔ‚ğ‰ÁZ‚·‚é
-//	beattime += measure * beat.measure;
-//
-//	//””•ª‚ÌŠÔ‚ğ‰ÁZ‚·‚é
-//	beattime += whole * ((float)beat.beat / beat.LPB);
-//
-//	return beattime;
-//}
 
 Beat MusicDesc::ConvertMiliSecondsToBeat(const float& miliSec)
 {

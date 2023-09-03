@@ -110,7 +110,6 @@ private:
 	size_t mUsingBufferSizeCounter = 0;
 
 	static MemoryRegion* _Alloc(size_t needSize, uint32_t align, bool deflag);
-	//static void _Free(byte* ptr);
 	static void _Free(SRBufferPtr& ptr);
 
 	SRBufferAllocator();

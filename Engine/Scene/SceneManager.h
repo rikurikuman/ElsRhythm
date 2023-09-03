@@ -40,7 +40,7 @@ private:
 	Sprite mLoadingMark;
 
 	SceneManager();
-	~SceneManager() = default;
+	~SceneManager();
 	SceneManager(const SceneManager& a) = delete;
 	SceneManager& operator=(const SceneManager&) = delete;
 
