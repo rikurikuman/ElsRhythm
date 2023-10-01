@@ -25,8 +25,8 @@ void MainTestScene::Init()
 void MainTestScene::Update()
 {
 	{
-		ImGui::SetNextWindowSize({ 400, 270 });
-		ImGui::SetNextWindowPos({ 800, 100 });
+		ImGui::SetNextWindowSize({ 400, 270 }, ImGuiCond_FirstUseEver);
+		ImGui::SetNextWindowPos({ 800, 100 }, ImGuiCond_FirstUseEver);
 
 		ImGuiWindowFlags window_flags = 0;
 		window_flags |= ImGuiWindowFlags_NoResize;
@@ -46,6 +46,29 @@ void MainTestScene::Update()
 		ImGui::End();
 	}
 
+
+	for (int i = 0; i < 10; i++) {
+		testList.emplace_back();
+		testList.back().model = ModelObj(Model::Load("Resources/Model/", "Sphere.obj", "Sphere", true));
+		testList.back().model.mTransform.scale = { 0.5f, 0.5f, 0.5f };
+		testList.back().model.mTuneMaterial.mColor = Color(Util::GetRand(0.0f, 1.0f), Util::GetRand(0.0f, 1.0f), Util::GetRand(0.0f, 1.0f), 1);
+		testList.back().vec = Vector3(Util::GetRand(-20.0f, 20.0f), Util::GetRand(-20.0f, 20.0f), Util::GetRand(-20.0f, 20.0f));
+	}
+	
+	for (auto itr = testList.begin(); itr != testList.end();) {
+		Test& T = *itr;
+		T.timer += TimeManager::deltaTime;
+		if (T.timer >= 2.0f) {
+			itr = testList.erase(itr);
+			continue;
+		}
+
+		T.model.mTransform.position += T.vec * TimeManager::deltaTime;
+		T.model.mTransform.UpdateMatrix();
+		T.model.TransferBuffer(camera.mViewProjection);
+		itr++;
+	}
+
 	light.Update();
 	camera.Update();
 
@@ -56,10 +79,16 @@ void MainTestScene::Draw()
 {
 	testObj.TransferBuffer(ViewProjection());
 	testObj.Draw();
-	skydome.Draw();
+	//skydome.Draw();
 
-	SimpleDrawer::DrawBox(100, 100, 200, 200, 0, { 1, 1, 1, 1 }, true);
-	SimpleDrawer::DrawBox(120, 120, 220, 220, 0, { 1, 0, 0, 0.5f }, true);
+	for (auto itr = testList.begin(); itr != testList.end();) {
+		Test& T = *itr;
+		T.model.Draw();
+		itr++;
+	}
+
+	//SimpleDrawer::DrawBox(100, 100, 200, 200, 0, { 1, 1, 1, 1 }, true);
+	//SimpleDrawer::DrawBox(120, 120, 220, 220, 0, { 1, 0, 0, 0.5f }, true);
 
 	SimpleDrawer::DrawCircle(RWindow::GetWidth() - 30, 710, 5, 0, { 1, 0, 0, 1 }, true);
 	SimpleDrawer::DrawCircle(RWindow::GetWidth() - 20, 710, 5, 0, { 0, 1, 0, 1 }, true);

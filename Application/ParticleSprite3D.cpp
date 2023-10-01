@@ -13,6 +13,7 @@ ParticleSprite3D::ParticleSprite3D(Vector3 pos, TextureHandle texHandle, RRect t
 	this->sprite.SetTexture(texHandle);
 	this->sprite.SetTexRect(texRect.left, texRect.top, texRect.right - texRect.left, texRect.bottom - texRect.top);
 	this->sprite.SetAnchor(texAnchor);
+	this->sprite.mBlendMode = Sprite::BlendMode::Add;
 	this->pos = pos;
 	this->color = color;
 	this->vec = vec;
@@ -38,7 +39,7 @@ void ParticleSprite3D::Update()
 	speed = startSpeed * (1 - fx) + endSpeed * fx;
 	size = startSize * (1 - fx) + endSize * fx;
 	sprite.mMaterial.mColor = color;
-	sprite.mMaterial.mColor.a = color.a - fx;
+	sprite.mMaterial.mColor.a = color.a * (1 - fx);
 
 	pos += vec * speed * TimeManager::deltaTime;
 }

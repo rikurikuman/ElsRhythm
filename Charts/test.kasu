@@ -8,7 +8,7 @@
 	},
 	"bg": "Simple",
 	"event": [
-		{"beat": {"measure": 0, "beat": 0, "lpb":1}, "name": "tutorial", "paramString": "Tutorialへようこそ", "paramFloat": 5.0},
+		{"beat": {"measure": 0, "beat": 0, "lpb":1}, "name": "tutorial", "paramString": "チュートリアルへようこそ", "paramFloat": 5.0},
 		{"beat": {"measure": 2, "beat": 0, "lpb":1}, "name": "tutorial", "paramString": "このリズムゲームの遊び方を説明します", "paramFloat": 5.0},
 		{"beat": {"measure": 4, "beat": 0, "lpb":1}, "name": "tutorial", "paramString": "降ってくるノートオブジェクトに合わせて、対応した操作を行います", "paramFloat": 5.0},
 		{"beat": {"measure": 6, "beat": 0, "lpb":1}, "name": "tutorial", "paramString": "これはタップノートです", "paramFloat": 5.0},

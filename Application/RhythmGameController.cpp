@@ -594,6 +594,7 @@ void RhythmGameController::Update()
 			}
 			ModelObj& obj = noteModelObjs[noteObjIndex];
 			obj.mTransform.position = { posX, 0, -posZ };
+			obj.mTransform.scale = { 0.85f, 1.0f, 1.15f };
 			obj.mTransform.UpdateMatrix();
 			obj.TransferBuffer(Camera::sNowCamera->mViewProjection);
 			obj.Draw();

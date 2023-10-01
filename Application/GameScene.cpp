@@ -16,6 +16,7 @@
 #include <codecvt>
 
 std::string GameScene::sChartName;
+int32_t GameScene::sLevel = 0;
 
 GameScene::GameScene()
 {
@@ -195,5 +196,18 @@ void GameScene::Draw()
 		tutorialBack.TransferBuffer();
 		tutorialText.Draw();
 		tutorialBack.Draw();
+	}
+
+	if (sLevel == 1) {
+		SimpleDrawer::DrawBox(1100, 120, 1280, 150, 0, { 0, 0.6f, 1, 1 }, true);
+		SimpleDrawer::DrawString(1120, 125, 1, "かんたんモード", { 0, 0, 0, 1 }, "やさしさゴシックボールドV2");
+	}
+	else if (sLevel == 2) {
+		SimpleDrawer::DrawBox(1100, 120, 1280, 150, 0, { 0, 1, 0, 1 }, true);
+		SimpleDrawer::DrawString(1120, 125, 1, "やさしめモード", { 0, 0, 0, 1 }, "やさしさゴシックボールドV2");
+	}
+	else if (sLevel == 3) {
+		SimpleDrawer::DrawBox(1100, 120, 1280, 150, 0, { 1, 0, 0, 1 }, true);
+		SimpleDrawer::DrawString(1120, 125, 1, "つよすぎモード", { 0, 0, 0, 1 }, "やさしさゴシックボールドV2");
 	}
 }

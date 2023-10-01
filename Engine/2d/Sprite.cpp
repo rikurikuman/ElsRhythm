@@ -114,19 +114,29 @@ void Sprite::TransferBuffer()
 
 void Sprite::Draw()
 {
-	std::vector<RootData> rootData{
+	RenderOrder order;
+
+	order.anchorPoint = mTransform.position;
+	order.vertBuff = mVertBuff;
+	order.indexBuff = mIndexBuff;
+	order.indexCount = 6;
+
+	order.rootData = {
 		{TextureManager::Get(mTexture).mGpuHandle},
 		{RootDataType::SRBUFFER_CBV, mMaterialBuff.mBuff},
 		{RootDataType::SRBUFFER_CBV, mTransformBuff.mBuff},
 		{RootDataType::SRBUFFER_CBV, mViewProjectionBuff.mBuff},
 	};
-	
-	if (mTransform.position.z >= 0) {
-		Renderer::DrawCall("Sprite", mVertBuff, mIndexBuff, 6, rootData, mTransform.position);
+
+	int32_t blendMode = static_cast<int32_t>(mBlendMode);
+	order.mRootSignature = SpriteManager::GetInstance()->GetRootSignature().mPtr.Get();
+	order.pipelineState = SpriteManager::GetInstance()->GetGraphicsPipeline(blendMode).mPtr.Get();
+
+	std::string stageID = "Sprite";
+	if (mTransform.position.z < 0) {
+		stageID = "BackSprite";
 	}
-	else {
-		Renderer::DrawCall("BackSprite", mVertBuff, mIndexBuff, 6, rootData, mTransform.position);
-	}
+	Renderer::DrawCall(stageID, order);
 }
 
 void SpriteManager::Init()
@@ -161,4 +171,23 @@ void SpriteManager::Init()
 	mPipelineState.mDesc.pRootSignature = mRootSignature.mPtr.Get();
 
 	mPipelineState.Create();
+	mPipelineStates[0] = mPipelineState;
+
+	mPipelineStates[1] = mPipelineState;
+	mPipelineStates[1].mDesc.BlendState.RenderTarget[0].BlendOpAlpha = D3D12_BLEND_OP_ADD;
+	mPipelineStates[1].mDesc.BlendState.RenderTarget[0].SrcBlendAlpha = D3D12_BLEND_SRC_ALPHA;
+	mPipelineStates[1].mDesc.BlendState.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_ONE;
+	mPipelineStates[1].mDesc.BlendState.RenderTarget[0].BlendOp = D3D12_BLEND_OP_ADD;
+	mPipelineStates[1].mDesc.BlendState.RenderTarget[0].SrcBlend = D3D12_BLEND_SRC_ALPHA;
+	mPipelineStates[1].mDesc.BlendState.RenderTarget[0].DestBlend = D3D12_BLEND_ONE;
+	mPipelineStates[1].Create();
+
+	mPipelineStates[2] = mPipelineState;
+	mPipelineStates[2].mDesc.BlendState.RenderTarget[0].BlendOpAlpha = D3D12_BLEND_OP_REV_SUBTRACT;
+	mPipelineStates[2].mDesc.BlendState.RenderTarget[0].SrcBlendAlpha = D3D12_BLEND_SRC_ALPHA;
+	mPipelineStates[2].mDesc.BlendState.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_ONE;
+	mPipelineStates[2].mDesc.BlendState.RenderTarget[0].BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;
+	mPipelineStates[2].mDesc.BlendState.RenderTarget[0].SrcBlend = D3D12_BLEND_SRC_ALPHA;
+	mPipelineStates[2].mDesc.BlendState.RenderTarget[0].DestBlend = D3D12_BLEND_ONE;
+	mPipelineStates[2].Create();
 }

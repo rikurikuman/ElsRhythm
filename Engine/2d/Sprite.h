@@ -8,12 +8,20 @@
 #include "ViewProjection.h"
 #include "SRVertexBuffer.h"
 #include "SRIndexBuffer.h"
+#include <array>
 
 class Sprite
 {
 public:
+	enum class BlendMode : int32_t {
+		Alpha,
+		Add,
+		Sub
+	};
+
 	Material mMaterial;
 	Transform mTransform;
+	BlendMode mBlendMode = BlendMode::Alpha;
 
 private:
 	bool mChangeFlag = false;
@@ -71,8 +79,8 @@ public:
 		return mRootSignature;
 	}
 
-	GraphicsPipeline GetGraphicsPipeline() {
-		return mPipelineState;
+	GraphicsPipeline GetGraphicsPipeline(int32_t num = 0) {
+		return mPipelineStates[num];
 	}
 
 private:
@@ -87,5 +95,6 @@ private:
 
 	RootSignature mRootSignature;
 	GraphicsPipeline mPipelineState;
+	std::array<GraphicsPipeline, 3> mPipelineStates;
 };
 

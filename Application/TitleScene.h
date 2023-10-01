@@ -32,6 +32,7 @@ private:
 	};
 
 	Button goEasyButton{};
+	Button goNormalButton{};
 	Button goHardButton{};
 	Button goTutorialButton{};
 };

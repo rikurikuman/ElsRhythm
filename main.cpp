@@ -19,10 +19,7 @@
 #include "SceneManager.h"
 #include "SimpleSceneTransition.h"
 #include "RImGui.h"
-#include "MainTestScene.h"
 #include "TitleScene.h"
-#include "GameScene.h"
-#include "ResultScene.h"
 
 #define _CRTDBG_MAP_ALLOC
 #include <cstdlib>
@@ -33,11 +30,9 @@
 #include <Renderer.h>
 #include <TestRenderStage.h>
 #include <SRBuffer.h>
-#include <CollidersScene.h>
-#include <ControllerScene.h>
-#include <SoundScene.h>
 #include <ParticleObject.h>
 #include "EventSystem.h"
+#include <DebugGUI.h>
 
 using namespace std;
 using namespace DirectX;
@@ -57,7 +52,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 #endif
 
 	//WindowsAPI
-	RWindow::SetWindowName(L"RKEngine");
+	RWindow::SetWindowName(L"リズムマウサー");
 	RWindow::Init();
 
 	//DirectX
@@ -154,88 +149,15 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		SceneManager::Draw();
 		SimpleDrawer::DrawAll();
 
+		//べんり！
+		if (Util::debugBool) {
+			DebugGUI::Show();
+		}
+
 		//描画の実行中に別スレッドとかでSRBufferとかの操作をされるとぶっ飛ぶので雑にロックする
 		//いずれもっと良い制御にしたい
 		std::unique_lock<std::recursive_mutex> bufferLockInDrawing(SRBufferAllocator::GetInstance()->sMutex);
 		Renderer::Execute();
-
-		//べんり！
-		if (Util::debugBool) {
-			ImGui::SetNextWindowSize({ 400, 380 });
-
-			ImGuiWindowFlags window_flags = 0;
-			window_flags |= ImGuiWindowFlags_NoResize;
-			ImGui::Begin("Debug", NULL, window_flags);
-
-			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-			ImGui::Spacing();
-			ImGui::Text("MousePos:(%.1f,%.1f)", ImGui::GetMousePos().x, ImGui::GetMousePos().y);
-			ImGui::Spacing();
-			UINT64 buffUsingSize = SRBufferAllocator::GetUsingBufferSize();
-			UINT64 buffTotalSize = SRBufferAllocator::GetBufferSize();
-			std::string buffUsingSizeStr;
-			std::string buffTotalSizeStr;
-			if (buffUsingSize < 1024 * 1024 - 1) {
-				buffUsingSizeStr = Util::StringFormat("%.2fKB", buffUsingSize / 1024.0f);
-			}
-			else {
-				buffUsingSizeStr = Util::StringFormat("%.2fMB", buffUsingSize / 1024.0f / 1024.0f);
-			}
-			if (buffTotalSize < 1024 * 1024 - 1) {
-				buffTotalSizeStr = Util::StringFormat("%.2fKB", buffTotalSize / 1024.0f);
-			}
-			else {
-				buffTotalSizeStr = Util::StringFormat("%.2fMB", buffTotalSize / 1024.0f / 1024.0f);
-			}
-			ImGui::Text("SRBuffer");
-			ImGui::Text(("Using : " + buffUsingSizeStr + " / " + buffTotalSizeStr + "(%.2lf%%)").c_str(), static_cast<double>(buffUsingSize) / buffTotalSize * 100);
-			ImGui::Text("(Raw : %lld / %lld)", buffUsingSize, buffTotalSize);
-			ImGui::NewLine();
-			ImGui::Text("SceneManager");
-			static int32_t sceneNum = 0;
-			const char* scenes[] = { "Title", "RhythmGameTest", "ResultTest", "MainTest", "ControllerTest", "CollidersTest", "SoundTest" };
-			ImGui::Combo("##SceneNumCombo", &sceneNum, scenes, IM_ARRAYSIZE(scenes));
-			ImGui::SameLine();
-			if (ImGui::Button("Go!!!")) {
-				if (!SceneManager::IsSceneChanging()) {
-					switch (sceneNum) {
-					case 0:
-						SceneManager::Change<TitleScene, SimpleSceneTransition>();
-						break;
-					case 1:
-						GameScene::sChartName = "test.kasu";
-						SceneManager::Change<GameScene, SimpleSceneTransition>();
-						break;
-					case 2:
-						SceneManager::Change<ResultScene, SimpleSceneTransition>();
-						break;
-					case 3:
-						SceneManager::Change<MainTestScene, SimpleSceneTransition>();
-						break;
-					case 4:
-						SceneManager::Change<ControllerScene, SimpleSceneTransition>();
-						break;
-					case 5:
-						SceneManager::Change<CollidersScene, SimpleSceneTransition>();
-						break;
-					case 6:
-						SceneManager::Change<SoundScene, SimpleSceneTransition>();
-						break;
-					}
-				}
-			}
-
-			ImGui::NewLine();
-			ImGui::Separator();
-			ImGui::Text("DebugCamera Control");
-			ImGui::Text("* Valid only in available scenes.");
-			ImGui::Text("Left Control Key : Enable / Disable");
-			ImGui::Text("WASD Key : Move");
-			ImGui::Text("Space Key : Up");
-			ImGui::Text("LShift Key : Down");
-			ImGui::Text("Mouse : Direction");
-			ImGui::End();
-		}
 
 		RImGui::Render();
 

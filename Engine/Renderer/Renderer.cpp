@@ -124,6 +124,16 @@ IRenderStage* Renderer::GetRenderStage(std::string id)
 	return nullptr;
 }
 
+std::vector<std::string> Renderer::GetRenderStageIDs()
+{
+	std::vector<std::string> result;
+	Renderer* instance = GetInstance();
+	for (auto itr = instance->mStages.begin(); itr != instance->mStages.end(); itr++) {
+		result.push_back((*itr)->GetTypeIndentifier());
+	}
+	return result;
+}
+
 void Renderer::SetAllParamaterToAuto()
 {
 	SetRenderTargetToAuto();

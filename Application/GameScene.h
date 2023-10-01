@@ -19,6 +19,7 @@ public:
 	void Draw() override;
 
 	static std::string sChartName;
+	static int32_t sLevel;
 
 private:
 	DebugCamera camera = DebugCamera({0, 0, -5});

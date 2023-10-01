@@ -24,4 +24,12 @@ private:
 	ModelObj skydome;
 
 	ArcNoteObj testObj;
+
+	float timer = 0;
+	struct Test {
+		ModelObj model;
+		Vector3 vec;
+		float timer = 0;
+	};
+	std::list<Test> testList;
 };

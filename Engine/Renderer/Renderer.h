@@ -100,6 +100,9 @@ public:
 	//指定IDのRenderStageを取得します
 	static IRenderStage* GetRenderStage(std::string id);
 
+	//Rendererに登録されているRenderStageのIDを全て取得します
+	static std::vector<std::string> GetRenderStageIDs();
+
 	//今後の描画に使うPrimitiveTopologyを指定します
 	//一度セットするとその後ずっと維持されます
 	//一時的に変える場合などに戻し忘れないよう注意
