@@ -134,6 +134,51 @@ void DebugGUI::Show()
 			}
 			ImGui::EndTabItem();
 		}
+		if (ImGui::BeginTabItem("Audio")) {
+			// Left
+			std::vector<RAudio::PlayingInfo> audios = RAudio::GetPlayingInfo();
+			static int32_t selected = -1;
+			{
+				ImVec2 parentSize = ImGui::GetWindowSize();
+				ImGui::BeginChild("left pane", ImVec2(parentSize.x / 3.0f, 0), true, ImGuiWindowFlags_AlwaysAutoResize);
+				for (int32_t i = 0; i < audios.size(); i++)
+				{
+					RAudio::PlayingInfo audio = audios[i];
+					if (ImGui::Selectable(Util::StringFormat("##%p", audio.pSource).c_str(), selected == i)) {
+						selected = i;
+					}
+					ImGui::SameLine();
+					ImGui::Text(audio.handle.c_str());
+				}
+				ImGui::EndChild();
+			}
+			ImGui::SameLine();
+
+			// Right
+			if (selected >= audios.size()) {
+				selected = static_cast<int32_t>(audios.size() - 1);
+			}
+			if (selected >= 0) {
+				RAudio::PlayingInfo audio = audios[selected];
+				ImGui::BeginGroup();
+				ImGui::BeginChild("item view", ImVec2(0, -ImGui::GetFrameHeightWithSpacing())); // Leave room for 1 line below us
+				ImGui::Text(audio.handle.c_str());
+				ImGui::Separator();
+				float pos = RAudio::GetCurrentPosition(audio);
+				float min = floor(pos / 60.0f);
+				float sec = floor(pos - min * 60);
+				int32_t mili = static_cast<int32_t>((pos - min * 60 - sec) * 1000);
+				ImGui::Text(Util::StringFormat("%0.0f:%02.0f.%03d", min, sec, mili).c_str());
+				ImGui::Text(Util::StringFormat("Loop:%d", audio.loop).c_str());
+				if (ImGui::Button("Stop##item view button")) {
+					audio.pSource->Stop();
+					audio.pSource->FlushSourceBuffers();
+				}
+				ImGui::EndChild();
+				ImGui::EndGroup();
+			}
+			ImGui::EndTabItem();
+		}
 		ImGui::EndTabBar();
 	}
 	

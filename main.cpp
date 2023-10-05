@@ -108,7 +108,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	DebugCamera camera({ 0, 0, -10 });
 
-	TimeManager::targetFPS = 60;
+	TimeManager::targetFPS = 120;
 
 	//////////////////////////////////////
 

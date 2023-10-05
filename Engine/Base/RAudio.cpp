@@ -292,6 +292,56 @@ void RAudio::SetLoopRange(AudioHandle handle, float startPos, float endPos)
 	Util::DebugLog("ERROR: RAudio::SetLoopRange() : Audio[" + handle + "] is unknown AudioType.");
 }
 
+std::vector<RAudio::PlayingInfo> RAudio::GetPlayingInfo()
+{
+	std::vector<PlayingInfo> result;
+
+	for (auto itr = RAudio::GetInstance()->mPlayingList.begin(); itr != RAudio::GetInstance()->mPlayingList.end(); itr++) {
+		result.push_back(*itr);
+	}
+
+	return result;
+}
+
+float RAudio::GetCurrentPosition(PlayingInfo info)
+{
+	RAudio* instance = GetInstance();
+
+	std::lock_guard<std::recursive_mutex> lock(GetInstance()->mMutex);
+
+	shared_ptr<AudioData> data = instance->mAudioMap[info.handle];
+	uint32_t samplePerSec = 0;
+	if (data->type == AudioType::Wave) {
+		shared_ptr<WaveAudio> waveData = static_pointer_cast<WaveAudio>(data);
+		samplePerSec = waveData->wfex.nSamplesPerSec;
+	}
+	else {
+		Util::DebugLog("ERROR: RAudio::SetPlayRange() : Audio[" + info.handle + "] is unknown AudioType.");
+		return 0;
+	}
+
+	XAUDIO2_VOICE_STATE state{};
+	info.pSource->GetState(&state);
+	if (state.BuffersQueued == 0) {
+		return 0;
+	}
+
+	uint64_t totalSample = state.SamplesPlayed;
+
+	if (info.loop) {
+		totalSample += data->samplePlayBegin;
+
+		while (totalSample >= data->sampleLoopBegin + data->sampleLoopLength) {
+			totalSample -= data->sampleLoopLength;
+		}
+		return totalSample / static_cast<float>(samplePerSec);
+	}
+	else {
+		return (data->samplePlayBegin + totalSample) / static_cast<float>(samplePerSec);
+	}
+	return 0;
+}
+
 void RAudio::InitInternal()
 {
 	HRESULT result;

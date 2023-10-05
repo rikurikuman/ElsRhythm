@@ -7,56 +7,70 @@
 
 using namespace Util;
 
-
-ParticleSprite3D::ParticleSprite3D(Vector3 pos, TextureHandle texHandle, RRect texRect, Vector2 texAnchor, Color color, Vector3 vec, float startSpeed, float endSpeed, float startSize, float endSize, float time)
+ParticleSprite3D::ParticleSprite3D(Vector3 pos, TextureHandle texHandle, RRect texRect, Vector2 texAnchor, Color color, float angle, float rotSpeed, Vector3 inVelocity, Vector3 stayVelocity, Vector3 outVelocity, Vector2 inSize, Vector2 staySize, Vector2 outSize, float inTime, float stayTime, float outTime)
+	: inVelocity(inVelocity), stayVelocity(stayVelocity), outVelocity(outVelocity),
+	  inSize(inSize), staySize(staySize), outSize(outSize),
+	  inTime(inTime), stayTime(stayTime), outTime(outTime)
 {
-	this->sprite.SetTexture(texHandle);
-	this->sprite.SetTexRect(texRect.left, texRect.top, texRect.right - texRect.left, texRect.bottom - texRect.top);
-	this->sprite.SetAnchor(texAnchor);
-	this->sprite.mBlendMode = Sprite::BlendMode::Add;
+	this->image.SetTexture(texHandle);
+	this->image.SetTexRect(texRect.left, texRect.top, texRect.right - texRect.left, texRect.bottom - texRect.top);
+	this->image.SetAnchor(texAnchor);
+	this->image.mBlendMode = Image3D::BlendMode::TransparentAdd;
 	this->pos = pos;
 	this->color = color;
-	this->vec = vec;
-	this->startSpeed = startSpeed;
-	this->endSpeed = endSpeed;
-	this->startSize = startSize;
-	this->endSize = endSize;
-	this->maxTime = time;
+	this->radian = Util::AngleToRadian(angle);
+	this->rotSpeed = Util::AngleToRadian(rotSpeed);
+	this->maxTime = inTime + stayTime + outTime;
 }
 
 void ParticleSprite3D::Update()
 {
 	timer += TimeManager::deltaTime;
-	float t = timer / maxTime;
-	if (t > 1) t = 1;
-
-	if (t >= 1) {
+	if (timer >= maxTime) {
 		isDeleted = true;
 		return;
 	}
 
-	float fx = 1 - powf(1 - t, 3);
-	speed = startSpeed * (1 - fx) + endSpeed * fx;
-	size = startSize * (1 - fx) + endSize * fx;
-	sprite.mMaterial.mColor = color;
-	sprite.mMaterial.mColor.a = color.a * (1 - fx);
+	float inBorder = inTime;
+	float outBorder = maxTime - (inTime + stayTime);
 
-	pos += vec * speed * TimeManager::deltaTime;
+	if (timer < inBorder) {
+		float t = timer / inTime;
+		float fx = 1 - powf(1 - t, 3);
+
+		velocity = inVelocity * (1 - fx) + stayVelocity * fx;
+		size = inSize * (1 - fx) + staySize * fx;
+	}
+	else if (timer >= outBorder) {
+		float t = (timer - inTime - stayTime) / timer;
+		float fx = 1 - powf(1 - t, 3);
+
+		velocity = stayVelocity * (1 - fx) + outVelocity * fx;
+		size = staySize * (1 - fx) + outSize * fx;
+		image.mMaterial.mColor.a = color.a * (1 - fx);
+	}
+	else {
+		velocity = stayVelocity;
+		size = staySize;
+	}
+
+	image.mMaterial.mColor = color;
+
+	pos += velocity * TimeManager::deltaTime;
+	radian += rotSpeed * TimeManager::deltaTime;
 }
 
 void ParticleSprite3D::Draw()
 {
-	Vector2 screenPos = Camera::sNowCamera->mViewProjection.WorldToScreen({ pos.x, pos.y, pos.z });
+	image.mTransform.position = pos;
+	image.mTransform.rotation.z = radian;
+	image.mTransform.scale = { size.x, size.y, 1 };
+	image.mTransform.UpdateMatrix();
 	
-	sprite.mTransform.position = screenPos;
-	sprite.mTransform.position.z = -1;
-	sprite.mTransform.scale = { size, size, 1 };
-	sprite.mTransform.UpdateMatrix();
-	
-	sprite.TransferBuffer();
-	sprite.Draw();
+	image.TransferBuffer(Camera::sNowCamera->mViewProjection);
+	image.Draw();
 }
 
-void ParticleSprite3D::Spawn(Vector3 pos, TextureHandle texHandle, RRect texRect, Vector2 texAnchor, Color color, Vector3 vec, float startSpeed, float endSpeed, float startSize, float endSize, float time) {
-	manageParticleObjList.emplace_back(std::make_unique<ParticleSprite3D>(pos, texHandle, texRect, texAnchor, color, vec, startSpeed, endSpeed, startSize, endSize, time));
+void ParticleSprite3D::Spawn(Vector3 pos, TextureHandle texHandle, RRect texRect, Vector2 texAnchor, Color color, float angle, float rotSpeed, Vector3 inVelocity, Vector3 stayVelocity, Vector3 outVelocity, Vector2 inSize, Vector2 staySize, Vector2 outSize, float inTime, float stayTime, float outTime) {
+	manageParticleObjList.emplace_back(std::make_unique<ParticleSprite3D>(pos, texHandle, texRect, texAnchor, color, angle, rotSpeed, inVelocity, stayVelocity, outVelocity, inSize, staySize, outSize, inTime, stayTime, outTime));
 }

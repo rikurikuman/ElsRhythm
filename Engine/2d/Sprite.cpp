@@ -98,6 +98,7 @@ void Sprite::TransferBuffer()
 {
 	if (mChangeFlag) {
 		UpdateVertex();
+		mChangeFlag = false;
 	}
 
 	mMaterial.Transfer(mMaterialBuff.Get());

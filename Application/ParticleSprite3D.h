@@ -1,27 +1,34 @@
 #pragma once
 #include "ParticleObject.h"
-#include <Sprite.h>
+#include <Image3D.h>
 #include <Rect.h>
 
 class ParticleSprite3D : public ParticleObject
 {
-public:
-	Sprite sprite;
+private:
+	Image3D image;
 	Color color;
-	Vector3 vec;
-	float speed = 0;
-	float startSpeed;
-	float endSpeed;
-	float size = 0;
-	float startSize;
-	float endSize;
+	Vector3 velocity;
+	Vector3 inVelocity;
+	Vector3 stayVelocity;
+	Vector3 outVelocity;
+	float radian = 0;
+	float rotSpeed = 0;
+	Vector2 size;
+	Vector2 inSize;
+	Vector2 staySize;
+	Vector2 outSize;
+	float inTime;
+	float stayTime;
+	float outTime;
 	float maxTime;
 	float timer = 0;
 
-	ParticleSprite3D(Vector3 pos, TextureHandle texHandle, RRect texRect, Vector2 texAnchor, Color color, Vector3 vec, float startSpeed, float endSpeed, float startSize, float endSize, float time);
+public:
+	ParticleSprite3D(Vector3 pos, TextureHandle texHandle, RRect texRect, Vector2 texAnchor, Color color, float angle, float rotSpeed, Vector3 inVelocity, Vector3 stayVelocity, Vector3 outVelocity, Vector2 inSize, Vector2 staySize, Vector2 outSize, float inTime, float stayTime, float outTime);
 
 	void Update() override;
 	void Draw() override;
 
-	static void Spawn(Vector3 pos, TextureHandle texHandle, RRect texRect, Vector2 texAnchor, Color color, Vector3 vec, float startSpeed, float endSpeed, float startSize, float endSize, float time);
+	static void Spawn(Vector3 pos, TextureHandle texHandle, RRect texRect, Vector2 texAnchor, Color color, float angle, float rotSpeed, Vector3 inVelocity, Vector3 stayVelocity, Vector3 outVelocity, Vector2 inSize, Vector2 staySize, Vector2 outSize, float inTime, float stayTime, float outTime);
 };

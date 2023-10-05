@@ -11,9 +11,30 @@ class Image3D final : public Obj3D
 {
 private:
 	TextureHandle mTexture;
-	Vector2 mScale = { 1, 1 };
+	Vector2 mImageScale = { 1, 1 };
 	Vector2 mSize = { 1, 1 };
+	Vector2 mSrcPos = { 0, 0 };
+	Vector2 mTexRect = { 0, 0 };
+	Vector2 mAnchor = { 0.5f, 0.5f };
 	bool mForceSize = false;
+	bool mChangeFlag = false;
+
+	void UpdateVertex();
+
+public:
+	enum class BlendMode : int32_t {
+		OpaqueAlpha,
+		OpaqueAdd,
+		OpaqueSub,
+		TransparentAlpha,
+		TransparentAdd,
+		TransparentSub
+	};
+
+	BlendMode mBlendMode = BlendMode::OpaqueAlpha;
+
+private:
+	GraphicsPipeline GetPipeline();
 
 public:
 	Material mMaterial;
@@ -25,34 +46,29 @@ public:
 	SRConstBuffer<TransformBuffer> mTransformBuff;
 	SRConstBuffer<ViewProjectionBuffer> mViewProjectionBuff;
 
-	Image3D() {};
+	Image3D();
 
 	Image3D(TextureHandle texture, Vector2 size = {1, 1}, bool forceSize = false);
 
-	void SetTexture(TextureHandle texture) {
-		mTexture = texture;
-		if (!mForceSize) {
-			Texture tex = TextureManager::Get(texture);
-			mSize.x = tex.mResource->GetDesc().Width / (float)tex.mResource->GetDesc().Height * mSize.x;
-		}
-	}
+	void SetTexture(TextureHandle texture);
 
 	TextureHandle GetTexture() {
 		return mTexture;
 	}
 
-	void SetSize(Vector2 size, bool forceSize = false) {
-		mForceSize = forceSize;
-		if (forceSize) {
-			mSize = size;
-		}
-		else {
-			mScale = size;
-			Texture tex = TextureManager::Get(mTexture);
-			mSize.x = tex.mResource->GetDesc().Width / (float)tex.mResource->GetDesc().Height * mScale.x;
-			mSize.y = mScale.y;
-		}
-	}
+	void SetSize(Vector2 size, bool forceSize = false);
+
+	//アンカーポイントを変更する
+	void SetAnchor(Vector2 anchor);
+
+	/// <summary>
+	/// テクスチャの切り出し位置を設定する
+	/// </summary>
+	/// <param name="srcX">切り出し位置の左上X</param>
+	/// <param name="srcY">切り出し位置の左上Y</param>
+	/// <param name="width">切り出し範囲サイズX</param>
+	/// <param name="height">切り出し範囲サイズY</param>
+	void SetTexRect(int32_t srcX, int32_t srcY, int32_t width, int32_t height);
 
 	Vector2 GetSize() {
 		return mSize;

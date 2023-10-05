@@ -1,6 +1,7 @@
 #pragma once
 #include "IBackGround.h"
 #include "Sprite.h"
+#include "Image3D.h"
 #include <cstdint>
 
 class BGSimple : public IBackGround

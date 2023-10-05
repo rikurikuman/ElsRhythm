@@ -89,11 +89,16 @@ private:
 	std::map<AudioHandle, std::shared_ptr<AudioData>> mAudioMap;
 	std::map<PlayingAudioHandle, std::shared_ptr<AudioData>> mPlayingAudioMap;
 
+public:
 	struct PlayingInfo {
 		AudioHandle handle;
 		IXAudio2SourceVoice* pSource;
 		bool loop = false;
 	};
+	static std::vector<PlayingInfo> GetPlayingInfo();
+	static float GetCurrentPosition(PlayingInfo info);
+
+private:
 	std::list<PlayingInfo> mPlayingList;
 
 	RAudio() {};
