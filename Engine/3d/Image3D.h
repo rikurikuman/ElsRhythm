@@ -63,12 +63,23 @@ public:
 
 	/// <summary>
 	/// テクスチャの切り出し位置を設定する
+	/// つまりUV座標を加工する
 	/// </summary>
 	/// <param name="srcX">切り出し位置の左上X</param>
 	/// <param name="srcY">切り出し位置の左上Y</param>
 	/// <param name="width">切り出し範囲サイズX</param>
 	/// <param name="height">切り出し範囲サイズY</param>
 	void SetTexRect(int32_t srcX, int32_t srcY, int32_t width, int32_t height);
+
+	/// <summary>
+	/// テクスチャの切り出し位置を設定する
+	/// つまりUV座標を加工する
+	/// </summary>
+	/// <param name="srcX">切り出し位置の左上X</param>
+	/// <param name="srcY">切り出し位置の左上Y</param>
+	/// <param name="width">切り出し範囲サイズX</param>
+	/// <param name="height">切り出し範囲サイズY</param>
+	void SetTexRect(float srcX, float srcY, float width, float height);
 
 	Vector2 GetSize() {
 		return mSize;

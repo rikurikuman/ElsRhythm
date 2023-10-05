@@ -4,7 +4,9 @@
 #include "DebugCamera.h"
 #include "ModelObj.h"
 #include "Sprite.h"
+#include "Image3D.h"
 #include "SRConstBuffer.h"
+#include "BackGroundSelector.h"
 #include <ChartFile.h>
 #include <RhythmGameController.h>
 
@@ -25,10 +27,14 @@ private:
 	DebugCamera camera = DebugCamera({0, 0, -5});
 	LightGroup light;
 
+	BackGroundSelector backGround;
+
 	ModelObj judgeLine;
 	ModelObj lane;
 	std::array<ModelObj, 3> lines;
 	std::array<ModelObj, 4> inputlines;
+	Image3D laneStripe;
+	float stripeZ;
 
 	Sprite tempoVeil;
 	float veilTimer = 0;
@@ -36,7 +42,6 @@ private:
 	ChartFile chartFile;
 	RhythmGameController gameController;
 	float finishTimer = 0;
-
 
 	//チュートリアル
 	Sprite tutorialText;

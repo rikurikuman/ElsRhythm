@@ -18,10 +18,10 @@ void Image3D::UpdateVertex()
 
 	//頂点データ
 	VertexPNU vertices[] = {
-		{{ -mAnchor.x * mSize.x, (1 - mAnchor.y) * mSize.y, 0.0f}, {0, 0, -1}, {uvLeft, uvBottom}}, //左上
-		{{ -mAnchor.x * mSize.x, -mAnchor.y * mSize.y, 0.0f }, {0, 0, -1}, {uvLeft, uvTop}}, //左下
-		{{ (1 - mAnchor.x) * mSize.x, (1 - mAnchor.y) * mSize.y, 0.0f }, {0, 0, -1}, {uvRight, uvBottom}}, //右上
-		{{ (1 - mAnchor.x) * mSize.x, -mAnchor.y * mSize.y, 0.0f }, {0, 0, -1}, {uvRight, uvTop}}, //右下
+		{{ -mAnchor.x * mSize.x, (1 - mAnchor.y) * mSize.y, 0.0f}, {0, 0, -1}, {uvLeft, uvTop}}, //左上
+		{{ -mAnchor.x * mSize.x, -mAnchor.y * mSize.y, 0.0f }, {0, 0, -1}, {uvLeft, uvBottom}}, //左下
+		{{ (1 - mAnchor.x) * mSize.x, (1 - mAnchor.y) * mSize.y, 0.0f }, {0, 0, -1}, {uvRight, uvTop}}, //右上
+		{{ (1 - mAnchor.x) * mSize.x, -mAnchor.y * mSize.y, 0.0f }, {0, 0, -1}, {uvRight, uvBottom}}, //右下
 	};
 
 	mVertBuff.Update(vertices, _countof(vertices));
@@ -161,6 +161,13 @@ void Image3D::SetTexRect(int32_t srcX, int32_t srcY, int32_t width, int32_t heig
 {
 	mSrcPos = { static_cast<float>(srcX), static_cast<float>(srcY) };
 	mTexRect = { static_cast<float>(width), static_cast<float>(height) };
+	mChangeFlag = true;
+}
+
+void Image3D::SetTexRect(float srcX, float srcY, float width, float height)
+{
+	mSrcPos = { srcX, srcY };
+	mTexRect = { width, height };
 	mChangeFlag = true;
 }
 

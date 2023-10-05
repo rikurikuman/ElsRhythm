@@ -48,7 +48,15 @@ GameScene::GameScene()
 		inputlines[i].mTuneMaterial.mColor = { 0.4f, 0.4f, 0.4f, 0.2f };
 	}
 
+	laneStripe.mBlendMode = Image3D::BlendMode::TransparentAlpha;
+	laneStripe.SetTexture(TextureManager::Load("./Resources/Stripe.png", "LaneStripe"));
+	laneStripe.SetSize({ 16, 160 }, true);
+	laneStripe.mTransform.rotation.x = Util::AngleToRadian(90);
+	laneStripe.mTransform.UpdateMatrix();
+	laneStripe.mMaterial.mColor = { 0.3f, 0.3f, 0.3f, 0.05f };
+
 	tempoVeil = Sprite(TextureManager::Load("./Resources/veil.png", "tempoVeil"), {0.0f, 0.0f});
+	tempoVeil.mBlendMode = Sprite::BlendMode::Add;
 	tempoVeil.mMaterial.mColor = { 0.05f, 0.4f, 1.0f, 0.5f };
 	tempoVeil.mTransform.position = { 0, RWindow::GetHeight() / 1.0f, 0};
 	tempoVeil.mTransform.scale = { RWindow::GetWidth() / 300.0f, -1.0f, 1.0f };
@@ -81,7 +89,7 @@ GameScene::GameScene()
 	gameController.chart = chartFile;
 	gameController.Load();
 	gameController.Init();
-	BackGroundSelector::Select(chartFile.bgName);
+	backGround.Select(chartFile.bgName);
 }
 
 void GameScene::Init()
@@ -111,6 +119,10 @@ void GameScene::Update()
 		if(!SceneManager::IsSceneChanging()) SceneManager::Change<TitleScene, SimpleSceneTransition>();
 	}
 
+	stripeZ = (gameController.nowPosY / 172.0f) * 384.0f;
+	laneStripe.SetTexRect(0.0f, -stripeZ, 256.0f, 64.0f * 6);
+	SimpleDrawer::DrawString(0, 200, 0, Util::StringFormat("%f", stripeZ));
+
 	veilTimer += TimeManager::deltaMiliTime;
 	float bpm = gameController.music.GetBPM(gameController.music.ConvertMiliSecondsToBeat(gameController.time));
 	float whole = gameController.music.GetWholeNoteLength(gameController.music.ConvertMiliSecondsToBeat(gameController.time));
@@ -128,7 +140,7 @@ void GameScene::Update()
 		if (!SceneManager::IsSceneChanging()) SceneManager::Change<ResultScene, SimpleSceneTransition>();
 	}
 
-	BackGroundSelector::Update();
+	backGround.Update();
 
 	for (Event& e : EventSystem::GetTriggeredEvents("tutorial")) {
 		std::wstring wStr = Util::ConvertStringToWString(e.paramString, CP_UTF8);
@@ -186,10 +198,13 @@ void GameScene::Draw()
 		}
 	}
 
+	laneStripe.TransferBuffer(Camera::sNowCamera->mViewProjection);
+	laneStripe.Draw();
+
 	tempoVeil.TransferBuffer();
 	tempoVeil.Draw();
 
-	BackGroundSelector::Draw();
+	backGround.Draw();
 
 	if (tutorialAliveTime != 0) {
 		tutorialText.TransferBuffer();

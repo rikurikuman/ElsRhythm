@@ -13,7 +13,11 @@ ParticleSprite3D::ParticleSprite3D(Vector3 pos, TextureHandle texHandle, RRect t
 	  inTime(inTime), stayTime(stayTime), outTime(outTime)
 {
 	this->image.SetTexture(texHandle);
-	this->image.SetTexRect(texRect.left, texRect.top, texRect.right - texRect.left, texRect.bottom - texRect.top);
+	this->image.SetTexRect(
+		static_cast<float>(texRect.left),
+		static_cast<float>(texRect.top),
+		static_cast<float>(texRect.right - texRect.left),
+		static_cast<float>(texRect.bottom - texRect.top));
 	this->image.SetAnchor(texAnchor);
 	this->image.mBlendMode = Image3D::BlendMode::TransparentAdd;
 	this->pos = pos;

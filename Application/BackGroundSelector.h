@@ -6,13 +6,12 @@
 class BackGroundSelector
 {
 public:
-	static void Select(std::string name);
+	void Select(std::string name);
 
-	static void Update();
-	static void Draw();
+	void Update();
+	void Draw();
 
 private:
 	std::unique_ptr<IBackGround> bg;
-	static BackGroundSelector* GetInstance();
 };
 
