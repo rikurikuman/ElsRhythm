@@ -29,7 +29,7 @@ Mtllib Mtllib::Load(std::string filepath, std::string filename)
             key.erase(key.begin());
         }
 
-        if (key == "newmtl") { //ƒ}ƒeƒŠƒAƒ‹’è‹`i‚¨–¼‘O‚Í‚±‚±‚©‚çj
+        if (key == "newmtl") { //ãƒžãƒ†ãƒªã‚¢ãƒ«å®šç¾©ï¼ˆãŠåå‰ã¯ã“ã“ã‹ã‚‰ï¼‰
             if (loading != Material()) {
                 data.mMaterials.push_back(loading);
             }
@@ -37,25 +37,25 @@ Mtllib Mtllib::Load(std::string filepath, std::string filename)
             line_stream >> loading.mName;
         }
 
-        if (key == "Ka") { //ŠÂ‹«Œõ
+        if (key == "Ka") { //ç’°å¢ƒå…‰
             line_stream >> loading.mAmbient.x;
             line_stream >> loading.mAmbient.y;
             line_stream >> loading.mAmbient.z;
         }
 
-        if (key == "Kd") { //ŠgŽU”½ŽËŒõ
+        if (key == "Kd") { //æ‹¡æ•£åå°„å…‰
             line_stream >> loading.mDiffuse.x;
             line_stream >> loading.mDiffuse.y;
             line_stream >> loading.mDiffuse.z;
         }
 
-        if (key == "Ks") { //‹¾–Ê”½ŽËŒõ
+        if (key == "Ks") { //é¡é¢åå°„å…‰
             line_stream >> loading.mSpecular.x;
             line_stream >> loading.mSpecular.y;
             line_stream >> loading.mSpecular.z;
         }
 
-        if (key == "map_Kd") { //ƒeƒNƒXƒ`ƒƒŽw’è
+        if (key == "map_Kd") { //ãƒ†ã‚¯ã‚¹ãƒãƒ£æŒ‡å®š
             string texfile;
             line_stream >> texfile;
             loading.mTexture = TextureManager::Load(filepath + texfile);

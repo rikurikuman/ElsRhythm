@@ -1,7 +1,12 @@
 #pragma once
+
+//å¤–éƒ¨ãƒ˜ãƒƒãƒ€
+#pragma warning(push, 0)
 #include <d3d12.h>
 #include <cassert>
 #include <wrl.h>
+#pragma warning(pop)
+
 #include "RDirectX.h"
 #include "Util.h"
 #include <chrono>
@@ -48,24 +53,24 @@ private:
 	void Init() {
 		HRESULT result;
 
-		//ƒq[ƒvÝ’è
+		//ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_PROPERTIES cbHeapProp{};
 		cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
-		// ƒŠƒ\[ƒXÝ’è
+		// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_DESC cbResourceDesc{};
 		cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-		cbResourceDesc.Width = (sizeof(T) + 0xff) & ~0xff; //256ƒoƒCƒgƒAƒ‰ƒCƒ“ƒƒ“ƒg
+		cbResourceDesc.Width = (sizeof(T) + 0xff) & ~0xff; //256ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³ãƒ¡ãƒ³ãƒˆ
 		cbResourceDesc.Height = 1;
 		cbResourceDesc.DepthOrArraySize = 1;
 		cbResourceDesc.MipLevels = 1;
 		cbResourceDesc.SampleDesc.Count = 1;
 		cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 		
-		// ’è”ƒoƒbƒtƒ@‚Ì¶¬
+		// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 		result = RDirectX::GetDevice()->CreateCommittedResource(
-			&cbHeapProp, //ƒq[ƒvÝ’è
+			&cbHeapProp, //ãƒ’ãƒ¼ãƒ—è¨­å®š
 			D3D12_HEAP_FLAG_NONE,
-			&cbResourceDesc, //ƒŠƒ\[ƒXÝ’è
+			&cbResourceDesc, //ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
 			IID_PPV_ARGS(&mConstBuff)
@@ -110,7 +115,7 @@ public:
 
 	void Map() {
 		HRESULT result;
-		result = mConstBuff->Map(0, nullptr, (void**)&mConstMap); //ƒ}ƒbƒsƒ“ƒO
+		result = mConstBuff->Map(0, nullptr, (void**)&mConstMap); //ãƒžãƒƒãƒ”ãƒ³ã‚°
 		assert(SUCCEEDED(result));
 	}
 

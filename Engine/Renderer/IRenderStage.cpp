@@ -9,10 +9,10 @@ void IRenderStage::AllCall()
 	RenderOrder memo;
 
 	for (RenderOrder& order : mOrders) {
-		//’¼‘OÀsˆ—
+		//ç›´å‰å®Ÿè¡Œå‡¦ç†
 		if(order.preCommand) order.preCommand();
 
-		//©“®İ’è€–Ú‚Ìİ’è
+		//è‡ªå‹•è¨­å®šé …ç›®ã®è¨­å®š
 		if (order.primitiveTopology == D3D_PRIMITIVE_TOPOLOGY_UNDEFINED) {
 			order.primitiveTopology = mDefParamater.primitiveTopology;
 		}
@@ -87,7 +87,7 @@ void IRenderStage::AllCall()
 			RDirectX::GetCommandList()->SetPipelineState(order.pipelineState);
 		}
 
-		//’¸“_nullƒ`ƒFƒbƒN
+		//é ‚ç‚¹nullãƒã‚§ãƒƒã‚¯
 		if (!order.vertBuff.IsValid() && order.vertView == nullptr) {
 #ifdef _DEBUG
 			OutputDebugStringA(Util::StringFormat("RKEngine WARNING: IRenderStage::AllCall() : Vertex is null. Draw skip.\n").c_str());
@@ -165,7 +165,7 @@ void IRenderStage::AllCall()
 			RDirectX::GetCommandList()->DrawInstanced(static_cast<uint32_t>(order.indexCount), order.instanceCount, 0, 0);
 		}
 
-		//’¼ŒãÀsˆ—
+		//ç›´å¾Œå®Ÿè¡Œå‡¦ç†
 		if (order.postCommand) order.postCommand();
 	}
 }

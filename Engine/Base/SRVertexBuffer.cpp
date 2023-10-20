@@ -159,7 +159,7 @@ D3D12_VERTEX_BUFFER_VIEW SRVertexBuffer::GetVertView()
 	}
 	D3D12_VERTEX_BUFFER_VIEW view{};
 	view.BufferLocation = mData->buff.GetGPUVirtualAddress();
-	view.SizeInBytes = mData->dataSize; //頂点バッファのサイズ
-	view.StrideInBytes = mData->strideInBytes; //頂点一個のサイズ
+	view.SizeInBytes = mData->dataSize; //鬆らせ繝舌ャ繝輔ぃ縺ｮ繧ｵ繧､繧ｺ
+	view.StrideInBytes = mData->strideInBytes; //鬆らせ荳蛟九�ｮ繧ｵ繧､繧ｺ
 	return view;
 }

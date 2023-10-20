@@ -16,12 +16,12 @@ struct MaterialBuffer {
 class Material
 {
 public:
-	std::string mName; //‚¨‚È‚Ü‚¦ƒhƒbƒgƒRƒ€
-	TextureHandle mTexture; //ƒeƒNƒXƒ`ƒƒ
-	Color mColor = {1, 1, 1, 1}; //F(RGBA)
-	Vector3 mAmbient = {1, 1, 1}; //ŠÂ‹«Œõ
-	Vector3 mDiffuse = {0, 0, 0}; //ŠgU”½ËŒõ
-	Vector3 mSpecular = {0, 0, 0}; //‹¾–Ê”½ËŒõ
+	std::string mName; //ãŠãªã¾ãˆãƒ‰ãƒƒãƒˆã‚³ãƒ 
+	TextureHandle mTexture; //ãƒ†ã‚¯ã‚¹ãƒãƒ£
+	Color mColor = {1, 1, 1, 1}; //è‰²(RGBA)
+	Vector3 mAmbient = {1, 1, 1}; //ç’°å¢ƒå…‰
+	Vector3 mDiffuse = {0, 0, 0}; //æ‹¡æ•£åå°„å…‰
+	Vector3 mSpecular = {0, 0, 0}; //é¡é¢åå°„å…‰
 
 	Material() {}
 	Material(bool allOne) {
@@ -34,8 +34,8 @@ public:
 	bool operator!=(const Material& o) const;
 
 	/// <summary>
-	/// ’è”ƒoƒbƒtƒ@‚Ö“]‘—
+	/// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸è»¢é€
 	/// </summary>
-	/// <param name="target">‘ÎÛ‚Ìƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^</param>
+	/// <param name="target">å¯¾è±¡ã®ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿</param>
 	void Transfer(MaterialBuffer* target);
 };

@@ -17,7 +17,7 @@ struct DrawBuffers {
 struct DrawCustomData {
 	float layer;
 	bool fillFlag;
-	float radius; //circle‚Åg—p
+	float radius; //circleã§ä½¿ç”¨
 
 	bool operator==(const DrawCustomData& l) const {
 		return layer == l.layer
@@ -26,17 +26,16 @@ struct DrawCustomData {
 	}
 };
 
-//unordered_map—p‚ÉƒnƒbƒVƒ…ŠÖ”OBJ‚ğ’Ç‰Á‚µ‚Ä‚ ‚°‚é
+//unordered_mapç”¨ã«ãƒãƒƒã‚·ãƒ¥é–¢æ•°OBJã‚’è¿½åŠ ã—ã¦ã‚ã’ã‚‹
 namespace std {
 	template<>
 	class hash<DrawCustomData> {
 	public:
 		size_t operator() (const DrawCustomData& o) const {
-			return static_cast<size_t>((
-				o.layer * 2.0f +
+			float hash = o.layer * 2.0f +
 				static_cast<float>(o.fillFlag) * 3.0f +
-				o.radius * 5.0f
-			));
+				o.radius * 5.0f;
+			return static_cast<size_t>(hash);
 		}
 	};
 }

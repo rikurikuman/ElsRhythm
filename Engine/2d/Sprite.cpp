@@ -1,5 +1,4 @@
 #include "Sprite.h"
-#include <d3d12.h>
 #include "RDirectX.h"
 #include "RWindow.h"
 #include "Vertex.h"
@@ -16,12 +15,12 @@ Sprite::Sprite(TextureHandle texture, Vector2 anchor)
 {
 	mTexture = texture;
 
-	//ÉTÉCÉYÇÉZÉbÉgÇ∑ÇÈ
+	//„Çµ„Ç§„Ç∫„Çí„Çª„ÉÉ„Éà„Åô„Çã
 	
 	mSize.x = (float)TextureManager::Get(mTexture).mResource->GetDesc().Width;
 	mSize.y = (float)TextureManager::Get(mTexture).mResource->GetDesc().Height;
 
-	//ÉAÉìÉJÅ[É|ÉCÉìÉgÇÉZÉbÉgÇ∑ÇÈ
+	//„Ç¢„É≥„Ç´„Éº„Éù„Ç§„É≥„Éà„Çí„Çª„ÉÉ„Éà„Åô„Çã
 	mAnchor = anchor;
 
 	Init();
@@ -39,12 +38,12 @@ void Sprite::UpdateVertex()
 	float uvTop = mSrcPos.y / texSize.y;
 	float uvBottom = (mSrcPos.y + mSize.y) / texSize.y;
 
-	//í∏ì_ÉfÅ[É^
+	//È†ÇÁÇπ„Éá„Éº„Çø
 	VertexPNU vertices[] = {
-		{{ -mAnchor.x * mSize.x, (1 - mAnchor.y) * mSize.y, 0.0f}, {}, {uvLeft, uvBottom}}, //ç∂â∫
-		{{ -mAnchor.x * mSize.x, -mAnchor.y * mSize.y, 0.0f }, {}, {uvLeft, uvTop}}, //ç∂è„
-		{{ (1 - mAnchor.x) * mSize.x, (1 - mAnchor.y) * mSize.y, 0.0f }, {}, {uvRight, uvBottom}}, //âEâ∫
-		{{ (1 - mAnchor.x) * mSize.x, -mAnchor.y * mSize.y, 0.0f }, {}, {uvRight, uvTop}}, //âEè„
+		{{ -mAnchor.x * mSize.x, (1 - mAnchor.y) * mSize.y, 0.0f}, {}, {uvLeft, uvBottom}}, //Â∑¶‰∏ã
+		{{ -mAnchor.x * mSize.x, -mAnchor.y * mSize.y, 0.0f }, {}, {uvLeft, uvTop}}, //Â∑¶‰∏ä
+		{{ (1 - mAnchor.x) * mSize.x, (1 - mAnchor.y) * mSize.y, 0.0f }, {}, {uvRight, uvBottom}}, //Âè≥‰∏ã
+		{{ (1 - mAnchor.x) * mSize.x, -mAnchor.y * mSize.y, 0.0f }, {}, {uvRight, uvTop}}, //Âè≥‰∏ä
 	};
 
 	mVertBuff.Update(vertices, _countof(vertices));
@@ -74,15 +73,15 @@ void Sprite::SetTexRect(int32_t srcX, int32_t srcY, int32_t width, int32_t heigh
 
 void Sprite::Init()
 {
-	//í∏ì_ÉfÅ[É^
+	//È†ÇÁÇπ„Éá„Éº„Çø
 	VertexPNU vertices[] = {
-		{{ -mAnchor.x * mSize.x, (1 - mAnchor.y) * mSize.y, 0.0f}, {}, {0.0f, 1.0f}}, //ç∂â∫
-		{{ -mAnchor.x * mSize.x, -mAnchor.y * mSize.y, 0.0f }, {}, {0.0f, 0.0f}}, //ç∂è„
-		{{ (1 - mAnchor.x) * mSize.x, (1 - mAnchor.y) * mSize.y, 0.0f }, {}, {1.0f, 1.0f}}, //âEâ∫
-		{{ (1 - mAnchor.x) * mSize.x, -mAnchor.y * mSize.y, 0.0f }, {}, {1.0f, 0.0f}}, //âEè„
+		{{ -mAnchor.x * mSize.x, (1 - mAnchor.y) * mSize.y, 0.0f}, {}, {0.0f, 1.0f}}, //Â∑¶‰∏ã
+		{{ -mAnchor.x * mSize.x, -mAnchor.y * mSize.y, 0.0f }, {}, {0.0f, 0.0f}}, //Â∑¶‰∏ä
+		{{ (1 - mAnchor.x) * mSize.x, (1 - mAnchor.y) * mSize.y, 0.0f }, {}, {1.0f, 1.0f}}, //Âè≥‰∏ã
+		{{ (1 - mAnchor.x) * mSize.x, -mAnchor.y * mSize.y, 0.0f }, {}, {1.0f, 0.0f}}, //Âè≥‰∏ä
 	};
 
-	//í∏ì_ÉCÉìÉfÉbÉNÉXÉfÅ[É^
+	//È†ÇÁÇπ„Ç§„É≥„Éá„ÉÉ„ÇØ„Çπ„Éá„Éº„Çø
 	uint32_t indices[] = {
 		0, 1, 2,
 		1, 3, 2
@@ -148,12 +147,12 @@ void SpriteManager::Init()
 	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
 	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
 	samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
-	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK; //É{Å[É_Å[ÇÃéûÇÕçï
-	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR; //ÉäÉjÉAï‚ä‘
-	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX; //É~ÉbÉvÉ}ÉbÉvç≈ëÂíl
-	samplerDesc.MinLOD = 0.0f; //É~ÉbÉvÉ}ÉbÉvç≈è¨íl
+	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK; //„Éú„Éº„ÉÄ„Éº„ÅÆÊôÇ„ÅØÈªí
+	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR; //„É™„Éã„Ç¢Ë£úÈñì
+	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX; //„Éü„ÉÉ„Éó„Éû„ÉÉ„ÉóÊúÄÂ§ßÂÄ§
+	samplerDesc.MinLOD = 0.0f; //„Éü„ÉÉ„Éó„Éû„ÉÉ„ÉóÊúÄÂ∞èÂÄ§
 	samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
-	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL; //ÉsÉNÉZÉãÉVÉFÅ[É_Å[Ç©ÇÁÇæÇØå©Ç¶ÇÈ
+	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL; //„Éî„ÇØ„Çª„É´„Ç∑„Çß„Éº„ÉÄ„Éº„Åã„Çâ„Å†„ÅëË¶ã„Åà„Çã
 	mRootSignature.mDesc.StaticSamplers = StaticSamplerDescs{ samplerDesc };
 	mRootSignature.Create();
 
@@ -162,7 +161,7 @@ void SpriteManager::Init()
 	mPipelineState.mDesc.VS = Shader("./Shader/SpriteVS.hlsl", "main", "vs_5_0");
 	mPipelineState.mDesc.PS = Shader("./Shader/SpritePS.hlsl", "main", "ps_5_0");
 
-	// ÉâÉXÉ^ÉâÉCÉUÇÃê›íË
+	// „É©„Çπ„Çø„É©„Ç§„Ç∂„ÅÆË®≠ÂÆö
 	mPipelineState.mDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 	mPipelineState.mDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
 	mPipelineState.mDesc.RasterizerState.DepthClipEnable = false;

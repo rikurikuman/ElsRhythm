@@ -216,7 +216,7 @@ Quaternion Quaternion::FromRotationMatrix(const Matrix4& mat)
 	}
 
 	if (elem[biggestIndex] < 0.0f) {
-		//s—ñ‚ª‚¨‚©‚µ‚¢
+		//è¡Œåˆ—ãŒãŠã‹ã—ã„
 		return Quaternion(0, 0, 0, 0);
 	}
 

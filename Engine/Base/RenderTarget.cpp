@@ -42,7 +42,7 @@ void RenderTarget::SetToTexture(std::string name)
 	RenderTexture* tex = manager->GetRenderTexture(name);
 
 	if (tex == nullptr) {
-		//Ç»Ç¢ÇÊ
+		//„Å™„ÅÑ„Çà
 #ifdef _DEBUG
 		OutputDebugStringA(("RKEngine ERROR: Failed SetToTexture. RenderTargetTexture(" + name + ") isn't exist.\n").c_str());
 #endif
@@ -78,7 +78,7 @@ void RenderTarget::SetToTexture(std::vector<std::string> names)
 		RenderTexture* tex = manager->GetRenderTexture(name);
 
 		if (tex == nullptr) {
-			//Ç»Ç¢ÇÊ
+			//„Å™„ÅÑ„Çà
 #ifdef _DEBUG
 			OutputDebugStringA(("RKEngine ERROR: Failed SetToTexture. RenderTargetTexture(" + name + ") isn't exist.\n").c_str());
 #endif
@@ -136,11 +136,11 @@ RenderTexture* RenderTarget::CreateRenderTexture(const uint32_t width, const uin
 
 	renderTarget.mHeapIndex = useIndex;
 
-	// ÉeÉNÉXÉ`ÉÉÉoÉbÉtÉ@
-	// ÉqÅ[Évê›íË
+	// „ÉÜ„ÇØ„Çπ„ÉÅ„É£„Éê„ÉÉ„Éï„Ç°
+	// „Éí„Éº„ÉóË®≠ÂÆö
 	D3D12_HEAP_PROPERTIES textureHeapProp{};
 	textureHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
-	// ÉäÉ\Å[ÉXê›íË
+	// „É™„ÇΩ„Éº„ÇπË®≠ÂÆö
 	D3D12_RESOURCE_DESC textureResourceDesc{};
 	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 	textureResourceDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
@@ -157,7 +157,7 @@ RenderTexture* RenderTarget::CreateRenderTexture(const uint32_t width, const uin
 	textureClearValue.Color[2] = clearColor.b;
 	textureClearValue.Color[3] = clearColor.a;
 
-	//ê∂ê¨
+	//ÁîüÊàê
 	result = RDirectX::GetDevice()->CreateCommittedResource(
 		&textureHeapProp,
 		D3D12_HEAP_FLAG_NONE,
@@ -175,7 +175,7 @@ RenderTexture* RenderTarget::CreateRenderTexture(const uint32_t width, const uin
 	depthResDesc.DepthOrArraySize = 1;
 	depthResDesc.Format = DXGI_FORMAT_R32_TYPELESS;
 	depthResDesc.SampleDesc.Count = 1;
-	depthResDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL; //ÉfÉvÉXÉXÉeÉìÉVÉã
+	depthResDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL; //„Éá„Éó„Çπ„Çπ„ÉÜ„É≥„Ç∑„É´
 
 	D3D12_HEAP_PROPERTIES depthHeapProp{};
 	depthHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
@@ -242,7 +242,7 @@ RenderTexture* RenderTarget::GetRenderTexture(std::string name) {
 		return &itr->second;
 	}
 
-	//Ç»Ç¢ÇÊ
+	//„Å™„ÅÑ„Çà
 	Util::DebugLog("RKEngine ERROR : RenderTarget::GetRenderTexture() : Failed find from map.");
 	return nullptr;
 }

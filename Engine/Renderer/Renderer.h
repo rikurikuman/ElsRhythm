@@ -13,45 +13,45 @@ public:
 		return &instance;
 	}
 
-	//Renderer‚É‚æ‚é•`‰æˆ—‚ğÀs‚µ‚Ü‚·
+	//Rendererã«ã‚ˆã‚‹æç”»å‡¦ç†ã‚’å®Ÿè¡Œã—ã¾ã™
 	static void Execute();
 
 	/// <summary>
-	/// •`‰æƒRƒ}ƒ“ƒh‚ğRenderer‚É—v‹‚µ‚Ü‚·
-	/// ‚±‚ÌŠÖ”‚ğÀs‚µ‚½uŠÔ‚É•`‰æƒRƒ}ƒ“ƒh‚ªƒR[ƒ‹‚³‚ê‚é‚í‚¯‚Å‚Í‚È‚¢‚±‚Æ‚É’ˆÓ‚µ‚Ä‚­‚¾‚³‚¢
+	/// æç”»ã‚³ãƒãƒ³ãƒ‰ã‚’Rendererã«è¦æ±‚ã—ã¾ã™
+	/// ã“ã®é–¢æ•°ã‚’å®Ÿè¡Œã—ãŸç¬é–“ã«æç”»ã‚³ãƒãƒ³ãƒ‰ãŒã‚³ãƒ¼ãƒ«ã•ã‚Œã‚‹ã‚ã‘ã§ã¯ãªã„ã“ã¨ã«æ³¨æ„ã—ã¦ãã ã•ã„
 	/// </summary>
-	/// <param name="stageID">•`‰æƒXƒe[ƒW–¼</param>
-	/// <param name="vertView">’¸“_ƒoƒbƒtƒ@ƒrƒ…[</param>
-	/// <param name="indexView">ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[</param>
-	/// <param name="indexCount">ƒCƒ“ƒfƒbƒNƒX‚Ì”</param>
-	/// <param name="rootData">ƒ‹[ƒgƒpƒ‰ƒ[ƒ^[</param>
-	/// <param name="anchorPoint">•`‰æ—Dæ“x©“®”»’è‚Ég‚¤À•W</param>
+	/// <param name="stageID">æç”»ã‚¹ãƒ†ãƒ¼ã‚¸å</param>
+	/// <param name="vertView">é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼</param>
+	/// <param name="indexView">ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼</param>
+	/// <param name="indexCount">ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®æ•°</param>
+	/// <param name="rootData">ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼</param>
+	/// <param name="anchorPoint">æç”»å„ªå…ˆåº¦è‡ªå‹•åˆ¤å®šã«ä½¿ã†åº§æ¨™</param>
 	static void DrawCall(std::string stageID, D3D12_VERTEX_BUFFER_VIEW* vertView, D3D12_INDEX_BUFFER_VIEW* indexView, uint32_t indexCount, const std::vector<RootData>& rootData, const Vector3& anchorPoint = Vector3::ZERO);
 	
 	/// <summary>
-	/// •`‰æƒRƒ}ƒ“ƒh‚ğRenderer‚É—v‹‚µ‚Ü‚·
-	/// ‚±‚ÌŠÖ”‚ğÀs‚µ‚½uŠÔ‚É•`‰æƒRƒ}ƒ“ƒh‚ªƒR[ƒ‹‚³‚ê‚é‚í‚¯‚Å‚Í‚È‚¢‚±‚Æ‚É’ˆÓ‚µ‚Ä‚­‚¾‚³‚¢
+	/// æç”»ã‚³ãƒãƒ³ãƒ‰ã‚’Rendererã«è¦æ±‚ã—ã¾ã™
+	/// ã“ã®é–¢æ•°ã‚’å®Ÿè¡Œã—ãŸç¬é–“ã«æç”»ã‚³ãƒãƒ³ãƒ‰ãŒã‚³ãƒ¼ãƒ«ã•ã‚Œã‚‹ã‚ã‘ã§ã¯ãªã„ã“ã¨ã«æ³¨æ„ã—ã¦ãã ã•ã„
 	/// </summary>
-	/// <param name="stageID">•`‰æƒXƒe[ƒW–¼</param>
-	/// <param name="vertView">’¸“_ƒoƒbƒtƒ@ƒrƒ…[</param>
-	/// <param name="indexView">ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[</param>
-	/// <param name="indexCount">ƒCƒ“ƒfƒbƒNƒX‚Ì”</param>
-	/// <param name="rootData">ƒ‹[ƒgƒpƒ‰ƒ[ƒ^[</param>
-	/// <param name="anchorPoint">•`‰æ—Dæ“x©“®”»’è‚Ég‚¤À•W</param>
+	/// <param name="stageID">æç”»ã‚¹ãƒ†ãƒ¼ã‚¸å</param>
+	/// <param name="vertView">é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼</param>
+	/// <param name="indexView">ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼</param>
+	/// <param name="indexCount">ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®æ•°</param>
+	/// <param name="rootData">ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼</param>
+	/// <param name="anchorPoint">æç”»å„ªå…ˆåº¦è‡ªå‹•åˆ¤å®šã«ä½¿ã†åº§æ¨™</param>
 	static void DrawCall(std::string stageID, SRVertexBuffer& vertBuff, SRIndexBuffer& indexBuff, uint32_t indexCount, const std::vector<RootData>& rootData, const Vector3& anchorPoint = Vector3::ZERO);
 	
 	/// <summary>
-	/// •`‰æƒRƒ}ƒ“ƒh‚ğRenderer‚É—v‹‚µ‚Ü‚·
+	/// æç”»ã‚³ãƒãƒ³ãƒ‰ã‚’Rendererã«è¦æ±‚ã—ã¾ã™
 	/// </summary>
-	/// <param name="stageID">•`‰æƒXƒe[ƒW–¼</param>
-	/// <param name="vertView">’¸“_ƒoƒbƒtƒ@ƒrƒ…[</param>
-	/// <param name="indexView">ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[</param>
-	/// <param name="indexCount">ƒCƒ“ƒfƒbƒNƒX‚Ì”</param>
-	/// <param name="rootData">ƒ‹[ƒgƒpƒ‰ƒ[ƒ^[</param>
-	/// <param name="anchorPoint">•`‰æ—Dæ“x©“®”»’è‚Ég‚¤À•W</param>
+	/// <param name="stageID">æç”»ã‚¹ãƒ†ãƒ¼ã‚¸å</param>
+	/// <param name="vertView">é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼</param>
+	/// <param name="indexView">ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼</param>
+	/// <param name="indexCount">ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®æ•°</param>
+	/// <param name="rootData">ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼</param>
+	/// <param name="anchorPoint">æç”»å„ªå…ˆåº¦è‡ªå‹•åˆ¤å®šã«ä½¿ã†åº§æ¨™</param>
 	static void DrawCall(std::string stageID, RenderOrder order);
 
-	//RenderStage‚ğw’èID‚ÌRenderStage‚Ì‘O‚É’Ç‰Á‚µ‚Ü‚·
+	//RenderStageã‚’æŒ‡å®šIDã®RenderStageã®å‰ã«è¿½åŠ ã—ã¾ã™
 	template<class T>
 	static void AddRenderStageFront(std::string targetID = "") {
 		Renderer* instance = GetInstance();
@@ -72,7 +72,7 @@ public:
 		instance->mStages.insert(instance->mStages.begin(), std::move(ptr));
 	}
 
-	//RenderStage‚ğw’èID‚ÌRenderStage‚ÌŒã‚É’Ç‰Á‚µ‚Ü‚·
+	//RenderStageã‚’æŒ‡å®šIDã®RenderStageã®å¾Œã«è¿½åŠ ã—ã¾ã™
 	template<class T>
 	static void AddRenderStageBack(std::string targetID = "") {
 		Renderer* instance = GetInstance();
@@ -94,87 +94,87 @@ public:
 		instance->mStages.push_back(std::move(ptr));
 	}
 
-	//w’èID‚ÌRenderStage‚ğíœ‚µ‚Ü‚·
+	//æŒ‡å®šIDã®RenderStageã‚’å‰Šé™¤ã—ã¾ã™
 	static void RemoveRenderStage(std::string id);
 
-	//w’èID‚ÌRenderStage‚ğæ“¾‚µ‚Ü‚·
+	//æŒ‡å®šIDã®RenderStageã‚’å–å¾—ã—ã¾ã™
 	static IRenderStage* GetRenderStage(std::string id);
 
-	//Renderer‚É“o˜^‚³‚ê‚Ä‚¢‚éRenderStage‚ÌID‚ğ‘S‚Äæ“¾‚µ‚Ü‚·
+	//Rendererã«ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹RenderStageã®IDã‚’å…¨ã¦å–å¾—ã—ã¾ã™
 	static std::vector<std::string> GetRenderStageIDs();
 
-	//¡Œã‚Ì•`‰æ‚Ég‚¤PrimitiveTopology‚ğw’è‚µ‚Ü‚·
-	//ˆê“xƒZƒbƒg‚·‚é‚Æ‚»‚ÌŒã‚¸‚Á‚ÆˆÛ‚³‚ê‚Ü‚·
-	//ˆê“I‚É•Ï‚¦‚éê‡‚È‚Ç‚É–ß‚µ–Y‚ê‚È‚¢‚æ‚¤’ˆÓ
+	//ä»Šå¾Œã®æç”»ã«ä½¿ã†PrimitiveTopologyã‚’æŒ‡å®šã—ã¾ã™
+	//ä¸€åº¦ã‚»ãƒƒãƒˆã™ã‚‹ã¨ãã®å¾Œãšã£ã¨ç¶­æŒã•ã‚Œã¾ã™
+	//ä¸€æ™‚çš„ã«å¤‰ãˆã‚‹å ´åˆãªã©ã«æˆ»ã—å¿˜ã‚Œãªã„ã‚ˆã†æ³¨æ„
 	static void SetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY topology) {
 		GetInstance()->mPrimitiveTopology = topology;
 	}
 
-	//¡Œã‚Ì•`‰æ‚Ég‚¤RenderTarget‚ğƒoƒbƒNƒoƒbƒtƒ@‚Éw’è‚µ‚Ü‚·
-	//ˆê“xƒZƒbƒg‚·‚é‚Æ‚»‚ÌŒã‚¸‚Á‚ÆˆÛ‚³‚ê‚Ü‚·
-	//ˆê“I‚É•Ï‚¦‚éê‡‚È‚Ç‚É–ß‚µ–Y‚ê‚È‚¢‚æ‚¤’ˆÓ
+	//ä»Šå¾Œã®æç”»ã«ä½¿ã†RenderTargetã‚’ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã«æŒ‡å®šã—ã¾ã™
+	//ä¸€åº¦ã‚»ãƒƒãƒˆã™ã‚‹ã¨ãã®å¾Œãšã£ã¨ç¶­æŒã•ã‚Œã¾ã™
+	//ä¸€æ™‚çš„ã«å¤‰ãˆã‚‹å ´åˆãªã©ã«æˆ»ã—å¿˜ã‚Œãªã„ã‚ˆã†æ³¨æ„
 	static void SetToBackBuffer() {
 		GetInstance()->mRenderTargets.clear();
 	}
 
-	//¡Œã‚Ì•`‰æ‚Ég‚¤RenderTarget‚ÌŒˆ’è‚ğRenderer‚É”C‚¹‚Ü‚·
+	//ä»Šå¾Œã®æç”»ã«ä½¿ã†RenderTargetã®æ±ºå®šã‚’Rendererã«ä»»ã›ã¾ã™
 	static void SetRenderTargetToAuto() {
 		GetInstance()->mRenderTargets.clear();
 	}
 
-	//¡Œã‚Ì•`‰æ‚Ég‚¤RenderTarget‚ğw’è‚µ‚Ü‚·
-	//ˆê“xƒZƒbƒg‚·‚é‚Æ‚»‚ÌŒã‚¸‚Á‚ÆˆÛ‚³‚ê‚Ü‚·
-	//ˆê“I‚É•Ï‚¦‚éê‡‚È‚Ç‚É–ß‚µ–Y‚ê‚È‚¢‚æ‚¤’ˆÓ
+	//ä»Šå¾Œã®æç”»ã«ä½¿ã†RenderTargetã‚’æŒ‡å®šã—ã¾ã™
+	//ä¸€åº¦ã‚»ãƒƒãƒˆã™ã‚‹ã¨ãã®å¾Œãšã£ã¨ç¶­æŒã•ã‚Œã¾ã™
+	//ä¸€æ™‚çš„ã«å¤‰ãˆã‚‹å ´åˆãªã©ã«æˆ»ã—å¿˜ã‚Œãªã„ã‚ˆã†æ³¨æ„
 	static void SetRenderTarget(std::string renderTargetName) {
 		GetInstance()->mRenderTargets = std::vector<std::string>{ renderTargetName };
 	}
 
-	//¡Œã‚Ì•`‰æ‚Ég‚¤RenderTarget‚ğw’è‚µ‚Ü‚·
-	//ˆê“xƒZƒbƒg‚·‚é‚Æ‚»‚ÌŒã‚¸‚Á‚ÆˆÛ‚³‚ê‚Ü‚·
-	//ˆê“I‚É•Ï‚¦‚éê‡‚È‚Ç‚É–ß‚µ–Y‚ê‚È‚¢‚æ‚¤’ˆÓ
+	//ä»Šå¾Œã®æç”»ã«ä½¿ã†RenderTargetã‚’æŒ‡å®šã—ã¾ã™
+	//ä¸€åº¦ã‚»ãƒƒãƒˆã™ã‚‹ã¨ãã®å¾Œãšã£ã¨ç¶­æŒã•ã‚Œã¾ã™
+	//ä¸€æ™‚çš„ã«å¤‰ãˆã‚‹å ´åˆãªã©ã«æˆ»ã—å¿˜ã‚Œãªã„ã‚ˆã†æ³¨æ„
 	static void SetRenderTargets(std::vector<std::string> renderTargetNames) {
 		GetInstance()->mRenderTargets = renderTargetNames;
 	}
 
-	//¡Œã‚Ì•`‰æ‚Ég‚¤RootSignature‚ÌŒˆ’è‚ğRenderer‚É”C‚¹‚Ü‚·
+	//ä»Šå¾Œã®æç”»ã«ä½¿ã†RootSignatureã®æ±ºå®šã‚’Rendererã«ä»»ã›ã¾ã™
 	static void SetRootSignatureToAuto() {
 		GetInstance()->mRootSignature = nullptr;
 	}
 
-	//¡Œã‚Ì•`‰æ‚Ég‚¤RootSignature‚ğw’è‚µ‚Ü‚·
-	//ˆê“xƒZƒbƒg‚·‚é‚Æ‚»‚ÌŒã‚¸‚Á‚ÆˆÛ‚³‚ê‚Ü‚·
-	//ˆê“I‚É•Ï‚¦‚éê‡‚È‚Ç‚É–ß‚µ–Y‚ê‚È‚¢‚æ‚¤’ˆÓ
+	//ä»Šå¾Œã®æç”»ã«ä½¿ã†RootSignatureã‚’æŒ‡å®šã—ã¾ã™
+	//ä¸€åº¦ã‚»ãƒƒãƒˆã™ã‚‹ã¨ãã®å¾Œãšã£ã¨ç¶­æŒã•ã‚Œã¾ã™
+	//ä¸€æ™‚çš„ã«å¤‰ãˆã‚‹å ´åˆãªã©ã«æˆ»ã—å¿˜ã‚Œãªã„ã‚ˆã†æ³¨æ„
 	static void SetRootSignature(const RootSignature& mRootSignature) {
 		GetInstance()->mRootSignature = mRootSignature.mPtr.Get();
 	}
 
-	//¡Œã‚Ì•`‰æ‚Ég‚¤PipelineState‚ÌŒˆ’è‚ğRenderer‚É”C‚¹‚Ü‚·
+	//ä»Šå¾Œã®æç”»ã«ä½¿ã†PipelineStateã®æ±ºå®šã‚’Rendererã«ä»»ã›ã¾ã™
 	static void SetPipelineToAuto() {
 		GetInstance()->mPipelineState = nullptr;
 	}
 
-	//¡Œã‚Ì•`‰æ‚Ég‚¤PipelineState‚ğw’è‚µ‚Ü‚·
-	//ˆê“xƒZƒbƒg‚·‚é‚Æ‚»‚ÌŒã‚¸‚Á‚ÆˆÛ‚³‚ê‚Ü‚·
-	//ˆê“I‚É•Ï‚¦‚éê‡‚È‚Ç‚É–ß‚µ–Y‚ê‚È‚¢‚æ‚¤’ˆÓ
+	//ä»Šå¾Œã®æç”»ã«ä½¿ã†PipelineStateã‚’æŒ‡å®šã—ã¾ã™
+	//ä¸€åº¦ã‚»ãƒƒãƒˆã™ã‚‹ã¨ãã®å¾Œãšã£ã¨ç¶­æŒã•ã‚Œã¾ã™
+	//ä¸€æ™‚çš„ã«å¤‰ãˆã‚‹å ´åˆãªã©ã«æˆ»ã—å¿˜ã‚Œãªã„ã‚ˆã†æ³¨æ„
 	static void SetPipeline(const GraphicsPipeline& pipeline) {
 		GetInstance()->mPipelineState = pipeline.mPtr.Get();
 	}
 
-	//¡Œã‚Ì•`‰æ‚Ég‚¤Viewport‚ğw’è‚µ‚Ü‚·
-	//ˆê“xƒZƒbƒg‚·‚é‚Æ‚»‚ÌŒã‚¸‚Á‚ÆˆÛ‚³‚ê‚Ü‚·
-	//ˆê“I‚É•Ï‚¦‚éê‡‚È‚Ç‚É–ß‚µ–Y‚ê‚È‚¢‚æ‚¤’ˆÓ
+	//ä»Šå¾Œã®æç”»ã«ä½¿ã†Viewportã‚’æŒ‡å®šã—ã¾ã™
+	//ä¸€åº¦ã‚»ãƒƒãƒˆã™ã‚‹ã¨ãã®å¾Œãšã£ã¨ç¶­æŒã•ã‚Œã¾ã™
+	//ä¸€æ™‚çš„ã«å¤‰ãˆã‚‹å ´åˆãªã©ã«æˆ»ã—å¿˜ã‚Œãªã„ã‚ˆã†æ³¨æ„
 	static void SetViewports(const std::vector<Viewport>& viewports) {
 		GetInstance()->mViewports = viewports;
 	}
 
-	//¡Œã‚Ì•`‰æ‚Ég‚¤Viewport‚ğw’è‚µ‚Ü‚·
-	//ˆê“xƒZƒbƒg‚·‚é‚Æ‚»‚ÌŒã‚¸‚Á‚ÆˆÛ‚³‚ê‚Ü‚·
-	//ˆê“I‚É•Ï‚¦‚éê‡‚È‚Ç‚É–ß‚µ–Y‚ê‚È‚¢‚æ‚¤’ˆÓ
+	//ä»Šå¾Œã®æç”»ã«ä½¿ã†Viewportã‚’æŒ‡å®šã—ã¾ã™
+	//ä¸€åº¦ã‚»ãƒƒãƒˆã™ã‚‹ã¨ãã®å¾Œãšã£ã¨ç¶­æŒã•ã‚Œã¾ã™
+	//ä¸€æ™‚çš„ã«å¤‰ãˆã‚‹å ´åˆãªã©ã«æˆ»ã—å¿˜ã‚Œãªã„ã‚ˆã†æ³¨æ„
 	static void SetScissorRects(const std::vector<RRect> scissorRects) {
 		GetInstance()->mScissorRects = scissorRects;
 	}
 
-	//¡Œã‚Ì•`‰æ‚Ég‚¤ƒpƒ‰ƒ[ƒ^‚ğRenderer‚É”C‚¹‚Ü‚·
+	//ä»Šå¾Œã®æç”»ã«ä½¿ã†ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’Rendererã«ä»»ã›ã¾ã™
 	static void SetAllParamaterToAuto();
 
 private:

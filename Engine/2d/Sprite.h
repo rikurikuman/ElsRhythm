@@ -1,5 +1,10 @@
 #pragma once
+
+//å¤–éƒ¨ãƒ˜ãƒƒãƒ€
+#pragma warning(push, 0)
 #include <d3d12.h>
+#pragma warning(pop)
+
 #include "Vector2.h"
 #include "Texture.h"
 #include "Material.h"
@@ -36,34 +41,34 @@ private:
 	SRConstBuffer<TransformBuffer> mTransformBuff;
 	SRConstBuffer<ViewProjectionBuffer> mViewProjectionBuff;
 
-	//’¸“_‚ğ˜M‚é
+	//é ‚ç‚¹ã‚’å¼„ã‚‹
 	void UpdateVertex();
 
 public:
 	Sprite();
 	Sprite(TextureHandle texture, Vector2 anchor = { 0.5f, 0.5f });
 
-	//ƒeƒNƒXƒ`ƒƒ‚ğ•ÏX‚·‚é
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å¤‰æ›´ã™ã‚‹
 	void SetTexture(TextureHandle texture);
 
-	//ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg‚ğ•ÏX‚·‚é
+	//ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆã‚’å¤‰æ›´ã™ã‚‹
 	void SetAnchor(Vector2 anchor);
 
 	/// <summary>
-	/// ƒeƒNƒXƒ`ƒƒ‚ÌØ‚èo‚µˆÊ’u‚ğİ’è‚·‚é
+	/// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®åˆ‡ã‚Šå‡ºã—ä½ç½®ã‚’è¨­å®šã™ã‚‹
 	/// </summary>
-	/// <param name="srcX">Ø‚èo‚µˆÊ’u‚Ì¶ãX</param>
-	/// <param name="srcY">Ø‚èo‚µˆÊ’u‚Ì¶ãY</param>
-	/// <param name="width">Ø‚èo‚µ”ÍˆÍƒTƒCƒYX</param>
-	/// <param name="height">Ø‚èo‚µ”ÍˆÍƒTƒCƒYY</param>
+	/// <param name="srcX">åˆ‡ã‚Šå‡ºã—ä½ç½®ã®å·¦ä¸ŠX</param>
+	/// <param name="srcY">åˆ‡ã‚Šå‡ºã—ä½ç½®ã®å·¦ä¸ŠY</param>
+	/// <param name="width">åˆ‡ã‚Šå‡ºã—ç¯„å›²ã‚µã‚¤ã‚ºX</param>
+	/// <param name="height">åˆ‡ã‚Šå‡ºã—ç¯„å›²ã‚µã‚¤ã‚ºY</param>
 	void SetTexRect(int32_t srcX, int32_t srcY, int32_t width, int32_t height);
 
 	void Init();
 
-	//Šeƒf[ƒ^‚Ìƒoƒbƒtƒ@‚Ö‚Ì“]‘—
+	//å„ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã¸ã®è»¢é€
 	void TransferBuffer();
 
-	//•`‰æ—v‹‚ğRenderer‚ÖÏ‚Ş
+	//æç”»è¦æ±‚ã‚’Rendererã¸ç©ã‚€
 	void Draw();
 };
 

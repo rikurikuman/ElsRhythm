@@ -16,12 +16,12 @@ void Image3D::UpdateVertex()
 	float uvTop = mSrcPos.y / texSize.y;
 	float uvBottom = (mSrcPos.y + mTexRect.y) / texSize.y;
 
-	//’¸“_ƒf[ƒ^
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 	VertexPNU vertices[] = {
-		{{ -mAnchor.x * mSize.x, (1 - mAnchor.y) * mSize.y, 0.0f}, {0, 0, -1}, {uvLeft, uvTop}}, //¶ã
-		{{ -mAnchor.x * mSize.x, -mAnchor.y * mSize.y, 0.0f }, {0, 0, -1}, {uvLeft, uvBottom}}, //¶‰º
-		{{ (1 - mAnchor.x) * mSize.x, (1 - mAnchor.y) * mSize.y, 0.0f }, {0, 0, -1}, {uvRight, uvTop}}, //‰Eã
-		{{ (1 - mAnchor.x) * mSize.x, -mAnchor.y * mSize.y, 0.0f }, {0, 0, -1}, {uvRight, uvBottom}}, //‰E‰º
+		{{ -mAnchor.x * mSize.x, (1 - mAnchor.y) * mSize.y, 0.0f}, {0, 0, -1}, {uvLeft, uvTop}}, //å·¦ä¸Š
+		{{ -mAnchor.x * mSize.x, -mAnchor.y * mSize.y, 0.0f }, {0, 0, -1}, {uvLeft, uvBottom}}, //å·¦ä¸‹
+		{{ (1 - mAnchor.x) * mSize.x, (1 - mAnchor.y) * mSize.y, 0.0f }, {0, 0, -1}, {uvRight, uvTop}}, //å³ä¸Š
+		{{ (1 - mAnchor.x) * mSize.x, -mAnchor.y * mSize.y, 0.0f }, {0, 0, -1}, {uvRight, uvBottom}}, //å³ä¸‹
 	};
 
 	mVertBuff.Update(vertices, _countof(vertices));
@@ -141,7 +141,7 @@ void Image3D::SetSize(Vector2 size, bool forceSize)
 	
 void Image3D::Init()
 {
-	//’¸“_ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^
+	//é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿
 	uint32_t indices[] = {
 		0, 2, 1,
 		1, 2, 3
@@ -183,7 +183,7 @@ void Image3D::TransferBuffer(ViewProjection viewprojection)
 	mViewProjectionBuff->matrix = viewprojection.mMatrix;
 }
 
-void Image3D::Draw()
+void Image3D::Draw(std::string stageID)
 {
 	RenderOrder order;
 	order.pipelineState = GetPipeline().mPtr.Get();
@@ -198,11 +198,13 @@ void Image3D::Draw()
 		{RootDataType::LIGHT},
 	};
 
-	if (static_cast<int32_t>(mBlendMode) > 2) {
-		Renderer::DrawCall("Transparent", order);
+	if (stageID.empty()) {
+		if (static_cast<int32_t>(mBlendMode) > 2) {
+			stageID = "Transparent";
+		}
+		else {
+			stageID = "Opaque";
+		}
 	}
-	else {
-		Renderer::DrawCall("Opaque", order);
-	}
-	
+	Renderer::DrawCall(stageID, order);
 }

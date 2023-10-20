@@ -16,18 +16,18 @@ public:
 		Init(texture, size);
 	}
 
-	//‰Šú‰»ˆ—
+	//åˆæœŸåŒ–å‡¦ç†
 	void Init(TextureHandle texture, Vector2 size);
 
 	void Update(const ViewProjection& vp);
 
-	//Šeƒf[ƒ^‚Ìƒoƒbƒtƒ@‚Ö‚Ì“]‘—
+	//å„ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã¸ã®è»¢é€
 	void TransferBuffer(ViewProjection viewprojection) override;
 
-	//•`‰æ—v‹‚ğRenderer‚Ö
+	//æç”»è¦æ±‚ã‚’Rendererã¸
 	void Draw();
 
-	//•`‰æ—p‚ÌƒRƒ}ƒ“ƒh‚ğ‚Ü‚Æ‚ß‚ÄƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÉÏ‚Ş
+	//æç”»ç”¨ã®ã‚³ãƒãƒ³ãƒ‰ã‚’ã¾ã¨ã‚ã¦ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã«ç©ã‚€
 	void DrawCommands() override;
 };
 

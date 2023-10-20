@@ -48,7 +48,7 @@ void SRBufferAllocator::Free(SRBufferPtr& ptr)
 	}
 
 	_Free(ptr);
-	//‚à‚Á‚ÆˆÀ‘S‚ÉÁ‚¹‚é‚æ‚¤‚É‰½‚Æ‚©‚·‚é
+	//ã‚‚ã£ã¨å®‰å…¨ã«æ¶ˆã›ã‚‹ã‚ˆã†ã«ä½•ã¨ã‹ã™ã‚‹
 	ptr.mPtr->region = nullptr;
 	instance->mRegionPtrs.erase(ptr.mPtr->memItr);
 	ptr.mPtr = nullptr;
@@ -59,16 +59,16 @@ MemoryRegion* SRBufferAllocator::_Alloc(size_t needSize, uint32_t align, bool de
 	SRBufferAllocator* instance = GetInstance();
 	std::lock_guard<std::recursive_mutex> lock(instance->sMutex);
 
-	//Šm•Û‚µ‚½—Ìˆæ‚Ìæ“ªƒAƒhƒŒƒX‚ğw‚·ƒ|ƒCƒ“ƒ^
+	//ç¢ºä¿ã—ãŸé ˜åŸŸã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’æŒ‡ã™ãƒã‚¤ãƒ³ã‚¿
 	byte* newLoc = nullptr;
 
-	//‹ó‚«—Ìˆæ‚©‚ç—~‚µ‚¢ƒTƒCƒY‚ªû‚Ü‚é—Ìˆæ‚ğ’T‚·
+	//ç©ºãé ˜åŸŸã‹ã‚‰æ¬²ã—ã„ã‚µã‚¤ã‚ºãŒåã¾ã‚‹é ˜åŸŸã‚’æ¢ã™
 	for (MemoryRegion& reg : instance->mFreeRegions) {
 
-		//—v‹‹«ŠE‚ÉƒAƒ‰ƒCƒƒ“ƒg‚·‚é
+		//è¦æ±‚å¢ƒç•Œã«ã‚¢ãƒ©ã‚¤ãƒ¡ãƒ³ãƒˆã™ã‚‹
 		byte* alignedLoc = reinterpret_cast<byte*>(Align(reinterpret_cast<size_t>(reg.pBegin), align));
 
-		//ƒAƒ‰ƒCƒƒ“ƒg‚É¸”s‚·‚é‚æ‚¤‚È‚çnull‚Ì‚Ü‚Ü•Ô‚·
+		//ã‚¢ãƒ©ã‚¤ãƒ¡ãƒ³ãƒˆã«å¤±æ•—ã™ã‚‹ã‚ˆã†ãªã‚‰nullã®ã¾ã¾è¿”ã™
 		if (alignedLoc == nullptr) {
 #ifdef _DEBUG
 			OutputDebugStringA("RKEngine ERROR: SRBufferAllocator::_Alloc() : Failed Alignment.\n");
@@ -76,57 +76,57 @@ MemoryRegion* SRBufferAllocator::_Alloc(size_t needSize, uint32_t align, bool de
 			return nullptr;
 		}
 
-		//ƒAƒ‰ƒCƒƒ“ƒg‚³‚ê‚½Œã‚ÌƒAƒhƒŒƒX‚©‚ç—v‹ƒTƒCƒY‚ªŠm•Û‚Å‚«‚é‚©Šm”F
+		//ã‚¢ãƒ©ã‚¤ãƒ¡ãƒ³ãƒˆã•ã‚ŒãŸå¾Œã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã‹ã‚‰è¦æ±‚ã‚µã‚¤ã‚ºãŒç¢ºä¿ã§ãã‚‹ã‹ç¢ºèª
 		size_t remainSize = size_t(reg.pEnd - alignedLoc + 1);
 		if (reg.pEnd < alignedLoc || remainSize < needSize) {
-			continue; //‚Å‚«‚È‚¢‚È‚ç•Ê‚Ì‹ó‚«—Ìˆæ‚Å‚à‚¤ˆê“x
+			continue; //ã§ããªã„ãªã‚‰åˆ¥ã®ç©ºãé ˜åŸŸã§ã‚‚ã†ä¸€åº¦
 		}
 
-		//‚Å‚«‚é‚È‚çÌ—p
+		//ã§ãã‚‹ãªã‚‰æ¡ç”¨
 		newLoc = alignedLoc;
 		break;
 	}
 
-	//Šm•Û‚Å‚«‚È‚©‚Á‚½‚ç
+	//ç¢ºä¿ã§ããªã‹ã£ãŸã‚‰
 	if (newLoc == nullptr) {
 		if (deflag) {
-			//ƒfƒtƒ‰ƒO‚µ‚ÄÄŠm•Û‚ğ‚İ‚é
+			//ãƒ‡ãƒ•ãƒ©ã‚°ã—ã¦å†ç¢ºä¿ã‚’è©¦ã¿ã‚‹
 			instance->DeFlag();
 			return _Alloc(needSize, align, false);
 		}
 		if (mOptAutoReCreateBuffer) {
-			//‚æ‚è‘å‚«‚¢ƒTƒCƒY‚Åƒoƒbƒtƒ@‚ğì‚è’¼‚µ‚ÄÄŠm•Û‚ğ‚İ‚é
+			//ã‚ˆã‚Šå¤§ãã„ã‚µã‚¤ã‚ºã§ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚Šç›´ã—ã¦å†ç¢ºä¿ã‚’è©¦ã¿ã‚‹
 			instance->ResizeBuffer();
 			return _Alloc(needSize, align, false);
 		}
-		//‰Â”\‚ÈŒÀ‚èŠæ’£‚Á‚½‚¯‚Ç–³—‚¾‚Á‚½‚Ì‚Å‚²‚ß‚ñ‚Ë‚·‚é
+		//å¯èƒ½ãªé™ã‚Šé ‘å¼µã£ãŸã‘ã©ç„¡ç†ã ã£ãŸã®ã§ã”ã‚ã‚“ã­ã™ã‚‹
 #ifdef _DEBUG
 		OutputDebugStringA("RKEngine ERROR: SRBufferAllocator::_Alloc() : Failed Alloc. Out of memory.\n");
 #endif
 		return nullptr;
 	}
 
-	//‹ó‚«—Ìˆæî•ñ‚ğ•ÒW‚·‚é
-	//Šm•Û—Ìˆæ‚Ìæ“ªƒAƒhƒŒƒX‚ªŠÜ‚Ü‚ê‚Ä‚¢‚é‹ó‚«—Ìˆæ‚ğ’T‚·
+	//ç©ºãé ˜åŸŸæƒ…å ±ã‚’ç·¨é›†ã™ã‚‹
+	//ç¢ºä¿é ˜åŸŸã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ãŒå«ã¾ã‚Œã¦ã„ã‚‹ç©ºãé ˜åŸŸã‚’æ¢ã™
 	for (auto itr = instance->mFreeRegions.begin(); itr != instance->mFreeRegions.end(); itr++) {
 		MemoryRegion& reg = *itr;
 		if (newLoc < reg.pBegin || reg.pEnd < newLoc) {
 			continue;
 		}
 
-		//‚ ‚ê‚ÎA‹ó‚«—Ìˆæ‚Ìæ“ª‚©‚çŠm•Û—Ìˆæ‚Ìæ“ª‚Ü‚Å‚ğV‚½‚È‹ó‚«—Ìˆæ‚Æ‚µ‚Ä’Ç‰Á‚·‚é
+		//ã‚ã‚Œã°ã€ç©ºãé ˜åŸŸã®å…ˆé ­ã‹ã‚‰ç¢ºä¿é ˜åŸŸã®å…ˆé ­ã¾ã§ã‚’æ–°ãŸãªç©ºãé ˜åŸŸã¨ã—ã¦è¿½åŠ ã™ã‚‹
 		if (size_t(newLoc - reg.pBegin) != 0) {
 			itr = instance->mFreeRegions.emplace(itr, reg.pBegin, newLoc - 1);
 			itr++;
 		}
 
-		//‚ ‚ê‚ÎAŠm•Û—Ìˆæ‚Ì––”ö‚©‚ç‹ó‚«—Ìˆæ‚Ì––”ö‚Ü‚Å‚ğV‚½‚È‹ó‚«—Ìˆæ‚Æ‚µ‚Ä’Ç‰Á‚·‚é
+		//ã‚ã‚Œã°ã€ç¢ºä¿é ˜åŸŸã®æœ«å°¾ã‹ã‚‰ç©ºãé ˜åŸŸã®æœ«å°¾ã¾ã§ã‚’æ–°ãŸãªç©ºãé ˜åŸŸã¨ã—ã¦è¿½åŠ ã™ã‚‹
 		if (size_t(reg.pEnd - (newLoc + needSize - 1)) != 0) {
 			itr = instance->mFreeRegions.emplace(itr++, newLoc + needSize, reg.pEnd);
 			itr++;
 		}
 
-		//‹ó‚«—Ìˆæíœ
+		//ç©ºãé ˜åŸŸå‰Šé™¤
 		instance->mFreeRegions.erase(itr);
 		break;
 	}
@@ -142,57 +142,57 @@ void SRBufferAllocator::_Free(SRBufferPtr& ptr)
 	SRBufferAllocator* instance = GetInstance();
 	std::lock_guard<std::recursive_mutex> lock(instance->sMutex);
 
-	//g—p’†—Ìˆæ‚©‚çw’èƒAƒhƒŒƒX‚ğæ“ª‚Æ‚·‚é—Ìˆæ‚ğ’T‚·
+	//ä½¿ç”¨ä¸­é ˜åŸŸã‹ã‚‰æŒ‡å®šã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å…ˆé ­ã¨ã™ã‚‹é ˜åŸŸã‚’æ¢ã™
 	MemoryRegion usingRegion = *ptr.mPtr->region->memItr;
 	instance->mUsingRegions.erase(ptr.mPtr->region->memItr);
-	//Á‚·‚É•ª‚©‚è‚â‚·‚­0xdd‚É‚·‚é
+	//æ¶ˆã™æ™‚ã«åˆ†ã‹ã‚Šã‚„ã™ã0xddã«ã™ã‚‹
 	for (byte* p = usingRegion.pBegin; p <= usingRegion.pEnd; p++) {
 		*p = 0xdd;
 	}
 
-	//‰ğ•ú‚·‚é—Ìˆæ‚ğ‹ó‚«—Ìˆæ‚É’Ç‰Á‚·‚é
+	//è§£æ”¾ã™ã‚‹é ˜åŸŸã‚’ç©ºãé ˜åŸŸã«è¿½åŠ ã™ã‚‹
 	auto prev = instance->mFreeRegions.end();
 	auto next = instance->mFreeRegions.end();
 	for (auto itr = instance->mFreeRegions.begin(); itr != instance->mFreeRegions.end(); itr++) {
-		//‰ğ•ú‚·‚é—Ìˆæ‚Ìæ“ª‚Æ˜A‘±‚·‚éˆê”Ô‹ß‚¢Šù‘¶‚Ì‹ó‚«—Ìˆæ‚ğ’T‚·
+		//è§£æ”¾ã™ã‚‹é ˜åŸŸã®å…ˆé ­ã¨é€£ç¶šã™ã‚‹ä¸€ç•ªè¿‘ã„æ—¢å­˜ã®ç©ºãé ˜åŸŸã‚’æ¢ã™
 		if (itr->pEnd <= usingRegion.pBegin) {
 			prev = itr;
 		}
 
-		//‰ğ•ú‚·‚é—Ìˆæ‚Ì––”ö‚Æ˜A‘±‚·‚éˆê”Ô‹ß‚¢Šù‘¶‚Ì‹ó‚«—Ìˆæ‚ğ’T‚·
+		//è§£æ”¾ã™ã‚‹é ˜åŸŸã®æœ«å°¾ã¨é€£ç¶šã™ã‚‹ä¸€ç•ªè¿‘ã„æ—¢å­˜ã®ç©ºãé ˜åŸŸã‚’æ¢ã™
 		if (usingRegion.pEnd <= itr->pBegin) {
 			next = itr;
 			break;
 		}
 	}
 
-	//‘O•û—Ìˆæ‚ª‚ ‚é
+	//å‰æ–¹é ˜åŸŸãŒã‚ã‚‹æ™‚
 	bool prevMerged = false;
 	if (prev != instance->mFreeRegions.end()) {
-		//Š®‘S‚É˜A‘±‚·‚é‚È‚ç
+		//å®Œå…¨ã«é€£ç¶šã™ã‚‹ãªã‚‰
 		if (prev->pEnd == usingRegion.pBegin - 1) {
-			//—Z‡‚·‚é
+			//èåˆã™ã‚‹
 			prev->pEnd = usingRegion.pEnd;
 			prev->size = prev->pEnd - prev->pBegin + 1;
 			prevMerged = true;
 		}
 	}
 
-	//Œã•û—Ìˆæ‚ª‚ ‚é
+	//å¾Œæ–¹é ˜åŸŸãŒã‚ã‚‹æ™‚
 	bool nextMerged = false;
 	if (next != instance->mFreeRegions.end()) {
-		//Š®‘S‚É˜A‘±‚·‚é‚È‚ç
+		//å®Œå…¨ã«é€£ç¶šã™ã‚‹ãªã‚‰
 		if (next->pBegin == usingRegion.pEnd + 1) {
-			//‘O•û—Ìˆæ‚Æ—Z‡Ï‚İ‚©‚Å•ªŠò‚µ‚Ä
+			//å‰æ–¹é ˜åŸŸã¨èåˆæ¸ˆã¿ã‹ã§åˆ†å²ã—ã¦
 			if (prevMerged) {
-				//—Z‡Ï‚İ‚È‚çX‚É—Z‡
+				//èåˆæ¸ˆã¿ãªã‚‰æ›´ã«èåˆ
 				prev->pEnd = next->pEnd;
 				prev->size = prev->pEnd - prev->pBegin + 1;
 				instance->mFreeRegions.erase(next);
 				prevMerged = true;
 			}
 			else {
-				//—Z‡‚µ‚Ä‚È‚¢‚È‚ç•’Ê‚É—Z‡
+				//èåˆã—ã¦ãªã„ãªã‚‰æ™®é€šã«èåˆ
 				next->pBegin = usingRegion.pBegin;
 				next->size = next->pEnd - next->pBegin + 1;
 				prevMerged = true;
@@ -200,14 +200,14 @@ void SRBufferAllocator::_Free(SRBufferPtr& ptr)
 		}
 	}
 
-	//—Z‡‚µ‚Ä‚È‚¢‚È‚çŒÇ—§‚µ‚½—Ìˆæ‚È‚Ì‚Å’Ç‰Á‚·‚é
+	//èåˆã—ã¦ãªã„ãªã‚‰å­¤ç«‹ã—ãŸé ˜åŸŸãªã®ã§è¿½åŠ ã™ã‚‹
 	if (!prevMerged && !nextMerged) {
 		if (next != instance->mFreeRegions.end()) {
-			//Œã‚ë‚É—Ìˆæ‚ª‚ ‚é‚È‚ç‚»‚Ì‘O‚É‘}“ü
+			//å¾Œã‚ã«é ˜åŸŸãŒã‚ã‚‹ãªã‚‰ãã®å‰ã«æŒ¿å…¥
 			instance->mFreeRegions.insert(next, MemoryRegion(usingRegion.pBegin, usingRegion.pEnd));
 		}
 		else {
-			//‚È‚¢‚È‚çƒvƒbƒVƒ…
+			//ãªã„ãªã‚‰ãƒ—ãƒƒã‚·ãƒ¥
 			instance->mFreeRegions.emplace_back(usingRegion.pBegin, usingRegion.pEnd);
 		}
 	}
@@ -250,15 +250,15 @@ void SRBufferAllocator::DeFlag()
 void SRBufferAllocator::ResizeBuffer() {
 	std::lock_guard<std::recursive_mutex> lock(sMutex);
 
-	// Ä“xŠm•Û
+	// å†åº¦ç¢ºä¿
 	Microsoft::WRL::ComPtr<ID3D12Resource> newBuff;
-	size_t rebufferSize = GetBufferSize() * 2; //‚Æ‚è‚ ‚¦‚¸2”{‚ÌƒTƒCƒY‚É
+	size_t rebufferSize = GetBufferSize() * 2; //ã¨ã‚Šã‚ãˆãš2å€ã®ã‚µã‚¤ã‚ºã«
 	HRESULT result;
 
-	// ƒq[ƒvİ’è
+	// ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_HEAP_PROPERTIES cbHeapProp{};
 	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
-	// ƒŠƒ\[ƒXİ’è
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC cbResourceDesc{};
 	cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
 	cbResourceDesc.Width = rebufferSize;
@@ -268,18 +268,18 @@ void SRBufferAllocator::ResizeBuffer() {
 	cbResourceDesc.SampleDesc.Count = 1;
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	// ¶¬
+	// ç”Ÿæˆ
 	result = RDirectX::GetDevice()->CreateCommittedResource(
-		&cbHeapProp, //ƒq[ƒvİ’è
+		&cbHeapProp, //ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_FLAG_NONE,
-		&cbResourceDesc, //ƒŠƒ\[ƒXİ’è
+		&cbResourceDesc, //ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&newBuff)
 	);
 	assert(SUCCEEDED(result));
 
-	result = newBuff->Map(0, nullptr, (void**)&mPtrBufferBegin); //ƒ}ƒbƒsƒ“ƒO
+	result = newBuff->Map(0, nullptr, (void**)&mPtrBufferBegin); //ãƒãƒƒãƒ”ãƒ³ã‚°
 	assert(SUCCEEDED(result));
 
 	mPtrBufferEnd = mPtrBufferBegin + rebufferSize - 1;
@@ -290,7 +290,7 @@ void SRBufferAllocator::ResizeBuffer() {
 		*ptr = 0xdd;
 	}
 
-	// Šm•ÛI‚í‚èAŠù‘¶ƒf[ƒ^ˆÚs
+	// ç¢ºä¿çµ‚ã‚ã‚Šã€æ—¢å­˜ãƒ‡ãƒ¼ã‚¿ç§»è¡Œ
 
 	std::map<MemoryRegionPtr*, MemoryRegion> map;
 	for (MemoryRegionPtr& ptr : mRegionPtrs) {
@@ -321,15 +321,15 @@ void SRBufferAllocator::ResizeBuffer() {
 }
 
 SRBufferAllocator::SRBufferAllocator() {
-	size_t bufferSize = DEFAULT_SIZE;//(defSize + 0xff) & ~0xff; //256ƒoƒCƒgƒAƒ‰ƒCƒ“ƒƒ“ƒg
+	size_t bufferSize = DEFAULT_SIZE;//(defSize + 0xff) & ~0xff; //256ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³ãƒ¡ãƒ³ãƒˆ
 
-	// Šm•Û
+	// ç¢ºä¿
 	HRESULT result;
 
-	// ƒq[ƒvİ’è
+	// ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_HEAP_PROPERTIES cbHeapProp{};
 	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
-	// ƒŠƒ\[ƒXİ’è
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC cbResourceDesc{};
 	cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
 	cbResourceDesc.Width = bufferSize; 
@@ -339,18 +339,18 @@ SRBufferAllocator::SRBufferAllocator() {
 	cbResourceDesc.SampleDesc.Count = 1;
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	// ¶¬
+	// ç”Ÿæˆ
 	result = RDirectX::GetDevice()->CreateCommittedResource(
-		&cbHeapProp, //ƒq[ƒvİ’è
+		&cbHeapProp, //ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_FLAG_NONE,
-		&cbResourceDesc, //ƒŠƒ\[ƒXİ’è
+		&cbResourceDesc, //ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&mBuffer)
 	);
 	assert(SUCCEEDED(result));
 
-	result = mBuffer->Map(0, nullptr, (void**)&mPtrBufferBegin); //ƒ}ƒbƒsƒ“ƒO
+	result = mBuffer->Map(0, nullptr, (void**)&mPtrBufferBegin); //ãƒãƒƒãƒ”ãƒ³ã‚°
 	assert(SUCCEEDED(result));
 
 	mPtrBufferEnd = mPtrBufferBegin + bufferSize - 1;

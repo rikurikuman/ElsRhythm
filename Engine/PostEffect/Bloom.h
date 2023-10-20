@@ -30,7 +30,7 @@ public:
 protected:
 	static RootSignature& GetRootSignatureA();
 	static RootSignature& GetRootSignatureB();
-	static GraphicsPipeline& GetGraphicsPipelineA(); //–¾‚é‚³’Šo
-	static GraphicsPipeline& GetGraphicsPipelineB(); //ƒKƒEƒX‚Ú‚©‚µ
-	static GraphicsPipeline& GetGraphicsPipelineC(); //‰ÁZ‡¬
+	static GraphicsPipeline& GetGraphicsPipelineA(); //æ˜ã‚‹ã•æŠ½å‡º
+	static GraphicsPipeline& GetGraphicsPipelineB(); //ã‚¬ã‚¦ã‚¹ã¼ã‹ã—
+	static GraphicsPipeline& GetGraphicsPipelineC(); //åŠ ç®—åˆæˆ
 };

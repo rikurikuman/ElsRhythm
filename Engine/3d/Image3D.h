@@ -38,7 +38,7 @@ private:
 
 public:
 	Material mMaterial;
-	//Transform‚ÍObj3D‚É‚ ‚é
+	//Transformã¯Obj3Dã«ã‚ã‚‹
 
 	SRVertexBuffer mVertBuff;
 	SRIndexBuffer mIndexBuff;
@@ -58,40 +58,40 @@ public:
 
 	void SetSize(Vector2 size, bool forceSize = false);
 
-	//ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg‚ğ•ÏX‚·‚é
+	//ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆã‚’å¤‰æ›´ã™ã‚‹
 	void SetAnchor(Vector2 anchor);
 
 	/// <summary>
-	/// ƒeƒNƒXƒ`ƒƒ‚ÌØ‚èo‚µˆÊ’u‚ğİ’è‚·‚é
-	/// ‚Â‚Ü‚èUVÀ•W‚ğ‰ÁH‚·‚é
+	/// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®åˆ‡ã‚Šå‡ºã—ä½ç½®ã‚’è¨­å®šã™ã‚‹
+	/// ã¤ã¾ã‚ŠUVåº§æ¨™ã‚’åŠ å·¥ã™ã‚‹
 	/// </summary>
-	/// <param name="srcX">Ø‚èo‚µˆÊ’u‚Ì¶ãX</param>
-	/// <param name="srcY">Ø‚èo‚µˆÊ’u‚Ì¶ãY</param>
-	/// <param name="width">Ø‚èo‚µ”ÍˆÍƒTƒCƒYX</param>
-	/// <param name="height">Ø‚èo‚µ”ÍˆÍƒTƒCƒYY</param>
+	/// <param name="srcX">åˆ‡ã‚Šå‡ºã—ä½ç½®ã®å·¦ä¸ŠX</param>
+	/// <param name="srcY">åˆ‡ã‚Šå‡ºã—ä½ç½®ã®å·¦ä¸ŠY</param>
+	/// <param name="width">åˆ‡ã‚Šå‡ºã—ç¯„å›²ã‚µã‚¤ã‚ºX</param>
+	/// <param name="height">åˆ‡ã‚Šå‡ºã—ç¯„å›²ã‚µã‚¤ã‚ºY</param>
 	void SetTexRect(int32_t srcX, int32_t srcY, int32_t width, int32_t height);
 
 	/// <summary>
-	/// ƒeƒNƒXƒ`ƒƒ‚ÌØ‚èo‚µˆÊ’u‚ğİ’è‚·‚é
-	/// ‚Â‚Ü‚èUVÀ•W‚ğ‰ÁH‚·‚é
+	/// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®åˆ‡ã‚Šå‡ºã—ä½ç½®ã‚’è¨­å®šã™ã‚‹
+	/// ã¤ã¾ã‚ŠUVåº§æ¨™ã‚’åŠ å·¥ã™ã‚‹
 	/// </summary>
-	/// <param name="srcX">Ø‚èo‚µˆÊ’u‚Ì¶ãX</param>
-	/// <param name="srcY">Ø‚èo‚µˆÊ’u‚Ì¶ãY</param>
-	/// <param name="width">Ø‚èo‚µ”ÍˆÍƒTƒCƒYX</param>
-	/// <param name="height">Ø‚èo‚µ”ÍˆÍƒTƒCƒYY</param>
+	/// <param name="srcX">åˆ‡ã‚Šå‡ºã—ä½ç½®ã®å·¦ä¸ŠX</param>
+	/// <param name="srcY">åˆ‡ã‚Šå‡ºã—ä½ç½®ã®å·¦ä¸ŠY</param>
+	/// <param name="width">åˆ‡ã‚Šå‡ºã—ç¯„å›²ã‚µã‚¤ã‚ºX</param>
+	/// <param name="height">åˆ‡ã‚Šå‡ºã—ç¯„å›²ã‚µã‚¤ã‚ºY</param>
 	void SetTexRect(float srcX, float srcY, float width, float height);
 
 	Vector2 GetSize() {
 		return mSize;
 	}
 
-	//‰Šú‰»ˆ—
+	//åˆæœŸåŒ–å‡¦ç†
 	void Init();
 
-	//Šeƒf[ƒ^‚Ìƒoƒbƒtƒ@‚Ö‚Ì“]‘—
+	//å„ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã¸ã®è»¢é€
 	void TransferBuffer(ViewProjection viewprojection) override;
 
-	//•`‰æ—v‹‚ğRenderer‚Ö
-	void Draw() override;
+	//æç”»è¦æ±‚ã‚’Rendererã¸
+	void Draw(std::string stageID = "") override;
 };
 

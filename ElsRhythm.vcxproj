@@ -57,15 +57,16 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)Application;$(ProjectDir)Engine;$(ProjectDir)Engine\2d;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\3d\Model;$(ProjectDir)Engine\Base;$(ProjectDir)Engine\Camera;$(ProjectDir)Engine\Collision;$(ProjectDir)Engine\Light;$(ProjectDir)Engine\Math;$(ProjectDir)Engine\Scene;$(ProjectDir)Engine\PostEffect;$(ProjectDir)Engine\SimpleDrawer;$(ProjectDir)Engine\Renderer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Application;$(ProjectDir)Application\BackGround;$(ProjectDir)Application\Scene;$(ProjectDir)Application\RhythmCore;$(ProjectDir)Application\Particle;$(ProjectDir)Engine;$(ProjectDir)Engine\2d;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\3d\Model;$(ProjectDir)Engine\Base;$(ProjectDir)Engine\Camera;$(ProjectDir)Engine\Collision;$(ProjectDir)Engine\Light;$(ProjectDir)Engine\Math;$(ProjectDir)Engine\Scene;$(ProjectDir)Engine\PostEffect;$(ProjectDir)Engine\SimpleDrawer;$(ProjectDir)Engine\Renderer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -76,7 +77,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -84,9 +85,10 @@
       <ConformanceMode>false</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)Application;$(ProjectDir)Engine;$(ProjectDir)Engine\2d;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\3d\Model;$(ProjectDir)Engine\Base;$(ProjectDir)Engine\Camera;$(ProjectDir)Engine\Collision;$(ProjectDir)Engine\Light;$(ProjectDir)Engine\Math;$(ProjectDir)Engine\Scene;$(ProjectDir)Engine\PostEffect;$(ProjectDir)Engine\SimpleDrawer;$(ProjectDir)Engine\Renderer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Application;$(ProjectDir)Application\BackGround;$(ProjectDir)Application\Scene;$(ProjectDir)Application\RhythmCore;$(ProjectDir)Application\Particle;$(ProjectDir)Engine;$(ProjectDir)Engine\2d;$(ProjectDir)Engine\3d;$(ProjectDir)Engine\3d\Model;$(ProjectDir)Engine\Base;$(ProjectDir)Engine\Camera;$(ProjectDir)Engine\Collision;$(ProjectDir)Engine\Light;$(ProjectDir)Engine\Math;$(ProjectDir)Engine\Scene;$(ProjectDir)Engine\PostEffect;$(ProjectDir)Engine\SimpleDrawer;$(ProjectDir)Engine\Renderer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -100,24 +102,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Application\ArcNoteObj.cpp" />
-    <ClCompile Include="Application\BackGroundSelector.cpp" />
-    <ClCompile Include="Application\BeatUtil.cpp" />
-    <ClCompile Include="Application\BGSimple.cpp" />
-    <ClCompile Include="Application\ChartFile.cpp" />
-    <ClCompile Include="Application\ControllerScene.cpp" />
-    <ClCompile Include="Application\MainTestScene.cpp" />
-    <ClCompile Include="Application\ParticleExplode.cpp" />
-    <ClCompile Include="Application\ParticleObject.cpp" />
-    <ClCompile Include="Application\ParticleSprite.cpp" />
-    <ClCompile Include="Application\ParticleSprite3D.cpp" />
-    <ClCompile Include="Application\ResultScene.cpp" />
-    <ClCompile Include="Application\RhythmGameController.cpp" />
-    <ClCompile Include="Application\Note.cpp" />
-    <ClCompile Include="Application\SimpleSceneTransition.cpp" />
-    <ClCompile Include="Application\SoundScene.cpp" />
-    <ClCompile Include="Application\SpriteScene.cpp" />
-    <ClCompile Include="Application\TitleScene.cpp" />
+    <ClCompile Include="Application\EObjArcNote.cpp" />
+    <ClCompile Include="Application\RhythmCore\ArcNoteObj.cpp" />
+    <ClCompile Include="Application\BackGround\BackGroundSelector.cpp" />
+    <ClCompile Include="Application\RhythmCore\BeatUtil.cpp" />
+    <ClCompile Include="Application\BackGround\BGSimple.cpp" />
+    <ClCompile Include="Application\RhythmCore\ChartFile.cpp" />
+    <ClCompile Include="Application\Scene\ControllerScene.cpp" />
+    <ClCompile Include="Application\Scene\EditorScene.cpp" />
+    <ClCompile Include="Application\Scene\MainTestScene.cpp" />
+    <ClCompile Include="Application\Particle\ParticleExplode.cpp" />
+    <ClCompile Include="Application\Particle\ParticleObject.cpp" />
+    <ClCompile Include="Application\Particle\ParticleSprite.cpp" />
+    <ClCompile Include="Application\Particle\ParticleSprite3D.cpp" />
+    <ClCompile Include="Application\Scene\ResultScene.cpp" />
+    <ClCompile Include="Application\RhythmCore\RhythmGameController.cpp" />
+    <ClCompile Include="Application\RhythmCore\Note.cpp" />
+    <ClCompile Include="Application\Scene\SimpleSceneTransition.cpp" />
+    <ClCompile Include="Application\Scene\SoundScene.cpp" />
+    <ClCompile Include="Application\Scene\SpriteScene.cpp" />
+    <ClCompile Include="Application\Scene\TitleScene.cpp" />
     <ClCompile Include="Engine\Base\RenderTarget.cpp" />
     <ClCompile Include="Engine\Base\SRIndexBuffer.cpp" />
     <ClCompile Include="Engine\Collision\Colliders.cpp" />
@@ -132,27 +136,32 @@
     <ClCompile Include="Engine\3d\Image3D.cpp" />
     <ClCompile Include="Engine\Base\IndexBuffer.cpp" />
     <ClCompile Include="Engine\DebugGUI.cpp" />
+    <ClCompile Include="Engine\IParticle.cpp" />
     <ClCompile Include="Engine\Math\Float4.cpp" />
+    <ClCompile Include="Engine\ParticleImage3D.cpp" />
+    <ClCompile Include="Engine\ParticleManager.cpp" />
     <ClCompile Include="Engine\PostEffect\Bloom.cpp" />
     <ClCompile Include="Engine\PostEffect\CrossFilter.cpp" />
     <ClCompile Include="Engine\PostEffect\DepthTest.cpp" />
     <ClCompile Include="Engine\PostEffect\MultiRenderTest.cpp" />
     <ClCompile Include="Engine\Renderer\BackSpriteRenderStage.cpp" />
+    <ClCompile Include="Engine\Renderer\BackTransparentRenderStage.cpp" />
     <ClCompile Include="Engine\Renderer\FinalRenderStage.cpp" />
     <ClCompile Include="Engine\Renderer\OpaqueRenderStage.cpp" />
     <ClCompile Include="Engine\Renderer\PostEffectRenderStage.cpp" />
     <ClCompile Include="Engine\Renderer\RenderDesc.cpp" />
     <ClCompile Include="Engine\Renderer\Renderer.cpp" />
     <ClCompile Include="Engine\Renderer\IRenderStage.cpp" />
-    <ClCompile Include="Engine\Renderer\RenderOrder.cpp" />
     <ClCompile Include="Engine\Renderer\SpriteRenderStage.cpp" />
     <ClCompile Include="Engine\Renderer\TestRenderStage.cpp" />
     <ClCompile Include="Engine\Renderer\TransparentRenderStage.cpp" />
     <ClCompile Include="Engine\Scene\ISceneFactory.cpp" />
     <ClCompile Include="Engine\Light\LightGroup.cpp" />
     <ClCompile Include="Application\EventSystem.cpp" />
+    <ClCompile Include="Application\IEditorObject.cpp" />
+    <ClCompile Include="Application\EObjTapNote.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Application\GameScene.cpp" />
+    <ClCompile Include="Application\Scene\GameScene.cpp" />
     <ClCompile Include="Engine\Base\Material.cpp" />
     <ClCompile Include="Engine\Math\Matrix4.cpp" />
     <ClCompile Include="Engine\3d\Model\Model.cpp" />
@@ -413,25 +422,27 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application\ArcNoteObj.h" />
-    <ClInclude Include="Application\BackGroundSelector.h" />
-    <ClInclude Include="Application\BGSimple.h" />
-    <ClInclude Include="Application\IBackGround.h" />
-    <ClInclude Include="Application\BeatUtil.h" />
-    <ClInclude Include="Application\ChartFile.h" />
-    <ClInclude Include="Application\ControllerScene.h" />
-    <ClInclude Include="Application\MainTestScene.h" />
-    <ClInclude Include="Application\ParticleExplode.h" />
-    <ClInclude Include="Application\ParticleObject.h" />
-    <ClInclude Include="Application\ParticleSprite.h" />
-    <ClInclude Include="Application\ParticleSprite3D.h" />
-    <ClInclude Include="Application\ResultScene.h" />
-    <ClInclude Include="Application\RhythmGameController.h" />
-    <ClInclude Include="Application\Note.h" />
-    <ClInclude Include="Application\SimpleSceneTransition.h" />
-    <ClInclude Include="Application\SoundScene.h" />
-    <ClInclude Include="Application\SpriteScene.h" />
-    <ClInclude Include="Application\TitleScene.h" />
+    <ClInclude Include="Application\EObjArcNote.h" />
+    <ClInclude Include="Application\RhythmCore\ArcNoteObj.h" />
+    <ClInclude Include="Application\BackGround\BackGroundSelector.h" />
+    <ClInclude Include="Application\BackGround\BGSimple.h" />
+    <ClInclude Include="Application\BackGround\IBackGround.h" />
+    <ClInclude Include="Application\RhythmCore\BeatUtil.h" />
+    <ClInclude Include="Application\RhythmCore\ChartFile.h" />
+    <ClInclude Include="Application\Scene\ControllerScene.h" />
+    <ClInclude Include="Application\Scene\EditorScene.h" />
+    <ClInclude Include="Application\Scene\MainTestScene.h" />
+    <ClInclude Include="Application\Particle\ParticleExplode.h" />
+    <ClInclude Include="Application\Particle\ParticleObject.h" />
+    <ClInclude Include="Application\Particle\ParticleSprite.h" />
+    <ClInclude Include="Application\Particle\ParticleSprite3D.h" />
+    <ClInclude Include="Application\Scene\ResultScene.h" />
+    <ClInclude Include="Application\RhythmCore\RhythmGameController.h" />
+    <ClInclude Include="Application\RhythmCore\Note.h" />
+    <ClInclude Include="Application\Scene\SimpleSceneTransition.h" />
+    <ClInclude Include="Application\Scene\SoundScene.h" />
+    <ClInclude Include="Application\Scene\SpriteScene.h" />
+    <ClInclude Include="Application\Scene\TitleScene.h" />
     <ClInclude Include="Engine\Base\Rect.h" />
     <ClInclude Include="Engine\Base\RenderTarget.h" />
     <ClInclude Include="Engine\Base\SRConstBuffer.h" />
@@ -449,13 +460,17 @@
     <ClInclude Include="Engine\3d\Image3D.h" />
     <ClInclude Include="Engine\Base\IndexBuffer.h" />
     <ClInclude Include="Engine\DebugGUI.h" />
+    <ClInclude Include="Engine\IParticle.h" />
     <ClInclude Include="Engine\Light\DirectionalLight.h" />
     <ClInclude Include="Engine\Math\Float4.h" />
+    <ClInclude Include="Engine\ParticleImage3D.h" />
+    <ClInclude Include="Engine\ParticleManager.h" />
     <ClInclude Include="Engine\PostEffect\Bloom.h" />
     <ClInclude Include="Engine\PostEffect\CrossFilter.h" />
     <ClInclude Include="Engine\PostEffect\DepthTest.h" />
     <ClInclude Include="Engine\PostEffect\MultiRenderTest.h" />
     <ClInclude Include="Engine\Renderer\BackSpriteRenderStage.h" />
+    <ClInclude Include="Engine\Renderer\BackTransparentRenderStage.h" />
     <ClInclude Include="Engine\Renderer\FinalRenderStage.h" />
     <ClInclude Include="Engine\Renderer\OpaqueRenderStage.h" />
     <ClInclude Include="Engine\Renderer\PostEffectRenderStage.h" />
@@ -467,7 +482,7 @@
     <ClInclude Include="Engine\Renderer\TransparentRenderStage.h" />
     <ClInclude Include="Engine\Scene\ISceneFactory.h" />
     <ClInclude Include="Engine\Light\LightGroup.h" />
-    <ClInclude Include="Application\GameScene.h" />
+    <ClInclude Include="Application\Scene\GameScene.h" />
     <ClInclude Include="Engine\Base\Material.h" />
     <ClInclude Include="Engine\Math\Matrix4.h" />
     <ClInclude Include="Engine\3d\Model\Model.h" />
@@ -508,6 +523,8 @@
     <ClInclude Include="Engine\Collision\SphereCollider.h" />
     <ClInclude Include="Engine\Base\SRVertexBuffer.h" />
     <ClInclude Include="Application\EventSystem.h" />
+    <ClInclude Include="Application\IEditorObject.h" />
+    <ClInclude Include="Application\EObjTapNote.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\Basic.hlsli">

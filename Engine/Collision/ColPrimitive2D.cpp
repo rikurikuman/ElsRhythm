@@ -3,6 +3,11 @@
 using namespace std;
 using namespace ColPrimitive2D;
 
+ColPrimitive2D::Rect::Rect(Vector2 s, Vector2 e) :
+    p(Vector2((s.x + e.x) / 2.0f, (s.y + e.y) / 2.0f)),
+    w(max(s.x, e.x) - min(s.x, e.x)),
+    h(max(s.y, e.y) - min(s.y, e.y)) {}
+
 array<Vector2, 4> ColPrimitive2D::Rect::ToPointArray()
 {
     array<Vector2, 4> arr = {};
@@ -12,10 +17,10 @@ array<Vector2, 4> ColPrimitive2D::Rect::ToPointArray()
     float pTop = p.y + h / 2;
     float pBottom = p.y - h / 2;
 
-    arr[0] = { pLeft, pTop }; //ç∂è„
-    arr[1] = { pRight, pTop }; //âEè„
-    arr[2] = { pLeft, pBottom }; //ç∂â∫
-    arr[3] = { pRight, pBottom } ; //âEâ∫
+    arr[0] = { pLeft, pTop }; //Â∑¶‰∏ä
+    arr[1] = { pRight, pTop }; //Âè≥‰∏ä
+    arr[2] = { pLeft, pBottom }; //Â∑¶‰∏ã
+    arr[3] = { pRight, pBottom } ; //Âè≥‰∏ã
 
     return arr;
 }
@@ -29,12 +34,18 @@ std::array<Segment, 4> ColPrimitive2D::Rect::ToSideArray()
     float pTop = p.y + h / 2;
     float pBottom = p.y - h / 2;
 
-    arr[0] = { {pLeft, pTop}, {pLeft, pBottom} }; //ç∂
-    arr[1] = { {pRight, pTop}, {pRight, pBottom} }; //âE
-    arr[2] = { {pLeft, pTop}, {pRight, pTop} }; //è„
-    arr[3] = { {pLeft, pBottom}, {pRight, pBottom} }; //â∫
+    arr[0] = { {pLeft, pTop}, {pLeft, pBottom} }; //Â∑¶
+    arr[1] = { {pRight, pTop}, {pRight, pBottom} }; //Âè≥
+    arr[2] = { {pLeft, pTop}, {pRight, pTop} }; //‰∏ä
+    arr[3] = { {pLeft, pBottom}, {pRight, pBottom} }; //‰∏ã
 
     return arr;
+}
+
+bool ColPrimitive2D::IsHit(Point p, Rect r)
+{
+    return p.p.x >= r.p.x - r.w / 2.0f && p.p.x <= r.p.x + r.w / 2.0f
+        && p.p.y >= r.p.y - r.h / 2.0f && p.p.y <= r.p.y + r.h / 2.0f;
 }
 
 bool ColPrimitive2D::IsHit(Rect a, Rect b)
@@ -45,6 +56,35 @@ bool ColPrimitive2D::IsHit(Rect a, Rect b)
     float hSum = a.h / 2 + b.h / 2;
 
     return abs(xDiff) <= wSum && abs(yDiff) <= hSum;
+}
+
+bool ColPrimitive2D::IsHit(Point p, Capsule capsule)
+{
+    Vector2 ap = p.p - capsule.p;
+    Vector2 bp = p.p - (capsule.p + capsule.v);
+    Vector2 ab = (capsule.p + capsule.v) - capsule.p;
+    Vector2 ba = capsule.p - (capsule.p + capsule.v);
+
+    if (ap.Dot(ab) < 0) {
+        float distance = ap.Length();
+        if (distance <= capsule.r) {
+            return true;
+        }
+    }
+    else if (bp.Dot(ba) < 0) {
+        float distance = bp.Length();
+        if (distance <= capsule.r) {
+            return true;
+        }
+    }
+    else {
+        Vector2 ai = capsule.p + ab.GetNormalize() * ap.Dot(ab.GetNormalize());
+        float distance = (p.p - ai).Length();
+        if (distance <= capsule.r) {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool ColPrimitive2D::IsHit(Segment seg, Rect rect)
@@ -61,6 +101,42 @@ bool ColPrimitive2D::IsHit(Segment seg, Rect rect)
     }
 
     return false;
+}
+
+ColResult ColPrimitive2D::CheckHit(Point p, Capsule capsule)
+{
+    ColResult result;
+    Vector2 ap = p.p - capsule.p;
+    Vector2 bp = p.p - (capsule.p + capsule.v);
+    Vector2 ab = (capsule.p + capsule.v) - capsule.p;
+    Vector2 ba = capsule.p - (capsule.p + capsule.v);
+
+    if (ap.Dot(ab) < 0) {
+        float distance = ap.Length();
+        if (distance <= capsule.r) {
+            result.hit = true;
+            result.hitPos = p.p;
+            result.onLinePos = capsule.p;
+        }
+    }
+    else if (bp.Dot(ba) < 0) {
+        float distance = bp.Length();
+        if (distance <= capsule.r) {
+            result.hit = true;
+            result.hitPos = p.p;
+            result.onLinePos = capsule.p;
+        }
+    }
+    else {
+        Vector2 ai = capsule.p + ab.GetNormalize() * ap.Dot(ab.GetNormalize());
+        float distance = (p.p - ai).Length();
+        if (distance <= capsule.r) {
+            result.hit = true;
+            result.hitPos = p.p;
+            result.onLinePos = ai;
+        }
+    }
+    return result;
 }
 
 ColResult ColPrimitive2D::CheckHit(Segment seg, Rect rect)

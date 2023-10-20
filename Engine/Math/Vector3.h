@@ -1,6 +1,6 @@
 #pragma once
 
-//’‡—Ç‚µ‘ŠèéŒ¾
+//ä»²è‰¯ã—ç›¸æ‰‹å®£è¨€
 class Vector2;
 class Float4;
 
@@ -11,71 +11,71 @@ public:
 	float y;
 	float z;
 
-	//ƒ[ƒƒxƒNƒgƒ‹
+	//ã‚¼ãƒ­ãƒ™ã‚¯ãƒˆãƒ«
 	Vector3();
 	const static Vector3 ZERO;
 
-	//”CˆÓ‚Ì¬•ªƒxƒNƒgƒ‹
+	//ä»»æ„ã®æˆåˆ†ãƒ™ã‚¯ãƒˆãƒ«
 	Vector3(float x, float y, float z);
 
 	~Vector3();
 
-	//”äŠr
+	//æ¯”è¼ƒ
 	bool operator==(const Vector3& a) const;
 	bool operator!=(const Vector3& a) const;
 
-	//‹·‹`‚Ìã‡˜(ƒxƒNƒgƒ‹‚Ì’·‚³‚ğŒ©‚½‚è‚·‚é‚í‚¯‚¶‚á‚È‚¢‚Ì‚Å•’Êg‚í‚È‚¢j
+	//ç‹­ç¾©ã®å¼±é †åº(ãƒ™ã‚¯ãƒˆãƒ«ã®é•·ã•ã‚’è¦‹ãŸã‚Šã™ã‚‹ã‚ã‘ã˜ã‚ƒãªã„ã®ã§æ™®é€šä½¿ã‚ãªã„ï¼‰
 	bool operator<(const Vector3& a) const;
 
-	//ƒxƒNƒgƒ‹‚Ì‘«‚µZ
+	//ãƒ™ã‚¯ãƒˆãƒ«ã®è¶³ã—ç®—
 	Vector3 operator+(const Vector3& a) const;
-	//ƒxƒNƒgƒ‹‚Ìˆø‚«Z
+	//ãƒ™ã‚¯ãƒˆãƒ«ã®å¼•ãç®—
 	Vector3 operator-(const Vector3& a) const;
-	//‹tƒxƒNƒgƒ‹
+	//é€†ãƒ™ã‚¯ãƒˆãƒ«
 	Vector3 operator-() const;
-	//’è””{
+	//å®šæ•°å€
 	Vector3 operator*(const float a) const;
-	//’è”•ª‚Ì1”{
+	//å®šæ•°åˆ†ã®1å€
 	Vector3 operator/(const float a) const;
 
-	//ƒxƒNƒgƒ‹‚Ì‘«‚µZ
+	//ãƒ™ã‚¯ãƒˆãƒ«ã®è¶³ã—ç®—
 	Vector3& operator+=(const Vector3& a);
-	//ƒxƒNƒgƒ‹‚Ìˆø‚«Z
+	//ãƒ™ã‚¯ãƒˆãƒ«ã®å¼•ãç®—
 	Vector3& operator-=(const Vector3& a);
-	//ƒxƒNƒgƒ‹‚Ì‚©‚¯Z
+	//ãƒ™ã‚¯ãƒˆãƒ«ã®ã‹ã‘ç®—
 	Vector3& operator*=(const Vector3& a);
-	//’è””{
+	//å®šæ•°å€
 	Vector3& operator*=(const float a);
-	//’è”•ª‚Ì1”{
+	//å®šæ•°åˆ†ã®1å€
 	Vector3& operator/=(const float a);
 
-	//“àÏ
+	//å†…ç©
 	float Dot(const Vector3& a) const;
-	//ŠOÏ
+	//å¤–ç©
 	Vector3 Cross(const Vector3& a) const;
 
-	//ƒxƒNƒgƒ‹‚Ì’·‚³iã‚ğg‚¤‚Ì‚Åd‚ßj
+	//ãƒ™ã‚¯ãƒˆãƒ«ã®é•·ã•ï¼ˆâˆšã‚’ä½¿ã†ã®ã§é‡ã‚ï¼‰
 	float Length() const;
-	//ƒxƒNƒgƒ‹‚Ì‚×‚«æ’·‚³iã‚ğg‚í‚È‚¢‚Ì‚ÅŒy‚ßj
+	//ãƒ™ã‚¯ãƒˆãƒ«ã®ã¹ãä¹—é•·ã•ï¼ˆâˆšã‚’ä½¿ã‚ãªã„ã®ã§è»½ã‚ï¼‰
 	float LengthSq() const;
 
-	//³‹K‰»i‚±‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ‘‚«Š·‚¦‚éj
+	//æ­£è¦åŒ–ï¼ˆã“ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’æ›¸ãæ›ãˆã‚‹ï¼‰
 	Vector3& Normalize();
-	//³‹K‰»ƒxƒNƒgƒ‹‚ğæ“¾
-	//i‚±‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Í‘‚«Š·‚¦‚¸‚É•Ê‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Æ‚µ‚Äæ“¾‚·‚éj
+	//æ­£è¦åŒ–ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—
+	//ï¼ˆã“ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã¯æ›¸ãæ›ãˆãšã«åˆ¥ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã¨ã—ã¦å–å¾—ã™ã‚‹ï¼‰
 	Vector3 GetNormalize() const;
 
-	//z¬•ª‚ğÌ‚Ä‚ÄVector2‚ÖƒLƒƒƒXƒg
+	//zæˆåˆ†ã‚’æ¨ã¦ã¦Vector2ã¸ã‚­ãƒ£ã‚¹ãƒˆ
 	operator Vector2() const;
 
-	//w¬•ª‚ğ1‚Æ‚µ‚ÄFloat4‚ÖƒLƒƒƒXƒg
+	//wæˆåˆ†ã‚’1ã¨ã—ã¦Float4ã¸ã‚­ãƒ£ã‚¹ãƒˆ
 	operator Float4() const;
 };
 
-//¶•Ó‚Éfloat‚ğ’u‚¢‚½‚Æ‚«‚É*, /‚ªo—ˆ‚È‚¢‚Ì‚Å‚»‚ê‘Îô
+//å·¦è¾ºã«floatã‚’ç½®ã„ãŸã¨ãã«*, /ãŒå‡ºæ¥ãªã„ã®ã§ãã‚Œå¯¾ç­–
 
-//’è””{
+//å®šæ•°å€
 Vector3 operator*(const float a, const Vector3& b);
 
-//üŒ`•âŠÔ(1ŸŠÖ”•âŠÔ)
+//ç·šå½¢è£œé–“(1æ¬¡é–¢æ•°è£œé–“)
 const Vector3 lerp(const Vector3& start, const Vector3& end, const float t);

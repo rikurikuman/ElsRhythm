@@ -15,7 +15,7 @@ public:
 
 	Vector3 mPos;
 	Color mColor;
-	Vector3 mAtten; //‹——£Œ¸ŠŒW”
+	Vector3 mAtten; //è·é›¢æ¸›è¡°ä¿‚æ•°
 	bool mIsActive = false;
 
 	void TransferBuffer(LightBuffer& buffer) {

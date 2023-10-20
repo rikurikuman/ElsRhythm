@@ -32,19 +32,19 @@ void RInput::InitInternal()
 	result = mDirectInput->CreateDevice(GUID_SysMouse, &mMouse, NULL);
 	assert(SUCCEEDED(result));
 
-	//���̓f�[�^�`���̃Z�b�g
+	//入力データ形式のセット
 	result = mKeyboard->SetDataFormat(&c_dfDIKeyboard);
 	assert(SUCCEEDED(result));
 	result = mMouse->SetDataFormat(&c_dfDIMouse2);
 	assert(SUCCEEDED(result));
 
-	//�r�����䃌�x���̃Z�b�g
+	//排他制御レベルのセット
 	result = mKeyboard->SetCooperativeLevel(
-		RWindow::GetWindowHandle(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE // | DISCL_NOWINKEY //������A�A�N�e�B�u�E�B���h�E,��L���Ȃ�,Win�L�[����
+		RWindow::GetWindowHandle(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE // | DISCL_NOWINKEY //左から、アクティブウィンドウ,専有しない,Winキー無効
 	);
 	assert(SUCCEEDED(result));
 	result = mMouse->SetCooperativeLevel(
-		RWindow::GetWindowHandle(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE //������A�A�N�e�B�u�E�B���h�E,��L���Ȃ�
+		RWindow::GetWindowHandle(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE //左から、アクティブウィンドウ,専有しない
 	);
 	assert(SUCCEEDED(result));
 
@@ -66,11 +66,11 @@ void RInput::Update()
 {
 	RInput* instance = GetInstance();
 
-	//���̎擾�J�n
+	//情報の取得開始
 	instance->mKeyboard->Acquire();
 	instance->mMouse->Acquire();
 
-	//�S�L�[�̓��͏�Ԃ��擾����
+	//全キーの入力状態を取得する
 	for (int32_t i = 0; i < 256; i++) {
 		instance->mOldKeyState[i] = instance->mKeyState[i];
 	}

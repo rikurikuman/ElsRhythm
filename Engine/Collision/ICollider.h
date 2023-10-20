@@ -6,13 +6,13 @@
 class ICollider;
 
 struct CollisionInfo {
-	ICollider* hitCollider = nullptr; //Õ“Ë‚µ‚½‘Šè
-	bool hasClosestPos = false; //Å‹ßÚ“_î•ñ‚ğ‚Á‚Ä‚¢‚é‚©
-	Vector3 closestPos; //Å‹ßÚ“_(‚±‚êŒğ“_‚Å—Ç‚­‚Ë)
-	bool hasDistance = false; //‹——£‚ğ‚Á‚Ä‚¢‚é‚©
-	float distance = 0; //Õ“Ë“_‚Ö‚Ì‹——£
-	bool hasInter = false; //Œğ“_‚ğ‚Á‚Ä‚¢‚é‚©
-	Vector3 inter; //Œğ“_
+	ICollider* hitCollider = nullptr; //è¡çªã—ãŸç›¸æ‰‹
+	bool hasClosestPos = false; //æœ€è¿‘æ¥ç‚¹æƒ…å ±ã‚’æŒã£ã¦ã„ã‚‹ã‹
+	Vector3 closestPos; //æœ€è¿‘æ¥ç‚¹(ã“ã‚Œäº¤ç‚¹ã§è‰¯ãã­)
+	bool hasDistance = false; //è·é›¢ã‚’æŒã£ã¦ã„ã‚‹ã‹
+	float distance = 0; //è¡çªç‚¹ã¸ã®è·é›¢
+	bool hasInter = false; //äº¤ç‚¹ã‚’æŒã£ã¦ã„ã‚‹ã‹
+	Vector3 inter; //äº¤ç‚¹
 };
 
 class Colliders;
@@ -22,10 +22,10 @@ public:
 	virtual ~ICollider() = default;
 
 	virtual std::string GetTypeIndentifier() = 0;
-	virtual void Update() {} //•K—v‚Èq‚¾‚¯g‚Á‚Ä‚­‚ê‚æ‚È
+	virtual void Update() {} //å¿…è¦ãªå­ã ã‘ä½¿ã£ã¦ãã‚Œã‚ˆãª
 	virtual bool Collide(ICollider* hit, CollisionInfo* outputInfo) = 0;
 
-	//Õ“Ë‚µ‚½‘Šè‚ª‚¢‚é‚©‚Ç‚¤‚©‚ğ“¾‚é
+	//è¡çªã—ãŸç›¸æ‰‹ãŒã„ã‚‹ã‹ã©ã†ã‹ã‚’å¾—ã‚‹
 	bool HasCollision() {
 		return mHasCollision;
 	}

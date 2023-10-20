@@ -1,8 +1,13 @@
 #pragma once
-#include <DirectXMath.h>
 
-//Š|‚¯‚é‘Šè‚ÌéŒ¾‚¾‚¯‚µ‚Ä‚¨‚­
-//ÀÛ‚ÌŒvZ‚Ícpp‚É’u‚¢‚Ä‚ ‚é‚Ì‚Å–{•¨‚Ì‘Šè‚Í‚»‚Á‚¿‚ªinclude‚·‚é
+//XMMATRIXå‚ç…§ã™ã‚‹ãŸã‚ã ã‘ã«ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
+//ã‚ã¾ã‚Šã«ã‚‚ä¸è¦ã ã£ãŸã‚‰å‰Šé™¤å¯¾è±¡ã‹ã‚‚
+#pragma warning(push, 0)
+#include <DirectXMath.h>
+#pragma warning(pop)
+
+//æ›ã‘ã‚‹ç›¸æ‰‹ã®å®£è¨€ã ã‘ã—ã¦ãŠã
+//å®Ÿéš›ã®è¨ˆç®—ã¯cppã«ç½®ã„ã¦ã‚ã‚‹ã®ã§æœ¬ç‰©ã®ç›¸æ‰‹ã¯ãã£ã¡ãŒincludeã™ã‚‹
 class Vector3;
 class Float4;
 
@@ -19,69 +24,69 @@ private:
 	Line m[4] = {};
 
 public:
-	//’PˆÊs—ñ
+	//å˜ä½è¡Œåˆ—
 	Matrix4();
 
-	//”O‚Ì‚½‚ßXMMARTIX‚©‚ç‚Ì•ÏŠ·
+	//å¿µã®ãŸã‚XMMATRIXã‹ã‚‰ã®å¤‰æ›
 	Matrix4(DirectX::XMMATRIX matrix);
 
-	//“Y‚¦š
+	//æ·»ãˆå­—
 	Line operator[](const size_t i) const;
 	Line& operator[](const size_t i);
 
-	//‹ts—ñ
+	//é€†è¡Œåˆ—
 	Matrix4 operator-() const;
 
-	//”äŠr
+	//æ¯”è¼ƒ
 	bool operator==(const Matrix4& a) const;
 	bool operator!=(const Matrix4& a) const;
 
-	//‰ÁZ
+	//åŠ ç®—
 	Matrix4 operator+(const Matrix4& a) const;
-	//Œ¸Z
+	//æ¸›ç®—
 	Matrix4 operator-(const Matrix4& a) const;
-	//æZ
+	//ä¹—ç®—
 	Matrix4 operator*(const Matrix4& a) const;
 
-	//‰ÁZ
+	//åŠ ç®—
 	Matrix4& operator+=(const Matrix4& a);
-	//Œ¸Z
+	//æ¸›ç®—
 	Matrix4& operator-=(const Matrix4& a);
-	//æZ
+	//ä¹—ç®—
 	Matrix4& operator*=(const Matrix4& a);
 
-	//“]’us—ñ(‚±‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ‘‚«Š·‚¦‚é
+	//è»¢ç½®è¡Œåˆ—(ã“ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’æ›¸ãæ›ãˆã‚‹
 	Matrix4& Transpose();
 
-	//“]’us—ñ‚ğæ“¾
-	//i‚±‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Í‘‚«Š·‚¦‚¸‚É•Ê‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Æ‚µ‚Äæ“¾‚·‚éj
+	//è»¢ç½®è¡Œåˆ—ã‚’å–å¾—
+	//ï¼ˆã“ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã¯æ›¸ãæ›ãˆãšã«åˆ¥ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã¨ã—ã¦å–å¾—ã™ã‚‹ï¼‰
 	Matrix4 GetTranspose() const;
 
-	//•½sˆÚ“®s—ñ‚ç‚­‚ç‚­¶¬
+	//å¹³è¡Œç§»å‹•è¡Œåˆ—ã‚‰ãã‚‰ãç”Ÿæˆ
 	static Matrix4 Translation(float x, float y, float z);
 
-	//ƒXƒP[ƒŠƒ“ƒOs—ñ‚ç‚­‚ç‚­¶¬
+	//ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°è¡Œåˆ—ã‚‰ãã‚‰ãç”Ÿæˆ
 	static Matrix4 Scaling(float x, float y, float z);
 
-	//X²‰ñ“]s—ñ‚ç‚­‚ç‚­¶¬
+	//Xè»¸å›è»¢è¡Œåˆ—ã‚‰ãã‚‰ãç”Ÿæˆ
 	static Matrix4 RotationX(float radian);
-	//Y²‰ñ“]s—ñ‚ç‚­‚ç‚­¶¬
+	//Yè»¸å›è»¢è¡Œåˆ—ã‚‰ãã‚‰ãç”Ÿæˆ
 	static Matrix4 RotationY(float radian);
-	//Z²‰ñ“]s—ñ‚ç‚­‚ç‚­¶¬
+	//Zè»¸å›è»¢è¡Œåˆ—ã‚‰ãã‚‰ãç”Ÿæˆ
 	static Matrix4 RotationZ(float radian);
 
-	//ZXY(Roll,Pitch,Yaw)‰ñ“]s—ñ‚ç‚­‚ç‚­¶¬
+	//ZXY(Roll,Pitch,Yaw)å›è»¢è¡Œåˆ—ã‚‰ãã‚‰ãç”Ÿæˆ
 	static Matrix4 RotationZXY(float radianX, float radianY, float radianZ);
 
-	//ƒrƒ…[•ÏŠ·s—ñŠyX¶¬
+	//ãƒ“ãƒ¥ãƒ¼å¤‰æ›è¡Œåˆ—æ¥½ã€…ç”Ÿæˆ
 	static Matrix4 View(Vector3 eye, Vector3 target, Vector3 up);
 
-	//•½s“Š‰e•ÏŠ·s—ñ‚ç‚­‚ç‚­¶¬
+	//å¹³è¡ŒæŠ•å½±å¤‰æ›è¡Œåˆ—ã‚‰ãã‚‰ãç”Ÿæˆ
 	static Matrix4 OrthoGraphicProjection(float left, float right, float top, float bottom, float nearZ, float farZ);
-	//“§‹“Š‰e•ÏŠ·s—ñ‚ç‚­‚ç‚­¶¬
+	//é€è¦–æŠ•å½±å¤‰æ›è¡Œåˆ—ã‚‰ãã‚‰ãç”Ÿæˆ
 	static Matrix4 PerspectiveProjection(float fov, float aspect, float nearZ, float farZ);
 
-	//ƒrƒ…[ƒ|[ƒgs—ñ
+	//ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆè¡Œåˆ—
 	static Matrix4 Viewport(float x, float y, float width, float height, float minDepth, float maxDepth);
 };
 

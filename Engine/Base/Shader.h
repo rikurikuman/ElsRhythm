@@ -1,8 +1,12 @@
 #pragma once
+
+//外部ヘッダ
+#pragma warning(push, 0)
 #include <d3dcompiler.h>
 #include <wrl.h>
 #include <string>
 #include <unordered_map>
+#pragma warning(pop, 0)
 
 class Shader
 {

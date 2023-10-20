@@ -8,15 +8,15 @@ void Colliders::Update()
 {
     std::lock_guard<std::recursive_mutex> lock(sInstance.mMutex);
 
-    //“ñd”»’è–h~—p‚È‚Ì‚Å‚·
+    //äºŒé‡åˆ¤å®šé˜²æ­¢ç”¨ãªã®ã§ã™
     std::map <ICollider*, std::vector<ICollider*>> hitted;
 
-    //2‰ñ‰ñ‚·‚ÌŒ™‚¾‚©‚ç‰½‚©‚¢‚¢•û–@l‚¦‚½‚¢Š
+    //2å›å›ã™ã®å«Œã ã‹ã‚‰ä½•ã‹ã„ã„æ–¹æ³•è€ƒãˆãŸã„æ‰€
     for (std::unique_ptr<ICollider>& ptr : sInstance.mColList) {
         ptr->mHasCollision = false;
     }
 
-    //‘“–‚½‚èƒ`ƒFƒbƒNIIIII
+    //ç·å½“ãŸã‚Šãƒã‚§ãƒƒã‚¯ï¼ï¼ï¼ï¼ï¼
     for (std::unique_ptr<ICollider>& ptr : sInstance.mColList) {
         if (!ptr->mIsActive) continue;
         ptr->Update();

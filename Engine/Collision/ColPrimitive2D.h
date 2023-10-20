@@ -4,23 +4,27 @@
 #include "Vector2.h"
 
 namespace ColPrimitive2D {
+	//ç‚¹
+	struct Point {
+		Vector2 p; //ç‚¹ã€‚
+	};
 
-	//’¼ü
+	//ç›´ç·š
 	struct Line {
-		Vector2 p; //’¼üã‚Ìˆê“_
-		Vector2 v; //’¼ü‚Ì•ûŒüƒxƒNƒgƒ‹
+		Vector2 p; //ç›´ç·šä¸Šã®ä¸€ç‚¹
+		Vector2 v; //ç›´ç·šã®æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 	};
 
-	//ƒŒƒC(”¼’¼ü)
+	//ãƒ¬ã‚¤(åŠç›´ç·š)
 	struct Ray {
-		Vector2 p; //ƒŒƒC‚Ìn“_
-		Vector2 v; //ƒŒƒC‚Ì•ûŒüƒxƒNƒgƒ‹
+		Vector2 p; //ãƒ¬ã‚¤ã®å§‹ç‚¹
+		Vector2 v; //ãƒ¬ã‚¤ã®æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 	};
 
-	//ü•ª
+	//ç·šåˆ†
 	struct Segment {
-		Vector2 p; //ü•ª‚Ìn“_
-		Vector2 v; //ü•ª‚ÌI“_‚ÖŒü‚©‚¤ƒxƒNƒgƒ‹
+		Vector2 p; //ç·šåˆ†ã®å§‹ç‚¹
+		Vector2 v; //ç·šåˆ†ã®çµ‚ç‚¹ã¸å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«
 
 		Segment() {}
 		Segment(Vector2 a, Vector2 b) : p(a), v(b - a) {}
@@ -30,52 +34,92 @@ namespace ColPrimitive2D {
 		}
 	};
 
-	//‹éŒ`
+	//ã‚«ãƒ—ã‚»ãƒ«
+	struct Capsule {
+		Vector2 p; //ã‚«ãƒ—ã‚»ãƒ«ã®å§‹ç‚¹
+		Vector2 v; //ã‚«ãƒ—ã‚»ãƒ«ã®çµ‚ç‚¹ã¸å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«
+		float r = 0; //ã‚«ãƒ—ã‚»ãƒ«ã®åŠå¾„
+
+		Capsule() {}
+		Capsule(Vector2 a, Vector2 b, float r) : p(a), v(b - a), r(r) {}
+
+		bool operator==(const Capsule& a) {
+			return p == a.p && v == a.v && r == a.r;
+		}
+	};
+
+	//çŸ©å½¢
 	struct Rect {
-		Vector2 p; //‹éŒ`‚Ì’†S
-		float w; //•(’¼Œa“I)
-		float h; //‚‚³(’¼Œa“I)
+		Vector2 p; //çŸ©å½¢ã®ä¸­å¿ƒ
+		float w; //å¹…(ç›´å¾„çš„)
+		float h; //é«˜ã•(ç›´å¾„çš„)
 
 		Rect() : w(0), h(0) {}
+		Rect(Vector2 s, Vector2 e);
 		Rect(Vector2 p, float w, float h) : p(p), w(w), h(h) {}
 
-		//4’¸“_‚Ì”z—ñ‚Ö•ÏŠ·
-		//¶ãA‰EãA¶‰ºA‰E‰º
+		//4é ‚ç‚¹ã®é…åˆ—ã¸å¤‰æ›
+		//å·¦ä¸Šã€å³ä¸Šã€å·¦ä¸‹ã€å³ä¸‹
 		std::array<Vector2, 4> ToPointArray();
 
-		//4•Ó‚ğ‚»‚ê‚¼‚êü•ª‚Æ‚µ‚Ä•\‚·”z—ñ‚Ö•ÏŠ·
+		//4è¾ºã‚’ãã‚Œãã‚Œç·šåˆ†ã¨ã—ã¦è¡¨ã™é…åˆ—ã¸å¤‰æ›
 		std::array<Segment, 4> ToSideArray();
 	};
 
 	struct ColResult {
 		bool hit = false;
 		bool hasHitPos = false;
-		Vector2 hitPos; //Õ“Ë“_
-		int32_t hitSide = -1; //“–‚½‚Á‚½–Ê(0‚©‚ç‡‚É¶‰Eã‰º)
-		std::bitset<4> hitSideBit = 0; //“–‚½‚Á‚½–Ê(4ƒrƒbƒg—ñA‰ºˆÊ‚©‚ç¶‰Eã‰º)
+		Vector2 hitPos; //è¡çªç‚¹
+		int32_t hitSide = -1; //å½“ãŸã£ãŸé¢(0ã‹ã‚‰é †ã«å·¦å³ä¸Šä¸‹)
+		std::bitset<4> hitSideBit = 0; //å½“ãŸã£ãŸé¢(4ãƒ“ãƒƒãƒˆåˆ—ã€ä¸‹ä½ã‹ã‚‰å·¦å³ä¸Šä¸‹)
+		Vector2 onLinePos; //ç·šåˆ†ä¸Šã®æœ€è¿‘ç‚¹
 	};
 
 	/// <summary>
-	/// ‹éŒ`‚Æ‹éŒ`‚Ì“–‚½‚è”»’è
+	/// ç‚¹ã¨çŸ©å½¢ã®å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
-	/// <param name="a">‹éŒ`A</param>
-	/// <param name="b">‹éŒ`B</param>
-	/// <returns>“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©</returns>
+	/// <param name="p">ç‚¹</param>
+	/// <param name="r">çŸ©å½¢</param>
+	/// <returns></returns>
+	bool IsHit(Point p, Rect r);
+
+	/// <summary>
+	/// çŸ©å½¢ã¨çŸ©å½¢ã®å½“ãŸã‚Šåˆ¤å®š
+	/// </summary>
+	/// <param name="a">çŸ©å½¢A</param>
+	/// <param name="b">çŸ©å½¢B</param>
+	/// <returns>å½“ãŸã£ã¦ã„ã‚‹ã‹ã©ã†ã‹</returns>
 	bool IsHit(Rect a, Rect b);
 
 	/// <summary>
-	/// ü•ª‚Æ‹éŒ`‚Ì“–‚½‚è”»’è
+	/// ç‚¹ã¨ã‚«ãƒ—ã‚»ãƒ«ã®å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
-	/// <param name="seg">ü•ª</param>
-	/// <param name="rect">‹éŒ`</param>
-	/// <returns>“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©</returns>
+	/// <param name="p">ç‚¹</param>
+	/// <param name="capsule">ã‚«ãƒ—ã‚»ãƒ«</param>
+	/// <returns></returns>
+	bool IsHit(Point p, Capsule capsule);
+
+	/// <summary>
+	/// ç·šåˆ†ã¨çŸ©å½¢ã®å½“ãŸã‚Šåˆ¤å®š
+	/// </summary>
+	/// <param name="seg">ç·šåˆ†</param>
+	/// <param name="rect">çŸ©å½¢</param>
+	/// <returns>å½“ãŸã£ã¦ã„ã‚‹ã‹ã©ã†ã‹</returns>
 	bool IsHit(Segment seg, Rect rect);
 
 	/// <summary>
-	/// ü•ª‚Æ‹éŒ`‚ÌÕ“Ëî•ñ‚ğ“¾‚é
+	/// ç‚¹ã¨ã‚«ãƒ—ã‚»ãƒ«ã®è¡çªæƒ…å ±ã‚’å¾—ã‚‹
 	/// </summary>
-	/// <param name="seg">ü•ª</param>
-	/// <param name="rect">‹éŒ`</param>
-	/// <returns>Ú‚µ‚¢Õ“Ëî•ñ</returns>
+	/// <param name="p">ç‚¹</param>
+	/// <param name="capsule">ã‚«ãƒ—ã‚»ãƒ«</param>
+	/// <returns>è©³ã—ã„è¡çªæƒ…å ±</returns>
+	ColResult CheckHit(Point p, Capsule capsule);
+
+	/// <summary>
+	/// ç·šåˆ†ã¨çŸ©å½¢ã®è¡çªæƒ…å ±ã‚’å¾—ã‚‹
+	/// </summary>
+	/// <param name="seg">ç·šåˆ†</param>
+	/// <param name="rect">çŸ©å½¢</param>
+	/// <returns>è©³ã—ã„è¡çªæƒ…å ±</returns>
 	ColResult CheckHit(Segment seg, Rect rect);
 }

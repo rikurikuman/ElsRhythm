@@ -1,5 +1,5 @@
 #pragma once
-//’‡—Ç‚µ‘ŠèéŒ¾
+//ä»²è‰¯ã—ç›¸æ‰‹å®£è¨€
 class Vector2;
 class Vector3;
 
@@ -14,10 +14,10 @@ public:
 	Float4() : x(0), y(0), z(0), w(0) {}
 	Float4(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
 
-	//z,w¬•ª‚ğÌ‚Ä‚ÄVector2‚ÖƒLƒƒƒXƒg
+	//z,wæˆåˆ†ã‚’æ¨ã¦ã¦Vector2ã¸ã‚­ãƒ£ã‚¹ãƒˆ
 	operator Vector2() const;
 
-	//w¬•ª‚ğÌ‚Ä‚ÄVector3‚ÖƒLƒƒƒXƒg
+	//wæˆåˆ†ã‚’æ¨ã¦ã¦Vector3ã¸ã‚­ãƒ£ã‚¹ãƒˆ
 	operator Vector3() const;
 
 	Float4 operator/(const float& f) const;

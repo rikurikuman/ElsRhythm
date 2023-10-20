@@ -1,23 +1,28 @@
 #pragma once
+
+//å¤–éƒ¨ãƒ˜ãƒƒãƒ€
+#pragma warning(push, 0)
 #include <imgui.h>
 #include <imgui_impl_win32.h>
 #include <imgui_impl_dx12.h>
+#include <string>
+#pragma warning(pop)
 
 class RImGui
 {
 public:
 	static RImGui* GetInstance();
 
-	//‰Šú‰»ˆ—‚Ü‚Æ‚ß
+	//åˆæœŸåŒ–å‡¦ç†ã¾ã¨ã‚
 	static void Init();
 
-	//ƒtƒŒ[ƒ€ŠJnˆ—
+	//ãƒ•ãƒ¬ãƒ¼ãƒ é–‹å§‹æ™‚å‡¦ç†
 	static void NewFrame();
 
-	//•`‰æˆ—‚Ü‚Æ‚ß
+	//æç”»å‡¦ç†ã¾ã¨ã‚
 	static void Render();
 
-	//I—¹ˆ—‚Ü‚Æ‚ß
+	//çµ‚äº†å‡¦ç†ã¾ã¨ã‚
 	static void Finalize();
 
 private:
@@ -35,3 +40,10 @@ private:
 	RImGui& operator=(const RImGui&&) = delete;
 };
 
+//ImGuiç‹¬è‡ªæ‹¡å¼µ
+namespace ImGui
+{
+	IMGUI_API bool InputText(const char* label, std::string* str, ImGuiInputTextFlags flags = 0, ImGuiInputTextCallback callback = nullptr, void* user_data = nullptr);
+
+	void HelpMarker(const char* desc);
+}

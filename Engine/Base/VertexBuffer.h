@@ -1,7 +1,12 @@
 #pragma once
+
+//å¤–éƒ¨ãƒ˜ãƒƒãƒ€
+#pragma warning(push, 0)
 #include <d3d12.h>
 #include <wrl.h>
 #include <vector>
+#pragma warning(pop)
+
 #include "Vertex.h"
 
 class VertexBuffer
@@ -9,27 +14,27 @@ class VertexBuffer
 public:
 	VertexBuffer() {};
 
-	//Vertex(Pos)‚Ì”z—ñ‚Æ‚»‚Ì‘å‚«‚³‚Å’¸“_ƒoƒbƒtƒ@‚ğì‚é
+	//Vertex(Pos)ã®é…åˆ—ã¨ãã®å¤§ãã•ã§é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚‹
 	VertexBuffer(VertexP* list, uint32_t size);
-	//Vertex(Pos)‚Ìvector‚Å’¸“_ƒoƒbƒtƒ@‚ğì‚é
+	//Vertex(Pos)ã®vectorã§é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚‹
 	VertexBuffer(std::vector<VertexP> list);
 
-	//Vertex(PosNormalUv)‚Ì”z—ñ‚Æ‚»‚Ì‘å‚«‚³‚Å’¸“_ƒoƒbƒtƒ@‚ğì‚é
+	//Vertex(PosNormalUv)ã®é…åˆ—ã¨ãã®å¤§ãã•ã§é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚‹
 	VertexBuffer(VertexPNU* list, uint32_t size);
-	//Vertex(PosNormalUv)‚Ìvector‚Å’¸“_ƒoƒbƒtƒ@‚ğì‚é
+	//Vertex(PosNormalUv)ã®vectorã§é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚‹
 	VertexBuffer(std::vector<VertexPNU> list);
 
-	//Vertex(Pos)‚Ì”z—ñ‚Æ‚»‚Ì‘å‚«‚³‚Å’¸“_ƒoƒbƒtƒ@‚ğì‚é
+	//Vertex(Pos)ã®é…åˆ—ã¨ãã®å¤§ãã•ã§é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚‹
 	void Init(VertexP* list, uint32_t size);
-	//Vertex(Pos)‚Ìvector‚Å’¸“_ƒoƒbƒtƒ@‚ğì‚é
+	//Vertex(Pos)ã®vectorã§é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚‹
 	void Init(std::vector<VertexP> list);
 
-	//Vertex(PosNormalUv)‚Ì”z—ñ‚Æ‚»‚Ì‘å‚«‚³‚Å’¸“_ƒoƒbƒtƒ@‚ğì‚é
+	//Vertex(PosNormalUv)ã®é…åˆ—ã¨ãã®å¤§ãã•ã§é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚‹
 	void Init(VertexPNU* list, uint32_t size);
-	//Vertex(PosNormalUv)‚Ìvector‚Å’¸“_ƒoƒbƒtƒ@‚ğì‚é
+	//Vertex(PosNormalUv)ã®vectorã§é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚‹
 	void Init(std::vector<VertexPNU> list);
 
-	//Vertex(PosNormalUv)‚Ì”z—ñ‚Æ‚»‚Ì‘å‚«‚³‚Å’¸“_ƒoƒbƒtƒ@‚ğXV‚·‚é
+	//Vertex(PosNormalUv)ã®é…åˆ—ã¨ãã®å¤§ãã•ã§é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’æ›´æ–°ã™ã‚‹
 	void Update(VertexPNU* list, uint32_t size);
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> mBuff = nullptr;

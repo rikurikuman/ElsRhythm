@@ -1,9 +1,17 @@
+//å¤–éƒ¨ãƒ˜ãƒƒãƒ€
+#pragma warning(push, 0)
+#define _CRTDBG_MAP_ALLOC
+#include <cstdlib>
+#include <crtdbg.h>
+
 #include <Windows.h>
 #include <d3d12.h>
 #include <cassert>
 #include <wrl.h>
 #include <vector>
 #include <string>
+#pragma warning(pop)
+
 #include "RWindow.h"
 #include "RDirectX.h"
 #include "RInput.h"
@@ -20,11 +28,6 @@
 #include "SimpleSceneTransition.h"
 #include "RImGui.h"
 #include "TitleScene.h"
-
-#define _CRTDBG_MAP_ALLOC
-#include <cstdlib>
-#include <crtdbg.h>
-
 #include "Colliders.h"
 #include <RenderTarget.h>
 #include <Renderer.h>
@@ -33,6 +36,7 @@
 #include <ParticleObject.h>
 #include "EventSystem.h"
 #include <DebugGUI.h>
+#include <ParticleManager.h>
 
 using namespace std;
 using namespace DirectX;
@@ -52,7 +56,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 #endif
 
 	//WindowsAPI
-	RWindow::SetWindowName(L"ƒŠƒYƒ€ƒ}ƒEƒT[");
+	RWindow::SetWindowName(L"ãƒªã‚ºãƒ ãƒã‚¦ã‚µãƒ¼");
 	RWindow::Init();
 
 	//DirectX
@@ -95,7 +99,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	scissorRectS.top = 0;
 	scissorRectS.bottom = scissorRectS.top + WIN_HEIGHT;
 
-	//ƒ‚ƒfƒ‹ƒf[ƒ^‚Ì“Ç‚İ‚İ
+	//ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ã®èª­ã¿è¾¼ã¿
 	Model::Load("Resources/Model/", "Cube.obj", "Cube");
 
 	TextureManager::Load("Resources/loadingMark.png", "LoadingMark");
@@ -108,7 +112,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	DebugCamera camera({ 0, 0, -10 });
 
-	TimeManager::targetFPS = 120;
+	TimeManager::targetFPS = 60;
 
 	//////////////////////////////////////
 
@@ -137,25 +141,27 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		RAudio::Update();
 
 		SceneManager::Update();
+		ParticleManager::Update();
 
-		//ˆÈ‰º•`‰æˆ—
+		//ä»¥ä¸‹æç”»å‡¦ç†
 		RDirectX::PreDraw();
 		Renderer::SetAllParamaterToAuto();
 
-		//‰æ–ÊƒNƒŠƒA`
+		//ç”»é¢ã‚¯ãƒªã‚¢ï½
 		RDirectX::ClearBackBuffer(Color(0.0f, 0.0f, 0.0f, 1.0f));
 
-		//•`‰æƒRƒ}ƒ“ƒh
+		//æç”»ã‚³ãƒãƒ³ãƒ‰
 		SceneManager::Draw();
+		ParticleManager::Draw();
 		SimpleDrawer::DrawAll();
 
-		//‚×‚ñ‚èI
+		//ã¹ã‚“ã‚Šï¼
 		if (Util::debugBool) {
 			DebugGUI::Show();
 		}
 
-		//•`‰æ‚ÌÀs’†‚É•ÊƒXƒŒƒbƒh‚Æ‚©‚ÅSRBuffer‚Æ‚©‚Ì‘€ì‚ğ‚³‚ê‚é‚Æ‚Ô‚Á”ò‚Ô‚Ì‚ÅG‚ÉƒƒbƒN‚·‚é
-		//‚¢‚¸‚ê‚à‚Á‚Æ—Ç‚¢§Œä‚É‚µ‚½‚¢
+		//æç”»ã®å®Ÿè¡Œä¸­ã«åˆ¥ã‚¹ãƒ¬ãƒƒãƒ‰ã¨ã‹ã§SRBufferã¨ã‹ã®æ“ä½œã‚’ã•ã‚Œã‚‹ã¨ã¶ã£é£›ã¶ã®ã§é›‘ã«ãƒ­ãƒƒã‚¯ã™ã‚‹
+		//ã„ãšã‚Œã‚‚ã£ã¨è‰¯ã„åˆ¶å¾¡ã«ã—ãŸã„
 		std::unique_lock<std::recursive_mutex> bufferLockInDrawing(SRBufferAllocator::GetInstance()->sMutex);
 		Renderer::Execute();
 

@@ -14,13 +14,13 @@ bool ColPrimitive3D::CheckSphereToSphere(Sphere a, Sphere b)
 
 bool ColPrimitive3D::CheckSphereToPlane(Sphere sphere, Plane plane)
 {
-    //Œ´“_‚©‚ç‹…‚Ö‚Ì‹——£
+    //åŸç‚¹ã‹ã‚‰çƒã¸ã®è·é›¢
     float dist = sphere.pos.Dot(plane.normal);
 
-    //•½–Ê‚ÌŒ´“_‚©‚ç‚Ì‹——£‚ğˆø‚¢‚½’·‚³‚ª”¼Œa‚æ‚è’·‚¯‚ê‚Î“–‚½‚Á‚Ä‚È‚¢
+    //å¹³é¢ã®åŸç‚¹ã‹ã‚‰ã®è·é›¢ã‚’å¼•ã„ãŸé•·ã•ãŒåŠå¾„ã‚ˆã‚Šé•·ã‘ã‚Œã°å½“ãŸã£ã¦ãªã„
     if (fabsf(dist - plane.distance) > sphere.r) return false;
 
-    //‚¶‚á‚ “–‚½‚Á‚Ä‚é
+    //ã˜ã‚ƒã‚å½“ãŸã£ã¦ã‚‹
     return true;
 }
 
@@ -32,31 +32,31 @@ bool ColPrimitive3D::CheckSphereToAABB(Sphere sphere, AABB box) {
     float minZ = box.pos.z - box.size.z;
     float maxZ = box.pos.z + box.size.z;
 
-    float len = 0; //Å’Z‹——£
+    float len = 0; //æœ€çŸ­è·é›¢
 
-    //X²‚É‚Â‚¢‚Ä
+    //Xè»¸ã«ã¤ã„ã¦
     if (sphere.pos.x < minX)
         len += (sphere.pos.x - minX) * (sphere.pos.x - minX);
     if (sphere.pos.x > maxX)
         len += (sphere.pos.x - maxX) * (sphere.pos.x - maxX);
 
-    //Y²‚É‚Â‚¢‚Ä
+    //Yè»¸ã«ã¤ã„ã¦
     if (sphere.pos.y < minY)
         len += (sphere.pos.y - minY) * (sphere.pos.y - minY);
     if (sphere.pos.y > maxY)
         len += (sphere.pos.y - maxY) * (sphere.pos.y - maxY);
 
-    //Z²‚É‚Â‚¢‚Ä
+    //Zè»¸ã«ã¤ã„ã¦
     if (sphere.pos.z < minZ)
         len += (sphere.pos.z - minZ) * (sphere.pos.z - minZ);
     if (sphere.pos.z > maxZ)
         len += (sphere.pos.z - maxZ) * (sphere.pos.z - maxZ);
 
-    if (len == 0) { //0‚È‚ç” ‚Ì’†‚É‹…‚Ì’†S‚ª‚ ‚é‚Á‚Ä‚±‚ÆI
+    if (len == 0) { //0ãªã‚‰ç®±ã®ä¸­ã«çƒã®ä¸­å¿ƒãŒã‚ã‚‹ã£ã¦ã“ã¨ï¼
         return true;
     }
 
-    //‹…‚Ì’†S‚Æ” ‚ÌÅ’Z‹——£‚ª”¼Œa‚æ‚è¬‚³‚¢‚È‚ç‚»‚è‚á‚ “–‚½‚Á‚Ä‚é
+    //çƒã®ä¸­å¿ƒã¨ç®±ã®æœ€çŸ­è·é›¢ãŒåŠå¾„ã‚ˆã‚Šå°ã•ã„ãªã‚‰ãã‚Šã‚ƒã‚å½“ãŸã£ã¦ã‚‹
     if (len < sphere.r * sphere.r) { 
         return true;
     }
@@ -65,7 +65,7 @@ bool ColPrimitive3D::CheckSphereToAABB(Sphere sphere, AABB box) {
 }
 
 Vector3 GetClosestPoint(Vector3 point, Triangle triangle) {
-    //p0‚ÌŠO‘¤‚©HHH
+    //p0ã®å¤–å´ã‹ï¼Ÿï¼Ÿï¼Ÿ
     Vector3 p0_p1 = triangle.p1 - triangle.p0;
     Vector3 p0_p2 = triangle.p2 - triangle.p0;
     Vector3 p0_pt = point - triangle.p0;
@@ -77,7 +77,7 @@ Vector3 GetClosestPoint(Vector3 point, Triangle triangle) {
         return triangle.p0;
     }
 
-    //p1‚ÌŠO‘¤‚©HHH
+    //p1ã®å¤–å´ã‹ï¼Ÿï¼Ÿï¼Ÿ
     Vector3 p1_p0 = triangle.p0 - triangle.p1;
     Vector3 p1_p2 = triangle.p2 - triangle.p1;
     Vector3 p1_pt = point - triangle.p1;
@@ -89,7 +89,7 @@ Vector3 GetClosestPoint(Vector3 point, Triangle triangle) {
         return triangle.p1;
     }
 
-    //p2‚ÌŠO‘¤‚©HHH
+    //p2ã®å¤–å´ã‹ï¼Ÿï¼Ÿï¼Ÿ
     Vector3 p2_p0 = triangle.p0 - triangle.p2;
     Vector3 p2_p1 = triangle.p1 - triangle.p2;
     Vector3 p2_pt = point - triangle.p2;
@@ -105,7 +105,7 @@ Vector3 GetClosestPoint(Vector3 point, Triangle triangle) {
     float d_02_1p = p0_p2.Dot(p1_pt);
     float cc = d_01_0p * d_02_1p - d_01_1p * d_02_0p;
 
-    //p0-p1ŠÔ•Ó‚ÌŠO‘¤‚©HHH
+    //p0-p1é–“è¾ºã®å¤–å´ã‹ï¼Ÿï¼Ÿï¼Ÿ
     if (d_01_0p >= 0 && d_01_1p < 0 && cc <= 0) {
         return triangle.p0 + d_01_0p / (d_01_0p - d_01_1p) * p0_p1;
     }
@@ -114,7 +114,7 @@ Vector3 GetClosestPoint(Vector3 point, Triangle triangle) {
     float d_02_2p = p0_p2.Dot(p2_pt);
     float cb = d_01_2p * d_02_0p - d_01_0p * d_02_2p;
 
-    //p0-p2ŠÔ•Ó‚ÌŠO‘¤‚©HHH
+    //p0-p2é–“è¾ºã®å¤–å´ã‹ï¼Ÿï¼Ÿï¼Ÿ
     if (d_02_0p >= 0 && d_02_2p < 0 && cb <= 0) {
         return triangle.p0 + d_02_0p / (d_02_0p - d_02_2p) * p0_p2;
     }
@@ -123,7 +123,7 @@ Vector3 GetClosestPoint(Vector3 point, Triangle triangle) {
     float d_10_2p = p1_p0.Dot(p2_pt);
     float ca = d_12_1p * d_10_2p - d_12_2p * d_10_1p;
 
-    //p1-p2ŠÔ•Ó‚ÌŠO‘¤‚©HHH
+    //p1-p2é–“è¾ºã®å¤–å´ã‹ï¼Ÿï¼Ÿï¼Ÿ
     if (d_12_1p >= 0 && d_12_2p < 0 && ca <= 0) {
         return triangle.p1 + d_12_1p / (d_12_1p - d_12_2p) * p1_p2;
     }
@@ -152,15 +152,15 @@ bool ColPrimitive3D::CheckRayToPlane(Ray ray, Plane plane, float* outDistance, V
 {
     float d1 = ray.dir.Dot(plane.normal);
 
-    //•½–Ê‚©‚ç‰“‚´‚©‚é•ûŒü‚Ö‚ÌƒŒƒC‚Í‚à‚¿‚ë‚ñ“–‚½‚ç‚È‚¢
+    //å¹³é¢ã‹ã‚‰é ã–ã‹ã‚‹æ–¹å‘ã¸ã®ãƒ¬ã‚¤ã¯ã‚‚ã¡ã‚ã‚“å½“ãŸã‚‰ãªã„
     if (d1 > 0) return false;
 
     float d2 = plane.normal.Dot(ray.start);
     float dist = d2 - plane.distance;
 
-    //n“_‚Æ•½–Ê‚Ì‹——£
+    //å§‹ç‚¹ã¨å¹³é¢ã®è·é›¢
     float t = dist / -d1;
-    if (t < 0) return false; //0‚æ‚è¬‚³‚¢‚È‚çn“_‚æ‚èŒã‚ë‚É•½–Ê‚ª‚ ‚é
+    if (t < 0) return false; //0ã‚ˆã‚Šå°ã•ã„ãªã‚‰å§‹ç‚¹ã‚ˆã‚Šå¾Œã‚ã«å¹³é¢ãŒã‚ã‚‹
 
     if (outDistance) *outDistance = t;
     if (outInter) *outInter = ray.start + t * ray.dir;
@@ -169,34 +169,34 @@ bool ColPrimitive3D::CheckRayToPlane(Ray ray, Plane plane, float* outDistance, V
 
 bool ColPrimitive3D::CheckRayToTriangle(Ray ray, Triangle triangle, float* outDistance, Vector3* outInter)
 {
-    //OŠpŒ`‚ğŠÜ‚Ş•½–Ê
+    //ä¸‰è§’å½¢ã‚’å«ã‚€å¹³é¢
     Plane plane;
     plane.normal = triangle.normal;
     plane.distance = triangle.normal.Dot(triangle.p0);
 
     Vector3 interOnPlane;
-    //‚»‚à‚»‚à‚±‚Ì•½–Ê‚É‚·‚ç“–‚½‚ç‚È‚¢‚È‚ç“–‚½‚ç‚ñ
+    //ãã‚‚ãã‚‚ã“ã®å¹³é¢ã«ã™ã‚‰å½“ãŸã‚‰ãªã„ãªã‚‰å½“ãŸã‚‰ã‚“
     if (!CheckRayToPlane(ray, plane, outDistance, &interOnPlane)) return false;
 
-    //•Óp0_p1ŠÔ‚Å
+    //è¾ºp0_p1é–“ã§
     Vector3 pt_p0 = triangle.p0 - interOnPlane;
     Vector3 p0_p1 = triangle.p1 - triangle.p0;
     Vector3 m = pt_p0.Cross(p0_p1);
-    if (m.Dot(triangle.normal) < 0) return false; //ŠO‘¤‚È‚ç“–‚½‚ç‚ñ
+    if (m.Dot(triangle.normal) < 0) return false; //å¤–å´ãªã‚‰å½“ãŸã‚‰ã‚“
 
-    //•Óp1_p2ŠÔ‚Å
+    //è¾ºp1_p2é–“ã§
     Vector3 pt_p1 = triangle.p1 - interOnPlane;
     Vector3 p1_p2 = triangle.p2 - triangle.p1;
     m = pt_p1.Cross(p1_p2);
-    if (m.Dot(triangle.normal) < 0) return false; //ŠO‘¤‚È‚ç“–‚½‚ç‚ñ
+    if (m.Dot(triangle.normal) < 0) return false; //å¤–å´ãªã‚‰å½“ãŸã‚‰ã‚“
 
-    //•Óp2_p0ŠÔ‚Å
+    //è¾ºp2_p0é–“ã§
     Vector3 pt_p2 = triangle.p2 - interOnPlane;
     Vector3 p2_p0 = triangle.p0 - triangle.p2;
     m = pt_p2.Cross(p2_p0);
-    if (m.Dot(triangle.normal) < 0) return false; //ŠO‘¤‚È‚ç“–‚½‚ç‚ñ
+    if (m.Dot(triangle.normal) < 0) return false; //å¤–å´ãªã‚‰å½“ãŸã‚‰ã‚“
 
-    //“–‚½‚Á‚Ä‚é`I
+    //å½“ãŸã£ã¦ã‚‹ï½ï¼
     if (outInter) *outInter = interOnPlane;
     return true;
 }
@@ -204,17 +204,17 @@ bool ColPrimitive3D::CheckRayToTriangle(Ray ray, Triangle triangle, float* outDi
 bool ColPrimitive3D::CheckRayToSphere(Ray ray, Sphere sphere, float* outDistance, Vector3* outInter)
 {
     Vector3 sphereToRay = ray.start - sphere.pos;
-    float b = sphereToRay.Dot(ray.dir); //ƒŒƒC‚ª‹…‚Ì•û‚ğŒü‚¢‚Ä‚¢‚é‚©”»’è—p
-    float c = sphereToRay.Dot(sphereToRay) - sphere.r * sphere.r; //ƒŒƒC‚Ì‹“_‚ª‹…“à‚©”»’è—p
+    float b = sphereToRay.Dot(ray.dir); //ãƒ¬ã‚¤ãŒçƒã®æ–¹ã‚’å‘ã„ã¦ã„ã‚‹ã‹åˆ¤å®šç”¨
+    float c = sphereToRay.Dot(sphereToRay) - sphere.r * sphere.r; //ãƒ¬ã‚¤ã®è¦–ç‚¹ãŒçƒå†…ã‹åˆ¤å®šç”¨
 
     if (b > 0.0f && c > 0.0f) return false;
 
-    //”»•Ê®
+    //åˆ¤åˆ¥å¼
     float d = b * b - c;
-    if (d < 0) return false; //“ñŸ•û’ö®‚Ì‰ğ‚È‚µAŒğ“_‚ª‚È‚¢
+    if (d < 0) return false; //äºŒæ¬¡æ–¹ç¨‹å¼ã®è§£ãªã—ã€äº¤ç‚¹ãŒãªã„
 
     float t = -b - sqrtf(d);
-    if (t < 0) t = 0; //t‚ª•‰‚Ìê‡‚ÍƒŒƒC‚Ìn“_‚ª‹…‚Ì“à‘¤‚É‚¢‚é(ƒqƒbƒg‹——£‚ğ0‚É‚·‚é)
+    if (t < 0) t = 0; //tãŒè² ã®å ´åˆã¯ãƒ¬ã‚¤ã®å§‹ç‚¹ãŒçƒã®å†…å´ã«ã„ã‚‹(ãƒ’ãƒƒãƒˆè·é›¢ã‚’0ã«ã™ã‚‹)
     if (outDistance) *outDistance = t;
     if (outInter) *outInter = ray.start + t * ray.dir;
 

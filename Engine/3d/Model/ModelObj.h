@@ -24,10 +24,10 @@ public:
 	ModelObj(Model* model) : mModel(model) {};
 	ModelObj(ModelHandle handle) : mModel(ModelManager::Get(handle)) {};
 
-	//Šeƒf[ƒ^‚Ìƒoƒbƒtƒ@‚Ö‚Ì“]‘—
+	//å„ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã¸ã®è»¢é€
 	void TransferBuffer(ViewProjection viewprojection) override;
 
-	//•`‰æ—v‹‚ğRenderer‚Ö
+	//æç”»è¦æ±‚ã‚’Rendererã¸
 	void Draw();
 };
 

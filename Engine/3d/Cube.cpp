@@ -24,7 +24,7 @@ Cube::Cube(TextureHandle texture, Vector2 size, bool forceSize)
 		mFaces[i].Init();
 	}
 
-	//G‚ÉƒLƒ…[ƒu‚É‚·‚é‚æ
+	//é›‘ã«ã‚­ãƒ¥ãƒ¼ãƒ–ã«ã™ã‚‹ã‚ˆ
 	mFaces[Direction::Front].mTransform.position = { 0, 0, -fSize.x / 2.0f };
 	mFaces[Direction::Right].mTransform.position = { -fSize.x / 2.0f, 0, 0 };
 	mFaces[Direction::Right].mTransform.rotation.y = Util::AngleToRadian(90);

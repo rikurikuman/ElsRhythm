@@ -4,7 +4,7 @@
 
 class PolygonCollider : public ICollider {
 public:
-	//�|���S�����A�e���_�͎��v���Ŏw�肳��Ă��邱��
+	//ポリゴン情報、各頂点は時計回りで指定されていること
 	ColPrimitive3D::Triangle mPolygon{};
 
 	PolygonCollider() {}

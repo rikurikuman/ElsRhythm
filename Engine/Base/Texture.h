@@ -1,4 +1,7 @@
 #pragma once
+
+//å¤–éƒ¨ãƒ˜ãƒƒãƒ€
+#pragma warning(push, 0)
 #include <d3d12.h>
 #include <string>
 #include <list>
@@ -6,6 +9,8 @@
 #include <memory>
 #include <map>
 #include <mutex>
+#pragma warning(pop)
+
 #include "Color.h"
 #include <Rect.h>
 #include <Vector2.h>
@@ -15,33 +20,33 @@ typedef std::string TextureHandle;
 class Texture
 {
 public:
-	Microsoft::WRL::ComPtr<ID3D12Resource> mResource; //ƒeƒNƒXƒ`ƒƒ‚ÌƒŠƒ\[ƒX
-	D3D12_CPU_DESCRIPTOR_HANDLE mCpuHandle = D3D12_CPU_DESCRIPTOR_HANDLE(); //SRV‚Ìƒnƒ“ƒhƒ‹(CPU‘¤)
-	D3D12_GPU_DESCRIPTOR_HANDLE mGpuHandle = D3D12_GPU_DESCRIPTOR_HANDLE(); //SRV‚Ìƒnƒ“ƒhƒ‹(GPU‘¤)
+	Microsoft::WRL::ComPtr<ID3D12Resource> mResource; //ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒªã‚½ãƒ¼ã‚¹
+	D3D12_CPU_DESCRIPTOR_HANDLE mCpuHandle = D3D12_CPU_DESCRIPTOR_HANDLE(); //SRVã®ãƒãƒ³ãƒ‰ãƒ«(CPUå´)
+	D3D12_GPU_DESCRIPTOR_HANDLE mGpuHandle = D3D12_GPU_DESCRIPTOR_HANDLE(); //SRVã®ãƒãƒ³ãƒ‰ãƒ«(GPUå´)
 	uint32_t mHeapIndex = UINT32_MAX;
-	std::string mFilePath; //ƒtƒ@ƒCƒ‹‚Ö‚ÌƒpƒX
+	std::string mFilePath; //ãƒ•ã‚¡ã‚¤ãƒ«ã¸ã®ãƒ‘ã‚¹
 
 	Texture() : mState(D3D12_RESOURCE_STATE_COMMON) {};
 	Texture(D3D12_RESOURCE_STATES firstState) : mState(firstState) {};
 
 	/// <summary>
-	/// ƒeƒNƒXƒ`ƒƒ‚ÌƒŠƒ\[ƒXƒXƒe[ƒg‚ğ•ÏX‚µ‚Ü‚·
-	/// ‚±‚ÌŠÖ”ˆÈŠO‚©‚çƒŠƒ\[ƒXƒXƒe[ƒg‚ğ•ÏX‚·‚é‚Æ—Ç‚­‚È‚¢‚±‚Æ‚ª‹N‚«‚Ü‚·
+	/// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒªã‚½ãƒ¼ã‚¹ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å¤‰æ›´ã—ã¾ã™
+	/// ã“ã®é–¢æ•°ä»¥å¤–ã‹ã‚‰ãƒªã‚½ãƒ¼ã‚¹ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å¤‰æ›´ã™ã‚‹ã¨è‰¯ããªã„ã“ã¨ãŒèµ·ãã¾ã™
 	/// </summary>
-	/// <param name="state">•ÏXæƒŠƒ\[ƒXƒXƒe[ƒg</param>
+	/// <param name="state">å¤‰æ›´å…ˆãƒªã‚½ãƒ¼ã‚¹ã‚¹ãƒ†ãƒ¼ãƒˆ</param>
 	void ChangeResourceState(D3D12_RESOURCE_STATES state);
 
-	// ƒeƒNƒXƒ`ƒƒ‚ÌŒ»İ‚ÌƒŠƒ\[ƒXƒXƒe[ƒg‚ğæ“¾‚µ‚Ü‚·
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ç¾åœ¨ã®ãƒªã‚½ãƒ¼ã‚¹ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å–å¾—ã—ã¾ã™
 	D3D12_RESOURCE_STATES GetResourceState() const {
 		return mState;
 	}
 
 	/// <summary>
-	/// ƒeƒNƒXƒ`ƒƒ‚ğƒRƒs[‚µ‚Ü‚·
+	/// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ã‚³ãƒ”ãƒ¼ã—ã¾ã™
 	/// </summary>
-	/// <param name="dest">ƒRƒs[æƒeƒNƒXƒ`ƒƒ</param>
-	/// <param name="srcRect">ƒRƒs[Œ³—Ìˆæ</param>
-	/// <param name="destPos">ƒRƒs[æˆÊ’u</param>
+	/// <param name="dest">ã‚³ãƒ”ãƒ¼å…ˆãƒ†ã‚¯ã‚¹ãƒãƒ£</param>
+	/// <param name="srcRect">ã‚³ãƒ”ãƒ¼å…ƒé ˜åŸŸ</param>
+	/// <param name="destPos">ã‚³ãƒ”ãƒ¼å…ˆä½ç½®</param>
 	void Copy(Texture* dest, RRect srcRect, Vector2 destPos = {0, 0});
 
 private:
@@ -51,7 +56,7 @@ private:
 class TextureManager
 {
 public:
-	//TextureManager‚ğæ“¾‚·‚é
+	//TextureManagerã‚’å–å¾—ã™ã‚‹
 	static TextureManager* GetInstance() {
 		static TextureManager instance;
 		return &instance;
@@ -61,76 +66,76 @@ public:
 	static Texture GetHogeHogeTexture();
 
 	/// <summary>
-	/// w’èF‚Å“h‚è‚Â‚Ô‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ‚ğì‚é
+	/// æŒ‡å®šè‰²ã§å¡—ã‚Šã¤ã¶ã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä½œã‚‹
 	/// </summary>
-	/// <param name="color">“h‚è‚Â‚Ô‚·F</param>
-	/// <param name="width">‰¡•</param>
-	/// <param name="height">c•</param>
-	/// <param name="handle">•K—v‚È‚çA”CˆÓƒnƒ“ƒhƒ‹–¼w’è</param>
-	/// <returns>ì‚ç‚ê‚½ƒeƒNƒXƒ`ƒƒ‚Ìƒnƒ“ƒhƒ‹</returns>
+	/// <param name="color">å¡—ã‚Šã¤ã¶ã™è‰²</param>
+	/// <param name="width">æ¨ªå¹…</param>
+	/// <param name="height">ç¸¦å¹…</param>
+	/// <param name="handle">å¿…è¦ãªã‚‰ã€ä»»æ„ãƒãƒ³ãƒ‰ãƒ«åæŒ‡å®š</param>
+	/// <returns>ä½œã‚‰ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒãƒ³ãƒ‰ãƒ«</returns>
 	static TextureHandle Create(const Color color, const size_t width, const uint32_t height, const std::string handle = "");
 
 	/// <summary>
-	/// Fî•ñ‚Ì”z—ñ‚É‚æ‚Á‚ÄƒeƒNƒXƒ`ƒƒ‚ğì‚é
+	/// è‰²æƒ…å ±ã®é…åˆ—ã«ã‚ˆã£ã¦ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä½œã‚‹
 	/// </summary>
-	/// <param name="pSource">Color”z—ñ</param>
-	/// <param name="width">‰¡•</param>
-	/// <param name="height">c•</param>
-	/// <param name="filepath">‚ ‚ê‚ÎAƒtƒ@ƒCƒ‹ƒpƒX</param>
-	/// <param name="handle">•K—v‚È‚çA”CˆÓƒnƒ“ƒhƒ‹–¼w’è</param>
-	/// <returns>ì‚ç‚ê‚½ƒeƒNƒXƒ`ƒƒ‚Ìƒnƒ“ƒhƒ‹</returns>
+	/// <param name="pSource">Coloré…åˆ—</param>
+	/// <param name="width">æ¨ªå¹…</param>
+	/// <param name="height">ç¸¦å¹…</param>
+	/// <param name="filepath">ã‚ã‚Œã°ã€ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹</param>
+	/// <param name="handle">å¿…è¦ãªã‚‰ã€ä»»æ„ãƒãƒ³ãƒ‰ãƒ«åæŒ‡å®š</param>
+	/// <returns>ä½œã‚‰ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒãƒ³ãƒ‰ãƒ«</returns>
 	static TextureHandle Create(const Color* pSource, const size_t width, const uint32_t height, const std::string filepath = "", const std::string handle = "");
 
 	/// <summary>
-	/// ƒtƒ@ƒCƒ‹‚©‚çƒeƒNƒXƒ`ƒƒ‚ğ“Ç‚İ‚ñ‚Å“o˜^‚·‚é
+	/// ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’èª­ã¿è¾¼ã‚“ã§ç™»éŒ²ã™ã‚‹
 	/// </summary>
-	/// <param name="filepath">ƒtƒ@ƒCƒ‹‚Ö‚ÌƒpƒX</param>
-	/// <param name="handle">•K—v‚È‚çA”CˆÓƒnƒ“ƒhƒ‹–¼w’è</param>
-	/// <returns>“Ç‚İ‚ñ‚¾ƒeƒNƒXƒ`ƒƒ‚Ìƒnƒ“ƒhƒ‹</returns>
+	/// <param name="filepath">ãƒ•ã‚¡ã‚¤ãƒ«ã¸ã®ãƒ‘ã‚¹</param>
+	/// <param name="handle">å¿…è¦ãªã‚‰ã€ä»»æ„ãƒãƒ³ãƒ‰ãƒ«åæŒ‡å®š</param>
+	/// <returns>èª­ã¿è¾¼ã‚“ã ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒãƒ³ãƒ‰ãƒ«</returns>
 	static TextureHandle Load(const std::string filepath, const std::string handle = "");
 
 	/// <summary>
-	/// ƒƒ‚ƒŠ‚©‚çƒeƒNƒXƒ`ƒƒ‚ğ“Ç‚İ‚ñ‚Å“o˜^‚·‚é
+	/// ãƒ¡ãƒ¢ãƒªã‹ã‚‰ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’èª­ã¿è¾¼ã‚“ã§ç™»éŒ²ã™ã‚‹
 	/// </summary>
-	/// <param name="pSource">‚»‚Ìƒƒ‚ƒŠ‚Ö‚Ìƒ|ƒCƒ“ƒ^</param>
-	/// <param name="size">ƒTƒCƒY</param>
-	/// <param name="filepath">‚ ‚ê‚ÎAƒtƒ@ƒCƒ‹‚Ö‚ÌƒpƒX</param>
-	/// <param name="handle">•K—v‚È‚çA”CˆÓƒnƒ“ƒhƒ‹–¼w’è</param>
-	/// <returns>“Ç‚İ‚ñ‚¾ƒeƒNƒXƒ`ƒƒ‚Ìƒnƒ“ƒhƒ‹</returns>
+	/// <param name="pSource">ãã®ãƒ¡ãƒ¢ãƒªã¸ã®ãƒã‚¤ãƒ³ã‚¿</param>
+	/// <param name="size">ã‚µã‚¤ã‚º</param>
+	/// <param name="filepath">ã‚ã‚Œã°ã€ãƒ•ã‚¡ã‚¤ãƒ«ã¸ã®ãƒ‘ã‚¹</param>
+	/// <param name="handle">å¿…è¦ãªã‚‰ã€ä»»æ„ãƒãƒ³ãƒ‰ãƒ«åæŒ‡å®š</param>
+	/// <returns>èª­ã¿è¾¼ã‚“ã ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒãƒ³ãƒ‰ãƒ«</returns>
 	static TextureHandle Load(const void* pSource, const size_t size, const std::string filepath = "", const std::string handle = "");
 
 	/// <summary>
-	/// “o˜^Ï‚İ‚ÌƒeƒNƒXƒ`ƒƒ‚ğæ“¾‚·‚é
+	/// ç™»éŒ²æ¸ˆã¿ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å–å¾—ã™ã‚‹
 	/// </summary>
-	/// <param name="handle">æ“¾‚·‚éƒnƒ“ƒhƒ‹</param>
+	/// <param name="handle">å–å¾—ã™ã‚‹ãƒãƒ³ãƒ‰ãƒ«</param>
 	/// <returns></returns>
 	static Texture& Get(const TextureHandle& handle);
 
 	/// <summary>
-	/// ƒeƒNƒXƒ`ƒƒ‚ğ“o˜^‚·‚é
+	/// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ç™»éŒ²ã™ã‚‹
 	/// </summary>
-	/// <param name="texture">“o˜^‚·‚éƒeƒNƒXƒ`ƒƒ</param>
-	/// <param name="handle">“o˜^æ‚ÌƒeƒNƒXƒ`ƒƒƒnƒ“ƒhƒ‹</param>
-	/// <returns>“o˜^æ‚ÌƒeƒNƒXƒ`ƒƒƒnƒ“ƒhƒ‹</returns>
+	/// <param name="texture">ç™»éŒ²ã™ã‚‹ãƒ†ã‚¯ã‚¹ãƒãƒ£</param>
+	/// <param name="handle">ç™»éŒ²å…ˆã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒ³ãƒ‰ãƒ«</param>
+	/// <returns>ç™»éŒ²å…ˆã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒ³ãƒ‰ãƒ«</returns>
 	static TextureHandle Register(Texture texture, TextureHandle handle = "");
 
 	/// <summary>
-	/// “o˜^Ï‚İ‚ÌƒeƒNƒXƒ`ƒƒ‚ğ‘¦À‚É”jŠü‚·‚é
+	/// ç™»éŒ²æ¸ˆã¿ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å³åº§ã«ç ´æ£„ã™ã‚‹
 	/// </summary>
-	/// <param name="handle">”jŠü‚·‚éƒeƒNƒXƒ`ƒƒ‚Ìƒnƒ“ƒhƒ‹</param>
+	/// <param name="handle">ç ´æ£„ã™ã‚‹ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒãƒ³ãƒ‰ãƒ«</param>
 	static void UnRegister(const TextureHandle& handle);
 
 	/// <summary>
-	/// “o˜^Ï‚İ‚ÌƒeƒNƒXƒ`ƒƒ‚ğ‚»‚ÌƒtƒŒ[ƒ€I—¹‚É”jŠü‚·‚é
-	/// ‚»‚ÌƒtƒŒ[ƒ€‚Ì•`‰æ‚Ég‚¤‚¯‚Ç‚»‚êˆÈ~‚¢‚ç‚È‚¢ê‡‚Í‚±‚Á‚¿
+	/// ç™»éŒ²æ¸ˆã¿ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ãã®ãƒ•ãƒ¬ãƒ¼ãƒ çµ‚äº†æ™‚ã«ç ´æ£„ã™ã‚‹
+	/// ãã®ãƒ•ãƒ¬ãƒ¼ãƒ ã®æç”»ã«ä½¿ã†ã‘ã©ãã‚Œä»¥é™ã„ã‚‰ãªã„å ´åˆã¯ã“ã£ã¡
 	/// </summary>
-	/// <param name="handle">”jŠü‚·‚éƒeƒNƒXƒ`ƒƒ‚Ìƒnƒ“ƒhƒ‹</param>
+	/// <param name="handle">ç ´æ£„ã™ã‚‹ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒãƒ³ãƒ‰ãƒ«</param>
 	static void UnRegisterAtEndFrame(const TextureHandle& handle);
 
-	//ƒtƒŒ[ƒ€I—¹‚Ìˆ—‚ğs‚¤(ŒÄ‚×)
+	//ãƒ•ãƒ¬ãƒ¼ãƒ çµ‚äº†æ™‚ã®å‡¦ç†ã‚’è¡Œã†(å‘¼ã¹)
 	static void EndFrameProcess();
 
-	//“Ç‚İ‚ñ‚¾ƒeƒNƒXƒ`ƒƒ‚ğ‘S‚Ä‘¦À‚É”jŠü‚·‚é
+	//èª­ã¿è¾¼ã‚“ã ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å…¨ã¦å³åº§ã«ç ´æ£„ã™ã‚‹
 	static void UnRegisterAll();
 
 	ID3D12DescriptorHeap* GetSRVHeap() {
@@ -158,8 +163,8 @@ private:
 	void EndFrameProcessInternal();
 
 	std::recursive_mutex mMutex;
-	static const uint32_t NUM_SRV_DESCRIPTORS = 2048; //ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ì”
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mSrvHeap; //ƒeƒNƒXƒ`ƒƒ—pSRVƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	static const uint32_t NUM_SRV_DESCRIPTORS = 2048; //ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®æ•°
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mSrvHeap; //ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨SRVãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	std::map<TextureHandle, Texture> mTextureMap;
-	std::list<TextureHandle> mUnregisterScheduledList; //UnRegisterAtEndFrame—\’èƒŠƒXƒg
+	std::list<TextureHandle> mUnregisterScheduledList; //UnRegisterAtEndFrameäºˆå®šãƒªã‚¹ãƒˆ
 };

@@ -1,96 +1,101 @@
 #pragma once
+
+//外部ヘッダ
+#pragma warning(push, 0)
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
 #include <wrl.h>
+#pragma warning(pop)
+
 #include "Vector3.h"
 #include "Vector2.h"
 #include <Xinput.h>
 
 class RInput {
 public:
-	//���͏��Ǘ��@�\������
+	//入力情報管理機能初期化
 	static void Init();
 	static RInput* GetInstance();
 
-	//���͏��̍X�V
+	//入力情報の更新
 	static void Update();
 
-	//�L�[��������Ă��邩
+	//キーが押されているか
 	static bool GetKey(unsigned char key);
-	//�L�[�����ꂽ�u�Ԃ�
+	//キーが離れた瞬間か
 	static bool GetKeyUp(unsigned char key);
-	//�L�[�������ꂽ�u�Ԃ�
+	//キーが押された瞬間か
 	static bool GetKeyDown(unsigned char key);
 
-	//�}�E�X�̏�Ԃ𓾂�
+	//マウスの状態を得る
 	static inline DIMOUSESTATE2 GetMouseState() {
 		return GetInstance()->mMouseState;
 	}
-	//�O��̃}�E�X�̏�Ԃ𓾂�
+	//前回のマウスの状態を得る
 	static inline DIMOUSESTATE2 GetOldMouseState() {
 		return GetInstance()->mOldMouseState;
 	}
 
-	//�}�E�X�N���b�N����Ă��邩
+	//マウスクリックされているか
 	static bool GetMouseClick(int32_t buttonNum);
-	//�}�E�X�N���b�N�����ꂽ�u�Ԃ�
+	//マウスクリックが離れた瞬間か
 	static bool GetMouseClickUp(int32_t buttonNum);
-	//�}�E�X�N���b�N�����ꂽ�u�Ԃ�
+	//マウスクリックがされた瞬間か
 	static bool GetMouseClickDown(int32_t buttonNum);
 
-	//�}�E�X�̈ʒu���擾����
+	//マウスの位置を取得する
 	static Vector2 GetMousePos();
 
-	//�O��̃}�E�X�̈ʒu���擾����
+	//前回のマウスの位置を取得する
 	static Vector2 GetOldMousePos();
 
-	//�}�E�X�̈ړ��ʂ��擾����
+	//マウスの移動量を取得する
 	static Vector3 GetMouseMove();
 
-	//�p�b�h�ɐڑ�����Ă邩
+	//パッドに接続されてるか
 	static bool GetPadConnect();
 
-	//�p�b�h�̃{�^����������Ă��邩
+	//パッドのボタンが押されているか
 	static bool GetPadButton(uint32_t button);
 
-	//�p�b�h�̃{�^�������ꂽ�u�Ԃ�
+	//パッドのボタンが離れた瞬間か
 	static bool GetPadButtonUp(uint32_t button);
 
-	//�p�b�h�̃{�^���������ꂽ�u�Ԃ�
+	//パッドのボタンが押された瞬間か
 	static bool GetPadButtonDown(uint32_t button);
 
-	//�p�b�h�̍��X�e�B�b�N
+	//パッドの左スティック
 	Vector2 GetPadLStick();
 
-	//�p�b�h�̉E�X�e�B�b�N
+	//パッドの右スティック
 	Vector2 GetPadRStick();
 
-	//���g���K�[���������񂾏u�Ԃ�
+	//左トリガーを押し込んだ瞬間か
 	bool GetLTriggerDown();
 
-	//�E�g���K�[���������񂾏u�Ԃ�
+	//右トリガーを押し込んだ瞬間か
 	bool GetRTriggerDown();
 
-	//���X�e�B�b�N����ɓ|�����u�Ԃ�
+	//左スティックを上に倒した瞬間か
 	bool GetLStickUp();
 
-	//���X�e�B�b�N�����ɓ|�����u�Ԃ�
+	//左スティックを下に倒した瞬間か
 	bool GetLStickDown();
 
 	/// <summary>
-	/// ���X�e�B�b�N���͂𓾂�
+	/// 左スティック入力を得る
 	/// </summary>
-	/// <param name="useWASD">WASD�L�[���X�e�B�b�N�Ɍ����Ăď�������</param>
-	/// <param name="useArrow">���L�[���X�e�B�b�N�Ɍ����Ăď�������</param>
-	/// <returns>���͗�</returns>
+	/// <param name="useWASD">WASDキーもスティックに見立てて処理する</param>
+	/// <param name="useArrow">矢印キーもスティックに見立てて処理する</param>
+	/// <returns>入力量</returns>
 	static Vector2 GetLStick(bool useWASD, bool useArrow);
 
 	/// <summary>
-	/// �E�X�e�B�b�N���͂𓾂�
+	/// 右スティック入力を得る
 	/// </summary>
-	/// <param name="useWASD">WASD�L�[���X�e�B�b�N�Ɍ����Ăď�������</param>
-	/// <param name="useArrow">���L�[���X�e�B�b�N�Ɍ����Ăď�������</param>
-	/// <returns>���͗�</returns>
+	/// <param name="useWASD">WASDキーもスティックに見立てて処理する</param>
+	/// <param name="useArrow">矢印キーもスティックに見立てて処理する</param>
+	/// <returns>入力量</returns>
 	static Vector2 GetRStick(bool useWASD, bool useArrow);
 
 private:

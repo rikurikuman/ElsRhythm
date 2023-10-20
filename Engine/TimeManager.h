@@ -1,6 +1,10 @@
 #pragma once
+
+//外部ヘッダ
+#pragma warning(push, 0)
 #include <Windows.h>
 #include <mmsystem.h>
+#pragma warning(pop)
 
 namespace TimeManager
 {

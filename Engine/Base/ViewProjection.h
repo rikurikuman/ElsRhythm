@@ -21,24 +21,24 @@ public:
 	Matrix4 mView;
 	Matrix4 mProjection;
 	Matrix4 mMatrix;
-	Vector3 mEye = {0, 0, 0}; //‹“_À•W
-	Vector3 mTarget = {0, 0, 1}; //’‹“_À•W
-	Vector3 mUpVec = {0, 1, 0}; //ã•ûŒüƒxƒNƒgƒ‹
+	Vector3 mEye = {0, 0, 0}; //è¦–ç‚¹åº§æ¨™
+	Vector3 mTarget = {0, 0, 1}; //æ³¨è¦–ç‚¹åº§æ¨™
+	Vector3 mUpVec = {0, 1, 0}; //ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 
 	Vector2 mOrthoSize = { 1, 1 };
 
-	float mFov = Util::AngleToRadian(45); //‰æŠp(Rad)
-	float mAspect = 1; //ƒAƒXƒyƒNƒg”ä(‰¡/c)
-	float mNearclip = 0.3f; //ƒjƒAƒNƒŠƒbƒv‹——£
-	float mFarclip = 1000; //ƒtƒ@[ƒNƒŠƒbƒv‹——£
+	float mFov = Util::AngleToRadian(45); //ç”»è§’(Rad)
+	float mAspect = 1; //ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”(æ¨ª/ç¸¦)
+	float mNearclip = 0.3f; //ãƒ‹ã‚¢ã‚¯ãƒªãƒƒãƒ—è·é›¢
+	float mFarclip = 1000; //ãƒ•ã‚¡ãƒ¼ã‚¯ãƒªãƒƒãƒ—è·é›¢
 
-	//ƒƒ“ƒo•Ï”‚Ìî•ñ‚ÅŠes—ñ‚ğ¶¬‚·‚é
+	//ãƒ¡ãƒ³ãƒå¤‰æ•°ã®æƒ…å ±ã§å„è¡Œåˆ—ã‚’ç”Ÿæˆã™ã‚‹
 	void UpdateMatrix();
 
 	/// <summary>
-	/// ’è”ƒoƒbƒtƒ@‚Ö“]‘—
+	/// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸è»¢é€
 	/// </summary>
-	/// <param name="target">‘ÎÛ‚Ìƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^</param>
+	/// <param name="target">å¯¾è±¡ã®ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿</param>
 	void Transfer(ViewProjectionBuffer* target);
 
 	Vector2 WorldToScreen(Vector3 wPos);

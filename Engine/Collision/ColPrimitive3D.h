@@ -3,19 +3,19 @@
 
 namespace ColPrimitive3D
 {
-	//‹…
+	//çƒ
 	struct Sphere {
 		Vector3 pos;
 		float r;
 	};
 
-	//–³ŒÀ•½–Ê
+	//ç„¡é™å¹³é¢
 	struct Plane {
 		Vector3 normal;
-		float distance; //Œ´“_‚©‚ç‚Ì‹——£
+		float distance; //åŸç‚¹ã‹ã‚‰ã®è·é›¢
 	};
 
-	//ƒ|ƒŠƒSƒ“
+	//ãƒãƒªã‚´ãƒ³
 	struct Triangle {
 		Vector3 p0;
 		Vector3 p1;
@@ -23,20 +23,20 @@ namespace ColPrimitive3D
 		Vector3 normal;
 	};
 
-	//²•½sƒ{ƒbƒNƒX
+	//è»¸å¹³è¡Œãƒœãƒƒã‚¯ã‚¹
 	struct AABB {
 		Vector3 pos;
 		Vector3 size;
 	};
 
-	//ƒŒƒC
+	//ãƒ¬ã‚¤
 	struct Ray
 	{
 		Vector3 start;
 		Vector3 dir;
 	};
 
-	//ü•ª
+	//ç·šåˆ†
 	struct Segment {
 		Vector3 start;
 		Vector3 end;

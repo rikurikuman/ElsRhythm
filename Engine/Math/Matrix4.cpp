@@ -9,7 +9,7 @@ const float EPSILON = 0.000001f;
 float Matrix4::Line::operator[](const size_t i) const
 {
 	if (i >= 4) {
-		throw std::out_of_range("4—ñ‚È‚Ì‚É5—ñ–ÚˆÈ~‚ğG‚é‚È");
+		throw std::out_of_range("4åˆ—ãªã®ã«5åˆ—ç›®ä»¥é™ã‚’è§¦ã‚‹ãª");
 	}
 	return m[i];
 }
@@ -17,7 +17,7 @@ float Matrix4::Line::operator[](const size_t i) const
 float& Matrix4::Line::operator[](const size_t i)
 {
 	if (i >= 4) {
-		throw std::out_of_range("4—ñ‚È‚Ì‚É5—ñ–ÚˆÈ~‚ğG‚é‚È");
+		throw std::out_of_range("4åˆ—ãªã®ã«5åˆ—ç›®ä»¥é™ã‚’è§¦ã‚‹ãª");
 	}
 	return m[i];
 }
@@ -42,7 +42,7 @@ Matrix4::Matrix4(DirectX::XMMATRIX matrix)
 Matrix4::Line Matrix4::operator[](const size_t i) const
 {
 	if (i >= 4) {
-		throw std::out_of_range("4s4—ñ‚È‚Ì‚É5s–ÚˆÈ~‚ğG‚é‚È");
+		throw std::out_of_range("4è¡Œ4åˆ—ãªã®ã«5è¡Œç›®ä»¥é™ã‚’è§¦ã‚‹ãª");
 	}
 	return m[i];
 }
@@ -50,7 +50,7 @@ Matrix4::Line Matrix4::operator[](const size_t i) const
 Matrix4::Line& Matrix4::operator[](const size_t i)
 {
 	if (i >= 4) {
-		throw std::out_of_range("4s4—ñ‚È‚Ì‚É5s–ÚˆÈ~‚ğG‚é‚È");
+		throw std::out_of_range("4è¡Œ4åˆ—ãªã®ã«5è¡Œç›®ä»¥é™ã‚’è§¦ã‚‹ãª");
 	}
 	return m[i];
 }
@@ -72,7 +72,7 @@ Matrix4 Matrix4::operator-() const
 	mat[3][7] = 1;
 
 	for (int32_t n = 0; n < 4; n++) {
-		//Å‘å‚Ìâ‘Î’l‚ğ’Tõ‚·‚é(‚Æ‚è‚ ‚¦‚¸‘ÎÛ¬•ª‚ğÅ‘å‚Æ‰¼’è‚µ‚Ä‚¨‚­)
+		//æœ€å¤§ã®çµ¶å¯¾å€¤ã‚’æ¢ç´¢ã™ã‚‹(ã¨ã‚Šã‚ãˆãšå¯¾è±¡æˆåˆ†ã‚’æœ€å¤§ã¨ä»®å®šã—ã¦ãŠã)
 		float max = abs(mat[n][n]);
 		int32_t maxIndex = n;
 
@@ -83,12 +83,12 @@ Matrix4 Matrix4::operator-() const
 			}
 		}
 
-		//Å‘å‚Ìâ‘Î’l‚ª0‚¾‚Á‚½‚ç‹ts—ñ‚Í‹‚ß‚ç‚ê‚È‚¢
+		//æœ€å¤§ã®çµ¶å¯¾å€¤ãŒ0ã ã£ãŸã‚‰é€†è¡Œåˆ—ã¯æ±‚ã‚ã‚‰ã‚Œãªã„
 		if (abs(mat[maxIndex][n]) <= EPSILON) {
-			return temp; //‚Æ‚è‚ ‚¦‚¸’PˆÊs—ñ•Ô‚µ‚¿‚á‚¤
+			return temp; //ã¨ã‚Šã‚ãˆãšå˜ä½è¡Œåˆ—è¿”ã—ã¡ã‚ƒã†
 		}
 
-		//“ü‚ê‘Ö‚¦
+		//å…¥ã‚Œæ›¿ãˆ
 		if (n != maxIndex) {
 			for (int32_t i = 0; i < 8; i++) {
 				float f = mat[maxIndex][i];
@@ -97,15 +97,15 @@ Matrix4 Matrix4::operator-() const
 			}
 		}
 
-		//Š|‚¯‚½‚ç1‚É‚È‚é’l‚ğZo
+		//æ›ã‘ãŸã‚‰1ã«ãªã‚‹å€¤ã‚’ç®—å‡º
 		float mul = 1 / mat[n][n];
 
-		//Š|‚¯‚é
+		//æ›ã‘ã‚‹
 		for (int32_t i = 0; i < 8; i++) {
 			mat[n][i] *= mul;
 		}
 
-		//‘¼‘S•”0‚É‚·‚é
+		//ä»–å…¨éƒ¨0ã«ã™ã‚‹
 		for (int32_t i = 0; i < 4; i++) {
 			if (n == i) {
 				continue;
@@ -332,14 +332,14 @@ Matrix4 Matrix4::PerspectiveProjection(float fov, float aspect, float nearZ, flo
 {
 	Matrix4 mat;
 
-	Matrix4 _a; //ƒAƒXƒyƒNƒg”ä‚ğ1:1‚É
+	Matrix4 _a; //ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”ã‚’1:1ã«
 	_a[0][0] = 1 / aspect;
 
-	Matrix4 _b; //’¼•û‘Ì‚É
+	Matrix4 _b; //ç›´æ–¹ä½“ã«
 	_b[0][0] = 1 / tanf(fov / 2);
 	_b[1][1] = 1 / tanf(fov / 2);
 
-	Matrix4 _c; //Œ´“_‚É‚­‚Á‚Â‚¯‚Äk‚ß‚é
+	Matrix4 _c; //åŸç‚¹ã«ãã£ã¤ã‘ã¦ç¸®ã‚ã‚‹
 	_c[2][2] = farZ * (1 / (farZ - nearZ));
 	_c[3][2] = farZ * (-nearZ / (farZ - nearZ));
 

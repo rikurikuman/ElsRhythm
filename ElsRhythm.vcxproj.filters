@@ -106,6 +106,30 @@
     <Filter Include="ソース ファイル\Application\BackGround">
       <UniqueIdentifier>{bb89f56d-4bb0-4e9c-b8db-cebcd924837a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Application\Scene">
+      <UniqueIdentifier>{add6d1c1-84d3-46a8-b91e-df06704a725c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Application\RhythmCore">
+      <UniqueIdentifier>{de987113-413f-403d-987d-5ef2389fa721}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Application\Particle">
+      <UniqueIdentifier>{b567e987-e792-4ebe-9f0d-06a45ca677f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Application\RhythmCore">
+      <UniqueIdentifier>{6bc81664-b028-4967-9989-fc44eb41eb85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Application\Particle">
+      <UniqueIdentifier>{9c322476-ad51-480b-bafd-d62c8ebd65b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Application\Scene">
+      <UniqueIdentifier>{380574da-0fc7-48b6-b738-90570b96c9e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Application\Editor">
+      <UniqueIdentifier>{2ae1fd49-1ca1-4e19-8a02-3a876f2a33c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Application\Editor">
+      <UniqueIdentifier>{26c8010b-7507-4fdb-8d99-def237b4a601}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\2d\Sprite.cpp">
@@ -198,9 +222,6 @@
     <ClCompile Include="Engine\Light\LightGroup.cpp">
       <Filter>ソース ファイル\Engine\Light</Filter>
     </ClCompile>
-    <ClCompile Include="Application\GameScene.cpp">
-      <Filter>ソース ファイル\Application</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Light\SpotLight.cpp">
       <Filter>ソース ファイル\Engine\Light</Filter>
     </ClCompile>
@@ -264,9 +285,6 @@
     <ClCompile Include="Engine\Renderer\TestRenderStage.cpp">
       <Filter>ソース ファイル\Engine\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Renderer\RenderOrder.cpp">
-      <Filter>ソース ファイル\Engine\Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Renderer\SpriteRenderStage.cpp">
       <Filter>ソース ファイル\Engine\Renderer</Filter>
     </ClCompile>
@@ -297,19 +315,7 @@
     <ClCompile Include="Engine\Math\Float4.cpp">
       <Filter>ソース ファイル\Engine\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Note.cpp">
-      <Filter>ソース ファイル\Application</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>ソース ファイル\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\BeatUtil.cpp">
-      <Filter>ソース ファイル\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\ChartFile.cpp">
-      <Filter>ソース ファイル\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\RhythmGameController.cpp">
       <Filter>ソース ファイル\Application</Filter>
     </ClCompile>
     <ClCompile Include="Engine\PostEffect\MultiRenderTest.cpp">
@@ -321,53 +327,92 @@
     <ClCompile Include="Engine\PostEffect\DepthTest.cpp">
       <Filter>ソース ファイル\Engine\PostEffect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\ControllerScene.cpp">
-      <Filter>ソース ファイル\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SimpleSceneTransition.cpp">
-      <Filter>ソース ファイル\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SpriteScene.cpp">
-      <Filter>ソース ファイル\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\ParticleObject.cpp">
-      <Filter>ソース ファイル\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\ParticleExplode.cpp">
-      <Filter>ソース ファイル\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\SoundScene.cpp">
-      <Filter>ソース ファイル\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\MainTestScene.cpp">
-      <Filter>ソース ファイル\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\ArcNoteObj.cpp">
-      <Filter>ソース ファイル\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\TitleScene.cpp">
-      <Filter>ソース ファイル\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\ParticleSprite.cpp">
-      <Filter>ソース ファイル\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\ParticleSprite3D.cpp">
-      <Filter>ソース ファイル\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\ResultScene.cpp">
-      <Filter>ソース ファイル\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\BGSimple.cpp">
+    <ClCompile Include="Application\BackGround\BGSimple.cpp">
       <Filter>ソース ファイル\Application\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="Application\EventSystem.cpp">
       <Filter>ソース ファイル\Application</Filter>
     </ClCompile>
-    <ClCompile Include="Application\BackGroundSelector.cpp">
+    <ClCompile Include="Application\BackGround\BackGroundSelector.cpp">
       <Filter>ソース ファイル\Application\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="Engine\DebugGUI.cpp">
       <Filter>ソース ファイル\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scene\GameScene.cpp">
+      <Filter>ソース ファイル\Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scene\MainTestScene.cpp">
+      <Filter>ソース ファイル\Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scene\SoundScene.cpp">
+      <Filter>ソース ファイル\Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scene\SpriteScene.cpp">
+      <Filter>ソース ファイル\Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scene\TitleScene.cpp">
+      <Filter>ソース ファイル\Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scene\ControllerScene.cpp">
+      <Filter>ソース ファイル\Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\RhythmCore\RhythmGameController.cpp">
+      <Filter>ソース ファイル\Application\RhythmCore</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\RhythmCore\Note.cpp">
+      <Filter>ソース ファイル\Application\RhythmCore</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\RhythmCore\ChartFile.cpp">
+      <Filter>ソース ファイル\Application\RhythmCore</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\RhythmCore\BeatUtil.cpp">
+      <Filter>ソース ファイル\Application\RhythmCore</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\RhythmCore\ArcNoteObj.cpp">
+      <Filter>ソース ファイル\Application\RhythmCore</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scene\ResultScene.cpp">
+      <Filter>ソース ファイル\Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Particle\ParticleExplode.cpp">
+      <Filter>ソース ファイル\Application\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Particle\ParticleObject.cpp">
+      <Filter>ソース ファイル\Application\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Particle\ParticleSprite.cpp">
+      <Filter>ソース ファイル\Application\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Particle\ParticleSprite3D.cpp">
+      <Filter>ソース ファイル\Application\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scene\SimpleSceneTransition.cpp">
+      <Filter>ソース ファイル\Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ParticleManager.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\IParticle.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ParticleImage3D.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Renderer\BackTransparentRenderStage.cpp">
+      <Filter>ソース ファイル\Engine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scene\EditorScene.cpp">
+      <Filter>ソース ファイル\Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\IEditorObject.cpp">
+      <Filter>ソース ファイル\Application\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\EObjTapNote.cpp">
+      <Filter>ソース ファイル\Application\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\EObjArcNote.cpp">
+      <Filter>ソース ファイル\Application\Editor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -592,9 +637,6 @@
     <ClInclude Include="Engine\Light\PointLight.h">
       <Filter>ヘッダー ファイル\Engine\Light</Filter>
     </ClInclude>
-    <ClInclude Include="Application\GameScene.h">
-      <Filter>ヘッダー ファイル\Application</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Light\SpotLight.h">
       <Filter>ヘッダー ファイル\Engine\Light</Filter>
     </ClInclude>
@@ -700,18 +742,6 @@
     <ClInclude Include="Engine\Math\Float4.h">
       <Filter>ヘッダー ファイル\Engine\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Application\BeatUtil.h">
-      <Filter>ヘッダー ファイル\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\ChartFile.h">
-      <Filter>ヘッダー ファイル\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\RhythmGameController.h">
-      <Filter>ヘッダー ファイル\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Note.h">
-      <Filter>ヘッダー ファイル\Application</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\PostEffect\MultiRenderTest.h">
       <Filter>ヘッダー ファイル\Engine\PostEffect</Filter>
     </ClInclude>
@@ -721,49 +751,13 @@
     <ClInclude Include="Engine\PostEffect\DepthTest.h">
       <Filter>ヘッダー ファイル\Engine\PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="Application\ControllerScene.h">
-      <Filter>ヘッダー ファイル\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SimpleSceneTransition.h">
-      <Filter>ヘッダー ファイル\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SpriteScene.h">
-      <Filter>ヘッダー ファイル\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\ParticleObject.h">
-      <Filter>ヘッダー ファイル\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\ParticleExplode.h">
-      <Filter>ヘッダー ファイル\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SoundScene.h">
-      <Filter>ヘッダー ファイル\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\MainTestScene.h">
-      <Filter>ヘッダー ファイル\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\ArcNoteObj.h">
-      <Filter>ヘッダー ファイル\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\TitleScene.h">
-      <Filter>ヘッダー ファイル\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\ParticleSprite.h">
-      <Filter>ヘッダー ファイル\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\ParticleSprite3D.h">
-      <Filter>ヘッダー ファイル\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\ResultScene.h">
-      <Filter>ヘッダー ファイル\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\IBackGround.h">
+    <ClInclude Include="Application\BackGround\IBackGround.h">
       <Filter>ヘッダー ファイル\Application\BackGround</Filter>
     </ClInclude>
-    <ClInclude Include="Application\BackGroundSelector.h">
+    <ClInclude Include="Application\BackGround\BackGroundSelector.h">
       <Filter>ヘッダー ファイル\Application\BackGround</Filter>
     </ClInclude>
-    <ClInclude Include="Application\BGSimple.h">
+    <ClInclude Include="Application\BackGround\BGSimple.h">
       <Filter>ヘッダー ファイル\Application\BackGround</Filter>
     </ClInclude>
     <ClInclude Include="Application\EventSystem.h">
@@ -771,6 +765,81 @@
     </ClInclude>
     <ClInclude Include="Engine\DebugGUI.h">
       <Filter>ヘッダー ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\RhythmCore\ArcNoteObj.h">
+      <Filter>ヘッダー ファイル\Application\RhythmCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\RhythmCore\BeatUtil.h">
+      <Filter>ヘッダー ファイル\Application\RhythmCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\RhythmCore\ChartFile.h">
+      <Filter>ヘッダー ファイル\Application\RhythmCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\RhythmCore\Note.h">
+      <Filter>ヘッダー ファイル\Application\RhythmCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Particle\ParticleSprite3D.h">
+      <Filter>ヘッダー ファイル\Application\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Particle\ParticleExplode.h">
+      <Filter>ヘッダー ファイル\Application\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Particle\ParticleObject.h">
+      <Filter>ヘッダー ファイル\Application\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Particle\ParticleSprite.h">
+      <Filter>ヘッダー ファイル\Application\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scene\GameScene.h">
+      <Filter>ヘッダー ファイル\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scene\ControllerScene.h">
+      <Filter>ヘッダー ファイル\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scene\MainTestScene.h">
+      <Filter>ヘッダー ファイル\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scene\ResultScene.h">
+      <Filter>ヘッダー ファイル\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scene\SimpleSceneTransition.h">
+      <Filter>ヘッダー ファイル\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scene\SoundScene.h">
+      <Filter>ヘッダー ファイル\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scene\SpriteScene.h">
+      <Filter>ヘッダー ファイル\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scene\TitleScene.h">
+      <Filter>ヘッダー ファイル\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\RhythmCore\RhythmGameController.h">
+      <Filter>ヘッダー ファイル\Application\RhythmCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ParticleManager.h">
+      <Filter>ヘッダー ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\IParticle.h">
+      <Filter>ヘッダー ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ParticleImage3D.h">
+      <Filter>ヘッダー ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Renderer\BackTransparentRenderStage.h">
+      <Filter>ヘッダー ファイル\Engine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scene\EditorScene.h">
+      <Filter>ヘッダー ファイル\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\IEditorObject.h">
+      <Filter>ヘッダー ファイル\Application\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\EObjTapNote.h">
+      <Filter>ヘッダー ファイル\Application\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\EObjArcNote.h">
+      <Filter>ヘッダー ファイル\Application\Editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

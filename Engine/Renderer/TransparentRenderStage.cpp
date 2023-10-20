@@ -5,7 +5,7 @@ void TransparentRenderStage::Init()
 {
 	mPipelineState = RDirectX::GetDefPipeline();
 
-	// ƒ‰ƒXƒ^ƒ‰ƒCƒU‚Ìİ’è
+	// ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã®è¨­å®š
 	mPipelineState.mDesc.BlendState.AlphaToCoverageEnable = false;
 
 	mPipelineState.mDesc.DepthStencilState.DepthEnable = true;

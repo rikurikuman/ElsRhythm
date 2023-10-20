@@ -23,5 +23,7 @@ public:
 	virtual void Update() {}
 
 	static Camera* sNowCamera;
+
+
 };
 

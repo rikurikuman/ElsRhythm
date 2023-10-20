@@ -5,15 +5,15 @@
 
 MultiRenderTest::MultiRenderTest()
 {
-	//’¸“_ƒf[ƒ^
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 	VertexPU vertices[] = {
-		{{ -1.0f, -1.0f, 0.0f}, {0.0f, 1.0f}}, //¶‰º
-		{{ -1.0f, +1.0f, 0.0f}, {0.0f, 0.0f}}, //¶ã
-		{{ +1.0f, -1.0f, 0.0f}, {1.0f, 1.0f}}, //‰E‰º
-		{{ +1.0f, +1.0f, 0.0f}, {1.0f, 0.0f}}, //‰Eã
+		{{ -1.0f, -1.0f, 0.0f}, {0.0f, 1.0f}}, //å·¦ä¸‹
+		{{ -1.0f, +1.0f, 0.0f}, {0.0f, 0.0f}}, //å·¦ä¸Š
+		{{ +1.0f, -1.0f, 0.0f}, {1.0f, 1.0f}}, //å³ä¸‹
+		{{ +1.0f, +1.0f, 0.0f}, {1.0f, 0.0f}}, //å³ä¸Š
 	};
 
-	//’¸“_ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^
+	//é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿
 	uint32_t indices[] = {
 		0, 1, 2,
 		1, 3, 2
@@ -78,27 +78,27 @@ RootSignature& MultiRenderTest::GetRootSignatureA()
 	RootSignatureDesc desc = RDirectX::GetDefRootSignature().mDesc;
 
 	DescriptorRange descriptorRange{};
-	descriptorRange.NumDescriptors = 1; //ˆê“x‚Ì•`‰æ‚Ég‚¤ƒeƒNƒXƒ`ƒƒ‚ª1–‡‚È‚Ì‚Å1
+	descriptorRange.NumDescriptors = 1; //ä¸€åº¦ã®æç”»ã«ä½¿ã†ãƒ†ã‚¯ã‚¹ãƒãƒ£ãŒ1æšãªã®ã§1
 	descriptorRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-	descriptorRange.BaseShaderRegister = 0; //ƒeƒNƒXƒ`ƒƒƒŒƒWƒXƒ^0”Ô
+	descriptorRange.BaseShaderRegister = 0; //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¬ã‚¸ã‚¹ã‚¿0ç•ª
 	descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
 	RootParamaters rootParams(2);
-	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE; //ƒfƒXƒNƒŠƒvƒ^ƒe[ƒuƒ‹
+	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE; //ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ†ãƒ¼ãƒ–ãƒ«
 	rootParams[0].DescriptorTable = DescriptorRanges{ descriptorRange };
-	rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL; //‘SƒVƒF[ƒ_‚©‚çŒ©‚¦‚é
+	rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL; //å…¨ã‚·ã‚§ãƒ¼ãƒ€ã‹ã‚‰è¦‹ãˆã‚‹
 	desc.RootParamaters = rootParams;
 
 	StaticSamplerDesc samplerDesc{};
 	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
 	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
 	samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
-	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK; //ƒ{[ƒ_[‚Ì‚Í•
-	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR; //ƒŠƒjƒA•âŠÔ
-	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX; //ƒ~ƒbƒvƒ}ƒbƒvÅ‘å’l
-	samplerDesc.MinLOD = 0.0f; //ƒ~ƒbƒvƒ}ƒbƒvÅ¬’l
+	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK; //ãƒœãƒ¼ãƒ€ãƒ¼ã®æ™‚ã¯é»’
+	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR; //ãƒªãƒ‹ã‚¢è£œé–“
+	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX; //ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—æœ€å¤§å€¤
+	samplerDesc.MinLOD = 0.0f; //ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—æœ€å°å€¤
 	samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
-	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL; //ƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚©‚ç‚¾‚¯Œ©‚¦‚é
+	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL; //ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‹ã‚‰ã ã‘è¦‹ãˆã‚‹
 	desc.StaticSamplers = StaticSamplerDescs{ samplerDesc };
 
 	return RootSignature::GetOrCreate("MultiRenderTestA", desc);
@@ -109,37 +109,37 @@ RootSignature& MultiRenderTest::GetRootSignatureB()
 	RootSignatureDesc desc = RDirectX::GetDefRootSignature().mDesc;
 
 	DescriptorRange descriptorRange{};
-	descriptorRange.NumDescriptors = 1; //ˆê“x‚Ì•`‰æ‚Ég‚¤ƒeƒNƒXƒ`ƒƒ‚ª1–‡‚È‚Ì‚Å1
+	descriptorRange.NumDescriptors = 1; //ä¸€åº¦ã®æç”»ã«ä½¿ã†ãƒ†ã‚¯ã‚¹ãƒãƒ£ãŒ1æšãªã®ã§1
 	descriptorRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-	descriptorRange.BaseShaderRegister = 0; //ƒeƒNƒXƒ`ƒƒƒŒƒWƒXƒ^0”Ô
+	descriptorRange.BaseShaderRegister = 0; //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¬ã‚¸ã‚¹ã‚¿0ç•ª
 	descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
 	DescriptorRange descriptorRangeB{};
-	descriptorRangeB.NumDescriptors = 1; //ˆê“x‚Ì•`‰æ‚Ég‚¤ƒeƒNƒXƒ`ƒƒ‚ª1–‡‚È‚Ì‚Å1
+	descriptorRangeB.NumDescriptors = 1; //ä¸€åº¦ã®æç”»ã«ä½¿ã†ãƒ†ã‚¯ã‚¹ãƒãƒ£ãŒ1æšãªã®ã§1
 	descriptorRangeB.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-	descriptorRangeB.BaseShaderRegister = 1; //ƒeƒNƒXƒ`ƒƒƒŒƒWƒXƒ^1”Ô
+	descriptorRangeB.BaseShaderRegister = 1; //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¬ã‚¸ã‚¹ã‚¿1ç•ª
 	descriptorRangeB.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
 
 	RootParamaters rootParams(2);
-	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE; //ƒfƒXƒNƒŠƒvƒ^ƒe[ƒuƒ‹
+	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE; //ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ†ãƒ¼ãƒ–ãƒ«
 	rootParams[0].DescriptorTable = DescriptorRanges{ descriptorRange };
-	rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL; //‘SƒVƒF[ƒ_‚©‚çŒ©‚¦‚é
-	rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE; //ƒfƒXƒNƒŠƒvƒ^ƒe[ƒuƒ‹
+	rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL; //å…¨ã‚·ã‚§ãƒ¼ãƒ€ã‹ã‚‰è¦‹ãˆã‚‹
+	rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE; //ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ†ãƒ¼ãƒ–ãƒ«
 	rootParams[1].DescriptorTable = DescriptorRanges{ descriptorRangeB };
-	rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL; //‘SƒVƒF[ƒ_‚©‚çŒ©‚¦‚é
+	rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL; //å…¨ã‚·ã‚§ãƒ¼ãƒ€ã‹ã‚‰è¦‹ãˆã‚‹
 	desc.RootParamaters = rootParams;
 
 	StaticSamplerDesc samplerDesc{};
 	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
 	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
 	samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
-	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK; //ƒ{[ƒ_[‚Ì‚Í•
-	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR; //ƒŠƒjƒA•âŠÔ
-	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX; //ƒ~ƒbƒvƒ}ƒbƒvÅ‘å’l
-	samplerDesc.MinLOD = 0.0f; //ƒ~ƒbƒvƒ}ƒbƒvÅ¬’l
+	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK; //ãƒœãƒ¼ãƒ€ãƒ¼ã®æ™‚ã¯é»’
+	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR; //ãƒªãƒ‹ã‚¢è£œé–“
+	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX; //ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—æœ€å¤§å€¤
+	samplerDesc.MinLOD = 0.0f; //ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—æœ€å°å€¤
 	samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
-	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL; //ƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚©‚ç‚¾‚¯Œ©‚¦‚é
+	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL; //ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‹ã‚‰ã ã‘è¦‹ãˆã‚‹
 	desc.StaticSamplers = StaticSamplerDescs{ samplerDesc };
 
 	return RootSignature::GetOrCreate("MultiRenderTestB", desc);

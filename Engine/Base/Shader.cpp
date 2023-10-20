@@ -5,11 +5,11 @@
 Shader::Shader(std::string filename, std::string entrypoint, std::string target)
 {
 	HRESULT result = D3DCompileFromFile(
-		std::wstring(filename.begin(), filename.end()).c_str(), //ƒtƒ@ƒCƒ‹–¼
+		std::wstring(filename.begin(), filename.end()).c_str(), //ãƒ•ã‚¡ã‚¤ãƒ«å
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,
-		entrypoint.c_str(), target.c_str(), //ƒGƒ“ƒgƒŠ–¼AƒVƒF[ƒ_[ƒ‚ƒfƒ‹w’è
-		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, //ƒfƒoƒbƒO—p
+		entrypoint.c_str(), target.c_str(), //ã‚¨ãƒ³ãƒˆãƒªåã€ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ¢ãƒ‡ãƒ«æŒ‡å®š
+		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, //ãƒ‡ãƒãƒƒã‚°ç”¨
 		0,
 		&mShaderBlob, &mErrorBlob);
 	mSucceeded = SUCCEEDED(result);

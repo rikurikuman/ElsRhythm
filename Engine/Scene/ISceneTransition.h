@@ -10,14 +10,14 @@ public:
 	virtual void Update() {};
 	virtual void Draw() {};
 
-	//ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚ğŠJ‚¯‚é
+	//ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã‚’é–‹ã‘ã‚‹
 	virtual void Open() { mIsClosed = false; };
-	//ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚ªŠJ‚«‚«‚Á‚Ä‚¢‚é‚©
+	//ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ãŒé–‹ããã£ã¦ã„ã‚‹ã‹
 	virtual bool IsOpened() { return !mIsClosed; };
-	//ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚ğ•Â‚ß‚é
+	//ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã‚’é–‰ã‚ã‚‹
 	virtual void Close() { mIsClosed = true; };
-	//ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚ª•Â‚Ü‚è‚«‚Á‚Ä‚¢‚é‚©
+	//ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ãŒé–‰ã¾ã‚Šãã£ã¦ã„ã‚‹ã‹
 	virtual bool IsClosed() { return mIsClosed; };
-	//ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚ª“®ì’†‚©
+	//ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ãŒå‹•ä½œä¸­ã‹
 	virtual bool InProgress() { return false; };
 };

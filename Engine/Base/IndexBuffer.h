@@ -1,7 +1,11 @@
 #pragma once
+
+//外部ヘッダ
+#pragma warning(push, 0)
 #include <d3d12.h>
 #include <wrl.h>
 #include <vector>
+#pragma warning(pop)
 
 class IndexBuffer
 {

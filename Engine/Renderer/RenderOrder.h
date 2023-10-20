@@ -1,6 +1,11 @@
 #pragma once
+
+//å¤–éƒ¨ãƒ˜ãƒƒãƒ€
+#pragma warning(push, 0)
 #include <functional>
 #include <d3d12.h>
+#pragma warning(pop)
+
 #include "RootSignature.h"
 #include "GraphicsPipeline.h"
 #include <Viewport.h>
@@ -54,22 +59,22 @@ struct RenderOrder
 	SRVertexBuffer vertBuff;
 	SRIndexBuffer indexBuff;
 	SRVertexBuffer instanceVertBuff;
-	D3D12_VERTEX_BUFFER_VIEW* vertView = nullptr; //SRVertexBuffer‚ğg‚í‚È‚¢ê‡‚Í‚±‚Á‚¿‚Éƒrƒ…[‚ğ’¼‚Å
-	D3D12_INDEX_BUFFER_VIEW* indexView = nullptr; //SRIndexBuffer‚ğg‚í‚È‚¢ê‡‚Í‚±‚Á‚¿‚Éƒrƒ…[‚ğ’¼‚Å
+	D3D12_VERTEX_BUFFER_VIEW* vertView = nullptr; //SRVertexBufferã‚’ä½¿ã‚ãªã„å ´åˆã¯ã“ã£ã¡ã«ãƒ“ãƒ¥ãƒ¼ã‚’ç›´ã§
+	D3D12_INDEX_BUFFER_VIEW* indexView = nullptr; //SRIndexBufferã‚’ä½¿ã‚ãªã„å ´åˆã¯ã“ã£ã¡ã«ãƒ“ãƒ¥ãƒ¼ã‚’ç›´ã§
 	D3D12_VERTEX_BUFFER_VIEW* instanceVertView = nullptr;
 	uint32_t indexCount = 0;
 	uint32_t instanceCount = 1;
 	std::vector<RootData> rootData;
 
 	/// <summary>
-	/// ‚±‚Ì•`‰æ‚Ì’¼‘O‚ÉÀs‚µ‚Ä‚Ù‚µ‚¢ˆ—‚ğ“n‚·‚ÆŒÄ‚Ñ‚Ü‚·
-	/// ƒ‰ƒ€ƒ_®‚ª‚¨‚·‚·‚ß
+	/// ã“ã®æç”»ã®ç›´å‰ã«å®Ÿè¡Œã—ã¦ã»ã—ã„å‡¦ç†ã‚’æ¸¡ã™ã¨å‘¼ã³ã¾ã™
+	/// ãƒ©ãƒ ãƒ€å¼ãŒãŠã™ã™ã‚
 	/// </summary>
 	std::function<void()> preCommand;
 
 	/// <summary>
-	/// ‚±‚Ì•`‰æ‚Ì’¼Œã‚ÉÀs‚µ‚Ä‚Ù‚µ‚¢ˆ—‚ğ“n‚·‚ÆŒÄ‚Ñ‚Ü‚·
-	/// ƒ‰ƒ€ƒ_®‚ª‚¨‚·‚·‚ß
+	/// ã“ã®æç”»ã®ç›´å¾Œã«å®Ÿè¡Œã—ã¦ã»ã—ã„å‡¦ç†ã‚’æ¸¡ã™ã¨å‘¼ã³ã¾ã™
+	/// ãƒ©ãƒ ãƒ€å¼ãŒãŠã™ã™ã‚
 	/// </summary>
 	std::function<void()> postCommand;
 

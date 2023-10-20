@@ -91,7 +91,7 @@ void SceneManager::Update() {
 			instance->mRunningSceneChanges.erase(instance->mRunningSceneChanges.begin());
 		}
 
-		//ローディングマーク
+		//繝ｭ繝ｼ繝�繧｣繝ｳ繧ｰ繝槭�ｼ繧ｯ
 		if (sc.increment == 1 && sc.transition->IsClosed()) {
 			instance->mLoadingTimer += TimeManager::deltaTime;
 			if (instance->mLoadingTimer >= 0.5f) {

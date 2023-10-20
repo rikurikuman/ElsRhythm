@@ -1,9 +1,13 @@
 #pragma once
+
+//å¤–éƒ¨ãƒ˜ãƒƒãƒ€
+#pragma warning(push, 0)
 #include <d3d12.h>
 #include <cassert>
 #include <wrl.h>
 #include <list>
 #include <mutex>
+#pragma warning(pop)
 
 struct MemoryRegion {
 	byte* pBegin = nullptr;
@@ -58,7 +62,7 @@ private:
 class SRBufferAllocator
 {
 public:
-	static std::recursive_mutex sMutex; //–{“–‚ÍŒöŠJ‚µ‚½‚­‚È‚¢‚ñ‚¾‚¯‚Ç¡‚Í‘Ã‹¦
+	static std::recursive_mutex sMutex; //æœ¬å½“ã¯å…¬é–‹ã—ãŸããªã„ã‚“ã ã‘ã©ä»Šã¯å¦¥å”
 	static bool mOptAutoDeflag;
 	static bool mOptAutoReCreateBuffer;
 

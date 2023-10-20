@@ -21,13 +21,16 @@ public:
 		return mParent;
 	}
 
-	//Šeƒf[ƒ^‚Ìƒoƒbƒtƒ@‚Ö‚Ì“]‘—
+	//å„ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã¸ã®è»¢é€
 	virtual void TransferBuffer(ViewProjection viewprojection) {}
 
-	//•`‰æ—v‹‚ğRenderer‚Ö
+	//æç”»è¦æ±‚ã‚’Rendererã¸
 	virtual void Draw() {}
 
-	//•`‰æ—p‚ÌƒRƒ}ƒ“ƒh‚ğ‚Ü‚Æ‚ß‚ÄƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÉÏ‚Ş
+	//æç”»è¦æ±‚ã‚’Rendererã¸
+	virtual void Draw(std::string stageID = "") {}
+
+	//æç”»ç”¨ã®ã‚³ãƒãƒ³ãƒ‰ã‚’ã¾ã¨ã‚ã¦ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã«ç©ã‚€
 	virtual void DrawCommands() {}
 };
 

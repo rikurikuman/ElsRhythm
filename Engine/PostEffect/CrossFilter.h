@@ -33,7 +33,7 @@ protected:
 
 	static RootSignature& GetRootSignatureA();
 	static RootSignature& GetRootSignatureB();
-	static GraphicsPipeline& GetGraphicsPipelineA(); //–¾‚é‚³’Šo
-	static GraphicsPipeline& GetGraphicsPipelineB(); //’¼üó‚Ú‚©‚µ
-	static GraphicsPipeline& GetGraphicsPipelineC(); //‰ÁZ‡¬
+	static GraphicsPipeline& GetGraphicsPipelineA(); //æ˜ã‚‹ã•æŠ½å‡º
+	static GraphicsPipeline& GetGraphicsPipelineB(); //ç›´ç·šçŠ¶ã¼ã‹ã—
+	static GraphicsPipeline& GetGraphicsPipelineC(); //åŠ ç®—åˆæˆ
 };

@@ -85,7 +85,7 @@ ModelHandle Model::Load(string filepath, string filename, ModelHandle handle, bo
             continue;
         }
 
-        if (key == "o") { //‚¨‚È‚Ü‚¦
+        if (key == "o") { //ãŠãªã¾ãˆ
             if (loading != ModelMesh()) {
                 if (smooth) loading.CalcSmoothedNormals();
                 loading.mVertBuff.Init(loading.mVertices);
@@ -97,7 +97,7 @@ ModelHandle Model::Load(string filepath, string filename, ModelHandle handle, bo
             line_stream >> loading.mName;
         }
 
-        if (key == "v") { //’¸“_À•W
+        if (key == "v") { //é ‚ç‚¹åº§æ¨™
             Vector3 pos;
             line_stream >> pos.x;
             line_stream >> pos.y;
@@ -106,14 +106,14 @@ ModelHandle Model::Load(string filepath, string filename, ModelHandle handle, bo
             vertPosList.emplace_back(pos.x, pos.y, pos.z);
         }
 
-        if (key == "vt") { //’¸“_UV
+        if (key == "vt") { //é ‚ç‚¹UV
             Vector2 texcoord;
             line_stream >> texcoord.x;
             line_stream >> texcoord.y;
             vertTexcoordList.emplace_back(texcoord.x, 1.0f - texcoord.y);
         }
 
-        if (key == "vn") { //’¸“_–@ü
+        if (key == "vn") { //é ‚ç‚¹æ³•ç·š
             Vector3 normal;
 
             line_stream >> normal.x;
@@ -123,7 +123,7 @@ ModelHandle Model::Load(string filepath, string filename, ModelHandle handle, bo
             vertNormalList.emplace_back(normal.x, normal.y, normal.z);
         }
 
-        if (key == "f") { //ƒCƒ“ƒfƒbƒNƒX
+        if (key == "f") { //ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
             vector<string> indexs = Util::StringSplit(line_stream.str(), " ");
 
             vector<VertexPNU> _vertices;
@@ -162,7 +162,7 @@ ModelHandle Model::Load(string filepath, string filename, ModelHandle handle, bo
                     int32_t indexB = 1 + i;
                     int32_t indexC = 2 + i;
 
-                    //‚ß‚¿‚á‚­‚¿‚ád‚¢‚©‚çˆê‰ñ”p~
+                    //ã‚ã¡ã‚ƒãã¡ã‚ƒé‡ã„ã‹ã‚‰ä¸€å›å»ƒæ­¢
                     /*size_t a = Util::IndexOf(model.vertexs, _vertices[0]);
                     size_t b = Util::IndexOf(model.vertexs, _vertices[indexB]);
                     size_t c = Util::IndexOf(model.vertexs, _vertices[indexC]);*/
@@ -185,7 +185,7 @@ ModelHandle Model::Load(string filepath, string filename, ModelHandle handle, bo
             }
         }
 
-        if (key == "mtllib") { //ƒ}ƒeƒŠƒAƒ‹ƒeƒ“ƒvƒŒ[ƒgƒ‰ƒCƒuƒ‰ƒŠ
+        if (key == "mtllib") { //ãƒãƒ†ãƒªã‚¢ãƒ«ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ©ã‚¤ãƒ–ãƒ©ãƒª
             string mfilename;
             line_stream >> mfilename;
             Mtllib lib = Mtllib::Load(filepath, mfilename);
@@ -252,14 +252,14 @@ void NodeTraverse(const aiScene* scene, const aiNode* node, Model* model, const 
 
         aiMesh* mesh = scene->mMeshes[node->mMeshes[meshIndex]];
 
-        //‚¨‚È‚Ü‚¦ƒhƒbƒgƒRƒ€
+        //ãŠãªã¾ãˆãƒ‰ãƒƒãƒˆã‚³ãƒ 
         aiString _name = mesh->mName;
         data.mName = _name.C_Str();
 
-        //ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€
+        //ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ 
         aiMatrix4x4 transform = GetNodeAbsoluteTransform(node);
 
-        //’¸“_
+        //é ‚ç‚¹
         vector<VertexPNU> vertices;
 
         for (uint32_t posIndex = 0; posIndex < mesh->mNumVertices; posIndex++) {
@@ -303,7 +303,7 @@ void NodeTraverse(const aiScene* scene, const aiNode* node, Model* model, const 
             data.mVertices.push_back(vert);
         }
 
-        //–Ê(ƒCƒ“ƒfƒbƒNƒX)
+        //é¢(ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹)
         for (uint32_t faceIndex = 0; faceIndex < mesh->mNumFaces; faceIndex++) {
             aiFace face = mesh->mFaces[faceIndex];
             for (uint32_t vertIndex = 0; vertIndex < face.mNumIndices; vertIndex++) {
@@ -315,7 +315,7 @@ void NodeTraverse(const aiScene* scene, const aiNode* node, Model* model, const 
             data.mMaterial = materials->at(mesh->mMaterialIndex);
         }
 
-        //ƒ{[ƒ“
+        //ãƒœãƒ¼ãƒ³
         for (uint32_t boneIndex = 0; boneIndex < mesh->mNumBones; boneIndex++) {
             data.mBones.emplace_back();
             aiBone* bone = mesh->mBones[boneIndex];
@@ -397,7 +397,7 @@ ModelHandle Model::LoadWithAIL(std::string directoryPath, std::string filename, 
 
     model.mName = scene->mName.C_Str();
 
-    //ƒ}ƒeƒŠƒAƒ‹
+    //ãƒãƒ†ãƒªã‚¢ãƒ«
     vector<Material> materials;
 
     for (uint32_t materialIndex = 0; materialIndex < scene->mNumMaterials; materialIndex++) {
@@ -493,7 +493,7 @@ ModelHandle Model::LoadWithAIL(std::string directoryPath, std::string filename, 
         materials.push_back(material);
     }
 
-    //ƒ‹[ƒgƒm[ƒh‚©‚ç‚º[‚ñ‚ÔƒƒbƒVƒ…‚ğ‚Ô‚¿‚ñ‚Åƒ‚ƒfƒ‹‚É‚·‚é
+    //ãƒ«ãƒ¼ãƒˆãƒãƒ¼ãƒ‰ã‹ã‚‰ãœãƒ¼ã‚“ã¶ãƒ¡ãƒƒã‚·ãƒ¥ã‚’ã¶ã¡è¾¼ã‚“ã§ãƒ¢ãƒ‡ãƒ«ã«ã™ã‚‹
     NodeTraverse(scene, scene->mRootNode, &model, &materials);
 
     lock.lock();

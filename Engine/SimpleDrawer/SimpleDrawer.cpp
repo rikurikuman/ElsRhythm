@@ -30,47 +30,52 @@ void SimpleDrawer::DrawLine(int32_t x1, int32_t y1, int32_t x2, int32_t y2, floa
 {
 	SimpleDrawer* instance = GetInstance();
 
-	//Šù‚É‚»‚ÌƒŒƒCƒ„[‚Å•`‰æ‚ª—v‹‚³‚ê‚Ä‚é‚©’T‚·
+	//æ—¢ã«ãã®ãƒ¬ã‚¤ãƒ¤ãƒ¼ã§æç”»ãŒè¦æ±‚ã•ã‚Œã¦ã‚‹ã‹æ¢ã™
 	auto itr = instance->mLineInfoMap.find(layer);
 	if (itr != instance->mLineInfoMap.end()) {
-		//“¯‚¶ƒŒƒCƒ„[‚É‘¼‚Ì•`‰æ‚ª‚¢‚½‚ç“¯‚¶•`‰æƒRƒ}ƒ“ƒh‚Å•`‰æ‚·‚é‚æ‚¤‚É—v‘f‚ğ’Ç‰Á‚·‚é
+		//åŒã˜ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ä»–ã®æç”»ãŒã„ãŸã‚‰åŒã˜æç”»ã‚³ãƒãƒ³ãƒ‰ã§æç”»ã™ã‚‹ã‚ˆã†ã«è¦ç´ ã‚’è¿½åŠ ã™ã‚‹
 		std::vector<DrawLineInfo>& list = itr->second;
 		list.push_back({ Vector2(static_cast<float>(x1), static_cast<float>(y1)), Vector2(static_cast<float>(x2), static_cast<float>(y2)), thickness, color });
 		return;
 	}
-	//‚³‚ê‚Ä‚È‚¢‚İ‚½‚¢‚È‚Ì‚ÅV‹K•`‰æƒRƒ}ƒ“ƒh‚ğ’Ç‰Á‚·‚é
+	//ã•ã‚Œã¦ãªã„ã¿ãŸã„ãªã®ã§æ–°è¦æç”»ã‚³ãƒãƒ³ãƒ‰ã‚’è¿½åŠ ã™ã‚‹
 	instance->mLineInfoMap[layer].push_back({ Vector2(static_cast<float>(x1), static_cast<float>(y1)), Vector2(static_cast<float>(x2), static_cast<float>(y2)), thickness, color });
 }
 
 void SimpleDrawer::DrawBox(int32_t x1, int32_t y1, int32_t x2, int32_t y2, float layer, Color color, bool fillFlag, float thickness)
 {
+	DrawBox(static_cast<float>(x1), static_cast<float>(y1), static_cast<float>(x2), static_cast<float>(y2), layer, color, fillFlag, thickness);
+}
+
+void SimpleDrawer::DrawBox(float x1, float y1, float x2, float y2, float layer, Color color, bool fillFlag, float thickness)
+{
 	SimpleDrawer* instance = GetInstance();
 
 	if (fillFlag) {
-		//4’¸“_ƒ|ƒŠƒSƒ“•`‰æ
+		//4é ‚ç‚¹ãƒãƒªã‚´ãƒ³æç”»
 
-		//Šù‚É‚»‚ÌƒŒƒCƒ„[‚Å•`‰æ‚ª—v‹‚³‚ê‚Ä‚é‚©’T‚·
+		//æ—¢ã«ãã®ãƒ¬ã‚¤ãƒ¤ãƒ¼ã§æç”»ãŒè¦æ±‚ã•ã‚Œã¦ã‚‹ã‹æ¢ã™
 		auto itr = instance->mBoxInfoMap.find(layer);
 		if (itr != instance->mBoxInfoMap.end()) {
-			//“¯‚¶ƒŒƒCƒ„[‚É‘¼‚Ì•`‰æ‚ª‚¢‚½‚ç“¯‚¶•`‰æƒRƒ}ƒ“ƒh‚Å•`‰æ‚·‚é‚æ‚¤‚É—v‘f‚ğ’Ç‰Á‚·‚é
+			//åŒã˜ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ä»–ã®æç”»ãŒã„ãŸã‚‰åŒã˜æç”»ã‚³ãƒãƒ³ãƒ‰ã§æç”»ã™ã‚‹ã‚ˆã†ã«è¦ç´ ã‚’è¿½åŠ ã™ã‚‹
 			std::vector<DrawBoxInfo>& list = itr->second;
-			list.push_back({ Vector2(static_cast<float>(x1), static_cast<float>(y1)), Vector2(static_cast<float>(x2), static_cast<float>(y2)), color });
+			list.push_back({ Vector2(x1, y1), Vector2(x2, y2), color });
 			return;
 		}
-		//‚³‚ê‚Ä‚È‚¢‚İ‚½‚¢‚È‚Ì‚ÅV‹K•`‰æƒRƒ}ƒ“ƒh‚ğ’Ç‰Á‚·‚é
-		instance->mBoxInfoMap[layer].push_back({ Vector2(static_cast<float>(x1), static_cast<float>(y1)), Vector2(static_cast<float>(x2), static_cast<float>(y2)), color });
+		//ã•ã‚Œã¦ãªã„ã¿ãŸã„ãªã®ã§æ–°è¦æç”»ã‚³ãƒãƒ³ãƒ‰ã‚’è¿½åŠ ã™ã‚‹
+		instance->mBoxInfoMap[layer].push_back({ Vector2(x1, y1), Vector2(x2, y2), color });
 	}
 	else {
-		//DrawLine‚É‚æ‚é•`‰æ
+		//DrawLineã«ã‚ˆã‚‹æç”»
 		int32_t adjX1 = static_cast<int32_t>(x1 + thickness / 2.0f);
 		int32_t adjX2 = static_cast<int32_t>(x2 - thickness / 2.0f);
 		int32_t adjY1 = static_cast<int32_t>(y1 + thickness / 2.0f);
 		int32_t adjY2 = static_cast<int32_t>(y2 - thickness / 2.0f);
 
-		SimpleDrawer::DrawLine(x1, adjY1, x2, adjY1, layer, color, thickness); //¶ã‚©‚ç‰Eã
-		SimpleDrawer::DrawLine(x1, adjY2, x2, adjY2, layer, color, thickness); //¶‰º‚©‚ç‰E‰º
-		SimpleDrawer::DrawLine(adjX1, y1, adjX1, y2, layer, color, thickness); //¶ã‚©‚ç¶‰º
-		SimpleDrawer::DrawLine(adjX2, y1, adjX2, y2, layer, color, thickness); //‰Eã‚©‚ç‰E‰º
+		SimpleDrawer::DrawLine(static_cast<int32_t>(x1), adjY1, static_cast<int32_t>(x2), adjY1, layer, color, thickness); //å·¦ä¸Šã‹ã‚‰å³ä¸Š
+		SimpleDrawer::DrawLine(static_cast<int32_t>(x1), adjY2, static_cast<int32_t>(x2), adjY2, layer, color, thickness); //å·¦ä¸‹ã‹ã‚‰å³ä¸‹
+		SimpleDrawer::DrawLine(adjX1, static_cast<int32_t>(y1), adjX1, static_cast<int32_t>(y2), layer, color, thickness); //å·¦ä¸Šã‹ã‚‰å·¦ä¸‹
+		SimpleDrawer::DrawLine(adjX2, static_cast<int32_t>(y1), adjX2, static_cast<int32_t>(y2), layer, color, thickness); //å³ä¸Šã‹ã‚‰å³ä¸‹
 	}
 }
 
@@ -78,23 +83,23 @@ void SimpleDrawer::DrawCircle(int32_t x, int32_t y, int32_t r, float layer, Colo
 {
 	SimpleDrawer* instance = GetInstance();
 
-	//¡‰ñ‚ÌƒJƒXƒ^ƒ€ƒf[ƒ^‚¾
+	//ä»Šå›ã®ã‚«ã‚¹ã‚¿ãƒ ãƒ‡ãƒ¼ã‚¿ã 
 	DrawCustomData cData = { layer, fillFlag, static_cast<float>(r) };
 	
 	if (fillFlag) {
-		//’¸“_‚Æ‚»‚ÌƒCƒ“ƒfƒbƒNƒX‚ğ•K—v‚È‚çŒvZ‚·‚é
+		//é ‚ç‚¹ã¨ãã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å¿…è¦ãªã‚‰è¨ˆç®—ã™ã‚‹
 		if (instance->mCircleBuffersMap.find(cData) == instance->mCircleBuffersMap.end()) {
 			instance->CalcCircleVertAndIndex(cData);
 		}
 	}
 	else {
 		if (instance->mCircleBuffersMap.find(cData) == instance->mCircleBuffersMap.end()) {
-			DrawCustomData cDataMin = cData; //“à‘¤‚Ì¬‚³‚ß‚È‰~
-			DrawCustomData cDataMax = cData; //ŠO‘¤‚Ì‘å‚«‚ß‚È‰~
+			DrawCustomData cDataMin = cData; //å†…å´ã®å°ã•ã‚ãªå††
+			DrawCustomData cDataMax = cData; //å¤–å´ã®å¤§ãã‚ãªå††
 			cDataMin.radius -= thickness / 2.0f;
 			cDataMax.radius += thickness / 2.0f;
 
-			//’¸“_‚Æ‚»‚ÌƒCƒ“ƒfƒbƒNƒX‚ğ•K—v‚È‚çŒvZ‚·‚é
+			//é ‚ç‚¹ã¨ãã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å¿…è¦ãªã‚‰è¨ˆç®—ã™ã‚‹
 			if (instance->mCircleBuffersMap.find(cDataMin) == instance->mCircleBuffersMap.end()) {
 				instance->CalcCircleVertAndIndex(cDataMin);
 			}
@@ -102,7 +107,7 @@ void SimpleDrawer::DrawCircle(int32_t x, int32_t y, int32_t r, float layer, Colo
 				instance->CalcCircleVertAndIndex(cDataMax);
 			}
 
-			//“ñ‚Â‚Ì‰~‚Ì’¸“_‚ğ—Z‡‚µ‚ÄÅ‹­‚É‚·‚é
+			//äºŒã¤ã®å††ã®é ‚ç‚¹ã‚’èåˆã—ã¦æœ€å¼·ã«ã™ã‚‹
 			std::vector<VertexP> vertices;
 			std::vector<uint32_t> indices;
 
@@ -215,12 +220,12 @@ void SimpleDrawer::DrawAll() {
 		
 		string stage;
 		if (layer >= 0) {
-			//‘O–Ê
+			//å‰é¢
 			order.anchorPoint.z = layer;
 			stage = "Sprite";
 		}
 		else {
-			//”w–Ê
+			//èƒŒé¢
 			order.anchorPoint.z = -layer;
 			stage = "BackSprite";
 		}
@@ -265,12 +270,12 @@ void SimpleDrawer::DrawAll() {
 
 			string stage;
 			if (layer >= 0) {
-				//‘O–Ê
+				//å‰é¢
 				order.anchorPoint.z = layer;
 				stage = "Sprite";
 			}
 			else {
-				//”w–Ê
+				//èƒŒé¢
 				order.anchorPoint.z = -layer;
 				stage = "BackSprite";
 			}
@@ -306,12 +311,12 @@ void SimpleDrawer::DrawAll() {
 
 			string stage;
 			if (layer >= 0) {
-				//‘O–Ê
+				//å‰é¢
 				order.anchorPoint.z = layer;
 				stage = "Sprite";
 			}
 			else {
-				//”w–Ê
+				//èƒŒé¢
 				order.anchorPoint.z = -layer;
 				stage = "BackSprite";
 			}
@@ -324,18 +329,18 @@ void SimpleDrawer::Init()
 {
 	mRootSignature = RDirectX::GetDefRootSignature();
 
-	// ƒ‹[ƒgƒpƒ‰ƒ[ƒ^‚Ìİ’è
+	// ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è¨­å®š
 	RootParamaters rootParams(2);
-	//’è”ƒoƒbƒtƒ@0”Ô(Color)
-	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV; //’è”ƒoƒbƒtƒ@ƒrƒ…[
-	rootParams[0].Descriptor.ShaderRegister = 0; //’è”ƒoƒbƒtƒ@”Ô†
-	rootParams[0].Descriptor.RegisterSpace = 0; //ƒfƒtƒHƒ‹ƒg’l
-	rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL; //‘SƒVƒF[ƒ_‚©‚çŒ©‚¦‚é
-	//’è”ƒoƒbƒtƒ@2”Ô(ViewProjection)
-	rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV; //’è”ƒoƒbƒtƒ@ƒrƒ…[
-	rootParams[1].Descriptor.ShaderRegister = 1; //’è”ƒoƒbƒtƒ@”Ô†
-	rootParams[1].Descriptor.RegisterSpace = 0; //ƒfƒtƒHƒ‹ƒg’l
-	rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL; //‘SƒVƒF[ƒ_‚©‚çŒ©‚¦‚é
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡0ç•ª(Color)
+	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV; //å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
+	rootParams[0].Descriptor.ShaderRegister = 0; //å®šæ•°ãƒãƒƒãƒ•ã‚¡ç•ªå·
+	rootParams[0].Descriptor.RegisterSpace = 0; //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤
+	rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL; //å…¨ã‚·ã‚§ãƒ¼ãƒ€ã‹ã‚‰è¦‹ãˆã‚‹
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡2ç•ª(ViewProjection)
+	rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV; //å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
+	rootParams[1].Descriptor.ShaderRegister = 1; //å®šæ•°ãƒãƒƒãƒ•ã‚¡ç•ªå·
+	rootParams[1].Descriptor.RegisterSpace = 0; //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤
+	rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL; //å…¨ã‚·ã‚§ãƒ¼ãƒ€ã‹ã‚‰è¦‹ãˆã‚‹
 
 	mRootSignature.mDesc.RootParamaters = rootParams;
 	mRootSignature.Create();
@@ -345,7 +350,7 @@ void SimpleDrawer::Init()
 	mPipelineState.mDesc.VS = Shader("./Shader/SimpleVS.hlsl", "main", "vs_5_0");
 	mPipelineState.mDesc.PS = Shader("./Shader/SimplePS.hlsl", "main", "ps_5_0");
 
-	// ƒ‰ƒXƒ^ƒ‰ƒCƒU‚Ìİ’è
+	// ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã®è¨­å®š
 	mPipelineState.mDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 	mPipelineState.mDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
 	mPipelineState.mDesc.RasterizerState.DepthClipEnable = false;
@@ -356,7 +361,7 @@ void SimpleDrawer::Init()
 
 	mPipelineState.Create();
 
-	//DrawBox—p
+	//DrawBoxç”¨
 	mBoxRS.mDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 	mBoxRS.Create();
 
@@ -401,7 +406,7 @@ void SimpleDrawer::Init()
 	mBoxPSO.mDesc.pRootSignature = mBoxRS.mPtr.Get();
 	mBoxPSO.Create();
 
-	//DrawLine—p
+	//DrawLineç”¨
 	mLineRS.mDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
 	RootParamaters lineRootParams(1);
@@ -459,14 +464,14 @@ void SimpleDrawer::Init()
 	mLinePSO.mDesc.pRootSignature = mLineRS.mPtr.Get();
 	mLinePSO.Create();
 
-	//DrawCircle—p
+	//DrawCircleç”¨
 	mCircleRS.mDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
 	RootParamaters circleRootParams(1);
-	circleRootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV; //’è”ƒoƒbƒtƒ@ƒrƒ…[
-	circleRootParams[0].Descriptor.ShaderRegister = 0; //’è”ƒoƒbƒtƒ@”Ô†
-	circleRootParams[0].Descriptor.RegisterSpace = 0; //ƒfƒtƒHƒ‹ƒg’l
-	circleRootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL; //‘SƒVƒF[ƒ_‚©‚çŒ©‚¦‚é
+	circleRootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV; //å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
+	circleRootParams[0].Descriptor.ShaderRegister = 0; //å®šæ•°ãƒãƒƒãƒ•ã‚¡ç•ªå·
+	circleRootParams[0].Descriptor.RegisterSpace = 0; //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤
+	circleRootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL; //å…¨ã‚·ã‚§ãƒ¼ãƒ€ã‹ã‚‰è¦‹ãˆã‚‹
 	mCircleRS.mDesc.RootParamaters = circleRootParams;
 	mCircleRS.mDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 	mCircleRS.Create();
@@ -517,19 +522,19 @@ void SimpleDrawer::Init()
 	mCirclePSO.mDesc.pRootSignature = mLineRS.mPtr.Get();
 	mCirclePSO.Create();
 
-	//DrawString—p
+	//DrawStringç”¨
 	mRootSignatureForString = SpriteManager::GetInstance()->GetRootSignature();
 
 	StaticSamplerDesc samplerDesc{};
 	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
 	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
 	samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
-	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK; //ƒ{[ƒ_[‚Ì‚Í•
-	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR; //ƒŠƒjƒA•âŠÔ
-	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX; //ƒ~ƒbƒvƒ}ƒbƒvÅ‘å’l
-	samplerDesc.MinLOD = 0.0f; //ƒ~ƒbƒvƒ}ƒbƒvÅ¬’l
+	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK; //ãƒœãƒ¼ãƒ€ãƒ¼ã®æ™‚ã¯é»’
+	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR; //ãƒªãƒ‹ã‚¢è£œé–“
+	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX; //ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—æœ€å¤§å€¤
+	samplerDesc.MinLOD = 0.0f; //ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—æœ€å°å€¤
 	samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
-	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL; //ƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚©‚ç‚¾‚¯Œ©‚¦‚é
+	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL; //ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‹ã‚‰ã ã‘è¦‹ãˆã‚‹
 	mRootSignatureForString.mDesc.StaticSamplers = StaticSamplerDescs{ samplerDesc };
 	mRootSignatureForString.Create();
 

@@ -28,7 +28,7 @@ public:
 		}
 	}
 
-	//ƒRƒs[‘Îô
+	//ã‚³ãƒ”ãƒ¼å¯¾ç­–
 	SRVertexBuffer(const SRVertexBuffer& o) {
 		std::lock_guard<std::recursive_mutex> lock(sMutex);
 		if (mData != nullptr) {
@@ -65,30 +65,30 @@ public:
 		return IsValid();
 	}
 
-	//Vertex(Pos)‚Ì”z—ñ‚Æ‚»‚Ì‘å‚«‚³‚Å’¸“_ƒoƒbƒtƒ@‚ğì‚é
+	//Vertex(Pos)ã®é…åˆ—ã¨ãã®å¤§ãã•ã§é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚‹
 	SRVertexBuffer(VertexP* list, uint32_t size);
-	//Vertex(Pos)‚Ìvector‚Å’¸“_ƒoƒbƒtƒ@‚ğì‚é
+	//Vertex(Pos)ã®vectorã§é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚‹
 	SRVertexBuffer(std::vector<VertexP> list);
 
-	//Vertex(PosNormalUv)‚Ì”z—ñ‚Æ‚»‚Ì‘å‚«‚³‚Å’¸“_ƒoƒbƒtƒ@‚ğì‚é
+	//Vertex(PosNormalUv)ã®é…åˆ—ã¨ãã®å¤§ãã•ã§é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚‹
 	SRVertexBuffer(VertexPNU* list, uint32_t size);
-	//Vertex(PosNormalUv)‚Ìvector‚Å’¸“_ƒoƒbƒtƒ@‚ğì‚é
+	//Vertex(PosNormalUv)ã®vectorã§é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚‹
 	SRVertexBuffer(std::vector<VertexPNU> list);
 
-	//Vertex(Pos)‚Ì”z—ñ‚Æ‚»‚Ì‘å‚«‚³‚Å’¸“_ƒoƒbƒtƒ@‚ğì‚é
+	//Vertex(Pos)ã®é…åˆ—ã¨ãã®å¤§ãã•ã§é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚‹
 	void Init(VertexP* list, uint32_t size);
-	//Vertex(Pos)‚Ìvector‚Å’¸“_ƒoƒbƒtƒ@‚ğì‚é
+	//Vertex(Pos)ã®vectorã§é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚‹
 	void Init(std::vector<VertexP> list);
 
-	//Vertex(PosNormalUv)‚Ì”z—ñ‚Æ‚»‚Ì‘å‚«‚³‚Å’¸“_ƒoƒbƒtƒ@‚ğì‚é
+	//Vertex(PosNormalUv)ã®é…åˆ—ã¨ãã®å¤§ãã•ã§é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚‹
 	void Init(VertexPNU* list, uint32_t size);
-	//Vertex(PosNormalUv)‚Ìvector‚Å’¸“_ƒoƒbƒtƒ@‚ğì‚é
+	//Vertex(PosNormalUv)ã®vectorã§é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚‹
 	void Init(std::vector<VertexPNU> list);
 
-	//Vertex(PosNormalUv)‚Ì”z—ñ‚Æ‚»‚Ì‘å‚«‚³‚Å’¸“_ƒoƒbƒtƒ@‚ğXV‚·‚é
+	//Vertex(PosNormalUv)ã®é…åˆ—ã¨ãã®å¤§ãã•ã§é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’æ›´æ–°ã™ã‚‹
 	void Update(VertexPNU* list, uint32_t size);
 
-	//”CˆÓ‚Ì’¸“_ƒf[ƒ^‚Ì”z—ñ‚Æ‚»‚Ì‘å‚«‚³‚Åì‚é
+	//ä»»æ„ã®é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®é…åˆ—ã¨ãã®å¤§ãã•ã§ä½œã‚‹
 	template<class T>
 	void Init(T* list, uint32_t size) {
 		std::lock_guard<std::recursive_mutex> lock(SRBufferAllocator::GetInstance()->sMutex);
@@ -115,7 +115,7 @@ public:
 		mData->strideInBytes = sizeof(T);
 	}
 
-	//”CˆÓ‚Ì’¸“_ƒf[ƒ^‚Ìvector‚Åì‚é
+	//ä»»æ„ã®é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®vectorã§ä½œã‚‹
 	template<class T>
 	void Init(std::vector<T> list) {
 		std::lock_guard<std::recursive_mutex> lock(SRBufferAllocator::GetInstance()->sMutex);
@@ -142,7 +142,7 @@ public:
 		mData->strideInBytes = sizeof(T);
 	}
 
-	//”CˆÓ‚Ì’¸“_ƒf[ƒ^‚Ì”z—ñ‚Æ‚»‚Ì‘å‚«‚³‚ÅXV
+	//ä»»æ„ã®é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®é…åˆ—ã¨ãã®å¤§ãã•ã§æ›´æ–°
 	template<class T>
 	void Update(T* list, uint32_t size) {
 		std::lock_guard<std::recursive_mutex> lock(sMutex);
@@ -167,7 +167,7 @@ public:
 		mData->strideInBytes = sizeof(T);
 	}
 
-	//”CˆÓ‚Ì’¸“_ƒf[ƒ^‚Ìvector‚ÅXV
+	//ä»»æ„ã®é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®vectorã§æ›´æ–°
 	template<class T>
 	void Update(std::vector<T> list) {
 		std::lock_guard<std::recursive_mutex> lock(sMutex);

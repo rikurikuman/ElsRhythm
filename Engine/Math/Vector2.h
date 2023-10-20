@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 
-//’‡—Ç‚µ‘ŠèéŒ¾
+//ä»²è‰¯ã—ç›¸æ‰‹å®£è¨€
 class Vector3;
 class Float4;
 
@@ -11,63 +11,63 @@ public:
 	float x;
 	float y;
 
-	//ƒ[ƒƒxƒNƒgƒ‹
+	//ã‚¼ãƒ­ãƒ™ã‚¯ãƒˆãƒ«
 	Vector2(); 
 	
-	//”CˆÓ‚Ì¬•ªƒxƒNƒgƒ‹
+	//ä»»æ„ã®æˆåˆ†ãƒ™ã‚¯ãƒˆãƒ«
 	Vector2(int32_t x, int32_t y);
-	//”CˆÓ‚Ì¬•ªƒxƒNƒgƒ‹
+	//ä»»æ„ã®æˆåˆ†ãƒ™ã‚¯ãƒˆãƒ«
 	Vector2(float x, float y); 
 
 	~Vector2();
 
-	//”äŠr
+	//æ¯”è¼ƒ
 	bool operator==(const Vector2& a) const;
 	bool operator!=(const Vector2& a) const;
 
-	//ƒxƒNƒgƒ‹‚Ì‘«‚µZ
+	//ãƒ™ã‚¯ãƒˆãƒ«ã®è¶³ã—ç®—
 	Vector2 operator+(const Vector2& a) const;
-	//ƒxƒNƒgƒ‹‚Ìˆø‚«Z
+	//ãƒ™ã‚¯ãƒˆãƒ«ã®å¼•ãç®—
 	Vector2 operator-(const Vector2& a) const;
-	//‹tƒxƒNƒgƒ‹
+	//é€†ãƒ™ã‚¯ãƒˆãƒ«
 	Vector2 operator-() const;
-	//’è””{
+	//å®šæ•°å€
 	Vector2 operator*(const float a) const;
-	//’è”•ª‚Ì1”{
+	//å®šæ•°åˆ†ã®1å€
 	Vector2 operator/(const float a) const;
 
-	//ƒxƒNƒgƒ‹‚Ì‘«‚µZ
+	//ãƒ™ã‚¯ãƒˆãƒ«ã®è¶³ã—ç®—
 	Vector2& operator+=(const Vector2& a);
-	//ƒxƒNƒgƒ‹‚Ìˆø‚«Z
+	//ãƒ™ã‚¯ãƒˆãƒ«ã®å¼•ãç®—
 	Vector2& operator-=(const Vector2& a);
-	//’è””{
+	//å®šæ•°å€
 	Vector2& operator*=(const float a);
-	//’è”•ª‚Ì1”{
+	//å®šæ•°åˆ†ã®1å€
 	Vector2& operator/=(const float a);
 	
-	//“àÏ
+	//å†…ç©
 	float Dot(const Vector2& a) const;
-	//ŠOÏ
+	//å¤–ç©
 	float Cross(const Vector2& a) const;
 
-	//ƒxƒNƒgƒ‹‚Ì’·‚³iã‚ğg‚¤‚Ì‚Åd‚ßj
+	//ãƒ™ã‚¯ãƒˆãƒ«ã®é•·ã•ï¼ˆâˆšã‚’ä½¿ã†ã®ã§é‡ã‚ï¼‰
 	float Length() const;
-	//ƒxƒNƒgƒ‹‚Ì‚×‚«æ’·‚³iã‚ğg‚í‚È‚¢‚Ì‚ÅŒy‚ßj
+	//ãƒ™ã‚¯ãƒˆãƒ«ã®ã¹ãä¹—é•·ã•ï¼ˆâˆšã‚’ä½¿ã‚ãªã„ã®ã§è»½ã‚ï¼‰
 	float LengthSq() const;
 
-	//³‹K‰»i‚±‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ‘‚«Š·‚¦‚éj
+	//æ­£è¦åŒ–ï¼ˆã“ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’æ›¸ãæ›ãˆã‚‹ï¼‰
 	Vector2& Normalize();
-	//³‹K‰»ƒxƒNƒgƒ‹‚ğæ“¾
-	//i‚±‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Í‘‚«Š·‚¦‚¸‚É•Ê‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Æ‚µ‚Äæ“¾‚·‚éj
+	//æ­£è¦åŒ–ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—
+	//ï¼ˆã“ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã¯æ›¸ãæ›ãˆãšã«åˆ¥ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã¨ã—ã¦å–å¾—ã™ã‚‹ï¼‰
 	Vector2 GetNormalize() const;
 
-	//z¬•ª‚ğ0‚Æ‚µ‚ÄVector3‚ÉƒLƒƒƒXƒg
+	//zæˆåˆ†ã‚’0ã¨ã—ã¦Vector3ã«ã‚­ãƒ£ã‚¹ãƒˆ
 	operator Vector3() const;
-	//z¬•ª‚ğ0, w¬•ª‚ğ1‚Æ‚µ‚ÄFloat4‚ÉƒLƒƒƒXƒg
+	//zæˆåˆ†ã‚’0, wæˆåˆ†ã‚’1ã¨ã—ã¦Float4ã«ã‚­ãƒ£ã‚¹ãƒˆ
 	operator Float4() const;
 };
 
-//¶•Ó‚Éfloat‚ğ’u‚¢‚½‚Æ‚«‚É*, /‚ªo—ˆ‚È‚¢‚Ì‚Å‚»‚ê‘Îô
+//å·¦è¾ºã«floatã‚’ç½®ã„ãŸã¨ãã«*, /ãŒå‡ºæ¥ãªã„ã®ã§ãã‚Œå¯¾ç­–
 
-//’è””{
+//å®šæ•°å€
 Vector2 operator*(const float a, const Vector2& b);

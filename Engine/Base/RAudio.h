@@ -1,4 +1,7 @@
 #pragma once
+
+//å¤–éƒ¨ãƒ˜ãƒƒãƒ€
+#pragma warning(push, 0)
 #include <xaudio2.h>
 #include <fstream>
 #include <wrl.h>
@@ -7,6 +10,8 @@
 #include <memory>
 #include <list>
 #include <mutex>
+#pragma warning(pop)
+
 #include "Util.h"
 
 typedef std::string AudioHandle;
@@ -14,7 +19,7 @@ typedef std::string PlayingAudioHandle;
 
 struct ChunkHeader
 {
-	char id[4]; //ƒ`ƒƒƒ“ƒNID
+	char id[4]; //ãƒãƒ£ãƒ³ã‚¯ID
 	int32_t size;
 };
 

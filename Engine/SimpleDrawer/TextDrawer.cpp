@@ -47,7 +47,7 @@ FontTexture TextDrawer::GetFontTexture(std::wstring glyph, std::wstring fontType
 	GetTextMetrics(hdc, &tm);
 	GetGlyphOutline(hdc, code, GGO_GRAY4_BITMAP, &gm, size, &buffer[0], &Mat);
 
-	// ƒIƒuƒWƒFƒNƒg‚ÌŠJ•ú
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é–‹æ”¾
 	SelectObject(hdc, oldFont);
 	DeleteObject(_font);
 	ReleaseDC(NULL, hdc);
@@ -94,14 +94,14 @@ FontTexture TextDrawer::GetFontTexture(std::wstring glyph, std::wstring fontType
 	ftex.tm = tm;
 	ftex.gm = gm;
 
-	// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@
-	// ƒq[ƒvÝ’è
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡
+	// ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_HEAP_PROPERTIES textureHeapProp{};
 	textureHeapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
 	textureHeapProp.CPUPageProperty =
 		D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
 	textureHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
-	// ƒŠƒ\[ƒXÝ’è
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC textureResourceDesc{};
 	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 	textureResourceDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -112,7 +112,7 @@ FontTexture TextDrawer::GetFontTexture(std::wstring glyph, std::wstring fontType
 	textureResourceDesc.SampleDesc.Count = 1;
 
 	HRESULT result;
-	//¶¬
+	//ç”Ÿæˆ
 	result = RDirectX::GetDevice()->CreateCommittedResource(
 		&textureHeapProp,
 		D3D12_HEAP_FLAG_NONE,
@@ -174,7 +174,7 @@ TextureHandle TextDrawer::CreateStringTexture(std::string text, std::string font
 		imageData[i] = Color(0, 0, 0, 0);
 	}
 
-	size_t currentPos = 0; //Œ»Ý‚ÌŒ´“_ˆÊ’u
+	size_t currentPos = 0; //ç¾åœ¨ã®åŽŸç‚¹ä½ç½®
 
 	for (FontTexture tex : glyphlist) {
 		size_t _width = tex.texture.mResource->GetDesc().Width;
@@ -206,14 +206,14 @@ TextureHandle TextDrawer::CreateStringTexture(std::string text, std::string font
 
 	Texture texture = Texture(D3D12_RESOURCE_STATE_GENERIC_READ);
 
-	// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@
-	// ƒq[ƒvÝ’ès
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡
+	// ãƒ’ãƒ¼ãƒ—è¨­å®šs
 	D3D12_HEAP_PROPERTIES textureHeapProp{};
 	textureHeapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
 	textureHeapProp.CPUPageProperty =
 		D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
 	textureHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
-	// ƒŠƒ\[ƒXÝ’è
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC textureResourceDesc{};
 	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 	textureResourceDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -224,7 +224,7 @@ TextureHandle TextDrawer::CreateStringTexture(std::string text, std::string font
 	textureResourceDesc.SampleDesc.Count = 1;
 
 	HRESULT result;
-	//¶¬
+	//ç”Ÿæˆ
 	result = RDirectX::GetDevice()->CreateCommittedResource(
 		&textureHeapProp,
 		D3D12_HEAP_FLAG_NONE,
@@ -287,7 +287,7 @@ TextureHandle TextDrawer::CreateStringTexture(std::wstring text, std::string fon
 		imageData[i] = Color(0, 0, 0, 0);
 	}
 
-	size_t currentPos = 0; //Œ»Ý‚ÌŒ´“_ˆÊ’u
+	size_t currentPos = 0; //ç¾åœ¨ã®åŽŸç‚¹ä½ç½®
 
 	for (FontTexture tex : glyphlist) {
 		size_t _width = tex.texture.mResource->GetDesc().Width;
@@ -319,14 +319,14 @@ TextureHandle TextDrawer::CreateStringTexture(std::wstring text, std::string fon
 
 	Texture texture = Texture(D3D12_RESOURCE_STATE_GENERIC_READ);
 
-	// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@
-	// ƒq[ƒvÝ’ès
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡
+	// ãƒ’ãƒ¼ãƒ—è¨­å®šs
 	D3D12_HEAP_PROPERTIES textureHeapProp{};
 	textureHeapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
 	textureHeapProp.CPUPageProperty =
 		D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
 	textureHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
-	// ƒŠƒ\[ƒXÝ’è
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC textureResourceDesc{};
 	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 	textureResourceDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -337,7 +337,7 @@ TextureHandle TextDrawer::CreateStringTexture(std::wstring text, std::string fon
 	textureResourceDesc.SampleDesc.Count = 1;
 
 	HRESULT result;
-	//¶¬
+	//ç”Ÿæˆ
 	result = RDirectX::GetDevice()->CreateCommittedResource(
 		&textureHeapProp,
 		D3D12_HEAP_FLAG_NONE,

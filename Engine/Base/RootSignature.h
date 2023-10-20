@@ -1,9 +1,13 @@
 #pragma once
+
+//外部ヘッダ
+#pragma warning(push, 0)
 #include <d3d12.h>
 #include <wrl.h>
 #include <string>
 #include <vector>
 #include <unordered_map>
+#pragma warning(pop)
 
 typedef D3D12_DESCRIPTOR_RANGE DescriptorRange;
 typedef D3D12_STATIC_SAMPLER_DESC StaticSamplerDesc;

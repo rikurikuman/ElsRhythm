@@ -1,5 +1,10 @@
 #pragma once
+
+//å¤–éƒ¨ãƒ˜ãƒƒãƒ€
+#pragma warning(push, 0)
 #include <d3d12.h>
+#pragma warning(pop)
+
 #include "Vector2.h"
 #include "Vector3.h"
 #include <vector>
@@ -34,11 +39,11 @@ public:
 	bool operator==(const VertexPNU& a) const;
 
 	/// <summary>
-	/// –@üƒxƒNƒgƒ‹‚ğŒvZ
+	/// æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨ˆç®—
 	/// </summary>
-	/// <param name="list">ŒvZ‚·‚é’¸“_ŒQ</param>
-	/// <param name="indexlist">ƒCƒ“ƒfƒbƒNƒXƒŠƒXƒgiOŠpŒ`A‘S‚ÄŒv‰ñ‚è‚Å‚ ‚é‚±‚Æj</param>
-	/// <param name="indexcount">ƒCƒ“ƒfƒbƒNƒX‚Ì”</param>
+	/// <param name="list">è¨ˆç®—ã™ã‚‹é ‚ç‚¹ç¾¤</param>
+	/// <param name="indexlist">ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆï¼ˆä¸‰è§’å½¢ã€å…¨ã¦æ™‚è¨ˆå›ã‚Šã§ã‚ã‚‹ã“ã¨ï¼‰</param>
+	/// <param name="indexcount">ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®æ•°</param>
 	static void CalcNormalVec(VertexPNU list[], const uint32_t indexlist[], const uint32_t indexcount);
 
 	static void CalcNormalVec(std::vector<VertexPNU> list, std::vector<uint32_t> indexlist);

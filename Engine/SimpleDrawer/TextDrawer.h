@@ -66,6 +66,6 @@ private:
 	void Init();
 
 	std::recursive_mutex mMutex;
-	std::map<Glyph, FontTexture> mGlyphMap; //ƒOƒŠƒtƒeƒNƒXƒ`ƒƒ‚Ìƒ}ƒbƒv
+	std::map<Glyph, FontTexture> mGlyphMap; //ã‚°ãƒªãƒ•ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒãƒƒãƒ—
 };
 

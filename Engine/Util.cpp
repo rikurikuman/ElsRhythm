@@ -1,5 +1,4 @@
 #include "Util.h"
-#include <windows.h>
 
 using namespace std;
 
@@ -23,7 +22,7 @@ vector<string> Util::StringSplit(string s, string separator)
 {
 	vector<string> result;
 
-	//‹æØ‚è•¶š‚Ì’·‚³‚ª0‚È‚ç‹æØ‚é‚í‚¯‚ª‚È‚¢‚Ì‚Å‚»‚Ì‚Ü‚Ü•Ô‚·
+	//åŒºåˆ‡ã‚Šæ–‡å­—ã®é•·ã•ãŒ0ãªã‚‰åŒºåˆ‡ã‚‹ã‚ã‘ãŒãªã„ã®ã§ãã®ã¾ã¾è¿”ã™
 	if (separator.length() == 0) {
 		result.push_back(s);
 		return result;
@@ -31,20 +30,20 @@ vector<string> Util::StringSplit(string s, string separator)
 
 	auto offset = string::size_type(0);
 	while (1) {
-		//‹æØ‚è•¶š‚ªoŒ»‚·‚éˆÊ’u‚ğæ“¾
+		//åŒºåˆ‡ã‚Šæ–‡å­—ãŒå‡ºç¾ã™ã‚‹ä½ç½®ã‚’å–å¾—
 		auto find = s.find(separator, offset);
 
-		//•¶š—ñ‚ÌI“_‚Ü‚Ås‚Á‚½‚ç
+		//æ–‡å­—åˆ—ã®çµ‚ç‚¹ã¾ã§è¡Œã£ãŸã‚‰
 		if (find == string::npos) {
-			//c‚è‘S•”‰Á‚¦‚Ä‚¨‚µ‚Ü‚¢
+			//æ®‹ã‚Šå…¨éƒ¨åŠ ãˆã¦ãŠã—ã¾ã„
 			result.push_back(s.substr(offset));
 			break;
 		}
 
-		//‚»‚¤‚Å‚È‚¢‚È‚ç‹æØ‚Á‚Ä‰Á‚¦‚é
+		//ãã†ã§ãªã„ãªã‚‰åŒºåˆ‡ã£ã¦åŠ ãˆã‚‹
 		result.push_back(s.substr(offset, find - offset));
 
-		//ˆ—Ï‚İ‚ÌŠ‚Ü‚ÅƒCƒeƒŒ[ƒ^‚ği‚ß‚é
+		//å‡¦ç†æ¸ˆã¿ã®æ‰€ã¾ã§ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã‚’é€²ã‚ã‚‹
 		offset = find + separator.length();
 	}
 
@@ -70,41 +69,41 @@ double Util::Clamp(double d, double min, double max) {
 }
 
 wstring Util::ConvertStringToWString(string str, uint32_t codePage) {
-	//•K—v‚Èwchar_t”z—ñ’·‚ğ“¾‚é
+	//å¿…è¦ãªwchar_té…åˆ—é•·ã‚’å¾—ã‚‹
 	int32_t _arraySize = MultiByteToWideChar(codePage, 0, str.c_str()
 		, -1, (wchar_t*)NULL, 0);
 
-	//”z—ñ‚ğ—pˆÓ‚·‚é
+	//é…åˆ—ã‚’ç”¨æ„ã™ã‚‹
 	std::vector<wchar_t> wArray;
 	wArray.resize(max(1, _arraySize));
 
-	//•ÏŠ·‚µ‚Äwchar_t‚Ì”z—ñ‚É‚Ô‚¿‚Ş
+	//å¤‰æ›ã—ã¦wchar_tã®é…åˆ—ã«ã¶ã¡è¾¼ã‚€
 	MultiByteToWideChar(codePage, 0, str.c_str(), -1, &wArray[0], _arraySize);
 
-	//wstring‚É‚·‚é
+	//wstringã«ã™ã‚‹
 	std::wstring wStr(&wArray[0], &wArray.back());
 
-	//‚¨‚µ‚Ü‚¢
+	//ãŠã—ã¾ã„
 	return wStr;
 }
 
 std::string Util::ConvertWStringToString(std::wstring wstr)
 {
-	//•K—v‚Èchar”z—ñ’·‚ğ“¾‚é
+	//å¿…è¦ãªcharé…åˆ—é•·ã‚’å¾—ã‚‹
 	int32_t _arraySize = WideCharToMultiByte(CP_OEMCP, 0, wstr.c_str()
 		, -1, (char*)NULL, 0, NULL, NULL);
 
-	//”z—ñ‚ğ—pˆÓ‚·‚é
+	//é…åˆ—ã‚’ç”¨æ„ã™ã‚‹
 	std::vector<char> sArray;
 	sArray.resize(max(1, _arraySize));
 
-	//•ÏŠ·‚µ‚Ächar_t‚Ì”z—ñ‚É‚Ô‚¿‚Ş
+	//å¤‰æ›ã—ã¦char_tã®é…åˆ—ã«ã¶ã¡è¾¼ã‚€
 	WideCharToMultiByte(CP_OEMCP, 0, wstr.c_str(), -1, &sArray[0], _arraySize, NULL, NULL);
 
-	//string‚É‚·‚é
+	//stringã«ã™ã‚‹
 	std::string str(&sArray[0], &sArray.back());
 
-	//‚¨‚µ‚Ü‚¢
+	//ãŠã—ã¾ã„
 	return str;
 }
 
@@ -163,14 +162,24 @@ void Util::CalcElapsedTimeEnd(std::string name, bool consecutive) {
 }
 
 void Util::DebugLog(std::string log) {
+	DebugLog(ConvertStringToWString(log));
+}
+
+void Util::DebugLog(std::wstring log)
+{
 #ifdef _DEBUG
-	OutputDebugStringA((log + "\n").c_str());
+	OutputDebugStringW((log + L"\n").c_str());
 #endif
 }
 
 void Util::DebugLogC(std::string log)
 {
+	DebugLogC(ConvertStringToWString(log));
+}
+
+void Util::DebugLogC(std::wstring log)
+{
 	if (debugBool) {
-		OutputDebugStringA((log + "\n").c_str());
+		OutputDebugStringW((log + L"\n").c_str());
 	}
 }

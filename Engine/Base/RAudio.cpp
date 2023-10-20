@@ -9,7 +9,7 @@ AudioHandle RAudio::Load(const std::string filepath, std::string handle)
 
 	std::unique_lock<std::recursive_mutex> lock(GetInstance()->mMutex);
 
-	//ˆê‰ñ“Ç‚İ‚ñ‚¾‚±‚Æ‚ª‚ ‚éƒtƒ@ƒCƒ‹‚Í‚»‚Ì‚Ü‚Ü•Ô‚·
+	//ä¸€å›èª­ã¿è¾¼ã‚“ã ã“ã¨ãŒã‚ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã¯ãã®ã¾ã¾è¿”ã™
 	auto itr = find_if(instance->mAudioMap.begin(), instance->mAudioMap.end(), [&](const std::pair<AudioHandle, shared_ptr<AudioData>>& p) {
 		return p.second->filepath == filepath;
 		});
@@ -63,7 +63,7 @@ AudioHandle RAudio::Load(const std::string filepath, std::string handle)
 	sound->wfex = format.fmt;
 	sound->bufferSize = data.size;
 
-	sound->buffer.resize(data.size);
+	sound->buffer.resize(data.size != 0 ? data.size : 1);
 	file.read(reinterpret_cast<char*>(&sound->buffer[0]), data.size);
 
 	file.close();
@@ -90,10 +90,10 @@ void RAudio::Play(const AudioHandle handle, float volume, float pitch, bool loop
 	shared_ptr<AudioData> data = instance->mAudioMap[handle];
 
 	if (
-		(data->samplePlayLength == 0 && data->samplePlayBegin != 0) // PlayLength‚ª0‚È‚çPlayBegin‚Í0‚Å‚È‚¯‚ê‚Î‚È‚ç‚È‚¢
-		&& (data->sampleLoopBegin >= data->samplePlayBegin + data->samplePlayLength) //LoopBegin‚ÍPlayBegin + PlayLength–¢–‚Å‚È‚¯‚ê‚Î‚È‚ç‚È‚¢
-		&& (data->sampleLoopBegin + data->sampleLoopLength <= data->samplePlayBegin) //LoopBegin + LoopLength‚ÍPlayBegin‚æ‚è‘å‚«‚­‚È‚¯‚ê‚Î‚È‚ç‚È‚¢
-		&& (data->sampleLoopBegin + data->sampleLoopLength >= data->samplePlayBegin + data->samplePlayLength) //LoopBegin + LoopLength‚ÍPlayBegin + PlayLength–¢–‚Å‚È‚¯‚ê‚Î‚È‚ç‚È‚¢
+		(data->samplePlayLength == 0 && data->samplePlayBegin != 0) // PlayLengthãŒ0ãªã‚‰PlayBeginã¯0ã§ãªã‘ã‚Œã°ãªã‚‰ãªã„
+		&& (data->sampleLoopBegin >= data->samplePlayBegin + data->samplePlayLength) //LoopBeginã¯PlayBegin + PlayLengthæœªæº€ã§ãªã‘ã‚Œã°ãªã‚‰ãªã„
+		&& (data->sampleLoopBegin + data->sampleLoopLength <= data->samplePlayBegin) //LoopBegin + LoopLengthã¯PlayBeginã‚ˆã‚Šå¤§ãããªã‘ã‚Œã°ãªã‚‰ãªã„
+		&& (data->sampleLoopBegin + data->sampleLoopLength >= data->samplePlayBegin + data->samplePlayLength) //LoopBegin + LoopLengthã¯PlayBegin + PlayLengthæœªæº€ã§ãªã‘ã‚Œã°ãªã‚‰ãªã„
 		) {
 		Util::DebugLog("ERROR: RAudio::Play() : Invalid Audio PlaySetting.");
 		return;

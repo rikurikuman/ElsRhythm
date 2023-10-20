@@ -11,6 +11,7 @@
 #include <FinalRenderStage.h>
 #include <Util.h>
 #include <PostEffectRenderStage.h>
+#include <BackTransparentRenderStage.h>
 
 void Renderer::Execute()
 {
@@ -61,8 +62,8 @@ void Renderer::DrawCall(std::string stageID, RenderOrder order)
 	for (auto itr = instance->mStages.begin(); itr != instance->mStages.end(); itr++) {
 		IRenderStage* stage = itr->get();
 		if (stage->GetTypeIndentifier() == stageID) {
-			//–¢Ý’è‚Ì€–Ú‚ðƒŒƒ“ƒ_ƒ‰[‚ÌÝ’è‚ÅŽ©“®‚Å•âŠ®‚·‚é
-			//‚±‚±‚Å‚à–¢Ý’è‚Ì‚Ü‚Ü‚É‚È‚Á‚½ê‡‚ÍƒŒƒ“ƒ_[ƒXƒe[ƒW‚É”C‚¹‚é
+			//æœªè¨­å®šã®é …ç›®ã‚’ãƒ¬ãƒ³ãƒ€ãƒ©ãƒ¼ã®è¨­å®šã§è‡ªå‹•ã§è£œå®Œã™ã‚‹
+			//ã“ã“ã§ã‚‚æœªè¨­å®šã®ã¾ã¾ã«ãªã£ãŸå ´åˆã¯ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¹ãƒ†ãƒ¼ã‚¸ã«ä»»ã›ã‚‹
 			if(order.renderTargets.empty()) order.renderTargets = instance->mRenderTargets;
 			if(order.primitiveTopology == D3D_PRIMITIVE_TOPOLOGY_UNDEFINED) order.primitiveTopology = instance->mPrimitiveTopology;
 			if(order.viewports.empty()) order.viewports = instance->mViewports;
@@ -165,6 +166,7 @@ void Renderer::Init()
 	RenderTarget::CreateRenderTexture(RWindow::GetWidth(), RWindow::GetHeight(), { 0, 0, 0, 1 }, "RenderingImage");
 	
 	AddDefRenderStageBack<BackSpriteRenderStage>();
+	AddDefRenderStageBack<BackTransparentRenderStage>();
 	AddDefRenderStageBack<OpaqueRenderStage>();
 	AddDefRenderStageBack<TransparentRenderStage>();
 	AddDefRenderStageBack<PostEffectRenderStage>();

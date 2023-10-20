@@ -27,109 +27,109 @@ public:
 		SetDefault();
 	}
 
-	//ƒfƒtƒHƒ‹ƒg’l‚Éİ’è
+	//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã«è¨­å®š
 	void SetDefault();
 
-	//XVˆ—
+	//æ›´æ–°å‡¦ç†
 	void Update();
 
-	//ŠÂ‹«Œõ‚ÌF‚ğİ’è‚·‚é
+	//ç’°å¢ƒå…‰ã®è‰²ã‚’è¨­å®šã™ã‚‹
 	void SetAmbientColor(Vector3 color);
 
-	//Œ»İ‚ÌŠÂ‹«Œõ‚ÌF‚ğ“¾‚é
+	//ç¾åœ¨ã®ç’°å¢ƒå…‰ã®è‰²ã‚’å¾—ã‚‹
 	Vector3 GetAmbientColor();
 
-	//•½sŒõŒ¹‚ÌƒAƒNƒeƒBƒuó‘Ô‚ğİ’è‚·‚é
+	//å¹³è¡Œå…‰æºã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ–çŠ¶æ…‹ã‚’è¨­å®šã™ã‚‹
 	void SetDirectionalLightActive(int32_t index, bool active);
 
-	//•½sŒõŒ¹‚ÌƒAƒNƒeƒBƒuó‘Ô‚ğ“¾‚é
+	//å¹³è¡Œå…‰æºã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ–çŠ¶æ…‹ã‚’å¾—ã‚‹
 	bool GetDirectionalLightActive(int32_t index);
 
-	//•½sŒõŒ¹‚Ì•ûŒü‚ğİ’è‚·‚é
+	//å¹³è¡Œå…‰æºã®æ–¹å‘ã‚’è¨­å®šã™ã‚‹
 	void SetDirectionalLightVec(int32_t index, Vector3 vec);
 
-	//•½sŒõŒ¹‚Ì•ûŒü‚ğ“¾‚é
+	//å¹³è¡Œå…‰æºã®æ–¹å‘ã‚’å¾—ã‚‹
 	Vector3 GetDirectionalLightVec(int32_t index);
 
-	//•½sŒõŒ¹‚ÌF‚ğİ’è‚·‚é
+	//å¹³è¡Œå…‰æºã®è‰²ã‚’è¨­å®šã™ã‚‹
 	void SetDirectionalLightColor(int32_t index, Color color);
 
-	//•½sŒõŒ¹‚ÌF‚ğ“¾‚é
+	//å¹³è¡Œå…‰æºã®è‰²ã‚’å¾—ã‚‹
 	Color GetDirectionalLightColor(int32_t index);
 
-	//“_ŒõŒ¹‚ÌƒAƒNƒeƒBƒuó‘Ô‚ğİ’è‚·‚é
+	//ç‚¹å…‰æºã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ–çŠ¶æ…‹ã‚’è¨­å®šã™ã‚‹
 	void SetPointLightActive(int32_t index, bool active);
 
-	//“_ŒõŒ¹‚ÌƒAƒNƒeƒBƒuó‘Ô‚ğ“¾‚é
+	//ç‚¹å…‰æºã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ–çŠ¶æ…‹ã‚’å¾—ã‚‹
 	bool GetPointLightActive(int32_t index);
 
-	//“_ŒõŒ¹‚ÌÀ•W‚ğİ’è‚·‚é
+	//ç‚¹å…‰æºã®åº§æ¨™ã‚’è¨­å®šã™ã‚‹
 	void SetPointLightPos(int32_t index, Vector3 pos);
 
-	//“_ŒõŒ¹‚ÌÀ•W‚ğ“¾‚é
+	//ç‚¹å…‰æºã®åº§æ¨™ã‚’å¾—ã‚‹
 	Vector3 GetPointLightPos(int32_t index);
 
-	//“_ŒõŒ¹‚ÌF‚ğİ’è‚·‚é
+	//ç‚¹å…‰æºã®è‰²ã‚’è¨­å®šã™ã‚‹
 	void SetPointLightColor(int32_t index, Color color);
 
-	//“_ŒõŒ¹‚ÌF‚ğ“¾‚é
+	//ç‚¹å…‰æºã®è‰²ã‚’å¾—ã‚‹
 	Color GetPointLightColor(int32_t index);
 
-	//“_ŒõŒ¹‚ÌŒ¸ŠŒW”‚ğİ’è‚·‚é
+	//ç‚¹å…‰æºã®æ¸›è¡°ä¿‚æ•°ã‚’è¨­å®šã™ã‚‹
 	void SetPointLightAtten(int32_t index, Vector3 atten);
 
-	//“_ŒõŒ¹‚ÌŒ¸ŠŒW”‚ğ“¾‚é
+	//ç‚¹å…‰æºã®æ¸›è¡°ä¿‚æ•°ã‚’å¾—ã‚‹
 	Vector3 GetPointLightAtten(int32_t index);
 
-	//ƒXƒ|ƒbƒgƒ‰ƒCƒg‚ÌƒAƒNƒeƒBƒuó‘Ô‚ğİ’è‚·‚é
+	//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ–çŠ¶æ…‹ã‚’è¨­å®šã™ã‚‹
 	void SetSpotLightActive(int32_t index, bool active);
 
-	//ƒXƒ|ƒbƒgƒ‰ƒCƒg‚ÌƒAƒNƒeƒBƒuó‘Ô‚ğ“¾‚é
+	//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ–çŠ¶æ…‹ã‚’å¾—ã‚‹
 	bool GetSpotLightActive(int32_t index);
 
-	//ƒXƒ|ƒbƒgƒ‰ƒCƒg‚ÌÀ•W‚ğİ’è‚·‚é
+	//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆã®åº§æ¨™ã‚’è¨­å®šã™ã‚‹
 	void SetSpotLightPos(int32_t index, Vector3 pos);
 
-	//ƒXƒ|ƒbƒgƒ‰ƒCƒg‚ÌÀ•W‚ğ“¾‚é
+	//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆã®åº§æ¨™ã‚’å¾—ã‚‹
 	Vector3 GetSpotLightPos(int32_t index);
 
-	//ƒXƒ|ƒbƒgƒ‰ƒCƒg‚ÌŒü‚«‚ğİ’è‚·‚é
+	//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆã®å‘ãã‚’è¨­å®šã™ã‚‹
 	void SetSpotLightDirection(int32_t index, Vector3 dir);
 
-	//ƒXƒ|ƒbƒgƒ‰ƒCƒg‚ÌÀ•W‚ğ“¾‚é
+	//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆã®åº§æ¨™ã‚’å¾—ã‚‹
 	Vector3 GetSpotLightDirection(int32_t index);
 
-	//ƒXƒ|ƒbƒgƒ‰ƒCƒg‚ÌF‚ğİ’è‚·‚é
+	//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆã®è‰²ã‚’è¨­å®šã™ã‚‹
 	void SetSpotLightColor(int32_t index, Color color);
 
-	//ƒXƒ|ƒbƒgƒ‰ƒCƒg‚ÌF‚ğ“¾‚é
+	//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆã®è‰²ã‚’å¾—ã‚‹
 	Color GetSpotLightColor(int32_t index);
 
-	//ƒXƒ|ƒbƒgƒ‰ƒCƒg‚ÌŒ¸ŠŒW”‚ğİ’è‚·‚é
+	//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆã®æ¸›è¡°ä¿‚æ•°ã‚’è¨­å®šã™ã‚‹
 	void SetSpotLightAtten(int32_t index, Vector3 atten);
 
-	//ƒXƒ|ƒbƒgƒ‰ƒCƒg‚ÌŒ¸ŠŒW”‚ğ“¾‚é
+	//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆã®æ¸›è¡°ä¿‚æ•°ã‚’å¾—ã‚‹
 	Vector3 GetSpotLightAtten(int32_t index);
 
-	//ƒXƒ|ƒbƒgƒ‰ƒCƒg‚ÌŒ¸ŠŠp“x‚ğİ’è‚·‚é
+	//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆã®æ¸›è¡°è§’åº¦ã‚’è¨­å®šã™ã‚‹
 	void SetSpotLightFactorAngle(int32_t index, Vector2 factorAngle);
 
-	//ƒXƒ|ƒbƒgƒ‰ƒCƒg‚ÌŒ¸ŠŠp“x‚ğ“¾‚é
+	//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆã®æ¸›è¡°è§’åº¦ã‚’å¾—ã‚‹
 	Vector2 GetSpotLightFactorAngle(int32_t index);
 
 private:
-	//ŠÂ‹«Œõ‚ÌF
+	//ç’°å¢ƒå…‰ã®è‰²
 	Vector3 mAmbientColor = { 1, 1, 1 };
 
-	//•½sŒõŒ¹”z—ñ
+	//å¹³è¡Œå…‰æºé…åˆ—
 	DirectionalLight mDirectionalLights[DIRECTIONAL_LIGHT_NUM];
 
-	//“_ŒõŒ¹”z—ñ
+	//ç‚¹å…‰æºé…åˆ—
 	PointLight mPointLights[POINT_LIGHT_NUM];
 
-	//ƒXƒ|ƒbƒgƒ‰ƒCƒg”z—ñ
+	//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆé…åˆ—
 	SpotLight mSpotLights[SPOT_LIGHT_NUM];
 
-	//XVƒtƒ‰ƒO
+	//æ›´æ–°ãƒ•ãƒ©ã‚°
 	bool mChangeFlag = false;
 };

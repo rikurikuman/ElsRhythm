@@ -9,7 +9,7 @@
 template <typename ColliderType>
 class Collider;
 
-// ŠeíƒRƒ‰ƒCƒ_[ˆêŠ‡ŠÇ—ƒNƒ‰ƒX
+// å„ç¨®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ä¸€æ‹¬ç®¡ç†ã‚¯ãƒ©ã‚¹
 
 class Colliders final {
 	template <typename ColliderType>
@@ -25,13 +25,13 @@ public:
 
 	static void Update();
 
-	//‘SƒRƒ‰ƒCƒ_[‚ğƒAƒNƒeƒBƒu‚É‚·‚é
+	//å…¨ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã«ã™ã‚‹
 	static void AllActivate();
-	//‘SƒRƒ‰ƒCƒ_[‚ğ”ñƒAƒNƒeƒBƒu‚É‚·‚é
+	//å…¨ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’éã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã«ã™ã‚‹
 	static void AllInactivate();
 
-	//CollidersƒNƒ‰ƒX‚ªŠÇ—‚·‚éŠeƒRƒ‰ƒCƒ_[‚ÌƒŠƒXƒg‚Ö‚ÌƒAƒNƒZƒX—pƒNƒ‰ƒX
-	//ŠO•”‚©‚ç‚Í‚±‚ÌƒNƒ‰ƒX‚ğ‰î‚µ‚Ä‚Ì‚İƒAƒNƒZƒX‚Å‚«‚é
+	//Collidersã‚¯ãƒ©ã‚¹ãŒç®¡ç†ã™ã‚‹å„ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ãƒªã‚¹ãƒˆã¸ã®ã‚¢ã‚¯ã‚»ã‚¹ç”¨ã‚¯ãƒ©ã‚¹
+	//å¤–éƒ¨ã‹ã‚‰ã¯ã“ã®ã‚¯ãƒ©ã‚¹ã‚’ä»‹ã—ã¦ã®ã¿ã‚¢ã‚¯ã‚»ã‚¹ã§ãã‚‹
 	class ColListAccessor {
 		friend class Colliders;
 	public:
@@ -56,37 +56,37 @@ private:
 };
 
 /*
-	Colliders‚ªŠÇ—‚·‚éŠeíƒRƒ‰ƒCƒ_[À‘Ì‚ğQÆ‚·‚éA
-	ƒXƒ}[ƒgƒ|ƒCƒ“ƒ^‚à‚Ç‚«‚ÈƒNƒ‰ƒXB
-	"Collider<SphereCollider>"‚İ‚½‚¢‚ÈŠ´‚¶‚Åg‚¤B
-	“à•”ƒJƒEƒ“ƒg‚ğ‚¿A‚±‚ÌƒNƒ‰ƒX‚Ì¶¬‚Å+1, ”jŠü‚Å-1‚µ‚ÄA
-	0‚É‚È‚Á‚½‚çƒRƒ‰ƒCƒ_[À‘Ì‚à”jŠü‚·‚éB
-	(CollidersƒCƒ“ƒXƒ^ƒ“ƒX‚æ‚èõ–½‚Ì’·‚¢ColliderƒCƒ“ƒXƒ^ƒ“ƒX‚ª‚¢‚é‚ÆŠë‚È‚¢‚Ì‚Í“à)
-	(ˆê‰‘åä•v‚È‚Í‚¸‚¾‚¯‚Ç)
+	CollidersãŒç®¡ç†ã™ã‚‹å„ç¨®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼å®Ÿä½“ã‚’å‚ç…§ã™ã‚‹ã€
+	ã‚¹ãƒãƒ¼ãƒˆãƒã‚¤ãƒ³ã‚¿ã‚‚ã©ããªã‚¯ãƒ©ã‚¹ã€‚
+	"Collider<SphereCollider>"ã¿ãŸã„ãªæ„Ÿã˜ã§ä½¿ã†ã€‚
+	å†…éƒ¨ã‚«ã‚¦ãƒ³ãƒˆã‚’æŒã¡ã€ã“ã®ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆã§+1, ç ´æ£„ã§-1ã—ã¦ã€
+	0ã«ãªã£ãŸã‚‰ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼å®Ÿä½“ã‚‚ç ´æ£„ã™ã‚‹ã€‚
+	(Collidersã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚ˆã‚Šå¯¿å‘½ã®é•·ã„Colliderã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãŒã„ã‚‹ã¨å±ãªã„ã®ã¯å†…ç·’)
+	(ä¸€å¿œå¤§ä¸ˆå¤«ãªã¯ãšã ã‘ã©)
 */
 
 template <typename ColliderType>
 class Collider final {
 	friend class Colliders;
 public:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Collider() {}
 
-private: //Colliders‚ğ‰î‚³‚È‚¢‚ÆV‹K¶¬‚Í‚Å‚«‚È‚¢‚æ‚¤‚É(ƒRƒs[‚Æ‚©‚Í‚¦‚¦‚Å)
+private: //Collidersã‚’ä»‹ã•ãªã„ã¨æ–°è¦ç”Ÿæˆã¯ã§ããªã„ã‚ˆã†ã«(ã‚³ãƒ”ãƒ¼ã¨ã‹ã¯ãˆãˆã§)
 	ColliderType* mData = nullptr;
 
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Collider(ColliderType* data) : mData(data) {
 		AddCount(data);
 	}
 
 public:
-	//ƒfƒXƒgƒ‰ƒNƒ^
+	//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	~Collider() {
 		if (mData) {
 			SubtractCount(mData);
 			if (GetCount(mData) == 0) {
-				//‘SQÆÁ–ÅAíœ‚·‚éˆ—‚ğ‚±‚±‚É
+				//å…¨å‚ç…§æ¶ˆæ»…ã€å‰Šé™¤ã™ã‚‹å‡¦ç†ã‚’ã“ã“ã«
 				Colliders::sInstance.mColList.remove_if(
 					[&](std::unique_ptr<ICollider>& o) {
 						return o.get() == mData;
@@ -94,13 +94,13 @@ public:
 			}
 		}
 	}
-	//ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Collider(const Collider& o) {
 		if (this != &o) {
 			if (mData) {
 				SubtractCount(mData);
 				if (GetCount(mData) == 0) {
-					//‘SQÆÁ–ÅAíœ‚·‚éˆ—‚ğ‚±‚±‚É
+					//å…¨å‚ç…§æ¶ˆæ»…ã€å‰Šé™¤ã™ã‚‹å‡¦ç†ã‚’ã“ã“ã«
 					Colliders::sInstance.mColList.remove_if(
 						[&](std::unique_ptr<ICollider>& o) {
 							return o.get() == mData;
@@ -111,13 +111,13 @@ public:
 		mData = o.mData;
 		AddCount(mData);
 	}
-	//ƒRƒs[‘ã“ü‰‰Zq
+	//ã‚³ãƒ”ãƒ¼ä»£å…¥æ¼”ç®—å­
 	Collider& operator=(const Collider& o) {
 		if (this != &o) {
 			if (mData) {
 				SubtractCount(mData);
 				if (GetCount(mData) == 0) {
-					//‘SQÆÁ–ÅAíœ‚·‚éˆ—‚ğ‚±‚±‚É
+					//å…¨å‚ç…§æ¶ˆæ»…ã€å‰Šé™¤ã™ã‚‹å‡¦ç†ã‚’ã“ã“ã«
 					Colliders::sInstance.mColList.remove_if(
 						[&](std::unique_ptr<ICollider>& o) {
 							return o.get() == mData;
@@ -129,13 +129,13 @@ public:
 		}
 		return *this;
 	}
-	//ƒ€[ƒuƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ãƒ ãƒ¼ãƒ–ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Collider(Collider&& o) noexcept {
 		if (this != &o) {
 			if (mData) {
 				SubtractCount(mData);
 				if (GetCount(mData) == 0) {
-					//‘SQÆÁ–ÅAíœ‚·‚éˆ—‚ğ‚±‚±‚É
+					//å…¨å‚ç…§æ¶ˆæ»…ã€å‰Šé™¤ã™ã‚‹å‡¦ç†ã‚’ã“ã“ã«
 					Colliders::sInstance.mColList.remove_if(
 						[&](std::unique_ptr<ICollider>& o) {
 							return o.get() == mData;
@@ -146,13 +146,13 @@ public:
 			o.mData = nullptr;
 		}
 	}
-	//ƒ€[ƒu‘ã“ü‰‰Zq
+	//ãƒ ãƒ¼ãƒ–ä»£å…¥æ¼”ç®—å­
 	Collider& operator=(Collider&& o) noexcept {
 		if (this != &o) {
 			if (mData) {
 				SubtractCount(mData);
 				if (GetCount(mData) == 0) {
-					//‘SQÆÁ–ÅAíœ‚·‚éˆ—‚ğ‚±‚±‚É
+					//å…¨å‚ç…§æ¶ˆæ»…ã€å‰Šé™¤ã™ã‚‹å‡¦ç†ã‚’ã“ã“ã«
 					Colliders::sInstance.mColList.remove_if(
 						[&](std::unique_ptr<ICollider>& o) {
 							return o.get() == mData;

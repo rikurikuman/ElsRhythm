@@ -1,9 +1,14 @@
 #pragma once
+
+//å¤–éƒ¨ãƒ˜ãƒƒãƒ€
+#pragma warning(push, 0)
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <cassert>
 #include <wrl.h>
 #include <vector>
+#pragma warning(pop)
+
 #include "Texture.h"
 #include "RootSignature.h"
 #include "GraphicsPipeline.h"
@@ -34,56 +39,56 @@ private:
 	GraphicsPipeline mPipelineState;
 
 public:
-	//DirectX‰Šú‰»
+	//DirectXåˆæœŸåŒ–
 	static void Init();
 	static RDirectX* GetInstance();
 
-	//ƒfƒoƒCƒX‚ğæ“¾‚·‚é
+	//ãƒ‡ãƒã‚¤ã‚¹ã‚’å–å¾—ã™ã‚‹
 	static ID3D12Device* GetDevice();
 
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğæ“¾‚·‚é
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’å–å¾—ã™ã‚‹
 	static ID3D12GraphicsCommandList* GetCommandList();
 
-	//‚Ù‚ÚImGuiê—p‚İ‚½‚¢‚É‚È‚Á‚Ä‚émSrvHeap‚ğƒvƒŒƒ[ƒ“ƒg
+	//ã»ã¼ImGuiå°‚ç”¨ã¿ãŸã„ã«ãªã£ã¦ã‚‹mSrvHeapã‚’ãƒ—ãƒ¬ã‚¼ãƒ³ãƒˆ
 	static ID3D12DescriptorHeap* GetSRVHeap();
 
-	//Šî–{ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ğæ“¾‚·‚é
+	//åŸºæœ¬ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã‚’å–å¾—ã™ã‚‹
 	static RootSignature GetDefRootSignature();
 
-	//Šî–{ƒpƒCƒvƒ‰ƒCƒ“‚ğæ“¾‚·‚é
+	//åŸºæœ¬ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚’å–å¾—ã™ã‚‹
 	static GraphicsPipeline GetDefPipeline();
 
-	//‰½‚©—Ç‚¢Š´‚¶‚É•`‰æ‘Oˆ—‚ğ‚·‚é
+	//ä½•ã‹è‰¯ã„æ„Ÿã˜ã«æç”»å‰å‡¦ç†ã‚’ã™ã‚‹
 	static void PreDraw();
 
-	//‰½‚©—Ç‚¢Š´‚¶‚É•`‰æŒãˆ—‚ğ‚·‚é
+	//ä½•ã‹è‰¯ã„æ„Ÿã˜ã«æç”»å¾Œå‡¦ç†ã‚’ã™ã‚‹
 	static void PostDraw();
 
-	//ƒoƒbƒNƒoƒbƒtƒ@‚Ì”‚ğæ“¾‚·‚é
+	//ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®æ•°ã‚’å–å¾—ã™ã‚‹
 	static size_t GetBackBufferSize();
 
-	//Œ»İ‚ÌƒoƒbƒNƒoƒbƒtƒ@”Ô†‚ğæ“¾‚·‚é
+	//ç¾åœ¨ã®ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ç•ªå·ã‚’å–å¾—ã™ã‚‹
 	static UINT GetCurrentBackBufferIndex();
 
-	//Œ»İ‚ÌƒoƒbƒNƒoƒbƒtƒ@‚ÌƒŠƒ\[ƒX‚ğæ“¾‚·‚é
+	//ç¾åœ¨ã®ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®ãƒªã‚½ãƒ¼ã‚¹ã‚’å–å¾—ã™ã‚‹
 	static ID3D12Resource* GetCurrentBackBufferResource();
 
-	//Œ»İ‚ÌƒoƒbƒNƒoƒbƒtƒ@‚ÌRTVƒnƒ“ƒhƒ‹‚ğæ“¾‚·‚é
+	//ç¾åœ¨ã®ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®RTVãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—ã™ã‚‹
 	static D3D12_CPU_DESCRIPTOR_HANDLE GetCurrentBackBufferHandle();
 
-	//ƒoƒbƒNƒoƒbƒtƒ@‚ÌDSVƒnƒ“ƒhƒ‹‚ğæ“¾‚·‚é
+	//ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®DSVãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—ã™ã‚‹
 	static D3D12_CPU_DESCRIPTOR_HANDLE GetBackBufferDSVHandle();
 
-	//ƒŠƒ\[ƒXƒoƒŠƒA‚ğPRESENT->RENDER_TARGET‚É‚·‚éˆ—
+	//ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã‚’PRESENT->RENDER_TARGETã«ã™ã‚‹å‡¦ç†
 	static void OpenResorceBarrier(ID3D12Resource* mResource);
 
-	//ƒŠƒ\[ƒXƒoƒŠƒA‚ğRENDER_TARGET->PRESENT‚É‚·‚éˆ—
+	//ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã‚’RENDER_TARGET->PRESENTã«ã™ã‚‹å‡¦ç†
 	static void CloseResourceBarrier(ID3D12Resource* mResource);
 
-	//ƒoƒbƒNƒoƒbƒtƒ@‚ğƒNƒŠƒA‚·‚é
+	//ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¯ãƒªã‚¢ã™ã‚‹
 	static void ClearBackBuffer(Color color);
 
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğ•Â‚¶‚ÄÀs‚µAƒtƒŠƒbƒv‚µ‚ÄAƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğÄ‚ÑŠJ‚¯‚é
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’é–‰ã˜ã¦å®Ÿè¡Œã—ã€ãƒ•ãƒªãƒƒãƒ—ã—ã¦ã€ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’å†ã³é–‹ã‘ã‚‹
 	static void RunDraw();
 
 private:

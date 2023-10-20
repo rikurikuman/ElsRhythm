@@ -1,6 +1,6 @@
 #include "SRIndexBuffer.h"
 
-std::recursive_mutex SRIndexBuffer::mMutex;
+std::recursive_mutex SRIndexBuffer::sMutex;
 
 SRIndexBuffer::SRIndexBuffer(uint32_t* list, uint32_t size)
 {
@@ -15,7 +15,7 @@ SRIndexBuffer::SRIndexBuffer(std::vector<uint32_t> list)
 void SRIndexBuffer::Init(uint32_t* list, uint32_t size)
 {
 	std::lock_guard<std::recursive_mutex> lock(SRBufferAllocator::GetInstance()->sMutex);
-	std::lock_guard<std::recursive_mutex> lock2(mMutex);
+	std::lock_guard<std::recursive_mutex> lock2(sMutex);
 
 	if (mData != nullptr && mData->buff.GetRegionPtr() != nullptr) {
 		SRBufferAllocator::Free(mData->buff);
@@ -41,7 +41,7 @@ void SRIndexBuffer::Init(uint32_t* list, uint32_t size)
 void SRIndexBuffer::Init(std::vector<uint32_t> list)
 {
 	std::lock_guard<std::recursive_mutex> lock(SRBufferAllocator::GetInstance()->sMutex);
-	std::lock_guard<std::recursive_mutex> lock2(mMutex);
+	std::lock_guard<std::recursive_mutex> lock2(sMutex);
 
 	if (mData != nullptr && mData->buff.GetRegionPtr() != nullptr) {
 		SRBufferAllocator::Free(mData->buff);
@@ -67,20 +67,20 @@ void SRIndexBuffer::Init(std::vector<uint32_t> list)
 D3D12_INDEX_BUFFER_VIEW SRIndexBuffer::GetIndexView()
 {
 	std::lock_guard<std::recursive_mutex> lock(SRBufferAllocator::GetInstance()->sMutex);
-	std::lock_guard<std::recursive_mutex> lock2(mMutex);
+	std::lock_guard<std::recursive_mutex> lock2(sMutex);
 	if (mData == nullptr || mData->buff.GetRegionPtr() == nullptr) {
 		return D3D12_INDEX_BUFFER_VIEW();
 	}
 	D3D12_INDEX_BUFFER_VIEW view{};
 	view.BufferLocation = mData->buff.GetGPUVirtualAddress();
-	view.SizeInBytes = mData->dataSize; //頂点バッファのサイズ
+	view.SizeInBytes = mData->dataSize; //鬆らせ繝舌ャ繝輔ぃ縺ｮ繧ｵ繧､繧ｺ
 	view.Format = DXGI_FORMAT_R32_UINT;
 	return view;
 }
 
 uint32_t SRIndexBuffer::GetIndexCount()
 {
-	std::lock_guard<std::recursive_mutex> lock2(mMutex);
+	std::lock_guard<std::recursive_mutex> lock2(sMutex);
 	if (mData == nullptr) {
 		return 0;
 	}

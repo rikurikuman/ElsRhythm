@@ -1,10 +1,15 @@
 #pragma once
+
+//å¤–éƒ¨ãƒ˜ãƒƒãƒ€
+#pragma warning(push, 0)
 #include <string>
 #include <vector>
 #include <list>
 #include <stdexcept>
 #include <random>
 #include <chrono>
+#include <windows.h>
+#pragma warning(pop)
 
 namespace Util {
 	extern bool debugBool;
@@ -17,48 +22,48 @@ namespace Util {
     extern std::chrono::high_resolution_clock::time_point memTimePoint;
     extern double memElapsedTime;
 
-	//Degree‚©‚çRadian‚Ö•ÏŠ·‚·‚é
+	//Degreeã‹ã‚‰Radianã¸å¤‰æ›ã™ã‚‹
 	float AngleToRadian(float angle);
 
-	//Radian‚©‚çDegree‚Ö•ÏŠ·‚·‚é
+	//Radianã‹ã‚‰Degreeã¸å¤‰æ›ã™ã‚‹
 	float RadianToAngle(float radian);
 
     /*
-    printf‚İ‚½‚¢‚É
-    ƒtƒH[ƒ}ƒbƒgw’èq‚ğŠÜ‚Ş•¶š—ñ(X = %d‚İ‚½‚¢‚È‚Ì)‚Æ
-    ˆø”‚ğD‚«‚È‚¾‚¯“ü‚ê‚é‚Æ
-    ‚»‚ÌŒ‹‰Ê‚Ì•¶š—ñ‚ğ•Ô‚·
-    —á:
+    printfã¿ãŸã„ã«
+    ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆæŒ‡å®šå­ã‚’å«ã‚€æ–‡å­—åˆ—(X = %dã¿ãŸã„ãªã®)ã¨
+    å¼•æ•°ã‚’å¥½ããªã ã‘å…¥ã‚Œã‚‹ã¨
+    ãã®çµæœã®æ–‡å­—åˆ—ã‚’è¿”ã™
+    ä¾‹:
     StringFormat("X = %d, Y = %d", 100, 500); -> "X = 100, Y = 500"
 */
     template<typename ... Args>
     std::string StringFormat(const std::string& format, Args&& ... args) {
-        /* ƒtƒH[ƒ}ƒbƒgŒã‚Ì•¶š”‚ğZo */
+        /* ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆå¾Œã®æ–‡å­—æ•°ã‚’ç®—å‡º */
         int32_t str_len = std::snprintf(nullptr, 0, format.c_str(), std::forward<Args>(args) ...);
 
-        /* ƒtƒH[ƒ}ƒbƒg¸”s */
+        /* ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆå¤±æ•— */
         if (str_len < 0)
         {
             throw std::runtime_error("String Formatting Error");
         }
 
-        /* ƒoƒbƒtƒ@ƒTƒCƒY‚ğZo(•¶š—ñ’· + null•¶šƒTƒCƒY) */
+        /* ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºã‚’ç®—å‡º(æ–‡å­—åˆ—é•· + nullæ–‡å­—ã‚µã‚¤ã‚º) */
         size_t bufferSize = str_len + sizeof(char);
 
-        /* ƒoƒbƒtƒ@ƒTƒCƒY•ªƒƒ‚ƒŠŠm•Û */
+        /* ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºåˆ†ãƒ¡ãƒ¢ãƒªç¢ºä¿ */
         std::vector<char> buffer;
         buffer.resize(bufferSize);
 
-        /* •¶š—ñ‚ÌƒtƒH[ƒ}ƒbƒg */
+        /* æ–‡å­—åˆ—ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ */
         std::snprintf(&buffer[0], bufferSize, format.c_str(), args ...);
 
-        /* •¶š—ñ‚ğstd::stringŒ^‚É•ÏŠ·‚µ‚Äo—Í */
+        /* æ–‡å­—åˆ—ã‚’std::stringå‹ã«å¤‰æ›ã—ã¦å‡ºåŠ› */
         return std::string(&buffer[0], &buffer[0] + str_len);
     }
 
     /*
-        Java‚Å‚¢‚¤instanceof‚Æ‚Ù‚ÚˆêI
-        instanceof<int>(a)‚İ‚½‚¢‚È‘‚«•û‚Å‚Ç‚¤‚¼
+        Javaã§ã„ã†instanceofã¨ã»ã¼ä¸€ç·’ï¼
+        instanceof<int>(a)ã¿ãŸã„ãªæ›¸ãæ–¹ã§ã©ã†ã
     */
     template <typename check, typename NANIYATU>
     inline bool instanceof(const NANIYATU& a)
@@ -67,24 +72,24 @@ namespace Util {
     }
 
     /*
-        std::string‚Ésplit‚ª‚È‚¢‚Ì‚Å
-        ©‘O‚Åsplit‚Å‚«‚é‚â‚Â
+        std::stringã«splitãŒãªã„ã®ã§
+        è‡ªå‰ã§splitã§ãã‚‹ã‚„ã¤
     */
     std::vector<std::string> StringSplit(std::string s, std::string separator);
 
-    //w’è‚µ‚½int‚ªmin‚©‚çmax‚ÌŠÔ‚Éû‚Ü‚Á‚Ä‚¢‚ê‚Î‚»‚Ì‚Ü‚ÜA
-    //û‚Ü‚Á‚Ä‚¢‚È‚¯‚ê‚Îû‚ß‚Ä•Ô‚·
+    //æŒ‡å®šã—ãŸintãŒminã‹ã‚‰maxã®é–“ã«åã¾ã£ã¦ã„ã‚Œã°ãã®ã¾ã¾ã€
+    //åã¾ã£ã¦ã„ãªã‘ã‚Œã°åã‚ã¦è¿”ã™
     int32_t Clamp(int32_t i, int32_t min, int32_t max);
 
-    //w’è‚µ‚½float‚ªmin‚©‚çmax‚ÌŠÔ‚Éû‚Ü‚Á‚Ä‚¢‚ê‚Î‚»‚Ì‚Ü‚ÜA
-    //û‚Ü‚Á‚Ä‚¢‚È‚¯‚ê‚Îû‚ß‚Ä•Ô‚·
+    //æŒ‡å®šã—ãŸfloatãŒminã‹ã‚‰maxã®é–“ã«åã¾ã£ã¦ã„ã‚Œã°ãã®ã¾ã¾ã€
+    //åã¾ã£ã¦ã„ãªã‘ã‚Œã°åã‚ã¦è¿”ã™
     float Clamp(float f, float min, float max);
 
-    //w’è‚µ‚½double‚ªmin‚©‚çmax‚ÌŠÔ‚Éû‚Ü‚Á‚Ä‚¢‚ê‚Î‚»‚Ì‚Ü‚ÜA
-    //û‚Ü‚Á‚Ä‚¢‚È‚¯‚ê‚Îû‚ß‚Ä•Ô‚·
+    //æŒ‡å®šã—ãŸdoubleãŒminã‹ã‚‰maxã®é–“ã«åã¾ã£ã¦ã„ã‚Œã°ãã®ã¾ã¾ã€
+    //åã¾ã£ã¦ã„ãªã‘ã‚Œã°åã‚ã¦è¿”ã™
     double Clamp(double d, double min, double max);
 
-    //std::vector‚Ésearch‚ªŠÜ‚Ü‚ê‚Ä‚¢‚é‚©’²‚×‚é
+    //std::vectorã«searchãŒå«ã¾ã‚Œã¦ã„ã‚‹ã‹èª¿ã¹ã‚‹
     template <class T>
     bool Contains(std::vector<T> vector, T search) {
         for (auto itr = vector.begin(); itr != vector.end(); itr++) {
@@ -95,15 +100,15 @@ namespace Util {
         return false;
     }
 
-    //std::list‚Ésearch‚ªŠÜ‚Ü‚ê‚Ä‚¢‚é‚©’²‚×‚é
+    //std::listã«searchãŒå«ã¾ã‚Œã¦ã„ã‚‹ã‹èª¿ã¹ã‚‹
     template <class T>
     bool Contains(std::list<T> list, T search) {
         auto itr = std::find(list.begin(), list.end(), search);
         return itr != list.end();
     }
 
-    //std::vector‚Ésearch‚ª‚¢‚é‚È‚ç‚»‚ÌƒCƒ“ƒfƒbƒNƒX‚ğ“¾‚é
-    //‚È‚¢‚È‚ç-1
+    //std::vectorã«searchãŒã„ã‚‹ãªã‚‰ãã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å¾—ã‚‹
+    //ãªã„ãªã‚‰-1
     template <class T>
     int32_t IndexOf(std::vector<T> vector, T search) {
         auto itr = std::find(vector.begin(), vector.end(), search);
@@ -113,36 +118,42 @@ namespace Util {
         return static_cast<int32_t>(std::distance(vector.begin(), itr));
     }
 
-    //string‚ğwstring‚É•ÏŠ·‚·‚éiMultiByteToWideChar)
-    std::wstring ConvertStringToWString(std::string str, uint32_t codePage = 0);
+    //stringã‚’wstringã«å¤‰æ›ã™ã‚‹ï¼ˆMultiByteToWideChar)
+    std::wstring ConvertStringToWString(std::string str, uint32_t codePage = CP_UTF8);
 
-    //wstring‚ğstring‚É•ÏŠ·‚·‚éiWideCharToMultiByte)
+    //wstringã‚’stringã«å¤‰æ›ã™ã‚‹ï¼ˆWideCharToMultiByte)
     std::string ConvertWStringToString(std::wstring wstr);
 
-    //—”¶¬(ˆê—l•ª•z)
+    //ä¹±æ•°ç”Ÿæˆ(ä¸€æ§˜åˆ†å¸ƒ)
     int32_t GetRand(int32_t min, int32_t max);
 
-    //—”¶¬(ˆê—l•ª•z)
+    //ä¹±æ•°ç”Ÿæˆ(ä¸€æ§˜åˆ†å¸ƒ)
     float GetRand(float min, float max);
 
-    //—”¶¬(ˆê—l•ª•z)
+    //ä¹±æ•°ç”Ÿæˆ(ä¸€æ§˜åˆ†å¸ƒ)
     double GetRand(double min, double max);
 
     /// <summary>
-    /// a~b‚Ì”ÍˆÍ“à‚ÅA‚Ç‚ÌŠ„‡‚Ép‚ªˆÊ’u‚µ‚Ä‚¢‚é‚©‚ğ•Ô‚·
-    /// e.x. a=2,b=6,p=4 ‚È‚ç return 0.5f;
+    /// a~bã®ç¯„å›²å†…ã§ã€ã©ã®å‰²åˆã«pãŒä½ç½®ã—ã¦ã„ã‚‹ã‹ã‚’è¿”ã™
+    /// e.x. a=2,b=6,p=4 ãªã‚‰ return 0.5f;
     /// </summary>
-    /// <returns>Š„‡</returns>
+    /// <returns>å‰²åˆ</returns>
     float GetRatio(float a, float b, float p);
 
-    //ˆ—ŠÔŒv‘ªŠJn
+    //å‡¦ç†æ™‚é–“è¨ˆæ¸¬é–‹å§‹
     void CalcElapsedTimeStart();
-    //ˆ—ŠÔŒv‘ªo—Í
+    //å‡¦ç†æ™‚é–“è¨ˆæ¸¬å‡ºåŠ›
     void CalcElapsedTimeEnd(std::string name, bool consecutive = true);
 
-    //ƒfƒoƒbƒOo—Í(ƒfƒoƒbƒOƒrƒ‹ƒh‚Å‚Ì‚İˆ—)
+    //ãƒ‡ãƒãƒƒã‚°å‡ºåŠ›(ãƒ‡ãƒãƒƒã‚°ãƒ“ãƒ«ãƒ‰ã§ã®ã¿å‡¦ç†)
     void DebugLog(std::string log);
 
-    //ƒfƒoƒbƒOo—Í(debugBool‚ª—§‚Á‚Ä‚¢‚éˆ—)
+    //ãƒ‡ãƒãƒƒã‚°å‡ºåŠ›(ãƒ‡ãƒãƒƒã‚°ãƒ“ãƒ«ãƒ‰ã§ã®ã¿å‡¦ç†)
+    void DebugLog(std::wstring log);
+
+    //ãƒ‡ãƒãƒƒã‚°å‡ºåŠ›(debugBoolãŒç«‹ã£ã¦ã„ã‚‹æ™‚å‡¦ç†)
     void DebugLogC(std::string log);
+
+    //ãƒ‡ãƒãƒƒã‚°å‡ºåŠ›(debugBoolãŒç«‹ã£ã¦ã„ã‚‹æ™‚å‡¦ç†)
+    void DebugLogC(std::wstring log);
 }

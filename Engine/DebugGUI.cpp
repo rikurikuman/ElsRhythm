@@ -11,9 +11,11 @@
 #include <SoundScene.h>
 #include <SimpleSceneTransition.h>
 #include <Renderer.h>
+#include <EditorScene.h>
 
 void DebugGUI::Show()
 {
+	ImGui::ShowDemoWindow();
 	ImGui::SetNextWindowSize({ 400, 380 }, ImGuiCond_FirstUseEver);
 
 	ImGuiWindowFlags window_flags = 0;
@@ -21,7 +23,7 @@ void DebugGUI::Show()
 
 	ImGui::Text("SceneManager");
 	static int32_t sceneNum = 0;
-	const char* scenes[] = { "Title", "RhythmGameTest", "ResultTest", "MainTest", "ControllerTest", "SoundTest" };
+	const char* scenes[] = { "Title", "Game", "Result", "Editor", "MainTest", "ControllerTest", "SoundTest" };
 	ImGui::Combo("##SceneNumCombo", &sceneNum, scenes, IM_ARRAYSIZE(scenes));
 	ImGui::SameLine();
 	if (ImGui::Button("Go!!!")) {
@@ -38,12 +40,15 @@ void DebugGUI::Show()
 				SceneManager::Change<ResultScene, SimpleSceneTransition>();
 				break;
 			case 3:
-				SceneManager::Change<MainTestScene, SimpleSceneTransition>();
+				SceneManager::Change<EditorScene, SimpleSceneTransition>();
 				break;
 			case 4:
-				SceneManager::Change<ControllerScene, SimpleSceneTransition>();
+				SceneManager::Change<MainTestScene, SimpleSceneTransition>();
 				break;
 			case 5:
+				SceneManager::Change<ControllerScene, SimpleSceneTransition>();
+				break;
+			case 6:
 				SceneManager::Change<SoundScene, SimpleSceneTransition>();
 				break;
 			}

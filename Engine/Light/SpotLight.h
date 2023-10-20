@@ -22,8 +22,8 @@ public:
 	Vector3 mPos;
 	Vector3 mDirection;
 	Color mColor;
-	Vector3 mAtten; //‹——£Œ¸ŠŒW”
-	Vector2 mFactorAngle; //Œ¸ŠŠp“x
+	Vector3 mAtten; //è·é›¢æ¸›è¡°ä¿‚æ•°
+	Vector2 mFactorAngle; //æ¸›è¡°è§’åº¦
 	bool mIsActive = false;
 
 	void TransferBuffer(LightBuffer& buffer) {

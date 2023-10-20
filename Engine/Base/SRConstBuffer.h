@@ -1,4 +1,7 @@
 #pragma once
+
+//外部ヘッダ
+#pragma warning(push, 0)
 #include <d3d12.h>
 #include <cassert>
 #include <wrl.h>
@@ -6,6 +9,8 @@
 #include "Util.h"
 #include <chrono>
 #include <mutex>
+#pragma warning(pop)
+
 #include <SRBuffer.h>
 
 template <typename T>
@@ -67,7 +72,7 @@ public:
 		}
 	}
 	
-	//�R�s�[
+	//コピー
 	SRConstBuffer(const SRConstBuffer& o) {
 		mBuff = o.mBuff;
 		SRConstBuffer::AddCount(mBuff.GetRegionPtr());

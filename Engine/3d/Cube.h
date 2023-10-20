@@ -15,14 +15,14 @@ public:
 	Cube(TextureHandle texture, Vector2 size = {1, 1}, bool forceSize = false);
 
 	/// <summary>
-	/// w’è‚µ‚½–Ê‚ÌƒeƒNƒXƒ`ƒƒ‚ğƒZƒbƒg‚·‚é
+	/// æŒ‡å®šã—ãŸé¢ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	/// </summary>
-	/// <param name="texture">ƒeƒNƒXƒ`ƒƒƒnƒ“ƒhƒ‹</param>
-	/// <param name="direction">–Ê‚ÌŒü‚«</param>
+	/// <param name="texture">ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒ³ãƒ‰ãƒ«</param>
+	/// <param name="direction">é¢ã®å‘ã</param>
 	void SetTexture(TextureHandle texture, Direction direction);
 
 	/// <summary>
-	/// ‘S‚Ä‚Ì–Ê‚ÌƒeƒNƒXƒ`ƒƒ‚ğƒZƒbƒg‚·‚é
+	/// å…¨ã¦ã®é¢ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	/// </summary>
 	/// <param name="texture"></param>
 	void SetAllTexture(TextureHandle texture);
@@ -30,16 +30,16 @@ public:
 
 	void SetAllAlpha(float alpha);
 
-	//–Ê‚ÌTransform‚Æ‚©‚ğXV‚·‚é
+	//é¢ã®Transformã¨ã‹ã‚’æ›´æ–°ã™ã‚‹
 	void UpdateFaces();
 
-	//Šeƒf[ƒ^‚Ìƒoƒbƒtƒ@‚Ö‚Ì“]‘—
+	//å„ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã¸ã®è»¢é€
 	void TransferBuffer(ViewProjection viewprojection) override;
 
-	//•`‰æ—v‹‚ğRenderer‚Ö
+	//æç”»è¦æ±‚ã‚’Rendererã¸
 	void Draw() override;
 
-	//•`‰æ—p‚ÌƒRƒ}ƒ“ƒh‚ğ‚Ü‚Æ‚ß‚ÄƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÉÏ‚Ş
+	//æç”»ç”¨ã®ã‚³ãƒãƒ³ãƒ‰ã‚’ã¾ã¨ã‚ã¦ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã«ç©ã‚€
 	void DrawCommands() override;
 };
 

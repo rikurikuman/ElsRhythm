@@ -14,45 +14,59 @@ public:
 	static void ClearData();
 
 	/// <summary>
-	/// 2D��ʂɐ���`�悷��
+	/// 2D画面に線を描画する
 	/// </summary>
-	/// <param name="x1">�J�n�ʒu�̃X�N���[�����WX</param>
-	/// <param name="y1">�J�n�ʒu�̃X�N���[�����WY</param>
-	/// <param name="x2">�I���ʒu�̃X�N���[�����WX</param>
-	/// <param name="y2">�I���ʒu�̃X�N���[�����WY</param>
-	/// <param name="layer">�`��D��x</param>
-	/// <param name="color">�F</param>
-	/// <param name="thickness">���̑���</param>
+	/// <param name="x1">開始位置のスクリーン座標X</param>
+	/// <param name="y1">開始位置のスクリーン座標Y</param>
+	/// <param name="x2">終了位置のスクリーン座標X</param>
+	/// <param name="y2">終了位置のスクリーン座標Y</param>
+	/// <param name="layer">描画優先度</param>
+	/// <param name="color">色</param>
+	/// <param name="thickness">線の太さ</param>
 	static void DrawLine(int32_t x1, int32_t y1, int32_t x2, int32_t y2, float layer, Color color, float thickness = 1.0f);
 
 
 	/// <summary>
-	/// 2D��ʂɎl�p�`��`�悷��
+	/// 2D画面に四角形を描画する
 	/// </summary>
-	/// <param name="x1">����̃X�N���[�����WX</param>
-	/// <param name="y1">����̃X�N���[�����WY</param>
-	/// <param name="x2">�E���̃X�N���[�����WX</param>
-	/// <param name="y2">�E���̃X�N���[�����WY</param>
-	/// <param name="layer">�`��D��x</param>
-	/// <param name="color">�F</param>
-	/// <param name="fillFlag">������h��Ԃ���</param>
-	/// <param name="thickness">�h��Ԃ��Ȃ��ꍇ�̐��̑���</param>
+	/// <param name="x1">左上のスクリーン座標X</param>
+	/// <param name="y1">左上のスクリーン座標Y</param>
+	/// <param name="x2">右下のスクリーン座標X</param>
+	/// <param name="y2">右下のスクリーン座標Y</param>
+	/// <param name="layer">描画優先度</param>
+	/// <param name="color">色</param>
+	/// <param name="fillFlag">内側を塗りつぶすか</param>
+	/// <param name="thickness">塗りつぶさない場合の線の太さ</param>
 	static void DrawBox(int32_t x1, int32_t y1, int32_t x2, int32_t y2, float layer, Color color, bool fillFlag, float thickness = 1.0f);
 
 	/// <summary>
-	/// 2D��ʂɉ~��`�悷��
+	/// 2D画面に四角形を描画する
 	/// </summary>
-	/// <param name="x">���S�̃X�N���[�����WX</param>
-	/// <param name="y">���S�̃X�N���[�����WY</param>
-	/// <param name="layer">�`��D��x</param>
-	/// <param name="color">�F</param>
-	/// <param name="fillFlag">������h��Ԃ���</param>
-	/// <param name="thickness">�h��Ԃ��Ȃ��ꍇ�̐��̑���</param>
+	/// <param name="x1">左上のスクリーン座標X</param>
+	/// <param name="y1">左上のスクリーン座標Y</param>
+	/// <param name="x2">右下のスクリーン座標X</param>
+	/// <param name="y2">右下のスクリーン座標Y</param>
+	/// <param name="layer">描画優先度</param>
+	/// <param name="color">色</param>
+	/// <param name="fillFlag">内側を塗りつぶすか</param>
+	/// <param name="thickness">塗りつぶさない場合の線の太さ</param>
+	static void DrawBox(float x1, float y1, float x2, float y2, float layer, Color color, bool fillFlag, float thickness = 1.0f);
+
+
+	/// <summary>
+	/// 2D画面に円を描画する
+	/// </summary>
+	/// <param name="x">中心のスクリーン座標X</param>
+	/// <param name="y">中心のスクリーン座標Y</param>
+	/// <param name="layer">描画優先度</param>
+	/// <param name="color">色</param>
+	/// <param name="fillFlag">内側を塗りつぶすか</param>
+	/// <param name="thickness">塗りつぶさない場合の線の太さ</param>
 	static void DrawCircle(int32_t x, int32_t y, int32_t r, float layer, Color color, bool fillFlag, float thickness = 1.0f);
 	
 	static void DrawString(float x, float y, float layer, std::string text, Color color = Color(1.0f, 1.0f, 1.0f, 1.0f), std::string fontTypeFace = "", uint32_t fontSize = 20, Vector2 anchor = {0, 0});
 
-	//��񂵕`��ɂ���Ē񋟂������̂�S���`�悷��
+	//後回し描画によって提供されるものを全部描画する
 	static void DrawAll();
 
 private:

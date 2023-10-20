@@ -36,10 +36,10 @@ void RWindow::InitInternal()
 		CW_USEDEFAULT,
 		wrc.right - wrc.left,
 		wrc.bottom - wrc.top,
-		nullptr, //eƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
-		nullptr, //ƒƒjƒ…[ƒnƒ“ƒhƒ‹
-		mWndClassEx.hInstance, //ŒÄ‚Ño‚µƒAƒvƒŠƒP[ƒVƒ‡ƒ“ƒnƒ“ƒhƒ‹
-		nullptr); //ƒIƒvƒVƒ‡ƒ“
+		nullptr, //è¦ªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
+		nullptr, //ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒãƒ³ãƒ‰ãƒ«
+		mWndClassEx.hInstance, //å‘¼ã³å‡ºã—ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒãƒ³ãƒ‰ãƒ«
+		nullptr); //ã‚ªãƒ—ã‚·ãƒ§ãƒ³
 
 	ShowWindow(mWndHandle, SW_SHOW);
 }
@@ -48,7 +48,7 @@ void RWindow::ProcessMessage()
 {
 	RWindow* instance = GetInstance();
 	if (PeekMessage(&instance->mMsg, nullptr, 0, 0, PM_REMOVE)) {
-		TranslateMessage(&instance->mMsg); //ƒL[“ü—ÍƒƒbƒZ[ƒWˆ—
+		TranslateMessage(&instance->mMsg); //ã‚­ãƒ¼å…¥åŠ›ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡¦ç†
 		DispatchMessage(&instance->mMsg);
 	}
 
@@ -60,13 +60,13 @@ void RWindow::ProcessMessage()
 
 		WINDOWINFO windowInfo{};
 
-		//ƒEƒBƒ“ƒhƒE‚ÌˆÊ’u‚ğæ“¾
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½ç½®ã‚’å–å¾—
 		windowInfo.cbSize = sizeof(WINDOWINFO);
 		GetWindowInfo(RWindow::GetWindowHandle(), &windowInfo);
 
-		//ƒ}ƒEƒX‚ÌˆÚ“®æ‚Ìâ‘ÎÀ•Wiƒ‚ƒjƒ^[¶ã‚©‚ç‚ÌÀ•Wj
+		//ãƒã‚¦ã‚¹ã®ç§»å‹•å…ˆã®çµ¶å¯¾åº§æ¨™ï¼ˆãƒ¢ãƒ‹ã‚¿ãƒ¼å·¦ä¸Šã‹ã‚‰ã®åº§æ¨™ï¼‰
 		xPos_absolute = RWindow::GetWidth() / 2 + windowInfo.rcWindow.left;
-		yPos_absolute = RWindow::GetHeight() / 2 + windowInfo.rcWindow.top + 35; //ƒEƒBƒ“ƒhƒE‚Ìƒ^ƒCƒgƒ‹ƒo[‚Ì•ªi35pxj‚ğƒvƒ‰ƒX
+		yPos_absolute = RWindow::GetHeight() / 2 + windowInfo.rcWindow.top + 35; //ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚¿ã‚¤ãƒˆãƒ«ãƒãƒ¼ã®åˆ†ï¼ˆ35pxï¼‰ã‚’ãƒ—ãƒ©ã‚¹
 
 		SetCursorPos(xPos_absolute, yPos_absolute);
 
@@ -86,13 +86,13 @@ Vector2 RWindow::GetMousePos()
 
 	WINDOWINFO windowInfo{};
 
-	//ƒEƒBƒ“ƒhƒE‚ÌˆÊ’u‚ğæ“¾
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½ç½®ã‚’å–å¾—
 	windowInfo.cbSize = sizeof(WINDOWINFO);
 	GetWindowInfo(RWindow::GetWindowHandle(), &windowInfo);
 
 	ScreenToClient(RWindow::GetWindowHandle(), &point);
 
-	//ƒ}ƒEƒX‚ÌˆÚ“®æ‚Ìâ‘ÎÀ•Wiƒ‚ƒjƒ^[¶ã‚©‚ç‚ÌÀ•Wj‚É‚µ‚Ä•Ô‚·
+	//ãƒã‚¦ã‚¹ã®ç§»å‹•å…ˆã®çµ¶å¯¾åº§æ¨™ï¼ˆãƒ¢ãƒ‹ã‚¿ãƒ¼å·¦ä¸Šã‹ã‚‰ã®åº§æ¨™ï¼‰ã«ã—ã¦è¿”ã™
 	return Vector2((float)point.x, (float)point.y);
 }
 
@@ -102,13 +102,13 @@ void RWindow::SetMousePos(int32_t posX, int32_t posY)
 
 	WINDOWINFO windowInfo{};
 
-	//ƒEƒBƒ“ƒhƒE‚ÌˆÊ’u‚ğæ“¾
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½ç½®ã‚’å–å¾—
 	windowInfo.cbSize = sizeof(WINDOWINFO);
 	GetWindowInfo(RWindow::GetWindowHandle(), &windowInfo);
 
-	//ƒ}ƒEƒX‚ÌˆÚ“®æ‚Ìâ‘ÎÀ•Wiƒ‚ƒjƒ^[¶ã‚©‚ç‚ÌÀ•Wj
+	//ãƒã‚¦ã‚¹ã®ç§»å‹•å…ˆã®çµ¶å¯¾åº§æ¨™ï¼ˆãƒ¢ãƒ‹ã‚¿ãƒ¼å·¦ä¸Šã‹ã‚‰ã®åº§æ¨™ï¼‰
 	xPos_absolute = posX + windowInfo.rcWindow.left;
-	yPos_absolute = posY + windowInfo.rcWindow.top + 35; //ƒEƒBƒ“ƒhƒE‚Ìƒ^ƒCƒgƒ‹ƒo[‚Ì•ªi35pxj‚ğƒvƒ‰ƒX
+	yPos_absolute = posY + windowInfo.rcWindow.top + 35; //ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚¿ã‚¤ãƒˆãƒ«ãƒãƒ¼ã®åˆ†ï¼ˆ35pxï¼‰ã‚’ãƒ—ãƒ©ã‚¹
 
 	SetCursorPos(xPos_absolute, yPos_absolute);
 }

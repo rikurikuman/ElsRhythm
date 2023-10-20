@@ -17,7 +17,7 @@ public:
 
 	Matrix4 matrix;
 
-	//pos(0, 0, 0), rot(0, 0, 0), scale(1, 1, 1)‚ÌTransform‚ğ¶¬
+	//pos(0, 0, 0), rot(0, 0, 0), scale(1, 1, 1)ã®Transformã‚’ç”Ÿæˆ
 	Transform() {
 		UpdateMatrix();
 	}
@@ -26,13 +26,13 @@ public:
 		UpdateMatrix();
 	}
 
-	//ƒƒ“ƒo•Ï”‚Ì3î•ñ‚Åƒ[ƒ‹ƒhÀ•W•ÏŠ·s—ñ‚ğ¶¬‚·‚é
+	//ãƒ¡ãƒ³ãƒå¤‰æ•°ã®3æƒ…å ±ã§ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™å¤‰æ›è¡Œåˆ—ã‚’ç”Ÿæˆã™ã‚‹
 	void UpdateMatrix();
 
 	/// <summary>
-	/// ’è”ƒoƒbƒtƒ@‚Ö“]‘—
+	/// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸è»¢é€
 	/// </summary>
-	/// <param name="target">‘ÎÛ‚Ìƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^</param>
+	/// <param name="target">å¯¾è±¡ã®ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿</param>
 	void Transfer(TransformBuffer* target);
 };
 
