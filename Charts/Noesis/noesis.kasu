@@ -6,7 +6,79 @@
         "amount": 4,
         "length": 4
     },
-    "bg": "",
+    "bg": "Simple",
+	"scrollchange": [
+		{"beat": {"measure": 64, "beat": 0, "lpb":1}, "scroll": -0.3},
+		{"beat": {"measure": 64, "beat": 3, "lpb":4}, "scroll": 1.0}
+	],
+    "meterchange": [
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 1,
+                "measure": 30
+            },
+            "meter": {
+                "amount": 7,
+                "length": 8
+            }
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 1,
+                "measure": 31
+            },
+            "meter": {
+                "amount": 9,
+                "length": 8
+            }
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 1,
+                "measure": 32
+            },
+            "meter": {
+                "amount": 7,
+                "length": 8
+            }
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 1,
+                "measure": 33
+            },
+            "meter": {
+                "amount": 4,
+                "length": 4
+            }
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 1,
+                "measure": 41
+            },
+            "meter": {
+                "amount": 9,
+                "length": 8
+            }
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 1,
+                "measure": 42
+            },
+            "meter": {
+                "amount": 4,
+                "length": 4
+            }
+        }
+    ],
     "notes": [
         {
             "beat": {
@@ -1215,18 +1287,18 @@
         },
         {
             "beat": {
-                "beat": 7,
+                "beat": 0,
                 "lpb": 8,
-                "measure": 30
+                "measure": 31
             },
             "lane": 1,
             "type": 0
         },
         {
             "beat": {
-                "beat": 7,
+                "beat": 0,
                 "lpb": 8,
-                "measure": 30
+                "measure": 31
             },
             "lane": 2,
             "type": 0
@@ -1397,9 +1469,9 @@
             "controlpoints": [
                 {
                     "beat": {
-                        "beat": 14,
+                        "beat": 0,
                         "lpb": 16,
-                        "measure": 32
+                        "measure": 33
                     },
                     "pos": {
                         "x": -6.0,
@@ -1408,9 +1480,9 @@
                 },
                 {
                     "beat": {
-                        "beat": 14,
+                        "beat": 0,
                         "lpb": 16,
-                        "measure": 32
+                        "measure": 33
                     },
                     "pos": {
                         "x": 6.0,
@@ -1419,9 +1491,9 @@
                 }
             ],
             "endbeat": {
-                "beat": 15,
+                "beat": 1,
                 "lpb": 16,
-                "measure": 32
+                "measure": 33
             },
             "endpos": {
                 "x": 6.0,
@@ -1435,20 +1507,11 @@
         },
         {
             "beat": {
-                "beat": 2,
-                "lpb": 16,
-                "measure": 33
-            },
-            "lane": 0,
-            "type": 0
-        },
-        {
-            "beat": {
                 "beat": 4,
                 "lpb": 16,
                 "measure": 33
             },
-            "lane": 1,
+            "lane": 0,
             "type": 0
         },
         {
@@ -1457,7 +1520,7 @@
                 "lpb": 16,
                 "measure": 33
             },
-            "lane": 0,
+            "lane": 1,
             "type": 0
         },
         {
@@ -1466,7 +1529,7 @@
                 "lpb": 16,
                 "measure": 33
             },
-            "lane": 3,
+            "lane": 0,
             "type": 0
         },
         {
@@ -1475,7 +1538,7 @@
                 "lpb": 16,
                 "measure": 33
             },
-            "lane": 2,
+            "lane": 3,
             "type": 0
         },
         {
@@ -1484,7 +1547,7 @@
                 "lpb": 16,
                 "measure": 33
             },
-            "lane": 3,
+            "lane": 2,
             "type": 0
         },
         {
@@ -1493,7 +1556,7 @@
                 "lpb": 16,
                 "measure": 33
             },
-            "lane": 0,
+            "lane": 3,
             "type": 0
         },
         {
@@ -1502,7 +1565,7 @@
                 "lpb": 16,
                 "measure": 34
             },
-            "lane": 1,
+            "lane": 0,
             "type": 0
         },
         {
@@ -1511,7 +1574,7 @@
                 "lpb": 16,
                 "measure": 34
             },
-            "lane": 0,
+            "lane": 1,
             "type": 0
         },
         {
@@ -1520,7 +1583,7 @@
                 "lpb": 16,
                 "measure": 34
             },
-            "lane": 2,
+            "lane": 0,
             "type": 0
         },
         {
@@ -1529,7 +1592,7 @@
                 "lpb": 16,
                 "measure": 34
             },
-            "lane": 1,
+            "lane": 2,
             "type": 0
         },
         {
@@ -1538,10 +1601,19 @@
                 "lpb": 16,
                 "measure": 34
             },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 20,
+                "lpb": 32,
+                "measure": 34
+            },
             "controlpoints": [
                 {
                     "beat": {
-                        "beat": 17,
+                        "beat": 21,
                         "lpb": 32,
                         "measure": 34
                     },
@@ -1552,7 +1624,7 @@
                 },
                 {
                     "beat": {
-                        "beat": 18,
+                        "beat": 22,
                         "lpb": 32,
                         "measure": 34
                     },
@@ -1563,7 +1635,7 @@
                 },
                 {
                     "beat": {
-                        "beat": 19,
+                        "beat": 23,
                         "lpb": 32,
                         "measure": 34
                     },
@@ -1574,7 +1646,7 @@
                 },
                 {
                     "beat": {
-                        "beat": 20,
+                        "beat": 24,
                         "lpb": 32,
                         "measure": 34
                     },
@@ -1585,7 +1657,7 @@
                 },
                 {
                     "beat": {
-                        "beat": 21,
+                        "beat": 25,
                         "lpb": 32,
                         "measure": 34
                     },
@@ -1596,7 +1668,7 @@
                 },
                 {
                     "beat": {
-                        "beat": 22,
+                        "beat": 26,
                         "lpb": 32,
                         "measure": 34
                     },
@@ -1607,7 +1679,7 @@
                 },
                 {
                     "beat": {
-                        "beat": 23,
+                        "beat": 27,
                         "lpb": 32,
                         "measure": 34
                     },
@@ -1618,8 +1690,8 @@
                 }
             ],
             "endbeat": {
-                "beat": 12,
-                "lpb": 16,
+                "beat": 28,
+                "lpb": 32,
                 "measure": 34
             },
             "endpos": {
@@ -1634,20 +1706,11 @@
         },
         {
             "beat": {
-                "beat": 2,
-                "lpb": 16,
-                "measure": 35
-            },
-            "lane": 3,
-            "type": 0
-        },
-        {
-            "beat": {
                 "beat": 4,
                 "lpb": 16,
                 "measure": 35
             },
-            "lane": 2,
+            "lane": 3,
             "type": 0
         },
         {
@@ -1656,7 +1719,7 @@
                 "lpb": 16,
                 "measure": 35
             },
-            "lane": 3,
+            "lane": 2,
             "type": 0
         },
         {
@@ -1665,7 +1728,7 @@
                 "lpb": 16,
                 "measure": 35
             },
-            "lane": 0,
+            "lane": 3,
             "type": 0
         },
         {
@@ -1674,7 +1737,7 @@
                 "lpb": 16,
                 "measure": 35
             },
-            "lane": 1,
+            "lane": 0,
             "type": 0
         },
         {
@@ -1683,7 +1746,7 @@
                 "lpb": 16,
                 "measure": 35
             },
-            "lane": 0,
+            "lane": 1,
             "type": 0
         },
         {
@@ -1692,7 +1755,7 @@
                 "lpb": 16,
                 "measure": 35
             },
-            "lane": 3,
+            "lane": 0,
             "type": 0
         },
         {
@@ -1701,7 +1764,7 @@
                 "lpb": 16,
                 "measure": 36
             },
-            "lane": 2,
+            "lane": 3,
             "type": 0
         },
         {
@@ -1710,7 +1773,7 @@
                 "lpb": 16,
                 "measure": 36
             },
-            "lane": 3,
+            "lane": 2,
             "type": 0
         },
         {
@@ -1719,7 +1782,7 @@
                 "lpb": 16,
                 "measure": 36
             },
-            "lane": 1,
+            "lane": 3,
             "type": 0
         },
         {
@@ -1728,7 +1791,7 @@
                 "lpb": 16,
                 "measure": 36
             },
-            "lane": 2,
+            "lane": 1,
             "type": 0
         },
         {
@@ -1737,10 +1800,19 @@
                 "lpb": 16,
                 "measure": 36
             },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 20,
+                "lpb": 32,
+                "measure": 36
+            },
             "controlpoints": [
                 {
                     "beat": {
-                        "beat": 17,
+                        "beat": 21,
                         "lpb": 32,
                         "measure": 36
                     },
@@ -1751,7 +1823,7 @@
                 },
                 {
                     "beat": {
-                        "beat": 18,
+                        "beat": 22,
                         "lpb": 32,
                         "measure": 36
                     },
@@ -1762,7 +1834,7 @@
                 },
                 {
                     "beat": {
-                        "beat": 19,
+                        "beat": 23,
                         "lpb": 32,
                         "measure": 36
                     },
@@ -1773,7 +1845,7 @@
                 },
                 {
                     "beat": {
-                        "beat": 20,
+                        "beat": 24,
                         "lpb": 32,
                         "measure": 36
                     },
@@ -1784,7 +1856,7 @@
                 },
                 {
                     "beat": {
-                        "beat": 21,
+                        "beat": 25,
                         "lpb": 32,
                         "measure": 36
                     },
@@ -1795,8 +1867,8 @@
                 }
             ],
             "endbeat": {
-                "beat": 12,
-                "lpb": 16,
+                "beat": 28,
+                "lpb": 32,
                 "measure": 36
             },
             "endpos": {
@@ -1811,20 +1883,11 @@
         },
         {
             "beat": {
-                "beat": 2,
-                "lpb": 16,
-                "measure": 37
-            },
-            "lane": 0,
-            "type": 0
-        },
-        {
-            "beat": {
                 "beat": 4,
                 "lpb": 16,
                 "measure": 37
             },
-            "lane": 3,
+            "lane": 0,
             "type": 0
         },
         {
@@ -1833,7 +1896,7 @@
                 "lpb": 16,
                 "measure": 37
             },
-            "lane": 1,
+            "lane": 3,
             "type": 0
         },
         {
@@ -1842,7 +1905,7 @@
                 "lpb": 16,
                 "measure": 37
             },
-            "lane": 3,
+            "lane": 1,
             "type": 0
         },
         {
@@ -1851,7 +1914,7 @@
                 "lpb": 16,
                 "measure": 37
             },
-            "lane": 0,
+            "lane": 3,
             "type": 0
         },
         {
@@ -1860,7 +1923,7 @@
                 "lpb": 16,
                 "measure": 37
             },
-            "lane": 2,
+            "lane": 0,
             "type": 0
         },
         {
@@ -1869,7 +1932,7 @@
                 "lpb": 16,
                 "measure": 37
             },
-            "lane": 0,
+            "lane": 2,
             "type": 0
         },
         {
@@ -1878,7 +1941,7 @@
                 "lpb": 16,
                 "measure": 38
             },
-            "lane": 3,
+            "lane": 0,
             "type": 0
         },
         {
@@ -1887,7 +1950,7 @@
                 "lpb": 16,
                 "measure": 38
             },
-            "lane": 1,
+            "lane": 3,
             "type": 0
         },
         {
@@ -1896,7 +1959,7 @@
                 "lpb": 16,
                 "measure": 38
             },
-            "lane": 3,
+            "lane": 1,
             "type": 0
         },
         {
@@ -1905,7 +1968,7 @@
                 "lpb": 16,
                 "measure": 38
             },
-            "lane": 0,
+            "lane": 3,
             "type": 0
         },
         {
@@ -1914,7 +1977,7 @@
                 "lpb": 16,
                 "measure": 38
             },
-            "lane": 2,
+            "lane": 0,
             "type": 0
         },
         {
@@ -1923,7 +1986,7 @@
                 "lpb": 16,
                 "measure": 38
             },
-            "lane": 1,
+            "lane": 2,
             "type": 0
         },
         {
@@ -1932,7 +1995,7 @@
                 "lpb": 16,
                 "measure": 38
             },
-            "lane": 2,
+            "lane": 1,
             "type": 0
         },
         {
@@ -1940,6 +2003,15 @@
                 "beat": 14,
                 "lpb": 16,
                 "measure": 38
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 39
             },
             "lane": 1,
             "type": 0
@@ -2081,16 +2153,16 @@
         },
         {
             "beat": {
-                "beat": 14,
+                "beat": 0,
                 "lpb": 16,
-                "measure": 40
+                "measure": 41
             },
             "lane": 3,
             "type": 0
         },
         {
             "beat": {
-                "beat": 6,
+                "beat": 7,
                 "lpb": 16,
                 "measure": 41
             },
@@ -3179,6 +3251,3026 @@
             },
             "lane": 0,
             "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 41
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 8,
+                "measure": 53
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 53
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 54
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 8,
+                "measure": 54
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 8,
+                "measure": 54
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 54
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 11,
+                "lpb": 16,
+                "measure": 54
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 54
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 8,
+                "measure": 54
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 55
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 8,
+                "measure": 55
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 55
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 56
+            },
+            "endbeat": {
+                "beat": 2,
+                "lpb": 8,
+                "measure": 56
+            },
+            "endpos": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "pos": {
+                "x": 8.0,
+                "y": 1.0
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 8,
+                "measure": 56
+            },
+            "endbeat": {
+                "beat": 4,
+                "lpb": 8,
+                "measure": 56
+            },
+            "endpos": {
+                "x": -2.0,
+                "y": 1.0
+            },
+            "pos": {
+                "x": 6.0,
+                "y": 1.0
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 8,
+                "measure": 56
+            },
+            "endbeat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 56
+            },
+            "endpos": {
+                "x": -4.0,
+                "y": 1.0
+            },
+            "pos": {
+                "x": 4.0,
+                "y": 1.0
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 56
+            },
+            "endbeat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 57
+            },
+            "endpos": {
+                "x": -6.0,
+                "y": 1.0
+            },
+            "pos": {
+                "x": 2.0,
+                "y": 1.0
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 57
+            },
+            "controlpoints": [
+                {
+                    "beat": {
+                        "beat": 1,
+                        "lpb": 16,
+                        "measure": 57
+                    },
+                    "pos": {
+                        "x": 0.25,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 16,
+                        "measure": 57
+                    },
+                    "pos": {
+                        "x": -0.25,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 3,
+                        "lpb": 16,
+                        "measure": 57
+                    },
+                    "pos": {
+                        "x": 0.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 4,
+                        "lpb": 16,
+                        "measure": 57
+                    },
+                    "pos": {
+                        "x": -0.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 5,
+                        "lpb": 16,
+                        "measure": 57
+                    },
+                    "pos": {
+                        "x": 0.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 16,
+                        "measure": 57
+                    },
+                    "pos": {
+                        "x": -0.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 7,
+                        "lpb": 16,
+                        "measure": 57
+                    },
+                    "pos": {
+                        "x": 1.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 8,
+                        "lpb": 16,
+                        "measure": 57
+                    },
+                    "pos": {
+                        "x": -1.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 9,
+                        "lpb": 16,
+                        "measure": 57
+                    },
+                    "pos": {
+                        "x": 1.25,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 10,
+                        "lpb": 16,
+                        "measure": 57
+                    },
+                    "pos": {
+                        "x": -1.25,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 11,
+                        "lpb": 16,
+                        "measure": 57
+                    },
+                    "pos": {
+                        "x": 1.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 12,
+                        "lpb": 16,
+                        "measure": 57
+                    },
+                    "pos": {
+                        "x": -1.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 13,
+                        "lpb": 16,
+                        "measure": 57
+                    },
+                    "pos": {
+                        "x": 1.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 14,
+                        "lpb": 16,
+                        "measure": 57
+                    },
+                    "pos": {
+                        "x": -1.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 15,
+                        "lpb": 16,
+                        "measure": 57
+                    },
+                    "pos": {
+                        "x": 2.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 0,
+                        "lpb": 16,
+                        "measure": 58
+                    },
+                    "pos": {
+                        "x": -2.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 1,
+                        "lpb": 16,
+                        "measure": 58
+                    },
+                    "pos": {
+                        "x": 2.25,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 16,
+                        "measure": 58
+                    },
+                    "pos": {
+                        "x": -2.25,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 3,
+                        "lpb": 16,
+                        "measure": 58
+                    },
+                    "pos": {
+                        "x": 2.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 4,
+                        "lpb": 16,
+                        "measure": 58
+                    },
+                    "pos": {
+                        "x": -2.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 5,
+                        "lpb": 16,
+                        "measure": 58
+                    },
+                    "pos": {
+                        "x": 2.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 16,
+                        "measure": 58
+                    },
+                    "pos": {
+                        "x": -2.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 7,
+                        "lpb": 16,
+                        "measure": 58
+                    },
+                    "pos": {
+                        "x": 3.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 8,
+                        "lpb": 16,
+                        "measure": 58
+                    },
+                    "pos": {
+                        "x": -3.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 9,
+                        "lpb": 16,
+                        "measure": 58
+                    },
+                    "pos": {
+                        "x": 3.25,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 10,
+                        "lpb": 16,
+                        "measure": 58
+                    },
+                    "pos": {
+                        "x": -3.25,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 11,
+                        "lpb": 16,
+                        "measure": 58
+                    },
+                    "pos": {
+                        "x": 3.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 12,
+                        "lpb": 16,
+                        "measure": 58
+                    },
+                    "pos": {
+                        "x": -3.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 13,
+                        "lpb": 16,
+                        "measure": 58
+                    },
+                    "pos": {
+                        "x": 3.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 14,
+                        "lpb": 16,
+                        "measure": 58
+                    },
+                    "pos": {
+                        "x": -3.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 15,
+                        "lpb": 16,
+                        "measure": 58
+                    },
+                    "pos": {
+                        "x": 4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 16,
+                        "lpb": 16,
+                        "measure": 58
+                    },
+                    "pos": {
+                        "x": -4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 1,
+                        "lpb": 16,
+                        "measure": 59
+                    },
+                    "pos": {
+                        "x": 4.25,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 16,
+                        "measure": 59
+                    },
+                    "pos": {
+                        "x": -4.25,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 3,
+                        "lpb": 16,
+                        "measure": 59
+                    },
+                    "pos": {
+                        "x": 4.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 4,
+                        "lpb": 16,
+                        "measure": 59
+                    },
+                    "pos": {
+                        "x": -4.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 5,
+                        "lpb": 16,
+                        "measure": 59
+                    },
+                    "pos": {
+                        "x": 4.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 16,
+                        "measure": 59
+                    },
+                    "pos": {
+                        "x": -4.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 7,
+                        "lpb": 16,
+                        "measure": 59
+                    },
+                    "pos": {
+                        "x": 5.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 8,
+                        "lpb": 16,
+                        "measure": 59
+                    },
+                    "pos": {
+                        "x": -5.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 9,
+                        "lpb": 16,
+                        "measure": 59
+                    },
+                    "pos": {
+                        "x": 5.25,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 10,
+                        "lpb": 16,
+                        "measure": 59
+                    },
+                    "pos": {
+                        "x": -5.25,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 11,
+                        "lpb": 16,
+                        "measure": 59
+                    },
+                    "pos": {
+                        "x": 5.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 12,
+                        "lpb": 16,
+                        "measure": 59
+                    },
+                    "pos": {
+                        "x": -5.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 13,
+                        "lpb": 16,
+                        "measure": 59
+                    },
+                    "pos": {
+                        "x": 5.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 14,
+                        "lpb": 16,
+                        "measure": 59
+                    },
+                    "pos": {
+                        "x": -5.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 15,
+                        "lpb": 16,
+                        "measure": 59
+                    },
+                    "pos": {
+                        "x": 6.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 0,
+                        "lpb": 16,
+                        "measure": 60
+                    },
+                    "pos": {
+                        "x": -6.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 1,
+                        "lpb": 16,
+                        "measure": 60
+                    },
+                    "pos": {
+                        "x": 5.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 16,
+                        "measure": 60
+                    },
+                    "pos": {
+                        "x": -4.25,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 3,
+                        "lpb": 16,
+                        "measure": 60
+                    },
+                    "pos": {
+                        "x": 3.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 4,
+                        "lpb": 16,
+                        "measure": 60
+                    },
+                    "pos": {
+                        "x": -2.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 5,
+                        "lpb": 16,
+                        "measure": 60
+                    },
+                    "pos": {
+                        "x": 1.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 16,
+                        "measure": 60
+                    },
+                    "pos": {
+                        "x": -1.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 7,
+                        "lpb": 16,
+                        "measure": 60
+                    },
+                    "pos": {
+                        "x": 0.75,
+                        "y": 1.0
+                    }
+                }
+            ],
+            "endbeat": {
+                "beat": 4,
+                "lpb": 8,
+                "measure": 60
+            },
+            "endpos": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "pos": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 4,
+                "measure": 61
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 4,
+                "measure": 61
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 4,
+                "measure": 61
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 4,
+                "measure": 61
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 62
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 8,
+                "measure": 62
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 8,
+                "measure": 62
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 8,
+                "measure": 62
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 8,
+                "measure": 62
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 8,
+                "measure": 62
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 62
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 8,
+                "measure": 62
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 63
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 16,
+                "measure": 63
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 63
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 63
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 63
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 16,
+                "measure": 63
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 63
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 16,
+                "measure": 63
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 63
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 9,
+                "lpb": 16,
+                "measure": 63
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 63
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 11,
+                "lpb": 16,
+                "measure": 63
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 63
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 13,
+                "lpb": 16,
+                "measure": 63
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 63
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 15,
+                "lpb": 16,
+                "measure": 63
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 65
+            },
+            "controlpoints": [
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 65
+                    },
+                    "pos": {
+                        "x": 0.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 65
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 65
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 65
+                    },
+                    "pos": {
+                        "x": 1.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 66
+                    },
+                    "pos": {
+                        "x": 1.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 66
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 66
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 66
+                    },
+                    "pos": {
+                        "x": 1.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 67
+                    },
+                    "pos": {
+                        "x": 1.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 67
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 67
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 67
+                    },
+                    "pos": {
+                        "x": 1.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 68
+                    },
+                    "pos": {
+                        "x": 1.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 68
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 68
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 68
+                    },
+                    "pos": {
+                        "x": 1.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 8,
+                        "lpb": 8,
+                        "measure": 68
+                    },
+                    "pos": {
+                        "x": 1.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 8,
+                        "lpb": 8,
+                        "measure": 68
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 69
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 69
+                    },
+                    "pos": {
+                        "x": -1.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 69
+                    },
+                    "pos": {
+                        "x": -1.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 69
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 70
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 70
+                    },
+                    "pos": {
+                        "x": -1.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 70
+                    },
+                    "pos": {
+                        "x": -1.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 70
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 71
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 71
+                    },
+                    "pos": {
+                        "x": -1.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 71
+                    },
+                    "pos": {
+                        "x": -1.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 71
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 72
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 72
+                    },
+                    "pos": {
+                        "x": -1.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 72
+                    },
+                    "pos": {
+                        "x": -1.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 72
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 0,
+                        "lpb": 8,
+                        "measure": 73
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 0,
+                        "lpb": 8,
+                        "measure": 73
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 73
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 73
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 0,
+                        "lpb": 8,
+                        "measure": 74
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 0,
+                        "lpb": 8,
+                        "measure": 74
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 3,
+                        "lpb": 8,
+                        "measure": 74
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 3,
+                        "lpb": 8,
+                        "measure": 74
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 74
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 74
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 0,
+                        "lpb": 8,
+                        "measure": 75
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 0,
+                        "lpb": 8,
+                        "measure": 75
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 8,
+                        "lpb": 8,
+                        "measure": 76
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 8,
+                        "lpb": 8,
+                        "measure": 76
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 77
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 77
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 4,
+                        "lpb": 8,
+                        "measure": 77
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 4,
+                        "lpb": 8,
+                        "measure": 77
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 77
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 77
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 0,
+                        "lpb": 8,
+                        "measure": 78
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 0,
+                        "lpb": 8,
+                        "measure": 78
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 1,
+                        "lpb": 8,
+                        "measure": 78
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 1,
+                        "lpb": 8,
+                        "measure": 78
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 78
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 78
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 3,
+                        "lpb": 8,
+                        "measure": 78
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 3,
+                        "lpb": 8,
+                        "measure": 78
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 4,
+                        "lpb": 8,
+                        "measure": 78
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 4,
+                        "lpb": 8,
+                        "measure": 78
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 5,
+                        "lpb": 8,
+                        "measure": 78
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 5,
+                        "lpb": 8,
+                        "measure": 78
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 78
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 78
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 7,
+                        "lpb": 8,
+                        "measure": 78
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 7,
+                        "lpb": 8,
+                        "measure": 78
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                }
+            ],
+            "endbeat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 79
+            },
+            "endpos": {
+                "x": -8.0,
+                "y": 2.25
+            },
+            "pos": {
+                "x": 0.0,
+                "y": 2.25
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 8,
+                "measure": 65
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 8,
+                "measure": 65
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 65
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 8,
+                "measure": 65
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 66
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 8,
+                "measure": 66
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 8,
+                "measure": 66
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 8,
+                "measure": 66
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 8,
+                "measure": 66
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 66
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 8,
+                "measure": 66
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 4,
+                "measure": 67
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 8,
+                "measure": 67
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 8,
+                "measure": 67
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 8,
+                "measure": 67
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 8,
+                "measure": 67
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 67
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 8,
+                "measure": 67
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 8,
+                "measure": 68
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 8,
+                "measure": 68
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 8,
+                "measure": 68
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 8,
+                "measure": 68
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 68
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 8,
+                "measure": 68
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 8,
+                "measure": 69
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 8,
+                "measure": 69
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 69
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 8,
+                "measure": 69
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 70
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 8,
+                "measure": 70
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 8,
+                "measure": 70
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 8,
+                "measure": 70
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 8,
+                "measure": 70
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 70
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 8,
+                "measure": 70
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 71
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 8,
+                "measure": 71
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 8,
+                "measure": 71
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 8,
+                "measure": 71
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 8,
+                "measure": 71
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 71
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 8,
+                "measure": 71
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 8,
+                "measure": 72
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 8,
+                "measure": 72
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 8,
+                "measure": 72
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 8,
+                "measure": 72
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 72
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 8,
+                "measure": 72
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 8,
+                "measure": 73
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 73
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 74
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 8,
+                "measure": 74
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 8,
+                "measure": 74
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 8,
+                "measure": 74
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 8,
+                "measure": 74
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 74
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 75
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 8,
+                "measure": 75
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 8,
+                "measure": 75
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 8,
+                "measure": 75
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 75
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 76
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 8,
+                "measure": 76
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 8,
+                "measure": 76
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 8,
+                "measure": 76
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 76
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 79
+            },
+            "controlpoints": [
+                {
+                    "beat": {
+                        "beat": 0,
+                        "lpb": 8,
+                        "measure": 79
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 1,
+                        "lpb": 8,
+                        "measure": 79
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 1,
+                        "lpb": 8,
+                        "measure": 79
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 79
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 8,
+                        "measure": 79
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 3,
+                        "lpb": 8,
+                        "measure": 79
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 3,
+                        "lpb": 8,
+                        "measure": 79
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 4,
+                        "lpb": 8,
+                        "measure": 79
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 4,
+                        "lpb": 8,
+                        "measure": 79
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 5,
+                        "lpb": 8,
+                        "measure": 79
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 5,
+                        "lpb": 8,
+                        "measure": 79
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 79
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 8,
+                        "measure": 79
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 7,
+                        "lpb": 8,
+                        "measure": 79
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 7,
+                        "lpb": 8,
+                        "measure": 79
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                }
+            ],
+            "endbeat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 80
+            },
+            "endpos": {
+                "x": -8.0,
+                "y": 2.25
+            },
+            "pos": {
+                "x": -8.0,
+                "y": 2.25
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 16,
+                "lpb": 16,
+                "measure": 79
+            },
+            "controlpoints": [
+                {
+                    "beat": {
+                        "beat": 16,
+                        "lpb": 16,
+                        "measure": 79
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 1,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 1,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 3,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 3,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 4,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 4,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 5,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 5,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 7,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 7,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 8,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 8,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 9,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 9,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 10,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 10,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 11,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 11,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 12,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 12,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 13,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 13,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 14,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 14,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 15,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 15,
+                        "lpb": 16,
+                        "measure": 80
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 2.25
+                    }
+                }
+            ],
+            "endbeat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 82
+            },
+            "endpos": {
+                "x": -8.0,
+                "y": 2.25
+            },
+            "pos": {
+                "x": -8.0,
+                "y": 2.25
+            },
+            "type": 2
         }
     ]
 }

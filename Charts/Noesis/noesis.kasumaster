@@ -8,7 +8,7 @@
 	"previewaudioend": 75.0,
 	"difficulty": {
 		"hard": {
-			"level": "?",
+			"level": "8",
 			"chartpath": "./noesis.kasu"
 		}
 	}
