@@ -2,6 +2,7 @@
 
 //外部ヘッダ
 #pragma warning(push, 0)
+#pragma warning(disable : 26819)
 #include "json.hpp"
 #pragma warning(pop)
 
@@ -13,7 +14,7 @@
 class ChartFile
 {
 public:
-	std::string path;
+	std::wstring path;
 
 	std::string audiopath;
 	float audioOffset = 0;
@@ -29,7 +30,7 @@ public:
 	std::map<Beat, std::vector<Event>> events;
 
 	ChartFile() {}
-	ChartFile(std::string path) : path(path) {}
+	ChartFile(std::wstring path) : path(path) {}
 
 	bool Load();
 	bool Save();

@@ -20,8 +20,8 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	static std::string sChartName;
-	static int32_t sLevel;
+	inline static std::wstring sChartPath;
+	inline static int32_t sLevel = 0;
 
 private:
 	DebugCamera camera = DebugCamera({0, 0, -5});
@@ -35,6 +35,9 @@ private:
 	std::array<ModelObj, 4> inputlines;
 	Image3D laneStripe;
 	float stripeZ;
+
+	Sprite uiBack1;
+	Sprite uiBack2;
 
 	Sprite tempoVeil;
 	float veilTimer = 0;

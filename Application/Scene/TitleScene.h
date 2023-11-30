@@ -19,20 +19,6 @@ private:
 	Camera camera = Camera();
 	LightGroup light;
 
-	struct Button {
-		Vector2 pos;
-		Vector2 size;
-		Color color;
-
-		bool isHover;
-		bool isClick;
-
-		void Update();
-		void Draw();
-	};
-
-	Button goEasyButton{};
-	Button goNormalButton{};
-	Button goHardButton{};
-	Button goTutorialButton{};
+	Sprite bgHexa1;
+	Sprite bgHexa2;
 };

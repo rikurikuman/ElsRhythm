@@ -16,10 +16,10 @@ public:
 	bool mSucceeded = false;
 
 	Shader() {}
-	Shader(std::string filename, std::string entrypoint, std::string target);
+	Shader(std::string filepath, std::string entrypoint, std::string target);
 
 	static void Register(std::string id, Shader shader);
-	static Shader GetOrCreate(std::string id, std::string filename, std::string entrypoint, std::string target);
+	static Shader GetOrCreate(std::string id, std::string filepath, std::string entrypoint, std::string target);
 	static Shader GetRegistered(std::string id);
 
 private:

@@ -87,10 +87,10 @@ wstring Util::ConvertStringToWString(string str, uint32_t codePage) {
 	return wStr;
 }
 
-std::string Util::ConvertWStringToString(std::wstring wstr)
+std::string Util::ConvertWStringToString(std::wstring wstr, uint32_t codePage)
 {
 	//必要なchar配列長を得る
-	int32_t _arraySize = WideCharToMultiByte(CP_OEMCP, 0, wstr.c_str()
+	int32_t _arraySize = WideCharToMultiByte(codePage, 0, wstr.c_str()
 		, -1, (char*)NULL, 0, NULL, NULL);
 
 	//配列を用意する
@@ -98,13 +98,23 @@ std::string Util::ConvertWStringToString(std::wstring wstr)
 	sArray.resize(max(1, _arraySize));
 
 	//変換してchar_tの配列にぶち込む
-	WideCharToMultiByte(CP_OEMCP, 0, wstr.c_str(), -1, &sArray[0], _arraySize, NULL, NULL);
+	WideCharToMultiByte(codePage, 0, wstr.c_str(), -1, &sArray[0], _arraySize, NULL, NULL);
 
 	//stringにする
 	std::string str(&sArray[0], &sArray.back());
 
 	//おしまい
 	return str;
+}
+
+std::string Util::GetTimeString(float sec)
+{
+	int32_t hour = static_cast<int32_t>(floorf(sec / 3600));
+	int32_t minute = static_cast<int32_t>(floorf((sec - 3600 * hour) / 60));
+	float second = sec - 60 * minute - 3600 * hour;
+
+	if (hour > 0) return Util::StringFormat("%d:%d:%.2f", hour, minute, second);
+	return Util::StringFormat("%d:%05.2f", minute, second);
 }
 
 int32_t Util::GetRand(int32_t min, int32_t max)

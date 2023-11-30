@@ -37,6 +37,8 @@
 #include "EventSystem.h"
 #include <DebugGUI.h>
 #include <ParticleManager.h>
+#include <PathUtil.h>
+#include <EditorScene.h>
 
 using namespace std;
 using namespace DirectX;
@@ -54,6 +56,13 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		debugController->SetEnableGPUBasedValidation(TRUE);
 	}
 #endif
+
+	//VSからの実行ならデバッグパスを設定する(起動した瞬間のカレントパスを用いる)
+	if (IsDebuggerPresent()) {
+		PathUtil::SetDebugPath(std::filesystem::current_path());
+		//パス管理機能のデバッグ目的でC直下にカレントパスを持ってく
+		std::filesystem::current_path("C:/");
+	}
 
 	//WindowsAPI
 	RWindow::SetWindowName(L"リズムマウサー");
@@ -100,13 +109,15 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	scissorRectS.bottom = scissorRectS.top + WIN_HEIGHT;
 
 	//モデルデータの読み込み
-	Model::Load("Resources/Model/", "Cube.obj", "Cube");
+	Model::Load("Resources/Model/Cube.obj", "Cube");
 
 	TextureManager::Load("Resources/loadingMark.png", "LoadingMark");
 
 	TextureManager::Load("Resources/hogetest.png", "hogetest");
 
-	SceneManager::Set<TitleScene>();
+	RAudio::Load("Resources/Sound/Select.wav", "Select");
+
+	SceneManager::Set<EditorScene>();
 
 	ParticleObject::Clear();
 

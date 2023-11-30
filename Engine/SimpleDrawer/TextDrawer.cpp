@@ -1,6 +1,7 @@
 #include "TextDrawer.h"
 #include "RDirectX.h"
 #include "Util.h"
+#include "PathUtil.h"
 
 using namespace std;
 
@@ -169,7 +170,7 @@ TextureHandle TextDrawer::CreateStringTexture(std::string text, std::string font
 	size_t imageDataCount = textureWidth * textureHeight;
 
 	vector<Color> imageData;
-	imageData.resize(imageDataCount);
+	imageData.resize(imageDataCount == 0 ? 1 : imageDataCount);
 	for (size_t i = 0; i < imageDataCount; i++) {
 		imageData[i] = Color(0, 0, 0, 0);
 	}
@@ -205,6 +206,10 @@ TextureHandle TextDrawer::CreateStringTexture(std::string text, std::string font
 	}
 
 	Texture texture = Texture(D3D12_RESOURCE_STATE_GENERIC_READ);
+
+	if (imageDataCount == 0) {
+		textureWidth = textureHeight = 1;
+	}
 
 	// テクスチャバッファ
 	// ヒープ設定s
@@ -366,7 +371,7 @@ TextureHandle TextDrawer::CreateStringTexture(std::wstring text, std::string fon
 
 bool TextDrawer::LoadFontFromFile(std::string path)
 {
-	return AddFontResourceEx(Util::ConvertStringToWString(path).c_str(), FR_PRIVATE, NULL) != 0;
+	return AddFontResourceEx(PathUtil::ConvertAbsolute(path).c_str(), FR_PRIVATE, NULL) != 0;
 }
 
 void TextDrawer::Init()

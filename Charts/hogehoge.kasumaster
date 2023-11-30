@@ -1,0 +1,14 @@
+{
+	"previewaudiostart": 0.0,
+	"previewaudioend": 20.5,
+	"difficulty": {
+		"hard": {
+			"displayname": "テスト",
+			"composer": "デバッグのお供",
+			"bpm": "95",
+			"level": "?",
+			"chartpath": "./hogehoge.kasu",
+			"audiopath": "./hogeSong.wav"
+		}
+	}
+}

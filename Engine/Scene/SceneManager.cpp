@@ -57,11 +57,19 @@ void SceneManager::Update() {
 		sc.transition->Update();
 
 		if (sc.increment == 1
-				&& sc.transition->IsClosed()
-				&& sc.future->valid()
-				&& sc.future->wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
-			sc.scene = sc.future->get();
-			sc.future2 = std::make_shared<std::future<bool>>(std::async(std::launch::async, [&sc] {
+			&& sc.transition->IsClosed()
+			&& sc.futureMakeScene->valid()) {
+			sc.futureMakeScene2 = std::make_shared<std::future<std::shared_ptr<IScene>>>(std::async(std::launch::async, [&sc] {
+				return sc.futureMakeScene->get();
+			}));
+			sc.increment++;
+		}
+
+		if (sc.increment == 2
+				&& sc.futureMakeScene2->valid()
+				&& sc.futureMakeScene2->wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
+			sc.scene = sc.futureMakeScene2->get();
+			sc.futureSwapScene = std::make_shared<std::future<bool>>(std::async(std::launch::async, [&sc] {
 				std::lock_guard<std::recursive_mutex> lockSR(SRBufferAllocator::sMutex);
 				SceneManager* instance = GetInstance();
 				std::lock_guard<std::mutex> lock(instance->mMutex);
@@ -72,9 +80,9 @@ void SceneManager::Update() {
 			sc.increment++;
 		}
 
-		if (sc.increment == 2
-			&& sc.transition->IsClosed()
-			&& sc.future2->wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
+		if (sc.increment == 3
+			&& sc.futureSwapScene->valid()
+			&& sc.futureSwapScene->wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
 			std::lock_guard<std::mutex> lock(instance->mMutex);
 			auto trash = std::make_shared<IScene>();
 			instance->mNowScene->Finalize();
@@ -86,13 +94,13 @@ void SceneManager::Update() {
 			sc.increment++;
 		}
 
-		if (sc.increment == 3
+		if (sc.increment == 4
 			&& sc.transition->IsOpened()) {
 			instance->mRunningSceneChanges.erase(instance->mRunningSceneChanges.begin());
 		}
 
 		//ローディングマーク
-		if (sc.increment == 1 && sc.transition->IsClosed()) {
+		if ((sc.increment == 1 || sc.increment == 2 || sc.increment == 3) && sc.transition->IsClosed()) {
 			instance->mLoadingTimer += TimeManager::deltaTime;
 			if (instance->mLoadingTimer >= 0.5f) {
 				float t = min(1, instance->mLoadingTimer - 0.5f / 0.5f);
@@ -113,7 +121,7 @@ void SceneManager::Update() {
 				instance->mLoadingMark.mMaterial.mColor.a = 0;
 			}
 		}
-		if (sc.increment == 3) {
+		if (sc.increment == 4) {
 			if (instance->mLoadingAngle != 0) {
 				instance->mLoadingTimer += TimeManager::deltaTime;
 				float t = min(1, instance->mLoadingTimer / 0.5f);

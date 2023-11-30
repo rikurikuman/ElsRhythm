@@ -1,0 +1,24 @@
+{
+	"displayname": "Aleph-0",
+	"composer": "LeaF",
+	"charter": "りくりくまん",
+	"bpm": "35 ~ 400",
+	"artworkpath": "artwork.png",
+	"audiopath": "Aleph-0.wav",
+	"previewaudiostart": 15.4,
+	"previewaudioend": 31.0,
+	"difficulty": {
+		"easy": {
+			"level": "4",
+			"chartpath": "aleph-0_e.kasu"
+		},
+		"normal": {
+			"level": "8",
+			"chartpath": "aleph-0_n.kasu"
+		},
+		"hard": {
+			"level": "10",
+			"chartpath": "aleph-0_h.kasu"
+		}
+	}
+}

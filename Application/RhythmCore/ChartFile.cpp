@@ -2,12 +2,14 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+#include <PathUtil.h>
 
 using namespace std;
 
 bool ChartFile::Load()
 {
-	ifstream ifs(path);
+	std::filesystem::path loadPath = PathUtil::ConvertAbsolute(path);
+	ifstream ifs(loadPath);
 	if (ifs) {
 		json j;
 
@@ -16,6 +18,8 @@ bool ChartFile::Load()
 
 			if (j["audiopath"].is_string()) {
 				audiopath = j["audiopath"].get<string>();
+				std::wstring wStr = PathUtil::ConvertRelativeFromTo(loadPath, Util::ConvertStringToWString(audiopath)).c_str();
+				audiopath = Util::ConvertWStringToString(wStr);
 			}
 			
 			if (!j["audiooffset"].is_null()) {
@@ -162,7 +166,7 @@ bool ChartFile::Load()
 		return true;
 	}
 	else {
-		Util::DebugLog(path + " 読み込めませんでした");
+		Util::DebugLog(path + L" 読み込めませんでした");
 		return false;
 	}
 
@@ -218,12 +222,13 @@ bool ChartFile::Save() {
 
 	j["bg"] = bgName;
 
-	ofstream ofs(path);
+	ofstream ofs(PathUtil::ConvertAbsolute(path));
 	if (ofs) {
 		ofs << j.dump(4);
 		return true;
 	}
 	else {
+		Util::DebugLog(path + L"書き出せませんでした");
 		return false;
 	}
 	return false;

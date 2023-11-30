@@ -56,7 +56,7 @@ public:
 	std::string mPath;
 	std::vector<std::shared_ptr<ModelMesh>> mData;
 
-	static ModelHandle Load(std::string filepath, std::string filename, ModelHandle handle = "", bool smooth = false);
+	static ModelHandle Load(std::string filepath, ModelHandle handle = "", bool smooth = false);
 	static ModelHandle Register(ModelHandle handle, Model model);
 
 	static ModelHandle LoadWithAIL(std::string directoryPath, std::string filename, ModelHandle handle = "");

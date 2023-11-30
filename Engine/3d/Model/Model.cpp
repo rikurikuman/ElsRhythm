@@ -5,6 +5,7 @@
 #include "Util.h"
 #include "Mtllib.h"
 #include "Matrix4.h"
+#include <PathUtil.h>
 
 using namespace std;
 
@@ -40,19 +41,17 @@ void ModelMesh::CalcSmoothedNormals()
     }
 }
 
-ModelHandle Model::Load(string filepath, string filename, ModelHandle handle, bool smooth)
+ModelHandle Model::Load(string filepath, ModelHandle handle, bool smooth)
 {
     ModelManager* instance = ModelManager::GetInstance();
     Model model;
 
-    if (filepath[filepath.size() - 1] != '/') {
-        filepath += "/";
-    }
+    std::filesystem::path path = PathUtil::ConvertAbsolute(Util::ConvertStringToWString(filepath));
 
-    model.mPath = filepath + filename;
+    model.mPath = Util::ConvertWStringToString(path);
 
     ifstream file;
-    file.open((filepath + filename).c_str());
+    file.open(path.c_str());
     if (file.fail()) {
         return "PreRegistedModel_Empty";
     }
@@ -63,7 +62,7 @@ ModelHandle Model::Load(string filepath, string filename, ModelHandle handle, bo
 
     std::unique_lock<std::recursive_mutex> lock(instance->mMutex);
     if (instance->mModelMap.find(handle) != instance->mModelMap.end()
-        && instance->mModelMap[handle].mPath == (filepath + filename)) {
+        && instance->mModelMap[handle].mPath == Util::ConvertWStringToString(path)) {
         return handle;
     }
     lock.unlock();
@@ -188,7 +187,7 @@ ModelHandle Model::Load(string filepath, string filename, ModelHandle handle, bo
         if (key == "mtllib") { //マテリアルテンプレートライブラリ
             string mfilename;
             line_stream >> mfilename;
-            Mtllib lib = Mtllib::Load(filepath, mfilename);
+            Mtllib lib = Mtllib::Load(Util::ConvertWStringToString(PathUtil::ConvertAbsolute(mfilename, path).c_str()));
 
             for (Material& mat : lib.mMaterials) {
                 materialList.push_back(mat);

@@ -1,7 +1,9 @@
 #pragma once
 #include <string>
+#include <memory>
 
 class EditorScene;
+struct EditorAction;
 
 class IEditorObject
 {
@@ -14,6 +16,8 @@ public:
 	virtual ~IEditorObject() {};
 
 	virtual std::string GetTypeName() = 0;
+	virtual std::unique_ptr<IEditorObject> Clone() const = 0;
+	virtual std::unique_ptr<EditorAction> GetSavePoint() = 0;
 
 	virtual bool Collide(float x, float y) { x; y; return false; };
 	virtual bool Collide(float x1, float y1, float x2, float y2) { x1; y1; x2; y2; return false; };

@@ -6,6 +6,7 @@
 #include <Camera.h>
 #include <ParticleExplode.h>
 #include <ParticleSprite.h>
+#include <PathUtil.h>
 
 float RhythmGameController::GetScroll(float miliSec)
 {
@@ -149,7 +150,7 @@ void RhythmGameController::Reset()
 void RhythmGameController::Init()
 {
 	if (noteModelObjs.empty()) {
-		Model::Load("./Resources/Model/Note", "note.obj", "Note");
+		Model::Load("./Resources/Model/Note/note.obj", "Note");
 		for (int32_t i = 0; i < 100; i++) {
 			noteModelObjs.emplace_back("Note");
 		}
@@ -162,7 +163,7 @@ void RhythmGameController::Init()
 	}
 
 	if (lineModelObjs.empty()) {
-		Model::Load("./Resources/Model/", "cube.obj", "Cube");
+		Model::Load("./Resources/Model/cube.obj", "Cube");
 		for (int32_t i = 0; i < 100; i++) {
 			lineModelObjs.emplace_back("Cube");
 		}
@@ -710,24 +711,24 @@ void RhythmGameController::Update()
 
 	maxCombo = max(combo, maxCombo);
 
-	SimpleDrawer::DrawString(1280, 0, 0, "Score", { 1, 1, 1, 1 }, "", 25, { 1, 0 });
-	SimpleDrawer::DrawString(1024, 20, 0, Util::StringFormat("%08d", score), { 1, 1, 1, 1 }, "", 60);
-	SimpleDrawer::DrawString(20, 20, 0, Util::StringFormat("BPM:%.2f", music.GetBPM(beat)), {1, 1, 1, 1}, "", 60);
-	SimpleDrawer::DrawString(20, 80, 0, Util::StringFormat("Perfect:%d", countJudgePerfect), {1, 1, 1, 1}, "", 25);
-	SimpleDrawer::DrawString(20, 100, 0, Util::StringFormat("Hit:%d", countJudgeHit), { 1, 1, 1, 1 }, "", 25);
-	SimpleDrawer::DrawString(20, 120, 0, Util::StringFormat("Hoge:%d", countJudgeMiss), { 1, 1, 1, 1 }, "", 25);
+	SimpleDrawer::DrawString(1280, 0, 5, "Score", { 1, 1, 1, 1 }, "", 25, { 1, 0 });
+	SimpleDrawer::DrawString(1024, 20, 5, Util::StringFormat("%08d", score), { 1, 1, 1, 1 }, "", 60);
+	SimpleDrawer::DrawString(20, 20, 5, Util::StringFormat("BPM:%.2f", music.GetBPM(beat)), {1, 1, 1, 1}, "", 60);
+	SimpleDrawer::DrawString(20, 80, 5, Util::StringFormat("Perfect:%d", countJudgePerfect), {1, 1, 1, 1}, "", 25);
+	SimpleDrawer::DrawString(20, 100, 5, Util::StringFormat("Hit:%d", countJudgeHit), { 1, 1, 1, 1 }, "", 25);
+	SimpleDrawer::DrawString(20, 120, 5, Util::StringFormat("Hoge:%d", countJudgeMiss), { 1, 1, 1, 1 }, "", 25);
 
 	if (combo != 0) {
 		SimpleDrawer::DrawString(1070, 240, 0, "Combo", {1, 0.3f, 0, 1}, "", 25);
 		SimpleDrawer::DrawString(1070, 260, 0, Util::StringFormat("%d", combo), { 1, 0.3f, 0, 1 }, "", 80);
 	}
-	SimpleDrawer::DrawString(1260, 80, 0, Util::StringFormat("MaxCombo:%d", maxCombo), { 1, 1, 1, 1 }, "", 25, {1, 0});
+	SimpleDrawer::DrawString(1260, 80, 5, Util::StringFormat("MaxCombo:%d", maxCombo), { 1, 1, 1, 1 }, "", 25, {1, 0});
 }
 
 void RhythmGameController::Load()
 {
 	if (!chart.audiopath.empty()) {
-		audioHandle = RAudio::Load(chart.audiopath.c_str());
+		audioHandle = RAudio::Load(Util::ConvertWStringToString(PathUtil::ConvertAbsolute(Util::ConvertStringToWString(chart.audiopath), PathUtil::ConvertAbsolute(chart.path)).c_str()));
 	}
 
 	offsetStream = chart.audioOffset;

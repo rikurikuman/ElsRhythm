@@ -1,10 +1,14 @@
 {
-	"hard": {
-		"displayname": "Song of Yobikomikun",
-		"composer": "ほげーた",
-		"bpm": "131",
-		"level": 10.4,
-		"chartpath": "./yobikomi.kasu",
-		"musicpath": "./Song_of_Yobikomikun.wav"
+	"previewaudiostart": 0.0,
+	"previewaudioend": 29.3,
+	"difficulty": {
+		"hard": {
+			"displayname": "Song of Yobikomikun",
+			"composer": "りくりくまん",
+			"bpm": "131",
+			"level": "9",
+			"chartpath": "./yobikomi.kasu",
+			"audiopath": "./Song_of_Yobikomikun.wav"
+		}
 	}
 }

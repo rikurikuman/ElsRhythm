@@ -8,6 +8,8 @@
 #include "SRConstBuffer.h"
 #include <ChartFile.h>
 #include <IEditorObject.h>
+#include "RAudio.h"
+#include <EditorAction.h>
 
 class EditorScene : public IScene
 {
@@ -30,6 +32,8 @@ public:
 	float GetScreenPosition(Beat beat);
 	Beat GetVirtualCursorBeat(float y);
 
+	void AddEditorAction(std::unique_ptr<EditorAction>&& act);
+
 private:
 	DebugCamera camera = DebugCamera({0, 0, -5});
 	LightGroup light;
@@ -45,7 +49,7 @@ private:
 	enum class EditMode {
 		Pen,
 		Erase,
-		Move,
+		AreaSelect,
 	};
 	enum class EditType {
 		TapNote,
@@ -56,8 +60,12 @@ private:
 	EditType mEditType = EditType::TapNote;
 
 	ChartFile chartFile;
+	AudioHandle mAudioHandle;
 
 	std::list<std::unique_ptr<IEditorObject>> mEditorObjects;
+	std::list<std::unique_ptr<EditorAction>> mNowActions; //このフレームに行われたアクション
+	std::list<std::vector<std::unique_ptr<EditorAction>>> mEditorActions; //今まで行われたアクション
+	std::list<std::vector<std::unique_ptr<EditorAction>>> mFutureEditorActions; //Undoによって戻された、これからのアクション
 
 	float mTime = 0;
 	float mNowScrollPos = 0;
@@ -73,7 +81,24 @@ private:
 
 	void ShowWindow();
 	void ShowMainWindow();
+	void ShowMainWindowMenuBar();
 	void ShowToolWindow();
+
+	struct EBPMChange {
+		Beat beat;
+		float bpm;
+	};
+	struct EMeterChange {
+		Beat beat;
+		Meter meter;
+	};
+	std::list<EBPMChange> mBPMChanges;
+	bool mOpenBPMChangeWindow = false;
+	void ShowBPMChangeWindow();
+	std::list<EMeterChange> mMeterChanges;
+	bool mOpenMeterChangeWindow = false;
+	void ShowMeterChangeWindow();
+
 	float GetScroll(float miliSec);
 	float GetPosition(float miliSec);
 	Beat GetCursorBeat();
@@ -84,4 +109,7 @@ private:
 	void InitEditor();
 	void Load(std::wstring path);
 	void Save(std::wstring path);
+
+	void Undo();
+	void Redo();
 };

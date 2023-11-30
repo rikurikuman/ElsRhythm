@@ -1,11 +1,13 @@
 #include "Shader.h"
 #include "Util.h"
 #include "RDirectX.h"
+#include "PathUtil.h"
 
-Shader::Shader(std::string filename, std::string entrypoint, std::string target)
+Shader::Shader(std::string filepath, std::string entrypoint, std::string target)
 {
+	std::filesystem::path path = PathUtil::ConvertAbsolute(Util::ConvertStringToWString(filepath));
 	HRESULT result = D3DCompileFromFile(
-		std::wstring(filename.begin(), filename.end()).c_str(), //ファイル名
+		path.c_str(), //ファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,
 		entrypoint.c_str(), target.c_str(), //エントリ名、シェーダーモデル指定
@@ -20,11 +22,11 @@ void Shader::Register(std::string id, Shader shader)
 	ShaderRegister::GetInstance()->mShaderRegister[id] = shader;
 }
 
-Shader Shader::GetOrCreate(std::string id, std::string filename, std::string entrypoint, std::string target)
+Shader Shader::GetOrCreate(std::string id, std::string filepath, std::string entrypoint, std::string target)
 {
 	Shader res = GetRegistered(id);
 	if (!res.mSucceeded) {
-		res = Shader(filename, entrypoint, target);
+		res = Shader(filepath, entrypoint, target);
 		Register(id, res);
 	}
 	return res;

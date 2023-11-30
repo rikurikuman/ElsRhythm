@@ -8,6 +8,7 @@
 
 #include "Color.h"
 #include "Util.h"
+#include "PathUtil.h"
 
 using namespace std;
 using namespace DirectX;
@@ -269,12 +270,14 @@ TextureHandle TextureManager::CreateInternal(const Color* pSource, const size_t 
 
 TextureHandle TextureManager::LoadInternal(const std::string filepath, const std::string handle)
 {
+	std::filesystem::path path = PathUtil::ConvertAbsolute(Util::ConvertStringToWString(filepath));
+
 	std::unique_lock<std::recursive_mutex> lock(mMutex);
 	HRESULT result;
 
 	//一回読み込んだことがあるファイルはそのまま返す
 	auto itr = find_if(mTextureMap.begin(), mTextureMap.end(), [&](const std::pair<TextureHandle, Texture>& p) {
-		return p.second.mFilePath == filepath;
+		return p.second.mFilePath == Util::ConvertWStringToString(path.c_str());
 		});
 	if (itr != mTextureMap.end()) {
 		return itr->first;
@@ -282,15 +285,14 @@ TextureHandle TextureManager::LoadInternal(const std::string filepath, const std
 	lock.unlock();
 
 	Texture texture = Texture(D3D12_RESOURCE_STATE_GENERIC_READ);
-	texture.mFilePath = filepath;
-	wstring wfilePath(filepath.begin(), filepath.end());
+	texture.mFilePath = Util::ConvertWStringToString(path.c_str());
 
 	// 画像イメージデータ
 	TexMetadata imgMetadata{};
 	ScratchImage scratchImg{};
 	// WICテクスチャのロード
 	result = LoadFromWICFile(
-		wfilePath.c_str(),
+		path.c_str(),
 		WIC_FLAGS_NONE,
 		&imgMetadata, scratchImg
 	);

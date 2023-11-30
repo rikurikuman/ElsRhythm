@@ -1,6 +1,8 @@
 #include "RImGui.h"
 #include "RWindow.h"
 #include "RDirectX.h"
+#include <PathUtil.h>
+#include <Util.h>
 
 RImGui* RImGui::GetInstance()
 {
@@ -35,10 +37,13 @@ void RImGui::Finalize()
 
 void RImGui::InitInternal()
 {
+    mConfigPath = Util::ConvertWStringToString(PathUtil::GetMainPath() / "imgui.ini").c_str();
+
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
-    io.Fonts->AddFontFromFileTTF("./Resources/Font/PixelMplus12-Regular.ttf", 16, NULL, io.Fonts->GetGlyphRangesJapanese());
+    io.IniFilename = mConfigPath.c_str();
+    io.Fonts->AddFontFromFileTTF(Util::ConvertWStringToString(PathUtil::ConvertAbsolute("./Resources/Font/PixelMplus12-Regular.ttf")).c_str(), 16, NULL, io.Fonts->GetGlyphRangesJapanese());
     io.Fonts->Build();
 
     ImGui::StyleColorsDark();

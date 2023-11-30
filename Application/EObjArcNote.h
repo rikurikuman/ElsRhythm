@@ -8,6 +8,8 @@ class EObjArcNote : public IEditorObject
 public:
 	EObjArcNote(EditorScene* scene);
 	std::string GetTypeName() override { return "EObjArcNote"; };
+	std::unique_ptr<IEditorObject> Clone() const override;
+	std::unique_ptr<EditorAction> GetSavePoint() override;
 
 	struct ControlPoint {
 		Beat beat;

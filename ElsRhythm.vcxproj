@@ -48,6 +48,7 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)Lib;$(SolutionDir)Lib\DirectXTex;$(SolutionDir)Lib\assimp\include;$(SolutionDir)Lib\assimp\include\assimp;$(SolutionDir)Lib\ImGui</IncludePath>
     <LibraryPath>$(SolutionDir)Lib\Product\$(Configuration);$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)Product\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -102,12 +103,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\EditorAction.cpp" />
     <ClCompile Include="Application\EObjArcNote.cpp" />
     <ClCompile Include="Application\RhythmCore\ArcNoteObj.cpp" />
     <ClCompile Include="Application\BackGround\BackGroundSelector.cpp" />
     <ClCompile Include="Application\RhythmCore\BeatUtil.cpp" />
     <ClCompile Include="Application\BackGround\BGSimple.cpp" />
     <ClCompile Include="Application\RhythmCore\ChartFile.cpp" />
+    <ClCompile Include="Application\RhythmCore\ChartInfoFile.cpp" />
     <ClCompile Include="Application\Scene\ControllerScene.cpp" />
     <ClCompile Include="Application\Scene\EditorScene.cpp" />
     <ClCompile Include="Application\Scene\MainTestScene.cpp" />
@@ -118,6 +121,7 @@
     <ClCompile Include="Application\Scene\ResultScene.cpp" />
     <ClCompile Include="Application\RhythmCore\RhythmGameController.cpp" />
     <ClCompile Include="Application\RhythmCore\Note.cpp" />
+    <ClCompile Include="Application\Scene\SelectScene.cpp" />
     <ClCompile Include="Application\Scene\SimpleSceneTransition.cpp" />
     <ClCompile Include="Application\Scene\SoundScene.cpp" />
     <ClCompile Include="Application\Scene\SpriteScene.cpp" />
@@ -198,6 +202,7 @@
     <ClCompile Include="Engine\Collision\RayCollider.cpp" />
     <ClCompile Include="Engine\Collision\SphereCollider.cpp" />
     <ClCompile Include="Engine\Base\SRVertexBuffer.cpp" />
+    <ClCompile Include="Engine\PathUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\BasicPS.hlsl">
@@ -422,6 +427,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\EditorAction.h" />
     <ClInclude Include="Application\EObjArcNote.h" />
     <ClInclude Include="Application\RhythmCore\ArcNoteObj.h" />
     <ClInclude Include="Application\BackGround\BackGroundSelector.h" />
@@ -429,6 +435,7 @@
     <ClInclude Include="Application\BackGround\IBackGround.h" />
     <ClInclude Include="Application\RhythmCore\BeatUtil.h" />
     <ClInclude Include="Application\RhythmCore\ChartFile.h" />
+    <ClInclude Include="Application\RhythmCore\ChartInfoFile.h" />
     <ClInclude Include="Application\Scene\ControllerScene.h" />
     <ClInclude Include="Application\Scene\EditorScene.h" />
     <ClInclude Include="Application\Scene\MainTestScene.h" />
@@ -439,6 +446,7 @@
     <ClInclude Include="Application\Scene\ResultScene.h" />
     <ClInclude Include="Application\RhythmCore\RhythmGameController.h" />
     <ClInclude Include="Application\RhythmCore\Note.h" />
+    <ClInclude Include="Application\Scene\SelectScene.h" />
     <ClInclude Include="Application\Scene\SimpleSceneTransition.h" />
     <ClInclude Include="Application\Scene\SoundScene.h" />
     <ClInclude Include="Application\Scene\SpriteScene.h" />
@@ -525,6 +533,7 @@
     <ClInclude Include="Application\EventSystem.h" />
     <ClInclude Include="Application\IEditorObject.h" />
     <ClInclude Include="Application\EObjTapNote.h" />
+    <ClInclude Include="Engine\PathUtil.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\Basic.hlsli">

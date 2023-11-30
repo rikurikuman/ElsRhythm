@@ -10,7 +10,7 @@
 #include <GameScene.h>
 #include <SimpleSceneTransition.h>
 #include <ParticleObject.h>
-#include <TitleScene.h>
+#include <SelectScene.h>
 
 int32_t ResultScene::sScore = 0;
 int32_t ResultScene::sCountPerfect = 0;
@@ -164,7 +164,7 @@ void ResultScene::Update()
 		}
 		if (goTitleButton.isClick) {
 			if (!SceneManager::IsSceneChanging()) {
-				SceneManager::Change<TitleScene, SimpleSceneTransition>();
+				SceneManager::Change<SelectScene, SimpleSceneTransition>();
 			}
 		}
 	}

@@ -78,6 +78,9 @@ public:
 	static void Stop(AudioHandle handle);
 	static bool IsPlaying(AudioHandle handle);
 	static float GetCurrentPosition(AudioHandle handle);
+	static void SetVolume(AudioHandle handle, float volume);
+
+	static float GetLength(AudioHandle handle);
 
 	static void SetPlayRange(AudioHandle handle, float startPos, float endPos);
 	static void SetLoopRange(AudioHandle handle, float startPos, float endPos);

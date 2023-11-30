@@ -414,6 +414,18 @@
     <ClCompile Include="Application\EObjArcNote.cpp">
       <Filter>ソース ファイル\Application\Editor</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\PathUtil.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\EditorAction.cpp">
+      <Filter>ソース ファイル\Application\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Scene\SelectScene.cpp">
+      <Filter>ソース ファイル\Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\RhythmCore\ChartInfoFile.cpp">
+      <Filter>ソース ファイル\Application\RhythmCore</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\TestVS.hlsl">
@@ -840,6 +852,18 @@
     </ClInclude>
     <ClInclude Include="Application\EObjArcNote.h">
       <Filter>ヘッダー ファイル\Application\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\PathUtil.h">
+      <Filter>ヘッダー ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\EditorAction.h">
+      <Filter>ヘッダー ファイル\Application\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Scene\SelectScene.h">
+      <Filter>ヘッダー ファイル\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\RhythmCore\ChartInfoFile.h">
+      <Filter>ヘッダー ファイル\Application\RhythmCore</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

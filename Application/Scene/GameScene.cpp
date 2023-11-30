@@ -8,15 +8,12 @@
 #include <RImGui.h>
 #include <ParticleObject.h>
 #include <SceneManager.h>
-#include <TitleScene.h>
+#include <SelectScene.h>
 #include <SimpleSceneTransition.h>
 #include <ParticleSprite3D.h>
 #include <ResultScene.h>
 #include <BackGroundSelector.h>
 #include <codecvt>
-
-std::string GameScene::sChartName;
-int32_t GameScene::sLevel = 0;
 
 GameScene::GameScene()
 {
@@ -62,14 +59,22 @@ GameScene::GameScene()
 	tempoVeil.mTransform.scale = { RWindow::GetWidth() / 300.0f, -1.0f, 1.0f };
 	tempoVeil.mTransform.UpdateMatrix();
 
-	tutorialText.mTransform.position = { RWindow::GetWidth() / 2.0f, 80, 5 };
+	tutorialText.mTransform.position = { RWindow::GetWidth() / 2.0f, 80, 510 };
 	tutorialText.mTransform.UpdateMatrix();
 
 	tutorialBack = Sprite(TextureManager::Load("./Resources/veil.png", "tempoVeil"), { 0.0f, 0.0f });
 	tutorialBack.mMaterial.mColor = { 0.0f, 0.0f, 0.0f, 0.5f };
-	tutorialBack.mTransform.position = { 0, 0, 0 };
+	tutorialBack.mTransform.position = { 0, 0, 500 };
 	tutorialBack.mTransform.scale = { RWindow::GetWidth() / 300.0f, 1.0f, 1.0f };
 	tutorialBack.mTransform.UpdateMatrix();
+
+	uiBack1.SetTexture(TextureManager::Load("./Resources/GameUIBack1.png", "GameUIBack1"));
+	uiBack1.SetAnchor({ 0, 0 });
+	uiBack1.mTransform.UpdateMatrix();
+	uiBack2.SetTexture(TextureManager::Load("./Resources/GameUIBack2.png", "GameUIBack2"));
+	uiBack2.SetAnchor({ 1, 0 });
+	uiBack2.mTransform.position = { static_cast<float>(RWindow::GetWidth()), 0, 0 };
+	uiBack2.mTransform.UpdateMatrix();
 
 	camera.mViewProjection.mEye = { 0, 11.0f, -12.0f };
 	camera.mAngle = { 90, -25 };
@@ -84,7 +89,7 @@ GameScene::GameScene()
 	RAudio::Load("Resources/Sound/Judge_Miss.wav", "JudgeMiss");
 	RAudio::Load("Resources/Sound/VerticalSlash.wav", "VerticalSlash");
 
-	chartFile = ChartFile("Charts/" + sChartName);
+	chartFile = ChartFile(sChartPath);
 	chartFile.Load();
 	gameController.chart = chartFile;
 	gameController.Load();
@@ -123,7 +128,7 @@ void GameScene::Update()
 
 	if (RInput::GetKey(DIK_ESCAPE)) {
 		gameController.playing = false;
-		if(!SceneManager::IsSceneChanging()) SceneManager::Change<TitleScene, SimpleSceneTransition>();
+		if(!SceneManager::IsSceneChanging()) SceneManager::Change<SelectScene, SimpleSceneTransition>();
 	}
 
 	stripeZ = (gameController.nowPosY / 172.0f) * 384.0f;
@@ -217,6 +222,11 @@ void GameScene::Draw()
 		tutorialText.Draw();
 		tutorialBack.Draw();
 	}
+
+	uiBack1.TransferBuffer();
+	uiBack1.Draw();
+	uiBack2.TransferBuffer();
+	uiBack2.Draw();
 
 	if (sLevel == 1) {
 		SimpleDrawer::DrawBox(1100, 120, 1280, 150, 0, { 0, 0.6f, 1, 1 }, true);

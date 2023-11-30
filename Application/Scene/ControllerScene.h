@@ -19,6 +19,7 @@ private:
 	ModelObj model;
 
 	Camera camera = Camera();
+	Vector2 mAngle = { 0, 0 };
 	LightGroup light;
 
 	float rot[3] = { 0, 0, 0 };

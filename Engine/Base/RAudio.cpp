@@ -1,4 +1,5 @@
 #include "RAudio.h"
+#include "PathUtil.h"
 #include <cassert>
 
 using namespace std;
@@ -7,11 +8,13 @@ AudioHandle RAudio::Load(const std::string filepath, std::string handle)
 {
 	RAudio* instance = GetInstance();
 
+	std::filesystem::path path = PathUtil::ConvertAbsolute(Util::ConvertStringToWString(filepath));
+
 	std::unique_lock<std::recursive_mutex> lock(GetInstance()->mMutex);
 
 	//一回読み込んだことがあるファイルはそのまま返す
 	auto itr = find_if(instance->mAudioMap.begin(), instance->mAudioMap.end(), [&](const std::pair<AudioHandle, shared_ptr<AudioData>>& p) {
-		return p.second->filepath == filepath;
+		return p.second->filepath == Util::ConvertWStringToString(path.c_str());
 		});
 	if (itr != instance->mAudioMap.end()) {
 		return itr->first;
@@ -19,7 +22,7 @@ AudioHandle RAudio::Load(const std::string filepath, std::string handle)
 	lock.unlock();
 
 	std::ifstream file;
-	file.open(filepath, std::ios_base::binary);
+	file.open(path, std::ios_base::binary);
 
 	if (file.fail()) {
 		return "";
@@ -59,7 +62,7 @@ AudioHandle RAudio::Load(const std::string filepath, std::string handle)
 	}
 
 	shared_ptr<WaveAudio> sound = make_shared<WaveAudio>();
-	sound->filepath = filepath;
+	sound->filepath = Util::ConvertWStringToString(path.c_str());
 	sound->wfex = format.fmt;
 	sound->bufferSize = data.size;
 
@@ -69,7 +72,7 @@ AudioHandle RAudio::Load(const std::string filepath, std::string handle)
 	file.close();
 
 	if (handle.empty()) {
-		handle = "NoNameHandle_" + filepath;
+		handle = "NoNameHandle_" + Util::ConvertWStringToString(path.c_str());
 	}
 
 	lock.lock();
@@ -232,6 +235,41 @@ float RAudio::GetCurrentPosition(AudioHandle handle) {
 	return 0;
 }
 
+void RAudio::SetVolume(AudioHandle handle, float volume)
+{
+	RAudio* instance = GetInstance();
+
+	for (auto itr = instance->mPlayingList.begin(); itr != instance->mPlayingList.end();) {
+		PlayingInfo info = *itr;
+		if (info.handle == handle) {
+			info.pSource->SetVolume(volume);
+		}
+		itr++;
+	}
+}
+
+float RAudio::GetLength(AudioHandle handle)
+{
+	RAudio* instance = GetInstance();
+
+	std::lock_guard<std::recursive_mutex> lock(GetInstance()->mMutex);
+	if (instance->mAudioMap.find(handle) == instance->mAudioMap.end()) {
+		Util::DebugLog("ERROR: RAudio::GetCurrentPosition() : Audio[" + handle + "] is not found.");
+		return 0;
+	}
+
+	shared_ptr<AudioData> data = instance->mAudioMap[handle];
+	if (data->type == AudioType::Wave) {
+		shared_ptr<WaveAudio> waveData = static_pointer_cast<WaveAudio>(data);
+		if (waveData->wfex.nAvgBytesPerSec == 0) return 0;
+		return waveData->bufferSize / static_cast<float>(waveData->wfex.nAvgBytesPerSec);
+	}
+	else {
+		Util::DebugLog("ERROR: RAudio::GetLength() : Audio[" + handle + "] is unknown AudioType.");
+		return 0;
+	}
+}
+
 void RAudio::SetPlayRange(AudioHandle handle, float startPos, float endPos)
 {
 	if (endPos != 0 && startPos >= endPos) return;
@@ -357,4 +395,6 @@ void RAudio::FinalInternal()
 	mMasteringVoice->DestroyVoice();
 	mXAudio2.Reset();
 	mAudioMap.clear();
+	mPlayingAudioMap.clear();
+	mPlayingList.clear();
 }

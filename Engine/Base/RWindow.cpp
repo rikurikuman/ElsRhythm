@@ -27,11 +27,11 @@ void RWindow::InitInternal()
 
 	RegisterClassEx(&mWndClassEx);
 	RECT wrc = { 0, 0, mWindowWidth, mWindowHeight };
-	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
+	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW ^ WS_MAXIMIZEBOX ^ WS_THICKFRAME, false);
 
 	mWndHandle = CreateWindow(mWndClassEx.lpszClassName,
 		mWndClassEx.lpszClassName,
-		WS_OVERLAPPEDWINDOW,
+		WS_OVERLAPPEDWINDOW ^ WS_MAXIMIZEBOX ^ WS_THICKFRAME,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
 		wrc.right - wrc.left,

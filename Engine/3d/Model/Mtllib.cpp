@@ -3,15 +3,18 @@
 #include <sstream>
 #include <cassert>
 #include "Util.h"
+#include <PathUtil.h>
 
 using namespace std;
 
-Mtllib Mtllib::Load(std::string filepath, std::string filename)
+Mtllib Mtllib::Load(std::string filepath)
 {
+    std::filesystem::path path = PathUtil::ConvertAbsolute(Util::ConvertStringToWString(filepath));
+
     Mtllib data;
 
     ifstream file;
-    file.open((filepath + filename).c_str());
+    file.open(path.c_str());
     if (file.fail()) {
         assert(0);
     }
@@ -58,7 +61,7 @@ Mtllib Mtllib::Load(std::string filepath, std::string filename)
         if (key == "map_Kd") { //テクスチャ指定
             string texfile;
             line_stream >> texfile;
-            loading.mTexture = TextureManager::Load(filepath + texfile);
+            loading.mTexture = TextureManager::Load(Util::ConvertWStringToString(PathUtil::ConvertAbsolute(Util::ConvertStringToWString(texfile), path).c_str()));
         }
     }
 

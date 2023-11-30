@@ -122,7 +122,10 @@ namespace Util {
     std::wstring ConvertStringToWString(std::string str, uint32_t codePage = CP_UTF8);
 
     //wstringをstringに変換する（WideCharToMultiByte)
-    std::string ConvertWStringToString(std::wstring wstr);
+    std::string ConvertWStringToString(std::wstring wstr, uint32_t codePage = CP_UTF8);
+    
+    //秒を00:00.00形式のstringで表します
+    std::string GetTimeString(float sec);
 
     //乱数生成(一様分布)
     int32_t GetRand(int32_t min, int32_t max);

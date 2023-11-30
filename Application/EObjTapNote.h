@@ -8,6 +8,8 @@ class EObjTapNote : public IEditorObject
 public:
 	EObjTapNote(EditorScene* scene);
 	std::string GetTypeName() override { return "EObjTapNote"; };
+	std::unique_ptr<IEditorObject> Clone() const override;
+	std::unique_ptr<EditorAction> GetSavePoint() override;
 
 	int32_t mLane = 0;
 	Beat mBeat;

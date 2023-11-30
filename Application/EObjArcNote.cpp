@@ -3,10 +3,22 @@
 #include "Vector3.h"
 #include <SimpleDrawer.h>
 #include <ColPrimitive2D.h>
+#include "EditorAction.h"
 
 EObjArcNote::EObjArcNote(EditorScene* scene)
 	: IEditorObject(scene)
 {
+}
+
+std::unique_ptr<IEditorObject> EObjArcNote::Clone() const
+{
+	return std::make_unique<EObjArcNote>(*this);
+}
+
+std::unique_ptr<EditorAction> EObjArcNote::GetSavePoint()
+{
+	std::unique_ptr<EditorAction> ptr = std::make_unique<EAModifyEOField<EObjArcNote>>(mUuid, 0, *this);
+	return ptr;
 }
 
 bool EObjArcNote::Collide(float x, float y)
@@ -106,8 +118,49 @@ bool EObjArcNote::Collide(float x, float y)
 	return false;
 }
 
-bool EObjArcNote::Collide(float, float, float, float)
-{
+bool EObjArcNote::Collide(float x1, float y1, float x2, float y2) {
+	ColPrimitive2D::Rect rect({x1, y1} , {x2, y2});
+	int32_t laneSize = mScene->sMaxLaneX - mScene->sMinLaneX;
+	int32_t laneCenter = (mScene->sMinLaneX + mScene->sMaxLaneX) / 2;
+	int32_t arcHeightSize = mScene->sMaxArcHeightX - mScene->sMinArcHeightX;
+
+	//始点
+	float startY = mScene->GetScreenPosition(mStartBeat);
+
+	float startX = laneCenter + (mStartPos.x / 8.0f) * (laneSize / 2);
+	float startX2 = mScene->sMaxArcHeightX - (((mStartPos.y - 1) / 4.0f) * arcHeightSize);
+
+	ColPrimitive2D::Rect startRect({ startX - 10, startY - 10 }, { startX + 10, startY + 10 });
+	ColPrimitive2D::Rect startRect2({ startX2 - 10, startY - 10 }, { startX2 + 10, startY + 10 });
+	if (ColPrimitive2D::IsHit(rect, startRect) || ColPrimitive2D::IsHit(rect, startRect2)) {
+		return true;
+	}
+
+	//終点
+	float endY = mScene->GetScreenPosition(mEndBeat);
+
+	float endX = laneCenter + (mEndPos.x / 8.0f) * (laneSize / 2);
+	float endX2 = mScene->sMaxArcHeightX - (((mEndPos.y - 1) / 4.0f) * arcHeightSize);
+
+	ColPrimitive2D::Rect endRect({ endX - 12, endY - 12 }, { endX + 12, endY + 12 });
+	ColPrimitive2D::Rect endRect2({ endX2 - 12, endY - 12 }, { endX2 + 12, endY + 12 });
+	if (ColPrimitive2D::IsHit(rect, endRect) || ColPrimitive2D::IsHit(rect, endRect2)) {
+		return true;
+	}
+
+	//制御点
+	for (auto& cp : mControlPoints) {
+		float cpY = mScene->GetScreenPosition(cp.beat);
+
+		float cpX = laneCenter + (cp.pos.x / 8.0f) * (laneSize / 2);
+		float cpX2 = mScene->sMaxArcHeightX - (((cp.pos.y - 1) / 4.0f) * arcHeightSize);
+
+		ColPrimitive2D::Rect cpRect({ cpX - 12, cpY - 12 }, { cpX + 12, cpY + 12 });
+		ColPrimitive2D::Rect cpRect2({ cpX2 - 12, cpY - 12 }, { cpX2 + 12, cpY + 12 });
+		if (ColPrimitive2D::IsHit(rect, cpRect) || ColPrimitive2D::IsHit(rect, cpRect2)) {
+			return true;
+		}
+	}
 	return false;
 }
 
@@ -234,7 +287,8 @@ void EObjArcNote::Select(float x, float y, bool keep)
 				if (!((startPos - result.onLinePos).Length() <= 20 || (endPos - result.onLinePos).Length() <= 20)) {
 					EObjArcNote::ControlPoint cp;
 					cp.beat = mScene->GetVirtualCursorBeat(result.onLinePos.y);
-					cp.pos.y = itr->pos.y;
+					if(itr != mControlPoints.end()) cp.pos.y = itr->pos.y;
+					else cp.pos.y = 1;
 
 					float nearX = 1;
 					float nearDistance = abs(EditorScene::sMinLaneX - result.onLinePos.x);
@@ -248,6 +302,8 @@ void EObjArcNote::Select(float x, float y, bool keep)
 					}
 					cp.pos.x = nearX;
 					cp.select = true;
+
+					mScene->AddEditorAction(std::make_unique<EAModifyEOField<EObjArcNote>>(mUuid, 0, *this));
 					mControlPoints.push_back(cp);
 					std::stable_sort(mControlPoints.begin(), mControlPoints.end(), [](EObjArcNote::ControlPoint const& lhs, EObjArcNote::ControlPoint const& rhs) {
 						return lhs.beat < rhs.beat;
@@ -269,8 +325,68 @@ void EObjArcNote::Select(float x, float y, bool keep)
 	}
 }
 
-void EObjArcNote::Select(float, float, float, float, bool)
+void EObjArcNote::Select(float x1, float y1, float x2, float y2, bool keep)
 {
+	ColPrimitive2D::Rect rect({ x1, y1 }, { x2, y2 });
+	int32_t laneSize = mScene->sMaxLaneX - mScene->sMinLaneX;
+	int32_t laneCenter = (mScene->sMinLaneX + mScene->sMaxLaneX) / 2;
+	int32_t arcHeightSize = mScene->sMaxArcHeightX - mScene->sMinArcHeightX;
+
+	//始点
+	float startY = mScene->GetScreenPosition(mStartBeat);
+
+	float startX = laneCenter + (mStartPos.x / 8.0f) * (laneSize / 2);
+	float startX2 = mScene->sMaxArcHeightX - (((mStartPos.y - 1) / 4.0f) * arcHeightSize);
+
+	ColPrimitive2D::Rect startRect({ startX - 10, startY - 10 }, { startX + 10, startY + 10 });
+	ColPrimitive2D::Rect startRect2({ startX2 - 10, startY - 10 }, { startX2 + 10, startY + 10 });
+	if (ColPrimitive2D::IsHit(rect, startRect) || ColPrimitive2D::IsHit(rect, startRect2)) {
+		if (keep) {
+			mSelectStartPos = true;
+		}
+		else {
+			mSelectStartPos = !mSelectStartPos;
+		}
+		mSelectStartHeight = ColPrimitive2D::IsHit(rect, startRect2);
+	}
+
+	//終点
+	float endY = mScene->GetScreenPosition(mEndBeat);
+
+	float endX = laneCenter + (mEndPos.x / 8.0f) * (laneSize / 2);
+	float endX2 = mScene->sMaxArcHeightX - (((mEndPos.y - 1) / 4.0f) * arcHeightSize);
+
+	ColPrimitive2D::Rect endRect({ endX - 12, endY - 12 }, { endX + 12, endY + 12 });
+	ColPrimitive2D::Rect endRect2({ endX2 - 12, endY - 12 }, { endX2 + 12, endY + 12 });
+	if (ColPrimitive2D::IsHit(rect, endRect) || ColPrimitive2D::IsHit(rect, endRect2)) {
+		if (keep) {
+			mSelectEndPos = true;
+		}
+		else {
+			mSelectEndPos = !mSelectEndPos;
+		}
+		mSelectEndHeight = ColPrimitive2D::IsHit(rect, endRect2);
+	}
+
+	//制御点
+	for (auto& cp : mControlPoints) {
+		float cpY = mScene->GetScreenPosition(cp.beat);
+
+		float cpX = laneCenter + (cp.pos.x / 8.0f) * (laneSize / 2);
+		float cpX2 = mScene->sMaxArcHeightX - (((cp.pos.y - 1) / 4.0f) * arcHeightSize);
+
+		ColPrimitive2D::Rect cpRect({ cpX - 12, cpY - 12 }, { cpX + 12, cpY + 12 });
+		ColPrimitive2D::Rect cpRect2({ cpX2 - 12, cpY - 12 }, { cpX2 + 12, cpY + 12 });
+		if (ColPrimitive2D::IsHit(rect, cpRect) || ColPrimitive2D::IsHit(rect, cpRect2)) {
+			if (keep) {
+				cp.select = true;
+			}
+			else {
+				cp.select = !cp.select;
+			}
+			cp.selectHeight = ColPrimitive2D::IsHit(rect, cpRect2);
+		}
+	}
 }
 
 void EObjArcNote::UnSelect()

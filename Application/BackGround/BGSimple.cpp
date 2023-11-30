@@ -36,15 +36,13 @@ void BGSimple::Update()
 		shotCount++;
 	}
 
-	for (int32_t i = 0; i < 3; i++) {
-		float speed = Util::GetRand(-200.0f, -150.0f);
-		float size = Util::GetRand(5.0f, 10.0f);
-		float spawnX = Util::GetRand(18.0f, 25.0f);
-		if (Util::GetRand(0, 1) == 1) {
-			spawnX *= -1;
-		}
-		ParticleSprite3D::Spawn({ spawnX, Util::GetRand(-8.0f, 8.0f), 80 }, "ParticleCircle", RRect(0, 64, 0, 64), { 0.5f, 0.5f }, { Util::GetRand(0.0f, 1.0f), Util::GetRand(0.0f, 1.0f), Util::GetRand(0.0f, 1.0f), 1.0f }, 0, 0, { 0, 0, speed }, { 0, 0, speed }, { 0, 0, speed }, { 0, 0 }, { size, size }, { 0, 0 }, 0.5f, 0.5f, 0.5f);
+	float speed = Util::GetRand(-200.0f, -150.0f);
+	float size = Util::GetRand(5.0f, 10.0f);
+	float spawnX = Util::GetRand(18.0f, 25.0f);
+	if (Util::GetRand(0, 1) == 1) {
+		spawnX *= -1;
 	}
+	ParticleSprite3D::Spawn({ spawnX, Util::GetRand(-8.0f, 8.0f), 80 }, "ParticleCircle", RRect(0, 64, 0, 64), { 0.5f, 0.5f }, { Util::GetRand(0.0f, 1.0f), Util::GetRand(0.0f, 1.0f), Util::GetRand(0.0f, 1.0f), 1.0f }, 0, 0, { 0, 0, speed }, { 0, 0, speed }, { 0, 0, speed }, { 0, 0 }, { size, size }, { 0, 0 }, 0.5f, 0.5f, 0.5f);
 }
 
 void BGSimple::Draw()

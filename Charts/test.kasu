@@ -1,221 +1,39 @@
 {
-	"audiooffset": 0.0,
-	"audiopath": "./Charts/hogeSong.wav",
-	"basebpm" : 95,
-	"basemeter":  {
-		"amount" : 4,
-		"length" : 4
-	},
-	"bg": "Simple",
-	"event": [
-		{"beat": {"measure": 0, "beat": 0, "lpb":1}, "name": "tutorial", "paramString": "チュートリアルへようこそ", "paramFloat": 5.0},
-		{"beat": {"measure": 2, "beat": 0, "lpb":1}, "name": "tutorial", "paramString": "このリズムゲームの遊び方を説明します", "paramFloat": 5.0},
-		{"beat": {"measure": 4, "beat": 0, "lpb":1}, "name": "tutorial", "paramString": "降ってくるノートオブジェクトに合わせて、対応した操作を行います", "paramFloat": 5.0},
-		{"beat": {"measure": 6, "beat": 0, "lpb":1}, "name": "tutorial", "paramString": "これはタップノートです", "paramFloat": 5.0},
-		{"beat": {"measure": 8, "beat": 0, "lpb":1}, "name": "tutorial", "paramString": "ノートが判定ラインに重なる瞬間に対応したボタンを押しましょう", "paramFloat": 4.5},
-		{"beat": {"measure": 10, "beat": 0, "lpb":1}, "name": "tutorial", "paramString": "レーン左から、Fキー,Gキー,左クリック,右クリックが対応します", "paramFloat": 5.0},
-		{"beat": {"measure": 16, "beat": 0, "lpb":1}, "name": "tutorial", "paramString": "続けて、これはレーザーノートです", "paramFloat": 5.0},
-		{"beat": {"measure": 18, "beat": 0, "lpb":1}, "name": "tutorial", "paramString": "レーザーが動く方向に向かって、マウスを動かしましょう", "paramFloat": 4.5},
-		{"beat": {"measure": 28, "beat": 0, "lpb":1}, "name": "tutorial", "paramString": "これで説明は終了です", "paramFloat": 5.0},
-		{"beat": {"measure": 30, "beat": 0, "lpb":1}, "name": "tutorial", "paramString": "ノートを処理すると、スコアが算出されます", "paramFloat": 5.0},
-		{"beat": {"measure": 32, "beat": 0, "lpb":1}, "name": "tutorial", "paramString": "正確に処理するほど、スコアは高くなります", "paramFloat": 5.0},
-		{"beat": {"measure": 34, "beat": 0, "lpb":1}, "name": "tutorial", "paramString": "それなりに高いスコアを目指して頑張ってみましょう", "paramFloat": 5.0},
-		{"beat": {"measure": 36, "beat": 0, "lpb":1}, "name": "finish"}
-	],
-	"scrollchange": [
-		{"beat": {"measure": 5, "beat": 31, "lpb": 32}, "scroll": 0.0},
-		{"beat": {"measure": 11, "beat": 1, "lpb": 32}, "scroll": -1.0},
-		{"beat": {"measure": 11, "beat": 2, "lpb": 4}, "scroll": 1.0},
-		{"beat": {"measure": 15, "beat": 31, "lpb": 32}, "scroll": 0.0},
-		{"beat": {"measure": 19, "beat": 1, "lpb": 32}, "scroll": -1.0},
-		{"beat": {"measure": 19, "beat": 2, "lpb": 4}, "scroll": 1.0}
-	],
-	"notes": [
-		{"beat": {"measure": 12, "beat": 0, "lpb": 4}, "lane": 0},
-		{"beat": {"measure": 12, "beat": 1, "lpb": 4}, "lane": 1},
-		{"beat": {"measure": 12, "beat": 2, "lpb": 4}, "lane": 2},
-		{"beat": {"measure": 12, "beat": 3, "lpb": 4}, "lane": 3},
-		{"beat": {"measure": 13, "beat": 0, "lpb": 4}, "lane": 0},
-		{"beat": {"measure": 13, "beat": 1, "lpb": 4}, "lane": 1},
-		{"beat": {"measure": 13, "beat": 2, "lpb": 4}, "lane": 2},
-		{"beat": {"measure": 13, "beat": 3, "lpb": 4}, "lane": 3},
-		{"beat": {"measure": 14, "beat": 0, "lpb": 4}, "lane": 0},
-		{"beat": {"measure": 14, "beat": 1, "lpb": 4}, "lane": 2},
-		{"beat": {"measure": 14, "beat": 2, "lpb": 4}, "lane": 1},
-		{"beat": {"measure": 14, "beat": 3, "lpb": 4}, "lane": 3},
-		{"beat": {"measure": 15, "beat": 0, "lpb": 4}, "lane": 0},
-		{"beat": {"measure": 15, "beat": 1, "lpb": 4}, "lane": 2},
-		{"beat": {"measure": 15, "beat": 2, "lpb": 4}, "lane": 1},
-		{"beat": {"measure": 15, "beat": 3, "lpb": 4}, "lane": 3},
-		
-		{
-			"type": 2,
-			"beat": {"measure": 20, "beat": 0, "lpb": 4},
-			"pos": {"x": 5.0, "y": 1.0},
-			"controlpoints": [
-				{
-					"beat": {"measure": 20, "beat": 1, "lpb": 4},
-					"pos": {"x": -5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 20, "beat": 2, "lpb": 4},
-					"pos": {"x": 5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 20, "beat": 3, "lpb": 4},
-					"pos": {"x": -5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 21, "beat": 0, "lpb": 4},
-					"pos": {"x": 5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 21, "beat": 1, "lpb": 4},
-					"pos": {"x": -5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 21, "beat": 2, "lpb": 4},
-					"pos": {"x": 5.0, "y": 1.0}
-				}
-			],
-			"endbeat": {"measure": 21, "beat": 3, "lpb": 4},
-			"endpos": {"x": -5.0, "y": 1.0}
-		},
-		
-		{
-			"type": 2,
-			"beat": {"measure": 22, "beat": 0, "lpb": 4},
-			"pos": {"x": 5.0, "y": 1.0},
-			"controlpoints": [
-				{
-					"beat": {"measure": 22, "beat": 0, "lpb": 4},
-					"pos": {"x": -5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 22, "beat": 1, "lpb": 4},
-					"pos": {"x": -5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 22, "beat": 1, "lpb": 4},
-					"pos": {"x": 5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 22, "beat": 2, "lpb": 4},
-					"pos": {"x": 5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 22, "beat": 2, "lpb": 4},
-					"pos": {"x": -5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 22, "beat": 3, "lpb": 4},
-					"pos": {"x": -5.0, "y": 1.0}
-				}
-			],
-			"endbeat": {"measure": 22, "beat": 3, "lpb": 4},
-			"endpos": {"x": 5.0, "y": 1.0}
-		},
-		
-		{
-			"type": 2,
-			"beat": {"measure": 23, "beat": 0, "lpb": 4},
-			"pos": {"x": -5.0, "y": 1.0},
-			"controlpoints": [
-				{
-					"beat": {"measure": 23, "beat": 0, "lpb": 4},
-					"pos": {"x": 5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 23, "beat": 1, "lpb": 4},
-					"pos": {"x": 5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 23, "beat": 1, "lpb": 4},
-					"pos": {"x": -5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 23, "beat": 2, "lpb": 4},
-					"pos": {"x": -5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 23, "beat": 2, "lpb": 4},
-					"pos": {"x": 5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 23, "beat": 3, "lpb": 4},
-					"pos": {"x": 5.0, "y": 1.0}
-				}
-			],
-			"endbeat": {"measure": 23, "beat": 3, "lpb": 4},
-			"endpos": {"x": -5.0, "y": 1.0}
-		},
-		
-		{
-			"type": 2,
-			"beat": {"measure": 24, "beat": 0, "lpb": 4},
-			"pos": {"x": 5.0, "y": 1.0},
-			"controlpoints": [
-				{
-					"beat": {"measure": 24, "beat": 1, "lpb": 4},
-					"pos": {"x": 5.0, "y": 5.0}
-				},
-				{
-					"beat": {"measure": 24, "beat": 2, "lpb": 4},
-					"pos": {"x": -5.0, "y": 5.0}
-				},
-				{
-					"beat": {"measure": 24, "beat": 3, "lpb": 4},
-					"pos": {"x": -5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 25, "beat": 0, "lpb": 4},
-					"pos": {"x": 5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 25, "beat": 1, "lpb": 4},
-					"pos": {"x": 5.0, "y": 5.0}
-				},
-				{
-					"beat": {"measure": 25, "beat": 2, "lpb": 4},
-					"pos": {"x": -5.0, "y": 5.0}
-				}
-			],
-			"endbeat": {"measure": 25, "beat": 3, "lpb": 4},
-			"endpos": {"x": -5.0, "y": 1.0}
-		},
-		
-		{
-			"type": 2,
-			"beat": {"measure": 26, "beat": 0, "lpb": 4},
-			"pos": {"x": -5.0, "y": 1.0},
-			"controlpoints": [
-				{
-					"beat": {"measure": 26, "beat": 1, "lpb": 4},
-					"pos": {"x": -5.0, "y": 5.0}
-				},
-				{
-					"beat": {"measure": 26, "beat": 2, "lpb": 4},
-					"pos": {"x": 5.0, "y": 5.0}
-				},
-				{
-					"beat": {"measure": 26, "beat": 3, "lpb": 4},
-					"pos": {"x": 5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 27, "beat": 0, "lpb": 4},
-					"pos": {"x": -5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 27, "beat": 1, "lpb": 4},
-					"pos": {"x": -5.0, "y": 5.0}
-				},
-				{
-					"beat": {"measure": 27, "beat": 2, "lpb": 4},
-					"pos": {"x": 5.0, "y": 5.0}
-				}
-			],
-			"endbeat": {"measure": 27, "beat": 3, "lpb": 4},
-			"endpos": {"x": 5.0, "y": 1.0}
-		}
-	]
+    "audiooffset": 0.0,
+    "audiopath": "",
+    "basebpm": 120.0,
+    "basemeter": {
+        "amount": 8,
+        "length": 4
+    },
+    "bg": "",
+    "notes": [
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 4,
+                "measure": 0
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 4,
+                "measure": 0
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 3,
+                "measure": 0
+            },
+            "lane": 1,
+            "type": 0
+        }
+    ]
 }

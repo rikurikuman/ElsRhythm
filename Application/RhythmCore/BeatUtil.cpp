@@ -2,6 +2,7 @@
 
 void MusicDesc::Init()
 {
+	changeList.clear();
 	for (const std::pair<Beat, float>& pair : bpmChange) {
 		if (!Util::Contains(changeList, pair.first)) {
 			changeList.push_back(pair.first);

@@ -17,6 +17,8 @@
 #include <EObjArcNote.h>
 #include <RAudio.h>
 #include <filesystem>
+#include <PathUtil.h>
+#include <cuchar>
 
 EditorScene::EditorScene()
 {
@@ -74,11 +76,17 @@ void EditorScene::Update()
 	int32_t laneCenter = (sMinLaneX + sMaxLaneX) / 2;
 	Vector2 mouse = RInput::GetMousePos();
 
+	if ((RInput::GetKey(DIK_LCONTROL) || RInput::GetKey(DIK_RCONTROL)) && RInput::GetKeyDown(DIK_Z)) {
+		Undo();
+	}
+
+	if ((RInput::GetKey(DIK_LCONTROL) || RInput::GetKey(DIK_RCONTROL)) && RInput::GetKeyDown(DIK_Y)) {
+		Redo();
+	}
+
 	if (mState == EditorState::Chart) {
 		if (GetActiveWindow() == RWindow::GetWindowHandle()
-			&& !ImGui::GetIO().WantCaptureMouse
-			&& sMinFieldX <= mouse.x && mouse.x <= sMaxFieldX
-			&& 0 <= mouse.y && mouse.y <= 720) {
+			&& !ImGui::GetIO().WantCaptureMouse) {
 
 			if (RInput::GetMouseMove().z != 0)
 				mTime += 5.0f * RInput::GetMouseMove().z;
@@ -87,7 +95,24 @@ void EditorScene::Update()
 				mDragStartPos = mouse;
 			}
 
-			if (mMode == EditMode::Pen) {
+			if (RInput::GetKeyDown(DIK_DELETE)) {
+				std::vector<std::unique_ptr<EditorAction>> acts;
+
+				for (auto itr = mEditorObjects.begin(); itr != mEditorObjects.end();) {
+					IEditorObject* obj = itr->get();
+					if (obj->IsSelected()) {
+						AddEditorAction(std::make_unique<EARemoveEO>(obj->mUuid, *itr));
+						itr = mEditorObjects.erase(itr);
+						continue;
+					}
+
+					itr++;
+				}
+
+				if(!acts.empty()) mEditorActions.push_back(std::move(acts));
+			}
+
+			if (mMode == EditMode::Pen || mMode == EditMode::AreaSelect) {
 				bool checkSelect = false;
 				int32_t selectCount = 0;
 				std::vector<IEditorObject*> selectList;
@@ -101,6 +126,32 @@ void EditorScene::Update()
 				}
 
 				bool checkOnObject = false;
+				if (mMode == EditMode::AreaSelect && (RInput::GetMouseClick(0) || RInput::GetMouseClickUp(0))) {
+					if (RInput::GetMouseClickDown(0)) {
+						misDragging = true;
+						for (auto itr = mEditorObjects.begin(); itr != mEditorObjects.end(); itr++) {
+							IEditorObject* obj = itr->get();
+							if (obj->Collide(mDragStartPos.x, mDragStartPos.y)) {
+								misDragging = false;
+								break;
+							}
+						}
+					}
+
+					if (misDragging) {
+						SimpleDrawer::DrawBox(mDragStartPos.x, mDragStartPos.y, mouse.x, mouse.y, 50, 0x00ffff, false, 2);
+
+						if (RInput::GetMouseClickUp(0)) {
+							for (auto itr = mEditorObjects.begin(); itr != mEditorObjects.end(); itr++) {
+								IEditorObject* obj = itr->get();
+								if (obj->Collide(mDragStartPos.x, mDragStartPos.y, mouse.x, mouse.y)) {
+									checkOnObject = true;
+									obj->Select(mDragStartPos.x, mDragStartPos.y, mouse.x, mouse.y, false);
+								}
+							}
+						}
+					}
+				}
 				for (auto itr = mEditorObjects.begin(); itr != mEditorObjects.end(); itr++) {
 					IEditorObject* obj = itr->get();
 					if (obj->Collide(RInput::GetMousePos().x, RInput::GetMousePos().y)) {
@@ -117,6 +168,7 @@ void EditorScene::Update()
 						}
 					}
 				}
+
 				if (!checkOnObject && RInput::GetMouseClickDown(0)) {
 					for (auto itr = mEditorObjects.begin(); itr != mEditorObjects.end(); itr++) {
 						IEditorObject* obj = itr->get();
@@ -135,72 +187,82 @@ void EditorScene::Update()
 					}
 				}
 
+				//ドラッグ移動
 				if (RInput::GetMouseClick(0)) {
 					Vector2 drag = (mouse - mDragStartPos);
 					float dragDistance = abs(drag.Length());
 
+					std::vector<std::unique_ptr<EditorAction>> acts;
+
 					for (IEditorObject* obj : selectList) {
 						if (RInput::GetMouseClickDown(0)) {
+							AddEditorAction(obj->GetSavePoint());
 							obj->MoveStart();
 						}
 						if (dragDistance >= 5) {
 							obj->Move(drag.x, drag.y);
 						}
 					}
+
+					if(!acts.empty()) mEditorActions.push_back(std::move(acts));
 				}
 
 				//何も選択してないなら追加の処理
-				if (!checkOnObject && !checkSelect) {
-					if (mEditType == EditType::TapNote) {
-						if (mouse.x >= sMinLaneX && mouse.x <= sMaxLaneX) {
-							Beat cursorBeat = GetCursorBeat();
-
-							int32_t lane = 0;
-							for (int i = 0; i <= 3; i++) {
-								int32_t x1 = sMinLaneX + laneSize / 4 * i;
-								int32_t x2 = sMinLaneX + laneSize / 4 * (i + 1);
-
-								if (mouse.x >= x1 && mouse.x <= x2) {
-									lane = i;
-									break;
-								}
-							}
-
-							EObjTapNote::TempDraw(this, lane, cursorBeat);
-
-							if (RInput::GetMouseClickDown(0)) {
-								mEditorObjects.push_back(std::make_unique<EObjTapNote>(this));
-								EObjTapNote* obj = static_cast<EObjTapNote*>(mEditorObjects.back().get());
-								obj->mLane = lane;
-								obj->mBeat = cursorBeat;
-							}
-						}
-					}
-					else {
-						if (mEditType == EditType::ArcNote) {
+				if (mMode == EditMode::Pen) {
+					if (!checkOnObject && !checkSelect) {
+						if (mEditType == EditType::TapNote) {
 							if (mouse.x >= sMinLaneX && mouse.x <= sMaxLaneX) {
 								Beat cursorBeat = GetCursorBeat();
 
-								float nearX = 1;
-								float nearDistance = abs(EditorScene::sMinLaneX - mouse.x);
-								for (float tx = -8; tx <= 8; tx += 0.25f) {
-									float sx = laneCenter + (tx / 8.0f) * (laneSize / 2);
-									float distance = abs(sx - mouse.x);
-									if (distance <= nearDistance) {
-										nearX = tx;
-										nearDistance = distance;
+								int32_t lane = 0;
+								for (int i = 0; i <= 3; i++) {
+									int32_t x1 = sMinLaneX + laneSize / 4 * i;
+									int32_t x2 = sMinLaneX + laneSize / 4 * (i + 1);
+
+									if (mouse.x >= x1 && mouse.x <= x2) {
+										lane = i;
+										break;
 									}
 								}
 
-								EObjArcNote::TempDraw(this, nearX, cursorBeat);
+								EObjTapNote::TempDraw(this, lane, cursorBeat);
 
 								if (RInput::GetMouseClickDown(0)) {
-									mEditorObjects.push_back(std::make_unique<EObjArcNote>(this));
-									EObjArcNote* obj = static_cast<EObjArcNote*>(mEditorObjects.back().get());
-									obj->mStartPos = { nearX, 1.0f };
-									obj->mEndPos = { nearX, 1.0f };
-									obj->mStartBeat = cursorBeat;
-									obj->mEndBeat = { cursorBeat.measure + 1, 0, 1 };
+									mEditorObjects.push_back(std::make_unique<EObjTapNote>(this));
+									EObjTapNote* obj = static_cast<EObjTapNote*>(mEditorObjects.back().get());
+									obj->mLane = lane;
+									obj->mBeat = cursorBeat;
+									AddEditorAction(std::make_unique<EAAddEO>(obj->mUuid, mEditorObjects.back()));
+								}
+							}
+						}
+						else {
+							if (mEditType == EditType::ArcNote) {
+								if (mouse.x >= sMinLaneX && mouse.x <= sMaxLaneX) {
+									Beat cursorBeat = GetCursorBeat();
+
+									float nearX = 1;
+									float nearDistance = abs(EditorScene::sMinLaneX - mouse.x);
+									for (float tx = -8; tx <= 8; tx += 0.25f) {
+										float sx = laneCenter + (tx / 8.0f) * (laneSize / 2);
+										float distance = abs(sx - mouse.x);
+										if (distance <= nearDistance) {
+											nearX = tx;
+											nearDistance = distance;
+										}
+									}
+
+									EObjArcNote::TempDraw(this, nearX, cursorBeat);
+
+									if (RInput::GetMouseClickDown(0)) {
+										mEditorObjects.push_back(std::make_unique<EObjArcNote>(this));
+										EObjArcNote* obj = static_cast<EObjArcNote*>(mEditorObjects.back().get());
+										obj->mStartPos = { nearX, 1.0f };
+										obj->mEndPos = { nearX, 1.0f };
+										obj->mStartBeat = cursorBeat;
+										obj->mEndBeat = { cursorBeat.measure + 1, 0, 1 };
+										AddEditorAction(std::make_unique<EAAddEO>(obj->mUuid, mEditorObjects.back()));
+									}
 								}
 							}
 						}
@@ -225,6 +287,7 @@ void EditorScene::Update()
 						for (auto itr = mEditorObjects.begin(); itr != mEditorObjects.end();) {
 							IEditorObject* obj = itr->get();
 							if (obj->IsSelected()) {
+								AddEditorAction(std::make_unique<EARemoveEO>(obj->mUuid, *itr));
 								itr = mEditorObjects.erase(itr);
 								continue;
 							}
@@ -237,6 +300,8 @@ void EditorScene::Update()
 							IEditorObject* obj = itr->get();
 							if (RInput::GetMouseClickDown(0)) {
 								if (obj->Collide(RInput::GetMousePos().x, RInput::GetMousePos().y)) {
+									AddEditorAction(std::make_unique<EARemoveEO>(obj->mUuid, *itr));
+
 									itr = mEditorObjects.erase(itr);
 									break;
 								}
@@ -254,12 +319,18 @@ void EditorScene::Update()
 			}
 		}
 	}
-	
+
+	std::vector<std::unique_ptr<EditorAction>> acts;
+	for (auto& act : mNowActions) {
+		acts.push_back(std::move(act));
+	}
+	mNowActions.clear();
+	if (!acts.empty()) {
+		mFutureEditorActions.clear();
+		mEditorActions.push_back(std::move(acts));
+	}
 
 	mNowScrollPos = GetPosition(mTime);
-
-	light.Update();
-	//camera.Update();
 }
 
 void EditorScene::Draw()
@@ -313,7 +384,7 @@ Beat EditorScene::GetVirtualCursorBeat(float y)
 	Beat checkBeat = cursorBeat;
 	while (true) {
 		checkBeat.beat++;
-		if (checkBeat.beat >= mSetLPB) {
+		if (chartFile.music.ConvertBeatToMiliSeconds(checkBeat) >= chartFile.music.ConvertBeatToMiliSeconds({ checkBeat.measure + 1, 0, 1 })) {
 			checkBeat.beat = 0;
 			checkBeat.measure++;
 		}
@@ -337,8 +408,11 @@ Beat EditorScene::GetVirtualCursorBeat(float y)
 	while (true) {
 		checkBeat.beat--;
 		if (checkBeat.beat < 0) {
-			checkBeat.beat = mSetLPB;
+			checkBeat.beat = 0;
 			checkBeat.measure--;
+			while (chartFile.music.ConvertBeatToMiliSeconds({ checkBeat.measure, checkBeat.beat + 1, checkBeat.LPB }) < chartFile.music.ConvertBeatToMiliSeconds({ checkBeat.measure + 1, 0, 1 })) {
+				checkBeat.beat++;
+			}
 		}
 
 		if (abs(checkBeat.measure - startMeasure) >= 100) {
@@ -359,6 +433,12 @@ Beat EditorScene::GetVirtualCursorBeat(float y)
 	return cursorBeat;
 }
 
+void EditorScene::AddEditorAction(std::unique_ptr<EditorAction>&& act)
+{
+	mNowActions.push_back(std::move(act));
+	mFutureEditorActions.clear();
+}
+
 
 void EditorScene::ShowWindow()
 {
@@ -373,11 +453,18 @@ void EditorScene::ShowMainWindow()
 
 	ImGuiWindowFlags window_flags = 0;
 	window_flags |= ImGuiWindowFlags_MenuBar;
+	window_flags |= ImGuiWindowFlags_NoMove;
 	ImGui::Begin("Editor", NULL, window_flags);
 
 	if (mState == EditorState::Chart) {
 		ImGui::Text("楽曲ファイル");
-		ImGui::InputText("##楽曲ファイル", &chartFile.audiopath);
+		if (ImGui::InputText("##楽曲ファイル", &chartFile.audiopath)) {
+			std::filesystem::path base = PathUtil::ConvertAbsolute(chartFile.path);
+			//std::u8string u8str = (const char8_t *)chartFile.audiopath.c_str();
+			std::filesystem::path audio = PathUtil::ConvertAbsolute(Util::ConvertStringToWString(chartFile.audiopath), base);
+			std::string str = Util::ConvertWStringToString(audio.c_str());
+			mAudioHandle = RAudio::Load(str);
+		}
 		ImGui::SameLine();
 		if (ImGui::Button("...##楽曲ファイル選択")) {
 			wchar_t filePath[MAX_PATH] = { 0 };
@@ -393,134 +480,222 @@ void EditorScene::ShowMainWindow()
 			ofn.nMaxFile = MAX_PATH;
 
 			if (GetOpenFileName(&ofn)) {
-				std::wstring wStr = filePath;
-				chartFile.audiopath = Util::ConvertWStringToString(wStr);
+				std::filesystem::path path = PathUtil::ConvertRelativeFromTo(chartFile.path, filePath);
+				chartFile.audiopath = Util::ConvertWStringToString(path.c_str());
+				mAudioHandle = RAudio::Load(Util::ConvertWStringToString(PathUtil::ConvertAbsolute(Util::ConvertStringToWString(chartFile.audiopath), PathUtil::ConvertAbsolute(chartFile.path)).c_str()));
 			}
 		}
 		ImGui::SameLine();
 		ImGui::HelpMarker("再生する音源を指定します");
-
+		ImGui::Text("再生位置");
+		float musicLength = RAudio::GetLength(mAudioHandle) * 1000;
+		ImGui::SliderFloat("##再生位置スライダー", &mTime, 0, musicLength, (Util::GetTimeString(mTime / 1000) + " / " + Util::GetTimeString(musicLength / 1000)).c_str());
 		ImGui::DragFloat("Time", &mTime);
 		if (ImGui::DragFloat("ScrollSpeed", &mScrollSpeed, 0.1f, 1.0f, 20.0f)) {
 			mCacheScrollPos.clear();
 		}
-		ImGui::Checkbox("EnableScrollChange", &mEnableScrollChangeInEditor);
 
-		ImGui::InputInt("ノーツ配置間隔", &mSetLPB);
-	}
+		ImGui::Text("ノーツ配置間隔");
+		ImGui::InputInt("##ノーツ配置間隔入力", &mSetLPB);
+		ImGui::SameLine();
+		ImGui::HelpMarker("ノーツを配置する際の間隔を何分音符区切りにするか決定します");
 
-	if (ImGui::BeginMenuBar()) {
-		if (ImGui::BeginMenu("ファイル")) {
-			if (ImGui::BeginMenu("新規作成")) {
-				if (ImGui::MenuItem("譜面ファイル(.kasu)")) {
-					InitEditor();
-					mState = EditorState::Chart;
-				}
-				ImGui::EndMenu();
-			}
-			if (ImGui::MenuItem("開く")) {
-				wchar_t filePath[MAX_PATH] = { 0 };
-
-				OPENFILENAME ofn = { 0 };
-				ofn.lStructSize = sizeof(OPENFILENAME);
-				ofn.hwndOwner = RWindow::GetWindowHandle();
-				ofn.lpstrFilter =
-					L"譜面ファイル (.kasu)\0*.kasu\0"
-					L"すべてのファイル (*.*)\0*.*\0";
-				ofn.nFilterIndex = 0;
-				ofn.lpstrFile = filePath;
-				ofn.nMaxFile = MAX_PATH;
-
-				auto old = std::filesystem::current_path();
-				if (GetOpenFileName(&ofn)) {
-					InitEditor();
-					std::wstring wStr = filePath;
-					Load(wStr);
-					mState = EditorState::Chart;
-				}
-				std::filesystem::current_path(old);
-			}
-			if (ImGui::MenuItem("保存")) {
-				if (chartFile.path.empty()) {
-					wchar_t filePath[MAX_PATH] = { 0 };
-
-					OPENFILENAME ofn = { 0 };
-					ofn.lStructSize = sizeof(OPENFILENAME);
-					ofn.hwndOwner = RWindow::GetWindowHandle();
-					ofn.lpstrFilter =
-						L"譜面ファイル (.kasu)\0*.kasu\0";
-					ofn.lpstrDefExt = L"kasu";
-					ofn.nFilterIndex = 0;
-					ofn.lpstrFile = filePath;
-					ofn.nMaxFile = MAX_PATH;
-					ofn.Flags = OFN_OVERWRITEPROMPT;
-
-					auto old = std::filesystem::current_path();
-					if (GetSaveFileName(&ofn)) {
-						std::wstring wStr = filePath;
-						Save(wStr);
-					}
-					std::filesystem::current_path(old);
-				}
-				else {
-					Save(Util::ConvertStringToWString(chartFile.path));
-				}
-			}
-			if (ImGui::MenuItem("名前を付けて保存")) {
-				wchar_t filePath[MAX_PATH] = { 0 };
-
-				OPENFILENAME ofn = { 0 };
-				ofn.lStructSize = sizeof(OPENFILENAME);
-				ofn.hwndOwner = RWindow::GetWindowHandle();
-				ofn.lpstrFilter =
-					L"譜面ファイル (.kasu)\0*.kasu\0";
-				ofn.lpstrDefExt = L"kasu";
-				ofn.nFilterIndex = 0;
-				ofn.lpstrFile = filePath;
-				ofn.nMaxFile = MAX_PATH;
-				ofn.Flags = OFN_OVERWRITEPROMPT;
-
-				auto old = std::filesystem::current_path();
-				if (GetSaveFileName(&ofn)) {
-					std::wstring wStr = filePath;
-					Save(wStr);
-				}
-				std::filesystem::current_path(old);
-			}
-
-			ImGui::EndMenu();
+		ImGui::Text("BPM");
+		ImGui::InputFloat("##BPM入力", &chartFile.music.baseBPM);
+		ImGui::SameLine();
+		if (ImGui::Button("...##BPM変化開")) {
+			mOpenBPMChangeWindow = true;
 		}
-		ImGui::EndMenuBar();
+		ImGui::SameLine();
+		ImGui::HelpMarker("楽曲の基本BPM(テンポ)を設定します");
+		
+		ImGui::Text("拍子");
+		ImGui::PushItemWidth(50);
+		ImGui::InputInt("##拍子入力", &chartFile.music.baseMeter.beatAmount, 0, 0);
+		ImGui::SameLine();
+		ImGui::Text("/");
+		ImGui::SameLine();
+		ImGui::InputInt("##拍子入力2", &chartFile.music.baseMeter.beatLength, 0);
+		ImGui::PopItemWidth();
+		ImGui::SameLine();
+		if (ImGui::Button("...##拍子変化開")) {
+			mOpenMeterChangeWindow = true;
+		}
+		ImGui::SameLine();
+		ImGui::HelpMarker("楽曲の基本拍子(1小節の長さ)を設定します");
 	}
+
+	ShowMainWindowMenuBar();
+	if (mOpenBPMChangeWindow) ShowBPMChangeWindow();
+	if (mOpenMeterChangeWindow) ShowMeterChangeWindow();
 
 	ImGui::End();
 }
 
 void EditorScene::ShowToolWindow()
 {
-	ImGui::SetNextWindowPos({ 1280, 0 }, ImGuiCond_FirstUseEver, {1, 0});
+	if (mState == EditorState::Chart) {
+		ImGui::SetNextWindowPos({ 1280, 0 }, ImGuiCond_FirstUseEver, { 1, 0 });
+
+		ImGuiWindowFlags window_flags = 0;
+		window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
+		ImGui::Begin("ツール", NULL, window_flags);
+
+		if (ImGui::RadioButton("ペン", mMode == EditMode::Pen)) {
+			mMode = EditMode::Pen;
+		}
+		ImGui::SameLine();
+		if (ImGui::RadioButton("消しゴム", mMode == EditMode::Erase)) {
+			mMode = EditMode::Erase;
+		}
+		ImGui::SameLine();
+		if (ImGui::RadioButton("範囲選択", mMode == EditMode::AreaSelect)) {
+			mMode = EditMode::AreaSelect;
+		}
+
+		if (mMode == EditMode::Pen) {
+			if (ImGui::RadioButton("タップ", mEditType == EditType::TapNote)) {
+				mEditType = EditType::TapNote;
+			}
+			ImGui::SameLine();
+			if (ImGui::RadioButton("レーザー", mEditType == EditType::ArcNote)) {
+				mEditType = EditType::ArcNote;
+			}
+		}
+
+		ImGui::End();
+	}
+}
+
+void EditorScene::ShowBPMChangeWindow() {
+	ImGui::SetNextWindowPos({ 640, 360 }, ImGuiCond_FirstUseEver, { 0.5f, 0.5f });
 
 	ImGuiWindowFlags window_flags = 0;
 	window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
-	ImGui::Begin("ツール", NULL, window_flags);
-
-	if (ImGui::RadioButton("ペン", mMode == EditMode::Pen)) {
-		mMode = EditMode::Pen;
+	ImGui::Begin("BPM変化", &mOpenBPMChangeWindow, window_flags);
+	if (ImGui::Button("追加##BPM変化追加")) {
+		mBPMChanges.push_back({ {0, 0, 1}, 120 });
 	}
-	ImGui::SameLine();
-	if (ImGui::RadioButton("消しゴム", mMode == EditMode::Erase)) {
-		mMode = EditMode::Erase;
-	}
+	ImGui::BeginChild("##BPM変化の子", { 600, 300 }, true);
+	int32_t i = 0;
+	bool checkActive = false;
+	for (auto itr = mBPMChanges.begin(); itr != mBPMChanges.end();) {
+		EBPMChange& c = *itr;
 
-	if (mMode == EditMode::Pen) {
-		if (ImGui::RadioButton("タップ", mEditType == EditType::TapNote)) {
-			mEditType = EditType::TapNote;
-		}
+		ImGui::PushItemWidth(50);
+		ImGui::InputInt(Util::StringFormat("小節##小節%d", i).c_str(), &c.beat.measure, 0, 0);
+		if (ImGui::IsItemActive()) checkActive = true;
 		ImGui::SameLine();
-		if (ImGui::RadioButton("レーザー", mEditType == EditType::ArcNote)) {
-			mEditType = EditType::ArcNote;
+		ImGui::BeginDisabled(c.beat.LPB == 1);
+		ImGui::InputInt(Util::StringFormat("拍##拍%d", i).c_str(), &c.beat.beat, 0, 0);
+		if (ImGui::IsItemActive()) checkActive = true;
+		ImGui::EndDisabled();
+		ImGui::SameLine();
+		if (ImGui::InputInt(Util::StringFormat("基準音符##基準音符%d", i).c_str(), &c.beat.LPB, 0, 0)) {
+			if (c.beat.LPB < 1) c.beat.LPB = 1;
 		}
+		if (ImGui::IsItemActive()) checkActive = true;
+		ImGui::PopItemWidth();
+		ImGui::SameLine(0, 20);
+		ImGui::Text("BPM");
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(80);
+		ImGui::InputFloat(Util::StringFormat("##BPM%d", i).c_str(), &c.bpm, 0, 0, "%.2f");
+		if (ImGui::IsItemActive()) checkActive = true;
+		ImGui::SameLine();
+		if (ImGui::Button((Util::StringFormat("削除##%d", i).c_str()))) {
+			i++;
+			itr = mBPMChanges.erase(itr);
+			continue;
+		}
+		i++;
+		itr++;
 	}
+
+	if (!checkActive) {
+		for (EBPMChange& c : mBPMChanges) {
+			if (c.beat.LPB == 1) {
+				c.beat.beat = 0;
+			}
+		}
+
+		mBPMChanges.sort([](const EBPMChange& lhs, const EBPMChange& rhs) {
+			return lhs.beat < rhs.beat;
+		});
+	}
+
+	chartFile.music.bpmChange.clear();
+	for (EBPMChange& c : mBPMChanges) {
+		chartFile.music.bpmChange[c.beat] = c.bpm;
+	}
+	chartFile.music.cacheMiliSec.clear();
+	mCacheScrollPos.clear();
+	chartFile.music.Init();
+	ImGui::EndChild();
+
+	ImGui::End();
+}
+
+void EditorScene::ShowMeterChangeWindow() {
+	ImGui::SetNextWindowPos({ 640, 360 }, ImGuiCond_FirstUseEver, { 0.5f, 0.5f });
+
+	ImGuiWindowFlags window_flags = 0;
+	window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
+	ImGui::Begin("拍子変化", &mOpenMeterChangeWindow, window_flags);
+	if (ImGui::Button("追加##拍子変化追加")) {
+		mMeterChanges.push_back({ {0, 0, 1}, {4, 4} });
+	}
+	ImGui::BeginChild("##拍子変化リスト", { 600, 300 }, true);
+	int32_t i = 0;
+	bool checkActive = false;
+	for (auto itr = mMeterChanges.begin(); itr != mMeterChanges.end();) {
+		EMeterChange& c = *itr;
+
+		ImGui::PushItemWidth(50);
+		ImGui::InputInt(Util::StringFormat("小節##小節%d", i).c_str(), &c.beat.measure, 0, 0);
+		if (ImGui::IsItemActive()) checkActive = true;
+		ImGui::SameLine(0, 20);
+		ImGui::InputInt(Util::StringFormat("拍数##拍数%d", i).c_str(), &c.meter.beatAmount, 0, 0);
+		if (ImGui::IsItemActive()) checkActive = true;
+		ImGui::SameLine();
+		ImGui::Text(" / ");
+		ImGui::SameLine();
+		if (ImGui::InputInt(Util::StringFormat("基準音符##基準音符%d", i).c_str(), &c.meter.beatLength, 0, 0)) {
+			if (c.meter.beatLength < 1) c.meter.beatLength = 1;
+		}
+		if (ImGui::IsItemActive()) checkActive = true;
+		ImGui::PopItemWidth();
+		ImGui::SameLine();
+		if (ImGui::Button((Util::StringFormat("削除##%d", i).c_str()))) {
+			i++;
+			itr = mMeterChanges.erase(itr);
+			continue;
+		}
+		i++;
+		itr++;
+	}
+
+	if (!checkActive) {
+		for (EMeterChange& c : mMeterChanges) {
+			c.beat.beat = 0;
+			c.beat.LPB = 1;
+
+			if (c.meter.beatLength < 1) c.meter.beatLength = 1;
+		}
+
+		mMeterChanges.sort([](const EMeterChange& lhs, const EMeterChange& rhs) {
+			return lhs.beat < rhs.beat;
+		});
+	}
+
+	chartFile.music.meterChange.clear();
+	for (EMeterChange& c : mMeterChanges) {
+		chartFile.music.meterChange[c.beat] = c.meter;
+	}
+	chartFile.music.cacheMiliSec.clear();
+	chartFile.music.Init();
+	mCacheScrollPos.clear();
+	ImGui::EndChild();
 
 	ImGui::End();
 }
@@ -572,7 +747,7 @@ float EditorScene::GetPosition(float miliSec)
 
 Beat EditorScene::GetCursorBeat()
 {
-	Beat cursorBeat = { chartFile.music.ConvertMiliSecondsToBeat(mTime).measure, 0, mSetLPB };
+	Beat cursorBeat = { chartFile.music.ConvertMiliSecondsToBeat(mTime).measure + 1, 0, mSetLPB };
 	float cursorDistance = abs(RInput::GetMousePos().y - GetScreenPosition(cursorBeat));
 
 	bool isStartUpOut = GetScreenPosition(cursorBeat) < 0;
@@ -587,7 +762,7 @@ Beat EditorScene::GetCursorBeat()
 		}
 		while (true) {
 			checkBeat.beat++;
-			if (checkBeat.beat >= mSetLPB - 1) {
+			if (chartFile.music.ConvertBeatToMiliSeconds(checkBeat) >= chartFile.music.ConvertBeatToMiliSeconds({checkBeat.measure + 1, 0, 1})) {
 				checkBeat.beat = 0;
 				checkBeat.measure++;
 			}
@@ -622,8 +797,11 @@ Beat EditorScene::GetCursorBeat()
 		while (true) {
 			checkBeat.beat--;
 			if (checkBeat.beat < 0) {
-				checkBeat.beat = mSetLPB - 1;
+				checkBeat.beat = 0;
 				checkBeat.measure--;
+				while (chartFile.music.ConvertBeatToMiliSeconds({checkBeat.measure, checkBeat.beat + 1, checkBeat.LPB}) < chartFile.music.ConvertBeatToMiliSeconds({ checkBeat.measure + 1, 0, 1 })) {
+					checkBeat.beat++;
+				}
 			}
 
 			if (abs(checkBeat.measure - startMeasure) >= 100) {
@@ -661,7 +839,7 @@ void EditorScene::DrawMeasureLine(Beat beat, Color color, bool drawNum)
 	}
 
 	SimpleDrawer::DrawLine(sMinLaneX, static_cast<int32_t>(posY), sMaxLaneX, static_cast<int32_t>(posY), 0, color, 2);
-	if(drawNum) SimpleDrawer::DrawString(sMinLaneX - 20.0f, posY, 0, Util::StringFormat("%d", beat.measure), color, "", 20, { 1.0f, 0.5f });
+	if (drawNum) SimpleDrawer::DrawString(sMinLaneX - 20.0f, posY, 0, Util::StringFormat("%d", beat.measure), color, "", 20, { 1.0f, 0.5f });
 }
 
 void EditorScene::DrawMeasureLines()
@@ -675,7 +853,7 @@ void EditorScene::DrawMeasureLines()
 		DrawMeasureLine({ measure, 0, 1 }, Color(1, 1, 1, 1), true);
 
 		float nextMeasureTime = chartFile.music.ConvertBeatToMiliSeconds({ measure + 1, 0, 1 });
-		for (int32_t beat = 1; beat < mSetLPB; beat++) {
+		for (int32_t beat = 1; true; beat++) {
 			if (chartFile.music.ConvertBeatToMiliSeconds({ measure, beat, mSetLPB })
 				>= nextMeasureTime) {
 				break;
@@ -692,7 +870,7 @@ void EditorScene::DrawMeasureLines()
 		DrawMeasureLine({ measure, 0, 1 }, Color(1, 1, 1, 1), true);
 
 		float nextMeasureTime = chartFile.music.ConvertBeatToMiliSeconds({ measure + 1, 0, 1 });
-		for (int32_t beat = 1; beat < mSetLPB; beat++) {
+		for (int32_t beat = 1; true; beat++) {
 			if (chartFile.music.ConvertBeatToMiliSeconds({ measure, beat, mSetLPB })
 				>= nextMeasureTime) {
 				break;
@@ -700,6 +878,16 @@ void EditorScene::DrawMeasureLines()
 			DrawMeasureLine({ measure, beat, mSetLPB }, Color(1, 1, 1, 0.1f), false);
 		}
 		measure++;
+	}
+
+	for (std::pair<Beat, float> change : chartFile.music.bpmChange) {
+		float posY = sBaseLineY - (GetPosition(chartFile.music.ConvertBeatToMiliSeconds(change.first)) - mNowScrollPos);
+
+		if (posY < 0 || posY > 720) {
+			continue;
+		}
+
+		SimpleDrawer::DrawString(sMaxLaneX + 20.0f, posY, 0, Util::StringFormat("%.2f", change.second), 0xffffaa, "", 20, { 0.0f, 0.5f });
 	}
 
 	for (std::pair<Beat, float> change : chartFile.scrollChange) {
@@ -798,19 +986,128 @@ void EditorScene::DrawNotes()
 	}
 }
 
+void EditorScene::ShowMainWindowMenuBar()
+{
+	if (ImGui::BeginMenuBar()) {
+		if (ImGui::BeginMenu("ファイル")) {
+			if (ImGui::BeginMenu("新規作成")) {
+				if (ImGui::MenuItem("譜面ファイル(.kasu)")) {
+					InitEditor();
+					mState = EditorState::Chart;
+				}
+				ImGui::EndMenu();
+			}
+			if (ImGui::MenuItem("開く")) {
+				wchar_t filePath[MAX_PATH] = { 0 };
+
+				OPENFILENAME ofn = { 0 };
+				ofn.lStructSize = sizeof(OPENFILENAME);
+				ofn.hwndOwner = RWindow::GetWindowHandle();
+				ofn.lpstrFilter =
+					L"譜面ファイル (.kasu)\0*.kasu\0"
+					L"すべてのファイル (*.*)\0*.*\0";
+				ofn.nFilterIndex = 0;
+				ofn.lpstrFile = filePath;
+				ofn.nMaxFile = MAX_PATH;
+
+				auto old = std::filesystem::current_path();
+				if (GetOpenFileName(&ofn)) {
+					InitEditor();
+					std::wstring wStr = filePath;
+					Load(wStr);
+					mState = EditorState::Chart;
+				}
+				std::filesystem::current_path(old);
+			}
+			if (ImGui::MenuItem("保存")) {
+				if (chartFile.path.empty()) {
+					wchar_t filePath[MAX_PATH] = { 0 };
+
+					OPENFILENAME ofn = { 0 };
+					ofn.lStructSize = sizeof(OPENFILENAME);
+					ofn.hwndOwner = RWindow::GetWindowHandle();
+					ofn.lpstrFilter =
+						L"譜面ファイル (.kasu)\0*.kasu\0";
+					ofn.lpstrDefExt = L"kasu";
+					ofn.nFilterIndex = 0;
+					ofn.lpstrFile = filePath;
+					ofn.nMaxFile = MAX_PATH;
+					ofn.Flags = OFN_OVERWRITEPROMPT;
+
+					auto old = std::filesystem::current_path();
+					if (GetSaveFileName(&ofn)) {
+						std::wstring wStr = filePath;
+						Save(wStr);
+					}
+					std::filesystem::current_path(old);
+				}
+				else {
+					Save(chartFile.path);
+				}
+			}
+			if (ImGui::MenuItem("名前を付けて保存")) {
+				wchar_t filePath[MAX_PATH] = { 0 };
+
+				OPENFILENAME ofn = { 0 };
+				ofn.lStructSize = sizeof(OPENFILENAME);
+				ofn.hwndOwner = RWindow::GetWindowHandle();
+				ofn.lpstrFilter =
+					L"譜面ファイル (.kasu)\0*.kasu\0";
+				ofn.lpstrDefExt = L"kasu";
+				ofn.nFilterIndex = 0;
+				ofn.lpstrFile = filePath;
+				ofn.nMaxFile = MAX_PATH;
+				ofn.Flags = OFN_OVERWRITEPROMPT;
+
+				auto old = std::filesystem::current_path();
+				if (GetSaveFileName(&ofn)) {
+					std::wstring wStr = filePath;
+					Save(wStr);
+				}
+				std::filesystem::current_path(old);
+			}
+
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("編集")) {
+			if (ImGui::MenuItem("元に戻す  (Ctrl + Z)")) {
+				Undo();
+			}
+			if (ImGui::MenuItem("やり直し  (Ctrl + Y)")) {
+				Redo();
+			}
+			ImGui::EndMenu();
+		}
+		ImGui::EndMenuBar();
+	}
+
+}
+
 void EditorScene::InitEditor()
 {
 	mState = EditorState::None;
 	chartFile = ChartFile();
+	chartFile.path = PathUtil::GetMainPath() / "Charts";
 	mEditorObjects.clear();
 	mTime = 0;
+	mBPMChanges.clear();
+	mMeterChanges.clear();
 }
 
 void EditorScene::Load(std::wstring path)
 {
-	Init();
-	chartFile.path = Util::ConvertWStringToString(path);
+	chartFile.path = PathUtil::ConvertRelativeFromMainPath(path).c_str();
 	chartFile.Load();
+
+	mAudioHandle = RAudio::Load(Util::ConvertWStringToString(PathUtil::ConvertAbsolute(Util::ConvertStringToWString(chartFile.audiopath), PathUtil::ConvertAbsolute(chartFile.path)).c_str()));
+
+	for (auto& pair : chartFile.music.bpmChange) {
+		mBPMChanges.push_back({ pair.first, pair.second });
+	}
+
+	for (auto& pair : chartFile.music.meterChange) {
+		mMeterChanges.push_back({ pair.first, pair.second });
+	}
 
 	for (auto& note : chartFile.notes) {
 		if (note.type == Note::Types::Tap) {
@@ -839,7 +1136,7 @@ void EditorScene::Load(std::wstring path)
 
 void EditorScene::Save(std::wstring path)
 {
-	chartFile.path = Util::ConvertWStringToString(path);
+	chartFile.path = PathUtil::ConvertRelativeFromMainPath(path).c_str();
 
 	chartFile.notes.clear();
 	for (auto& obj : mEditorObjects) {
@@ -868,6 +1165,37 @@ void EditorScene::Save(std::wstring path)
 			chartFile.notes.push_back(chartNote);
 		}
 	}
-	
+
 	chartFile.Save();
+}
+
+void EditorScene::Undo()
+{
+	if (mEditorActions.empty()) return;
+
+	std::vector<std::unique_ptr<EditorAction>> acts;
+
+	for(auto itr = mEditorActions.back().rbegin(); itr != mEditorActions.back().rend(); itr++) {
+		std::unique_ptr<EditorAction>& act = (*itr);
+		act->Undo(&mEditorObjects);
+		acts.push_back(std::move(act));
+	}
+
+	mEditorActions.pop_back();
+	mFutureEditorActions.push_back(std::move(acts));
+}
+
+void EditorScene::Redo()
+{
+	if (mFutureEditorActions.empty()) return;
+
+	std::vector<std::unique_ptr<EditorAction>> acts;
+	for (auto itr = mFutureEditorActions.back().rbegin(); itr != mFutureEditorActions.back().rend(); itr++) {
+		std::unique_ptr<EditorAction>& act = (*itr);
+		act->Redo(&mEditorObjects);
+		acts.push_back(std::move(act));
+	}
+
+	mFutureEditorActions.pop_back();
+	mEditorActions.push_back(std::move(acts));
 }

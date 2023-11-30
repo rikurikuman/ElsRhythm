@@ -9,7 +9,7 @@
 
 MainTestScene::MainTestScene()
 {
-	skydome = ModelObj(Model::Load("./Resources/Model/Skydome/", "Skydome.obj", "Skydome", true));
+	skydome = ModelObj(Model::Load("./Resources/Model/Skydome/Skydome.obj", "Skydome", true));
 
 	camera.mViewProjection.mEye = { 0, 0, -10 };
 	camera.mViewProjection.mTarget = { 0, 0, 0 };
@@ -49,7 +49,7 @@ void MainTestScene::Update()
 
 	for (int i = 0; i < 10; i++) {
 		testList.emplace_back();
-		testList.back().model = ModelObj(Model::Load("Resources/Model/", "Sphere.obj", "Sphere", true));
+		testList.back().model = ModelObj(Model::Load("Resources/Model/Sphere.obj", "Sphere", true));
 		testList.back().model.mTransform.scale = { 0.5f, 0.5f, 0.5f };
 		testList.back().model.mTuneMaterial.mColor = Color(Util::GetRand(0.0f, 1.0f), Util::GetRand(0.0f, 1.0f), Util::GetRand(0.0f, 1.0f), 1);
 		testList.back().vec = Vector3(Util::GetRand(-20.0f, 20.0f), Util::GetRand(-20.0f, 20.0f), Util::GetRand(-20.0f, 20.0f));

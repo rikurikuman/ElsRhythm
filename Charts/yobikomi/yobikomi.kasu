@@ -1,149 +1,4369 @@
 {
-	"audiooffset": 0.0,
-    "audiopath": "./Charts/Song_of_Yobikomikun.wav",
-	"basebpm" : 131,
-	"basemeter":  {
-		"amount" : 4,
-		"length" : 4
-	},
-	"scrollchange": [
-		{"beat": {"measure": 7, "beat": 0, "lpb":16}, "scroll": 0.5},
-		{"beat": {"measure": 7, "beat": 2, "lpb":16}, "scroll": 0.25},
-		{"beat": {"measure": 7, "beat": 4, "lpb":16}, "scroll": 0.125},
-		{"beat": {"measure": 7, "beat": 6, "lpb":16}, "scroll": 0.0625},
-		{"beat": {"measure": 7, "beat": 8, "lpb":16}, "scroll": 0.0},
-		{"beat": {"measure": 7, "beat": 10, "lpb":16}, "scroll": -2.0},
-		{"beat": {"measure": 7, "beat": 11, "lpb":16}, "scroll": 2.0},
-		{"beat": {"measure": 7, "beat": 12, "lpb":16}, "scroll": 1.0},
-		{"beat": {"measure": 8, "beat": 12, "lpb":16}, "scroll": 0.25},
-		{"beat": {"measure": 9, "beat": 0, "lpb":16}, "scroll": 1.0},
-		{"beat": {"measure": 9, "beat": 12, "lpb":16}, "scroll": 0.25},
-		{"beat": {"measure": 10, "beat": 0, "lpb":16}, "scroll": 1.0}
-	],
-	"notes": [
-		{
-			"type": 2,
-			"beat": {"measure": 0, "beat": 0, "lpb": 16},
-			"pos": {"x": 5.0, "y": 1.0},
-			"controlpoints": [
-				{
-					"beat": {"measure": 0, "beat": 4, "lpb": 16},
-					"pos": {"x": -5.0, "y": 1.0}
-				},
-				{
-					"beat": {"measure": 0, "beat": 8, "lpb": 16},
-					"pos": {"x": 3.0, "y": 5.0}
-				},
-				{
-					"beat": {"measure": 0, "beat": 10, "lpb": 16},
-					"pos": {"x": -1.0, "y": 1.0}
-				}
-			],
-			"endbeat": {"measure": 0, "beat": 12, "lpb": 16},
-			"endpos": {"x": 0.0, "y": 1.0}
-		},
-		{"beat": {"measure": 0, "beat": 0,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 0, "beat": 2,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 0, "beat": 3,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 0, "beat": 4,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 0, "beat": 6,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 0, "beat": 8,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 0, "beat": 10,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 0, "beat": 12,"lpb": 16}, "lane": 3},
-		
-		{"beat": {"measure": 1, "beat": 0,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 1, "beat": 2,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 1, "beat": 3,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 1, "beat": 4,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 1, "beat": 6,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 1, "beat": 8,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 1, "beat": 10,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 1, "beat": 12,"lpb": 16}, "lane": 0},
-		
-		{"beat": {"measure": 2, "beat": 0,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 2, "beat": 2,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 2, "beat": 4,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 2, "beat": 6,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 2, "beat": 8,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 2, "beat": 8,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 2, "beat": 14,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 2, "beat": 14,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 3, "beat": 0,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 3, "beat": 0,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 3, "beat": 6,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 3, "beat": 8,"lpb": 16}, "lane": 0},
-		
-		{"beat": {"measure": 4, "beat": 0,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 4, "beat": 2,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 4, "beat": 4,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 4, "beat": 6,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 4, "beat": 8,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 4, "beat": 8,"lpb": 16}, "lane": 2},
-		
-		{"beat": {"measure": 5, "beat": 0,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 5, "beat": 2,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 5, "beat": 4,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 5, "beat": 6,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 5, "beat": 8,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 5, "beat": 8,"lpb": 16}, "lane": 3},
-		
-		{"beat": {"measure": 6, "beat": 0,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 6, "beat": 2,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 6, "beat": 4,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 6, "beat": 6,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 6, "beat": 8,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 6, "beat": 12,"lpb": 16}, "lane": 0},
-		
-		{"beat": {"measure": 7, "beat": 12,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 7, "beat": 12,"lpb": 16}, "lane": 2},
-		
-		{"beat": {"measure": 8, "beat": 0,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 8, "beat": 0,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 8, "beat": 2,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 8, "beat": 3,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 8, "beat": 4,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 8, "beat": 5,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 8, "beat": 6,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 8, "beat": 8,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 8, "beat": 9,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 8, "beat": 10,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 8, "beat": 12,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 8, "beat": 12,"lpb": 16}, "lane": 3},
-		
-		{"beat": {"measure": 9, "beat": 0,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 9, "beat": 0,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 9, "beat": 2,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 9, "beat": 3,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 9, "beat": 4,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 9, "beat": 5,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 9, "beat": 6,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 9, "beat": 8,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 9, "beat": 9,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 9, "beat": 10,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 9, "beat": 12,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 9, "beat": 12,"lpb": 16}, "lane": 3},
-		
-		{"beat": {"measure": 10, "beat": 0,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 10, "beat": 1,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 10, "beat": 2,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 10, "beat": 3,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 10, "beat": 4,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 10, "beat": 5,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 10, "beat": 6,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 10, "beat": 7,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 10, "beat": 8,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 10, "beat": 8,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 10, "beat": 10,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 10, "beat": 11,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 10, "beat": 12,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 10, "beat": 14,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 10, "beat": 14,"lpb": 16}, "lane": 3},
-		{"beat": {"measure": 11, "beat": 0,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 11, "beat": 0,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 11, "beat": 2,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 11, "beat": 3,"lpb": 16}, "lane": 2},
-		{"beat": {"measure": 11, "beat": 4,"lpb": 16}, "lane": 1},
-		{"beat": {"measure": 11, "beat": 6,"lpb": 16}, "lane": 0},
-		{"beat": {"measure": 11, "beat": 8,"lpb": 16}, "lane": 0}
-	]
+    "audiooffset": 0.0,
+    "audiopath": "Song_of_Yobikomikun.wav",
+    "basebpm": 131.0,
+    "basemeter": {
+        "amount": 4,
+        "length": 4
+    },
+    "bg": "Simple",
+    "notes": [
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 0
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 0
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 0
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 0
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 0
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 0
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 0
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 0
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 1
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 1
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 1
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 1
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 1
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 1
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 1
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 1
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 2
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 2
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 2
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 2
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 2
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 2
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 2
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 2
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 3
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 3
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 3
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 3
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 4
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 4
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 4
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 4
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 4
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 4
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 5
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 5
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 5
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 5
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 5
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 5
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 6
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 6
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 6
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 6
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 6
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 6
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 7
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 7
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 8
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 8
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 8
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 8
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 8
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 16,
+                "measure": 8
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 8
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 8
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 9,
+                "lpb": 16,
+                "measure": 8
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 8
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 8
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 8
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 9
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 9
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 9
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 9
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 9
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 16,
+                "measure": 9
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 9
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 9
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 9,
+                "lpb": 16,
+                "measure": 9
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 9
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 9
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 9
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 10
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 16,
+                "measure": 10
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 10
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 10
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 10
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 16,
+                "measure": 10
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 10
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 16,
+                "measure": 10
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 10
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 10
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 10
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 11,
+                "lpb": 16,
+                "measure": 10
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 10
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 10
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 10
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 11
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 11
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 11
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 11
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 11
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 11
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 11
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 7
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 8,
+                "measure": 7
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 8,
+                "measure": 7
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 12
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 12
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 8,
+                "measure": 12
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 8,
+                "measure": 12
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 8,
+                "measure": 12
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 13
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 13
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 8,
+                "measure": 13
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 8,
+                "measure": 13
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 8,
+                "measure": 13
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 14
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 8,
+                "measure": 14
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 8,
+                "measure": 14
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 8,
+                "measure": 14
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 8,
+                "measure": 14
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 8,
+                "measure": 14
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 14
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 14
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 8,
+                "measure": 15
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 8,
+                "measure": 15
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 8,
+                "measure": 15
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 8,
+                "measure": 15
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 16
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 16,
+                "measure": 16
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 16
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 16
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 16
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 16,
+                "measure": 16
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 16
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 16,
+                "measure": 16
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 16
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 9,
+                "lpb": 16,
+                "measure": 16
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 16
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 11,
+                "lpb": 16,
+                "measure": 16
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 16
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 13,
+                "lpb": 16,
+                "measure": 16
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 16
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 15,
+                "lpb": 16,
+                "measure": 16
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 17
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 16,
+                "measure": 17
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 17
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 17
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 17
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 16,
+                "measure": 17
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 17
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 16,
+                "measure": 17
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 17
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 9,
+                "lpb": 16,
+                "measure": 17
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 17
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 11,
+                "lpb": 16,
+                "measure": 17
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 17
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 13,
+                "lpb": 16,
+                "measure": 17
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 17
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 15,
+                "lpb": 16,
+                "measure": 17
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 18
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 16,
+                "measure": 18
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 18
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 18
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 18
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 16,
+                "measure": 18
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 18
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 16,
+                "measure": 18
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 18
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 9,
+                "lpb": 16,
+                "measure": 18
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 18
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 11,
+                "lpb": 16,
+                "measure": 18
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 18
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 13,
+                "lpb": 16,
+                "measure": 18
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 18
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 15,
+                "lpb": 16,
+                "measure": 18
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 19
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 16,
+                "measure": 19
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 19
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 19
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 19
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 16,
+                "measure": 19
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 19
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 16,
+                "measure": 19
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 19
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 9,
+                "lpb": 16,
+                "measure": 19
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 19
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 11,
+                "lpb": 16,
+                "measure": 19
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 19
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 13,
+                "lpb": 16,
+                "measure": 19
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 19
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 15,
+                "lpb": 16,
+                "measure": 19
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 20
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 16,
+                "measure": 20
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 20
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 20
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 20
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 16,
+                "measure": 20
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 20
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 16,
+                "measure": 20
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 20
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 9,
+                "lpb": 16,
+                "measure": 20
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 20
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 11,
+                "lpb": 16,
+                "measure": 20
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 20
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 13,
+                "lpb": 16,
+                "measure": 20
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 20
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 15,
+                "lpb": 16,
+                "measure": 20
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 21
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 16,
+                "measure": 21
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 21
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 21
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 21
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 16,
+                "measure": 21
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 21
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 16,
+                "measure": 21
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 21
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 9,
+                "lpb": 16,
+                "measure": 21
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 21
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 11,
+                "lpb": 16,
+                "measure": 21
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 21
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 13,
+                "lpb": 16,
+                "measure": 21
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 21
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 15,
+                "lpb": 16,
+                "measure": 21
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 22
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 16,
+                "measure": 22
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 22
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 22
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 22
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 16,
+                "measure": 22
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 22
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 16,
+                "measure": 22
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 22
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 9,
+                "lpb": 16,
+                "measure": 22
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 22
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 11,
+                "lpb": 16,
+                "measure": 22
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 22
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 13,
+                "lpb": 16,
+                "measure": 22
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 22
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 15,
+                "lpb": 16,
+                "measure": 22
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 24
+            },
+            "controlpoints": [
+                {
+                    "beat": {
+                        "beat": 1,
+                        "lpb": 16,
+                        "measure": 24
+                    },
+                    "pos": {
+                        "x": -1.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 16,
+                        "measure": 24
+                    },
+                    "pos": {
+                        "x": 0.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 3,
+                        "lpb": 16,
+                        "measure": 24
+                    },
+                    "pos": {
+                        "x": 1.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 4,
+                        "lpb": 16,
+                        "measure": 24
+                    },
+                    "pos": {
+                        "x": 2.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 5,
+                        "lpb": 16,
+                        "measure": 24
+                    },
+                    "pos": {
+                        "x": 3.25,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 16,
+                        "measure": 24
+                    },
+                    "pos": {
+                        "x": 3.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 7,
+                        "lpb": 16,
+                        "measure": 24
+                    },
+                    "pos": {
+                        "x": 4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 0,
+                        "lpb": 16,
+                        "measure": 25
+                    },
+                    "pos": {
+                        "x": 4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 1,
+                        "lpb": 16,
+                        "measure": 25
+                    },
+                    "pos": {
+                        "x": 1.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 16,
+                        "measure": 25
+                    },
+                    "pos": {
+                        "x": 0.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 3,
+                        "lpb": 16,
+                        "measure": 25
+                    },
+                    "pos": {
+                        "x": -1.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 4,
+                        "lpb": 16,
+                        "measure": 25
+                    },
+                    "pos": {
+                        "x": -2.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 5,
+                        "lpb": 16,
+                        "measure": 25
+                    },
+                    "pos": {
+                        "x": -3.25,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 16,
+                        "measure": 25
+                    },
+                    "pos": {
+                        "x": -3.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 7,
+                        "lpb": 16,
+                        "measure": 25
+                    },
+                    "pos": {
+                        "x": -4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 0,
+                        "lpb": 16,
+                        "measure": 26
+                    },
+                    "pos": {
+                        "x": -4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 1,
+                        "lpb": 16,
+                        "measure": 26
+                    },
+                    "pos": {
+                        "x": -1.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 16,
+                        "measure": 26
+                    },
+                    "pos": {
+                        "x": 0.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 3,
+                        "lpb": 16,
+                        "measure": 26
+                    },
+                    "pos": {
+                        "x": 1.25,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 4,
+                        "lpb": 16,
+                        "measure": 26
+                    },
+                    "pos": {
+                        "x": 2.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 5,
+                        "lpb": 16,
+                        "measure": 26
+                    },
+                    "pos": {
+                        "x": 3.25,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 16,
+                        "measure": 26
+                    },
+                    "pos": {
+                        "x": 3.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 7,
+                        "lpb": 16,
+                        "measure": 26
+                    },
+                    "pos": {
+                        "x": 4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 0,
+                        "lpb": 16,
+                        "measure": 27
+                    },
+                    "pos": {
+                        "x": 4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 1,
+                        "lpb": 16,
+                        "measure": 27
+                    },
+                    "pos": {
+                        "x": 2.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 16,
+                        "measure": 27
+                    },
+                    "pos": {
+                        "x": 0.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 3,
+                        "lpb": 16,
+                        "measure": 27
+                    },
+                    "pos": {
+                        "x": -1.25,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 4,
+                        "lpb": 16,
+                        "measure": 27
+                    },
+                    "pos": {
+                        "x": -2.5,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 5,
+                        "lpb": 16,
+                        "measure": 27
+                    },
+                    "pos": {
+                        "x": -3.25,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 16,
+                        "measure": 27
+                    },
+                    "pos": {
+                        "x": -3.75,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 7,
+                        "lpb": 16,
+                        "measure": 27
+                    },
+                    "pos": {
+                        "x": -4.0,
+                        "y": 1.0
+                    }
+                }
+            ],
+            "endbeat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 28
+            },
+            "endpos": {
+                "x": -4.0,
+                "y": 1.0
+            },
+            "pos": {
+                "x": -4.0,
+                "y": 1.0
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 28
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 29
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 30
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 31
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 32
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 32
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 32
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 32
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 32
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 32
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 9,
+                "lpb": 16,
+                "measure": 32
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 32
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 32
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 15,
+                "lpb": 16,
+                "measure": 32
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 33
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 33
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 33
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 33
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 33
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 33
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 9,
+                "lpb": 16,
+                "measure": 33
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 33
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 33
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 15,
+                "lpb": 16,
+                "measure": 33
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 34
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 16,
+                "measure": 34
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 34
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 34
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 34
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 16,
+                "measure": 34
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 34
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 16,
+                "measure": 34
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 34
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 11,
+                "lpb": 16,
+                "measure": 34
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 34
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 35
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 35
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 35
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 35
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 11,
+                "lpb": 16,
+                "measure": 35
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 35
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 35
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 36
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 16,
+                "measure": 36
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 36
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 36
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 36
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 16,
+                "measure": 36
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 36
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 16,
+                "measure": 36
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 36
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 36
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 36
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 11,
+                "lpb": 16,
+                "measure": 36
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 36
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 36
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 36
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 37
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 16,
+                "measure": 37
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 37
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 37
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 37
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 16,
+                "measure": 37
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 37
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 16,
+                "measure": 37
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 37
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 37
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 37
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 11,
+                "lpb": 16,
+                "measure": 37
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 37
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 37
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 37
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 38
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 16,
+                "measure": 38
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 16,
+                "measure": 38
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 16,
+                "measure": 38
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 38
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 5,
+                "lpb": 16,
+                "measure": 38
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 38
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 7,
+                "lpb": 16,
+                "measure": 38
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 38
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 9,
+                "lpb": 16,
+                "measure": 38
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 10,
+                "lpb": 16,
+                "measure": 38
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 11,
+                "lpb": 16,
+                "measure": 38
+            },
+            "lane": 0,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 38
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 13,
+                "lpb": 16,
+                "measure": 38
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 38
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 15,
+                "lpb": 16,
+                "measure": 38
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 39
+            },
+            "controlpoints": [
+                {
+                    "beat": {
+                        "beat": 0,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -6.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 1,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -6.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 1,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -2.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 3,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -2.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 3,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 0.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 4,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 0.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 4,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 2.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 5,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 2.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 5,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 6.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 7,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 6.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 7,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 1.0
+                    }
+                }
+            ],
+            "endbeat": {
+                "beat": 1,
+                "lpb": 16,
+                "measure": 39
+            },
+            "endpos": {
+                "x": 8.0,
+                "y": 1.0
+            },
+            "pos": {
+                "x": -8.0,
+                "y": 1.0
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 16,
+                "measure": 39
+            },
+            "controlpoints": [
+                {
+                    "beat": {
+                        "beat": 32,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -6.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 33,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -6.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 33,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 34,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 34,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -2.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 35,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -2.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 35,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 0.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 36,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 0.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 36,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 2.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 37,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 2.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 37,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 38,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 38,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 6.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 39,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 6.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 39,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 1.0
+                    }
+                }
+            ],
+            "endbeat": {
+                "beat": 5,
+                "lpb": 16,
+                "measure": 39
+            },
+            "endpos": {
+                "x": 8.0,
+                "y": 1.0
+            },
+            "pos": {
+                "x": -8.0,
+                "y": 1.0
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 39
+            },
+            "controlpoints": [
+                {
+                    "beat": {
+                        "beat": 64,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -6.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 65,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -6.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 65,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 66,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 66,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -2.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 67,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -2.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 67,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 0.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 68,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 0.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 68,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 2.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 69,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 2.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 69,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 70,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 70,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 6.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 71,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 6.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 71,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 1.0
+                    }
+                }
+            ],
+            "endbeat": {
+                "beat": 9,
+                "lpb": 16,
+                "measure": 39
+            },
+            "endpos": {
+                "x": 8.0,
+                "y": 1.0
+            },
+            "pos": {
+                "x": -8.0,
+                "y": 1.0
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 39
+            },
+            "controlpoints": [
+                {
+                    "beat": {
+                        "beat": 96,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -6.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 97,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -6.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 97,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 98,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 98,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -2.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 99,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": -2.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 99,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 0.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 100,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 0.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 100,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 2.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 101,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 2.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 101,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 102,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 4.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 102,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 6.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 103,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 6.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 103,
+                        "lpb": 128,
+                        "measure": 39
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 1.0
+                    }
+                }
+            ],
+            "endbeat": {
+                "beat": 13,
+                "lpb": 16,
+                "measure": 39
+            },
+            "endpos": {
+                "x": 8.0,
+                "y": 1.0
+            },
+            "pos": {
+                "x": -8.0,
+                "y": 1.0
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 4,
+                "measure": 39
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 4,
+                "measure": 39
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 4,
+                "measure": 39
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 1,
+                "lpb": 4,
+                "measure": 39
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 4,
+                "measure": 39
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 4,
+                "measure": 39
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 4,
+                "measure": 39
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 3,
+                "lpb": 4,
+                "measure": 39
+            },
+            "lane": 3,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 4,
+                "measure": 40
+            },
+            "lane": 1,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 4,
+                "measure": 40
+            },
+            "lane": 2,
+            "type": 0
+        },
+        {
+            "beat": {
+                "beat": 2,
+                "lpb": 4,
+                "measure": 12
+            },
+            "endbeat": {
+                "beat": 7,
+                "lpb": 8,
+                "measure": 12
+            },
+            "endpos": {
+                "x": 6.0,
+                "y": 5.0
+            },
+            "pos": {
+                "x": -6.0,
+                "y": 1.0
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 4,
+                "lpb": 8,
+                "measure": 13
+            },
+            "endbeat": {
+                "beat": 7,
+                "lpb": 8,
+                "measure": 13
+            },
+            "endpos": {
+                "x": -6.0,
+                "y": 5.0
+            },
+            "pos": {
+                "x": 6.0,
+                "y": 1.0
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 32
+            },
+            "controlpoints": [
+                {
+                    "beat": {
+                        "beat": 12,
+                        "lpb": 16,
+                        "measure": 32
+                    },
+                    "pos": {
+                        "x": 6.0,
+                        "y": 1.0
+                    }
+                }
+            ],
+            "endbeat": {
+                "beat": 13,
+                "lpb": 16,
+                "measure": 32
+            },
+            "endpos": {
+                "x": 6.0,
+                "y": 1.0
+            },
+            "pos": {
+                "x": -6.0,
+                "y": 1.0
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 12,
+                "lpb": 16,
+                "measure": 33
+            },
+            "controlpoints": [
+                {
+                    "beat": {
+                        "beat": 12,
+                        "lpb": 16,
+                        "measure": 33
+                    },
+                    "pos": {
+                        "x": -6.0,
+                        "y": 1.0
+                    }
+                }
+            ],
+            "endbeat": {
+                "beat": 13,
+                "lpb": 16,
+                "measure": 33
+            },
+            "endpos": {
+                "x": -6.0,
+                "y": 1.0
+            },
+            "pos": {
+                "x": 6.0,
+                "y": 1.0
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 34
+            },
+            "controlpoints": [
+                {
+                    "beat": {
+                        "beat": 8,
+                        "lpb": 16,
+                        "measure": 34
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 1.0
+                    }
+                }
+            ],
+            "endbeat": {
+                "beat": 9,
+                "lpb": 16,
+                "measure": 34
+            },
+            "endpos": {
+                "x": 8.0,
+                "y": 1.0
+            },
+            "pos": {
+                "x": -2.0,
+                "y": 1.0
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 14,
+                "lpb": 16,
+                "measure": 34
+            },
+            "controlpoints": [
+                {
+                    "beat": {
+                        "beat": 14,
+                        "lpb": 16,
+                        "measure": 34
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 1.0
+                    }
+                }
+            ],
+            "endbeat": {
+                "beat": 15,
+                "lpb": 16,
+                "measure": 34
+            },
+            "endpos": {
+                "x": 8.0,
+                "y": 1.0
+            },
+            "pos": {
+                "x": -2.0,
+                "y": 1.0
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 35
+            },
+            "controlpoints": [
+                {
+                    "beat": {
+                        "beat": 0,
+                        "lpb": 16,
+                        "measure": 35
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 1.0
+                    }
+                }
+            ],
+            "endbeat": {
+                "beat": 1,
+                "lpb": 16,
+                "measure": 35
+            },
+            "endpos": {
+                "x": -8.0,
+                "y": 1.0
+            },
+            "pos": {
+                "x": 2.0,
+                "y": 1.0
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 6,
+                "lpb": 16,
+                "measure": 35
+            },
+            "controlpoints": [
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 16,
+                        "measure": 35
+                    },
+                    "pos": {
+                        "x": 8.0,
+                        "y": 1.0
+                    }
+                }
+            ],
+            "endbeat": {
+                "beat": 7,
+                "lpb": 16,
+                "measure": 35
+            },
+            "endpos": {
+                "x": 8.0,
+                "y": 1.0
+            },
+            "pos": {
+                "x": -2.0,
+                "y": 1.0
+            },
+            "type": 2
+        },
+        {
+            "beat": {
+                "beat": 8,
+                "lpb": 16,
+                "measure": 35
+            },
+            "controlpoints": [
+                {
+                    "beat": {
+                        "beat": 8,
+                        "lpb": 16,
+                        "measure": 35
+                    },
+                    "pos": {
+                        "x": -8.0,
+                        "y": 1.0
+                    }
+                }
+            ],
+            "endbeat": {
+                "beat": 9,
+                "lpb": 16,
+                "measure": 35
+            },
+            "endpos": {
+                "x": -8.0,
+                "y": 1.0
+            },
+            "pos": {
+                "x": 2.0,
+                "y": 1.0
+            },
+            "type": 2
+        }
+    ]
 }

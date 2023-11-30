@@ -1,0 +1,200 @@
+{
+    "audiooffset": 0.0,
+    "audiopath": "hogeSong.wav",
+    "basebpm": 120.0,
+    "basemeter": {
+        "amount": 4,
+        "length": 4
+    },
+    "bg": "",
+    "notes": [
+        {
+            "beat": {
+                "beat": 0,
+                "lpb": 16,
+                "measure": 0
+            },
+            "controlpoints": [
+                {
+                    "beat": {
+                        "beat": 1,
+                        "lpb": 16,
+                        "measure": 0
+                    },
+                    "pos": {
+                        "x": -2.0,
+                        "y": 2.5
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 2,
+                        "lpb": 16,
+                        "measure": 0
+                    },
+                    "pos": {
+                        "x": -3.0,
+                        "y": 3.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 3,
+                        "lpb": 16,
+                        "measure": 0
+                    },
+                    "pos": {
+                        "x": -3.75,
+                        "y": 3.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 4,
+                        "lpb": 16,
+                        "measure": 0
+                    },
+                    "pos": {
+                        "x": -4.0,
+                        "y": 3.5
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 5,
+                        "lpb": 16,
+                        "measure": 0
+                    },
+                    "pos": {
+                        "x": -3.75,
+                        "y": 3.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 6,
+                        "lpb": 16,
+                        "measure": 0
+                    },
+                    "pos": {
+                        "x": -3.0,
+                        "y": 3.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 7,
+                        "lpb": 16,
+                        "measure": 0
+                    },
+                    "pos": {
+                        "x": -2.0,
+                        "y": 2.5
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 8,
+                        "lpb": 16,
+                        "measure": 0
+                    },
+                    "pos": {
+                        "x": 0.0,
+                        "y": 1.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 9,
+                        "lpb": 16,
+                        "measure": 0
+                    },
+                    "pos": {
+                        "x": 2.0,
+                        "y": 2.5
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 10,
+                        "lpb": 16,
+                        "measure": 0
+                    },
+                    "pos": {
+                        "x": 3.0,
+                        "y": 3.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 11,
+                        "lpb": 16,
+                        "measure": 0
+                    },
+                    "pos": {
+                        "x": 3.75,
+                        "y": 3.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 12,
+                        "lpb": 16,
+                        "measure": 0
+                    },
+                    "pos": {
+                        "x": 4.0,
+                        "y": 3.5
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 13,
+                        "lpb": 16,
+                        "measure": 0
+                    },
+                    "pos": {
+                        "x": 3.75,
+                        "y": 3.25
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 14,
+                        "lpb": 16,
+                        "measure": 0
+                    },
+                    "pos": {
+                        "x": 3.0,
+                        "y": 3.0
+                    }
+                },
+                {
+                    "beat": {
+                        "beat": 15,
+                        "lpb": 16,
+                        "measure": 0
+                    },
+                    "pos": {
+                        "x": 2.0,
+                        "y": 2.5
+                    }
+                }
+            ],
+            "endbeat": {
+                "beat": 0,
+                "lpb": 1,
+                "measure": 1
+            },
+            "endpos": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "pos": {
+                "x": 0.0,
+                "y": 1.0
+            },
+            "type": 2
+        }
+    ]
+}

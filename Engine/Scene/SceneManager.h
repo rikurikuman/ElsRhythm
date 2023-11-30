@@ -21,8 +21,9 @@ public:
 
 private:
 	struct SceneChange {
-		std::shared_ptr<std::future<std::shared_ptr<IScene>>> future = nullptr;
-		std::shared_ptr<std::future<bool>> future2 = nullptr;
+		std::shared_ptr<std::future<std::shared_ptr<IScene>>> futureMakeScene = nullptr;
+		std::shared_ptr<std::future<std::shared_ptr<IScene>>> futureMakeScene2 = nullptr;
+		std::shared_ptr<std::future<bool>> futureSwapScene = nullptr;
 		std::shared_ptr<ISceneTransition> transition = nullptr;
 		std::shared_ptr<IScene> scene = nullptr;
 		int32_t increment = 0;
@@ -50,7 +51,7 @@ public:
 		SceneManager* instance = GetInstance();
 
 		SceneChange sc{};
-		sc.future = std::make_shared<std::future<std::shared_ptr<IScene>>>(std::async(std::launch::async, [] {
+		sc.futureMakeScene = std::make_shared<std::future<std::shared_ptr<IScene>>>(std::async(std::launch::deferred, [] {
 			std::lock_guard<std::recursive_mutex> lock(SRBufferAllocator::sMutex);
 			std::shared_ptr<IScene> newScene = std::make_shared<SceneClassName>();
 			return newScene;

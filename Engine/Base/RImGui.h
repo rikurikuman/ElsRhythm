@@ -29,6 +29,8 @@ private:
 	ID3D12Device* mDevicePtr = nullptr;
 	ID3D12DescriptorHeap* mSrvHeapPtr = nullptr;
 
+	std::string mConfigPath;
+
 	void InitInternal();
 	void FinalInternal();
 

@@ -2,10 +2,22 @@
 #include "EditorScene.h"
 #include <SimpleDrawer.h>
 #include "ColPrimitive2D.h"
+#include "EditorAction.h"
 
 EObjTapNote::EObjTapNote(EditorScene* scene)
 	: IEditorObject(scene)
 {}
+
+std::unique_ptr<IEditorObject> EObjTapNote::Clone() const
+{
+	return std::make_unique<EObjTapNote>(*this);
+}
+
+std::unique_ptr<EditorAction> EObjTapNote::GetSavePoint()
+{
+	std::unique_ptr<EditorAction> ptr = std::make_unique<EAModifyEOField<EObjTapNote>>(mUuid, 0, *this);
+	return ptr;
+}
 
 bool EObjTapNote::Collide(float x, float y)
 {
