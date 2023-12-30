@@ -47,8 +47,12 @@ SceneManager::~SceneManager()
 void SceneManager::Update() {
 	SceneManager* instance = GetInstance();
 
+	bool cancel = false;
+
 	if (!instance->mRunningSceneChanges.empty()) {
 		SceneChange& sc = *instance->mRunningSceneChanges.begin();
+
+		if (sc.increment >= 2 && sc.increment <= 4) cancel = true;
 
 		if (sc.increment == 0) {
 			sc.transition->Close();
@@ -84,23 +88,35 @@ void SceneManager::Update() {
 			&& sc.futureSwapScene->valid()
 			&& sc.futureSwapScene->wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
 			std::lock_guard<std::mutex> lock(instance->mMutex);
-			auto trash = std::make_shared<IScene>();
+			
 			instance->mNowScene->Finalize();
 			std::swap(instance->mNowScene, instance->mChangeScene);
-			std::swap(instance->mChangeScene, trash);
 			instance->mNowScene->Init();
+			sc.futureTrashScene = std::make_shared<std::future<bool>>(std::async(std::launch::async, [&sc] {
+				auto trash = std::make_shared<IScene>();
+				SceneManager* instance = GetInstance();
+				std::lock_guard<std::mutex> lock(instance->mMutex);
+				std::swap(instance->mChangeScene, trash);
+				return true;
+			}));
+			sc.increment++;
+		}
+
+		if (sc.increment == 4
+			&& sc.futureTrashScene->valid()
+			&& sc.futureTrashScene->wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
 			instance->mLoadingTimer = 0;
 			sc.transition->Open();
 			sc.increment++;
 		}
 
-		if (sc.increment == 4
+		if (sc.increment == 5
 			&& sc.transition->IsOpened()) {
 			instance->mRunningSceneChanges.erase(instance->mRunningSceneChanges.begin());
 		}
 
 		//ローディングマーク
-		if ((sc.increment == 1 || sc.increment == 2 || sc.increment == 3) && sc.transition->IsClosed()) {
+		if ((sc.increment >= 1 && sc.increment <= 4) && sc.transition->IsClosed()) {
 			instance->mLoadingTimer += TimeManager::deltaTime;
 			if (instance->mLoadingTimer >= 0.5f) {
 				float t = min(1, instance->mLoadingTimer - 0.5f / 0.5f);
@@ -121,7 +137,7 @@ void SceneManager::Update() {
 				instance->mLoadingMark.mMaterial.mColor.a = 0;
 			}
 		}
-		if (sc.increment == 4) {
+		if (sc.increment == 5) {
 			if (instance->mLoadingAngle != 0) {
 				instance->mLoadingTimer += TimeManager::deltaTime;
 				float t = min(1, instance->mLoadingTimer / 0.5f);
@@ -141,23 +157,29 @@ void SceneManager::Update() {
 		instance->mLoadingAlpha = 0;
 	}
 
-	if (instance->mNowScene != nullptr) {
+	if (!cancel && instance->mNowScene != nullptr) {
 		instance->mNowScene->Update();
 	}
 }
 
 void SceneManager::Draw() {
 	SceneManager* instance = GetInstance();
-	if (instance->mNowScene != nullptr) {
-		instance->mNowScene->Draw();
-	}
+	
+	bool cancel = false;
+
 	if (!instance->mRunningSceneChanges.empty()) {
 		SceneChange& sc = *instance->mRunningSceneChanges.begin();
+
+		if (sc.increment >= 2 && sc.increment <= 4) cancel = true;
 		sc.transition->Draw();
 
-		if (instance->mLoadingAlpha != 0 && ((sc.increment == 1 && sc.transition->IsClosed()) || sc.increment == 2 || sc.increment == 3)) {
+		if (instance->mLoadingAlpha != 0 && ((sc.increment == 1 && sc.transition->IsClosed()) || (sc.increment >= 2 && sc.increment <= 4))) {
 			instance->mLoadingMark.TransferBuffer();
 			instance->mLoadingMark.Draw();
 		}
+	}
+
+	if (!cancel && instance->mNowScene != nullptr) {
+		instance->mNowScene->Draw();
 	}
 }

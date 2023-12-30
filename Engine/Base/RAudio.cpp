@@ -80,12 +80,24 @@ AudioHandle RAudio::Load(const std::string filepath, std::string handle)
 	return handle;
 }
 
+AudioData* RAudio::GetData(AudioHandle handle)
+{
+	RAudio* instance = GetInstance();
+
+	std::lock_guard<std::recursive_mutex> lock(instance->mMutex);
+	if (instance->mAudioMap.find(handle) == instance->mAudioMap.end()) {
+		return nullptr;
+	}
+
+	return instance->mAudioMap[handle].get();
+}
+
 void RAudio::Play(const AudioHandle handle, float volume, float pitch, bool loop)
 {
 	RAudio* instance = GetInstance();
 	HRESULT result;
 
-	std::lock_guard<std::recursive_mutex> lock(GetInstance()->mMutex);
+	std::lock_guard<std::recursive_mutex> lock(instance->mMutex);
 	if (instance->mAudioMap.find(handle) == instance->mAudioMap.end()) {
 		return;
 	}

@@ -1,3 +1,9 @@
+/*
+* @file RConstBuffer.h
+* @brief 旧定数バッファクラス
+* 一つごとにCreateCommittedResourceをする
+*/
+
 #pragma once
 
 //外部ヘッダ

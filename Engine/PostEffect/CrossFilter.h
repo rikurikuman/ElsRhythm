@@ -1,3 +1,8 @@
+/*
+* @file CrossFilter.h
+* @brief 画面全体にクロスフィルタをかけるクラス
+*/
+
 #pragma once
 #include <Texture.h>
 #include <SRVertexBuffer.h>

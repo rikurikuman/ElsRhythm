@@ -1,3 +1,8 @@
+/*
+* @file SimpleSceneTransition.h
+* @brief 矩形が広がるだけのシンプルなシーントランジション
+*/
+
 #pragma once
 #include "ISceneTransition.h"
 #include "Sprite.h"

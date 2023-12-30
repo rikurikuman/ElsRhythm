@@ -1,3 +1,8 @@
+/*
+* @file Camera.h
+* @brief カメラ。
+*/
+
 #pragma once
 #include <memory>
 #include "ViewProjection.h"

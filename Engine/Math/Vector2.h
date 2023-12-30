@@ -1,3 +1,8 @@
+/*
+* @file Vector2.h
+* @brief 二次元ベクトル
+*/
+
 #pragma once
 #include <cstdint>
 

@@ -1,3 +1,8 @@
+/*
+* @file BGSimple.h
+* @brief 背景名[Simple]に相当するクラス
+*/
+
 #pragma once
 #include "IBackGround.h"
 #include "Sprite.h"
@@ -13,9 +18,9 @@ public:
 	void Draw() override;
 
 private:
-	Sprite backGround;
+	Sprite mBackGround;
 
-	float shotTimer = 0;
-	int32_t shotCount = 0;
+	float mShotTimer = 0;
+	int32_t mShotCount = 0;
 };
 

@@ -1,3 +1,8 @@
+/*
+* @file PathUtil.h
+* @brief ファイルパスを扱う機能群
+*/
+
 #pragma once
 #include <filesystem>
 

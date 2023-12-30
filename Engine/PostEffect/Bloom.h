@@ -1,3 +1,8 @@
+/*
+* @file Bloom.h
+* @brief 画面全体にブルームをかけるクラス
+*/
+
 #pragma once
 #include <Texture.h>
 #include <SRVertexBuffer.h>

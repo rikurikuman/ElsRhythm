@@ -1,3 +1,8 @@
+/*
+* @file EventSystem.h
+* @brief 譜面データ上で呼び出されるイベント情報を受け取るクラス
+*/
+
 #pragma once
 #include <string>
 #include <vector>

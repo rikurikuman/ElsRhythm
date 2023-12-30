@@ -1,3 +1,8 @@
+/*
+* @file Color.h
+* @brief RGBで定義する色。0xffffffなどのuintからこれに変換したりもできる
+*/
+
 #pragma once
 #include <cstdint>
 

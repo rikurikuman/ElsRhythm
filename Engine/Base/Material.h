@@ -1,3 +1,8 @@
+/*
+* @file Material.h
+* @brief マテリアル情報のクラス
+*/
+
 #pragma once
 #include "Color.h"
 #include "Vector3.h"

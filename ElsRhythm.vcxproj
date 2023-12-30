@@ -488,7 +488,6 @@
     <ClInclude Include="Engine\Renderer\SpriteRenderStage.h" />
     <ClInclude Include="Engine\Renderer\TestRenderStage.h" />
     <ClInclude Include="Engine\Renderer\TransparentRenderStage.h" />
-    <ClInclude Include="Engine\Scene\ISceneFactory.h" />
     <ClInclude Include="Engine\Light\LightGroup.h" />
     <ClInclude Include="Application\Scene\GameScene.h" />
     <ClInclude Include="Engine\Base\Material.h" />

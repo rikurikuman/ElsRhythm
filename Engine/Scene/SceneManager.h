@@ -1,3 +1,8 @@
+/*
+* @file SceneManager.h
+* @brief 各シーンとトランジションの制御, 非同期読み込みなど管理するクラス
+*/
+
 #pragma once
 #include <memory>
 #include <future>
@@ -24,6 +29,7 @@ private:
 		std::shared_ptr<std::future<std::shared_ptr<IScene>>> futureMakeScene = nullptr;
 		std::shared_ptr<std::future<std::shared_ptr<IScene>>> futureMakeScene2 = nullptr;
 		std::shared_ptr<std::future<bool>> futureSwapScene = nullptr;
+		std::shared_ptr<std::future<bool>> futureTrashScene = nullptr;
 		std::shared_ptr<ISceneTransition> transition = nullptr;
 		std::shared_ptr<IScene> scene = nullptr;
 		int32_t increment = 0;
@@ -52,7 +58,7 @@ public:
 
 		SceneChange sc{};
 		sc.futureMakeScene = std::make_shared<std::future<std::shared_ptr<IScene>>>(std::async(std::launch::deferred, [] {
-			std::lock_guard<std::recursive_mutex> lock(SRBufferAllocator::sMutex);
+			//std::lock_guard<std::recursive_mutex> lock(SRBufferAllocator::sMutex);
 			std::shared_ptr<IScene> newScene = std::make_shared<SceneClassName>();
 			return newScene;
 		}));

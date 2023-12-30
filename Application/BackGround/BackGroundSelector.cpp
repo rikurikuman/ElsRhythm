@@ -4,19 +4,19 @@
 void BackGroundSelector::Select(std::string name)
 {
     if (name == "Simple") {
-        bg = std::make_unique<BGSimple>();
+        mBG = std::make_unique<BGSimple>();
     }
     else {
-        bg = std::make_unique<IBackGround>();
+        mBG = std::make_unique<IBackGround>();
     }
 }
 
 void BackGroundSelector::Update()
 {
-    bg->Update();
+    mBG->Update();
 }
 
 void BackGroundSelector::Draw()
 {
-    bg->Draw();
+    mBG->Draw();
 }

@@ -1,3 +1,8 @@
+/*
+* @file SRVertexBuffer.h
+* @brief SRBufferを使用する頂点バッファ
+*/
+
 #pragma once
 #include "Vertex.h"
 #include <SRBuffer.h>
@@ -145,7 +150,8 @@ public:
 	//任意の頂点データの配列とその大きさで更新
 	template<class T>
 	void Update(T* list, uint32_t size) {
-		std::lock_guard<std::recursive_mutex> lock(sMutex);
+		std::lock_guard<std::recursive_mutex> lock(SRBufferAllocator::GetInstance()->sMutex);
+		std::lock_guard<std::recursive_mutex> lock2(sMutex);
 		if (mData == nullptr || mData->buff.GetRegionPtr() == nullptr) {
 			Init(list, size);
 			return;
@@ -170,7 +176,8 @@ public:
 	//任意の頂点データのvectorで更新
 	template<class T>
 	void Update(std::vector<T> list) {
-		std::lock_guard<std::recursive_mutex> lock(sMutex);
+		std::lock_guard<std::recursive_mutex> lock(SRBufferAllocator::GetInstance()->sMutex);
+		std::lock_guard<std::recursive_mutex> lock2(sMutex);
 		if (mData == nullptr || mData->buff.GetRegionPtr() == nullptr) {
 			Init(list);
 			return;

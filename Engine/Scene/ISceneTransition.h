@@ -1,3 +1,8 @@
+/*
+* @file ISceneTransition.h
+* @brief 各シーントランジションの基底クラス
+*/
+
 #pragma once
 class ISceneTransition
 {

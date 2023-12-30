@@ -1,3 +1,8 @@
+/*
+* @file Mtllib.h
+* @brief .obj形式で用いるマテリアル情報ファイルを読み込むクラス
+*/
+
 #pragma once
 #include "Material.h"
 #include <vector>

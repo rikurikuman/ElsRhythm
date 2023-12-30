@@ -1,3 +1,8 @@
+/*
+* @file Renderer.h
+* @brief レンダラー、描画一つ一つの実行を制御するクラス
+*/
+
 #pragma once
 #include <vector>
 #include <memory>

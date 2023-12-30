@@ -1,3 +1,8 @@
+/*
+* @file ParticleSprite.h
+* @brief Spriteを画面上に表示するパーティクル
+*/
+
 #pragma once
 #include "ParticleObject.h"
 #include <Sprite.h>

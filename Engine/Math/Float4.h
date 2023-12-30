@@ -1,3 +1,8 @@
+/*
+* @file Float4.h
+* @brief float4つをまとめて一つで扱うクラス
+*/
+
 #pragma once
 //仲良し相手宣言
 class Vector2;

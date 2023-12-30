@@ -14,6 +14,19 @@ MainTestScene::MainTestScene()
 	camera.mViewProjection.mEye = { 0, 0, -10 };
 	camera.mViewProjection.mTarget = { 0, 0, 0 };
 	camera.mViewProjection.UpdateMatrix();
+
+	for (int i = 0; i < 50000; i++) {
+		testList2.emplace_back();
+		testList2.back().model = ModelObj(Model::Load("Resources/Model/Sphere.obj", "Sphere", true));
+		testList2.back().model.mTransform.scale = { 0.5f, 0.5f, 0.5f };
+		testList2.back().model.mTuneMaterial.mColor = Color(Util::GetRand(0.0f, 1.0f), Util::GetRand(0.0f, 1.0f), Util::GetRand(0.0f, 1.0f), 1);
+		testList2.back().vec = Vector3(Util::GetRand(-20.0f, 20.0f), Util::GetRand(-20.0f, 20.0f), Util::GetRand(-20.0f, 20.0f));
+	}
+}
+
+MainTestScene::~MainTestScene()
+{
+
 }
 
 void MainTestScene::Init()

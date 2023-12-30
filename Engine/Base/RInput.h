@@ -1,3 +1,8 @@
+/*
+* @file RInput.h
+* @brief DirectInput, XInputを使った入力処理クラス
+*/
+
 #pragma once
 
 //外部ヘッダ

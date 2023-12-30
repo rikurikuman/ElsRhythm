@@ -1,3 +1,10 @@
+/*
+* @file Note.h
+* @brief 各種ノート用のクラス
+* これを基底にTapNote, ArcNoteに派生するべきだと思うけど
+* 今は一個にまとまってるぜ！！！
+*/
+
 #pragma once
 #include "BeatUtil.h"
 #include <Vector3.h>

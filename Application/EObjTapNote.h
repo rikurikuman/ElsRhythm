@@ -1,3 +1,8 @@
+/*
+* @file EObjTapNote.h
+* @brief 譜面エディタ上におけるタップノートのクラス
+*/
+
 #pragma once
 #include "IEditorObject.h"
 #include <BeatUtil.h>

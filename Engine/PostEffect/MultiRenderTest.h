@@ -1,3 +1,8 @@
+/*
+* @file MultiRenderTest.h
+* @brief 描画のテスト用クラス, これいる？
+*/
+
 #pragma once
 #include <Texture.h>
 #include <SRVertexBuffer.h>

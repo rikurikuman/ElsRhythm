@@ -1,3 +1,8 @@
+/*
+* @file RImGui.h
+* @brief ImGuiを制御するクラス
+*/
+
 #pragma once
 
 //外部ヘッダ

@@ -1,3 +1,8 @@
+/*
+* @file ViewProjection.h
+* @brief ビュープロジェクション行列を作るクラス
+*/
+
 #pragma once
 #include "Matrix4.h"
 #include "Util.h"

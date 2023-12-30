@@ -1,3 +1,8 @@
+/*
+* @file RootSignature.h
+* @brief ルートシグネチャのラッパークラス
+*/
+
 #pragma once
 
 //外部ヘッダ
@@ -38,6 +43,7 @@ public:
 
 	void Create();
 
+    //生成済みなら取得、そうでないなら生成して登録してから取得
     static RootSignature& GetOrCreate(std::string id, RootSignatureDesc desc);
 
 private:

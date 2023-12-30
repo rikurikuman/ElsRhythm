@@ -1,3 +1,8 @@
+/*
+* @file TitleScene.h
+* @brief タイトル画面のシーン
+*/
+
 #pragma once
 #include "IScene.h"
 #include "LightGroup.h"

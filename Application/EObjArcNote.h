@@ -1,3 +1,8 @@
+/*
+* @file EObjArcNote.h
+* @brief 譜面エディタ上におけるレーザーノートのクラス
+*/
+
 #pragma once
 #include "IEditorObject.h"
 #include <BeatUtil.h>

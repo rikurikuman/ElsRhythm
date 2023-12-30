@@ -1,3 +1,9 @@
+/*
+* @file TimeManager.h
+* @brief 経過時間やFPSを計測するクラス(?)
+* クラスじゃなくて名前空間だこれ
+*/
+
 #pragma once
 
 //外部ヘッダ

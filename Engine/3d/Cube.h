@@ -1,3 +1,9 @@
+/*
+* @file Cube.h
+* @brief 直方体を3D空間上に描画するクラス
+* 直方体なのにCubeとは
+*/
+
 #pragma once
 #include "Obj3D.h"
 #include "Image3D.h"

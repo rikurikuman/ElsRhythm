@@ -1,3 +1,9 @@
+/*
+* @file SoundScene.h
+* @brief RAudioのテストをするためのシーン
+* リリースに不要なため削除予定のシーンの一つ
+*/
+
 #pragma once
 #include "IScene.h"
 #include "LightGroup.h"
@@ -21,4 +27,6 @@ private:
 	bool loop = false;
 	Vector2 playRange;
 	Vector2 loopRange;
+
+	float time = 0;
 };

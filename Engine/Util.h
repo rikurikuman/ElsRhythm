@@ -1,3 +1,8 @@
+/*
+* @file Util.h
+* @brief べんり！
+*/
+
 #pragma once
 
 //外部ヘッダ

@@ -1,3 +1,8 @@
+/*
+* @file PolygonCollider.h
+* @brief ポリゴンで当たり判定をするコライダー
+*/
+
 #pragma once
 #include "Colliders.h"
 #include "ColPrimitive3D.h"

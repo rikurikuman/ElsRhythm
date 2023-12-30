@@ -1,3 +1,9 @@
+/*
+* @file ControllerScene.h
+* @brief キーボードやコントローラー入力が取れるかテストするシーン
+* リリースに不要なため削除予定のシーンの一つ
+*/
+
 #pragma once
 #include "IScene.h"
 #include "LightGroup.h"

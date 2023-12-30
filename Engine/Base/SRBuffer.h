@@ -1,3 +1,8 @@
+/*
+* @file SRBuffer.h
+* @brief 自作アロケータを含むバッファ管理クラス群
+*/
+
 #pragma once
 
 //外部ヘッダ

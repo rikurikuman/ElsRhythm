@@ -1,3 +1,8 @@
+/*
+* @file RenderTarget.h
+* @brief レンダーターゲットそのものだったりそれを制御したりするクラス群
+*/
+
 #pragma once
 #include "Texture.h"
 #include <vector>

@@ -1,3 +1,8 @@
+/*
+* @file SphereCollider.h
+* @brief 球で当たり判定をするコライダー
+*/
+
 #pragma once
 #include "Colliders.h"
 #include "ColPrimitive3D.h"

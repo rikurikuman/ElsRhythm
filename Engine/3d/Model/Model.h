@@ -1,3 +1,8 @@
+/*
+* @file Model.h
+* @brief モデルデータを持つクラス
+*/
+
 #pragma once
 #include <string>
 #include <vector>
@@ -59,6 +64,7 @@ public:
 	static ModelHandle Load(std::string filepath, ModelHandle handle = "", bool smooth = false);
 	static ModelHandle Register(ModelHandle handle, Model model);
 
+	//Assimp経由で読み込む
 	static ModelHandle LoadWithAIL(std::string directoryPath, std::string filename, ModelHandle handle = "");
 };
 

@@ -1,3 +1,8 @@
+/*
+* @file RWindow.h
+* @brief WindowsAPI制御の基盤となるクラス
+*/
+
 #pragma once
 
 //外部ヘッダ

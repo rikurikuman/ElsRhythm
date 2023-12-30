@@ -1,3 +1,9 @@
+/*
+* @file IndexBuffer.h
+* @brief 旧インデックスバッファ
+* 一つごとにCreateCommittedResourceをする
+*/
+
 #pragma once
 
 //外部ヘッダ

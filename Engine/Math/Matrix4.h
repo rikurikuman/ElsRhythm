@@ -1,3 +1,8 @@
+/*
+* @file Matrix4.h
+* @brief 4x4の行列クラス
+*/
+
 #pragma once
 
 //XMMATRIX参照するためだけにインクルード

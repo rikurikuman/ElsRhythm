@@ -1,3 +1,8 @@
+/*
+* @file EditorScene.h
+* @brief 譜面エディタのシーン
+*/
+
 #pragma once
 #include "IScene.h"
 #include "LightGroup.h"

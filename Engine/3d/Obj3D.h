@@ -1,3 +1,8 @@
+/*
+* @file Obj3D.h
+* @brief 3Dオブジェクトの基底クラス
+*/
+
 #pragma once
 #include "Transform.h"
 #include "ViewProjection.h"

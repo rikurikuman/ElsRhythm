@@ -1,3 +1,8 @@
+/*
+* @file Quaternion.h
+* @brief クォータニオンの諸々クラス
+*/
+
 #pragma once
 #include "Vector3.h"
 #include "Matrix4.h"

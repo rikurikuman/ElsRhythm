@@ -1,3 +1,8 @@
+/*
+* @file ResultScene.h
+* @brief リザルト画面のシーン
+*/
+
 #pragma once
 #include "IScene.h"
 #include "LightGroup.h"

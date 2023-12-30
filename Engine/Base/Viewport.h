@@ -1,3 +1,8 @@
+/*
+* @file Viewport.h
+* @brief ビューポート。
+*/
+
 #pragma once
 struct Viewport
 {

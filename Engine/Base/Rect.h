@@ -1,3 +1,8 @@
+/*
+* @file RRect.h
+* @brief 矩形。"Rect"だと名前被りするから無理やり回避している
+*/
+
 #pragma once
 struct RRect {
 	long left;

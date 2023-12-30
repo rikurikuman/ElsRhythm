@@ -1,3 +1,8 @@
+/*
+* @file TextDrawer.h
+* @brief ttfから文字列を描画する機能のクラス
+*/
+
 #pragma once
 #include "Texture.h"
 #include "GraphicsPipeline.h"

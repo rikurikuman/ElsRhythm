@@ -1,3 +1,8 @@
+/*
+* @file BillboardImage.h
+* @brief ビルボードを3D空間上に描画するクラス
+*/
+
 #pragma once
 #include "Obj3D.h"
 #include "Texture.h"

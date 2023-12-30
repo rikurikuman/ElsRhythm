@@ -128,7 +128,8 @@ void SRVertexBuffer::Init(std::vector<VertexPNU> list)
 
 void SRVertexBuffer::Update(VertexPNU* list, uint32_t size)
 {
-	std::lock_guard<std::recursive_mutex> lock(sMutex);
+	std::lock_guard<std::recursive_mutex> lock(SRBufferAllocator::GetInstance()->sMutex);
+	std::lock_guard<std::recursive_mutex> lock2(sMutex);
 	if (mData == nullptr || mData->buff.GetRegionPtr() == nullptr) {
 		Init(list, size);
 		return;

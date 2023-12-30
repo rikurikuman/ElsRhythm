@@ -1,3 +1,8 @@
+/*
+* @file ColPrimitive2D.h
+* @brief 2Dでのシンプルな当たり判定を提供する構造体,関数群
+*/
+
 #pragma once
 #include <array>
 #include <bitset>

@@ -1,3 +1,8 @@
+/*
+* @file SRIndexBuffer.h
+* @brief SRBufferを使用するインデックスバッファ
+*/
+
 #pragma once
 #include <vector>
 #include <SRBuffer.h>

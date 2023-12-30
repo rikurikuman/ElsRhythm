@@ -1,3 +1,8 @@
+/*
+* @file Image3D.h
+* @brief 板ポリに一枚絵を貼って3D空間上に描画するクラス
+*/
+
 #pragma once
 #include "Obj3D.h"
 #include "SRConstBuffer.h"

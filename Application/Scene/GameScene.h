@@ -1,3 +1,8 @@
+/*
+* @file GameScene.h
+* @brief ゲームシーン
+*/
+
 #pragma once
 #include "IScene.h"
 #include "LightGroup.h"

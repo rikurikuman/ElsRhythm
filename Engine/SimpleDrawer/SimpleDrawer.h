@@ -1,3 +1,8 @@
+/*
+* @file SimpleDrawer.h
+* @brief シンプルな描画を関数一つで行う機能を提供するクラス
+*/
+
 #pragma once
 #include "RDirectX.h"
 #include "SimpleDrawInfo.h"

@@ -1,3 +1,8 @@
+/*
+* @file LightGroup.h
+* @brief 3D空間の光源を管理するクラス
+*/
+
 #pragma once
 #include "Color.h"
 #include "RConstBuffer.h"

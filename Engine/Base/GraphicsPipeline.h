@@ -1,3 +1,8 @@
+/*
+* @file GraphicsPipeline.h
+* @brief PSOのラッパークラス
+*/
+
 #pragma once
 
 //外部ヘッダ
@@ -45,6 +50,7 @@ public:
 
 	void Create();
 
+    //生成済みなら取得、そうでないなら生成して登録してからそれを取得
     static GraphicsPipeline& GetOrCreate(std::string id, PipelineStateDesc desc);
 
 private:

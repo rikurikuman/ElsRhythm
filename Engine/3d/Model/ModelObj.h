@@ -1,3 +1,8 @@
+/*
+* @file ModelObj.h
+* @brief モデルデータを基に3Dオブジェクトを描画するクラス
+*/
+
 #pragma once
 #include "Obj3D.h"
 #include "Model.h"

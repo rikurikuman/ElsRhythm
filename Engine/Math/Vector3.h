@@ -1,3 +1,8 @@
+/*
+* @file Vector3.h
+* @brief 3次元ベクトル
+*/
+
 #pragma once
 
 //仲良し相手宣言

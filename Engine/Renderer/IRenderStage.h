@@ -1,3 +1,8 @@
+/*
+* @file IRenderStage.h
+* @brief 各レンダーステージの基底クラス
+*/
+
 #pragma once
 #include <string>
 #include <vector>

@@ -1,3 +1,8 @@
+/*
+* @file Colliders.h
+* @brief コライダー管理クラス
+*/
+
 #pragma once
 #include "ICollider.h"
 #include <mutex>

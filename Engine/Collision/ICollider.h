@@ -1,3 +1,8 @@
+/*
+* @file ICollider.h
+* @brief コライダーの基底クラス
+*/
+
 #pragma once
 #include <functional>
 #include <string>

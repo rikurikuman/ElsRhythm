@@ -1,3 +1,8 @@
+/*
+* @file RenderOrder.h
+* @brief 描画一つ一つを表すクラス
+*/
+
 #pragma once
 
 //外部ヘッダ

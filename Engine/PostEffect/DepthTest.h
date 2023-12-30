@@ -1,3 +1,8 @@
+/*
+* @file DepthTest.h
+* @brief 画面全体に被写界深度をかけるクラス
+*/
+
 #pragma once
 #include <Texture.h>
 #include <SRVertexBuffer.h>

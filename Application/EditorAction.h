@@ -1,3 +1,9 @@
+/*
+* @file EditorAction.h
+* @brief 譜面エディタ上で行った操作一つ一つを記憶するクラス
+* Undo, Redo機能用
+*/
+
 #pragma once
 #include <string>
 #include <list>

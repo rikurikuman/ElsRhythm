@@ -1,3 +1,8 @@
+/*
+* @file SRConstBuffer.h
+* @brief SRBufferを使用する定数バッファ
+*/
+
 #pragma once
 
 //外部ヘッダ

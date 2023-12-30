@@ -1,3 +1,8 @@
+/*
+* @file IScene.h
+* @brief 各シーンの基底クラス
+*/
+
 #pragma once
 class IScene
 {

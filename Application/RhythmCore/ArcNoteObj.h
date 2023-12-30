@@ -1,3 +1,8 @@
+/*
+* @file ArcNoteObj.h
+* @brief レーザーノートクラス
+*/
+
 #pragma once
 #include "Obj3D.h"
 #include <SRVertexBuffer.h>

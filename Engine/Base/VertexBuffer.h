@@ -1,3 +1,9 @@
+/*
+* @file VertexBuffer.h
+* @brief 旧頂点バッファ
+* 一つごとにCreateCommittedResourceをする
+*/
+
 #pragma once
 
 //外部ヘッダ

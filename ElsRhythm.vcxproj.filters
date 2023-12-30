@@ -655,9 +655,6 @@
     <ClInclude Include="Engine\Base\RImGui.h">
       <Filter>ヘッダー ファイル\Engine\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Scene\ISceneFactory.h">
-      <Filter>ヘッダー ファイル\Engine\SceneManage</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Camera\Camera.h">
       <Filter>ヘッダー ファイル\Engine</Filter>
     </ClInclude>

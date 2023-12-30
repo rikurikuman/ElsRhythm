@@ -1,3 +1,8 @@
+/*
+* @file RAudio.h
+* @brief XAudio2を制御するクラス
+*/
+
 #pragma once
 
 //外部ヘッダ
@@ -74,6 +79,9 @@ public:
 	}
 
 	static AudioHandle Load(const std::string filepath, std::string handle = "");
+
+	static AudioData* GetData(AudioHandle handle);
+
 	static void Play(AudioHandle handle, float volume = 1.0f, float pitch = 1.0f, bool loop = false);
 	static void Stop(AudioHandle handle);
 	static bool IsPlaying(AudioHandle handle);

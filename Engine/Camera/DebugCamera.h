@@ -1,3 +1,8 @@
+/*
+* @file DebugCamera.h
+* @brief FPS的移動ができるデバッグ用カメラ
+*/
+
 #pragma once
 #include "Camera.h"
 #include "ViewProjection.h"

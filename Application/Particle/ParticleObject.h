@@ -1,3 +1,8 @@
+/*
+* @file ParticleObject.h
+* @brief パーティクルクラス群の基底クラス
+*/
+
 #pragma once
 #include <list>
 #include <memory>

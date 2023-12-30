@@ -1,3 +1,8 @@
+/*
+* @file MainTestScene.h
+* @brief 色んなテストをするための落書き帳的シーン
+*/
+
 #pragma once
 #include "IScene.h"
 #include "LightGroup.h"
@@ -12,6 +17,7 @@ class MainTestScene : public IScene
 {
 public:
 	MainTestScene();
+	~MainTestScene();
 
 	void Init() override;
 	void Update() override;
@@ -32,4 +38,5 @@ private:
 		float timer = 0;
 	};
 	std::list<Test> testList;
+	std::list<Test> testList2;
 };

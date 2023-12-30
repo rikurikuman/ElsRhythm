@@ -1,3 +1,8 @@
+/*
+* @file ParticleExplode.h
+* @brief シンプルな爆発っぽいパーティクル
+*/
+
 #pragma once
 #include "ParticleObject.h"
 #include <ModelObj.h>

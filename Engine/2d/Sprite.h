@@ -1,3 +1,8 @@
+/*
+* @file Sprite.h
+* @brief Sprite, 一枚絵を画面上に描画するクラス
+*/
+
 #pragma once
 
 //外部ヘッダ

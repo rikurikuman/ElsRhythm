@@ -1,3 +1,8 @@
+/*
+* @file SelectScene.h
+* @brief 楽曲選択シーン
+*/
+
 #pragma once
 #include "IScene.h"
 #include <vector>

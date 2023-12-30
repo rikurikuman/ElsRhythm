@@ -1,3 +1,8 @@
+/*
+* @file BeatUtil.h
+* @brief BPMや拍子からの変換等を提供するクラス群
+*/
+
 #pragma once
 #include "Util.h"
 #include <map>

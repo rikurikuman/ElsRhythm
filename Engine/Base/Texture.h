@@ -1,3 +1,8 @@
+/*
+* @file Texture.h
+* @brief テクスチャ管理クラス
+*/
+
 #pragma once
 
 //外部ヘッダ

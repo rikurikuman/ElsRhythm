@@ -1,3 +1,9 @@
+/*
+* @file RhythmGameController.h
+* @brief リズムゲームを制御するクラス
+* ゲームシーンの殆どはこれが制御している
+*/
+
 #pragma once
 #include "BeatUtil.h"
 #include "Note.h"

@@ -1,3 +1,8 @@
+/*
+* @file ColPrimitive3D.h
+* @brief 3Dでのシンプルな当たり判定を提供する構造体, 関数群
+*/
+
 #pragma once
 #include "Vector3.h"
 

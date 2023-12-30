@@ -1,3 +1,8 @@
+/*
+* @file PointLight.h
+* @brief その名の通りさん
+*/
+
 #pragma once
 #include "Vector3.h"
 #include "Color.h"

@@ -1,3 +1,8 @@
+/*
+* @file Vertex.h
+* @brief 頂点を表すクラス
+*/
+
 #pragma once
 
 //外部ヘッダ

@@ -1,3 +1,8 @@
+/*
+* @file SimpleDrawInfo.h
+* @brief SimpleDrawerでの描画情報を記録するクラス
+*/
+
 #pragma once
 #include "Vector2.h"
 #include "VertexBuffer.h"

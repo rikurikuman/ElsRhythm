@@ -1,3 +1,8 @@
+/*
+* @file Shader.h
+* @brief 各種シェーダーのクラス
+*/
+
 #pragma once
 
 //外部ヘッダ

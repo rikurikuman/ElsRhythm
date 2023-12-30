@@ -1,3 +1,8 @@
+/*
+* @file ParticleSprite3D.h
+* @brief Image3Dを描画するパーティクル
+*/
+
 #pragma once
 #include "ParticleObject.h"
 #include <Image3D.h>
