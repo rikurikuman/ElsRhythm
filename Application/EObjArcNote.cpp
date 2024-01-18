@@ -21,6 +21,16 @@ std::unique_ptr<EditorAction> EObjArcNote::GetSavePoint()
 	return ptr;
 }
 
+Vector2 EObjArcNote::GetPos()
+{
+	return Vector2(mStartPos.x, mScene->GetOriginScreenPosition(mStartBeat));
+}
+
+Beat EObjArcNote::GetBeat()
+{
+	return mStartBeat;
+}
+
 bool EObjArcNote::Collide(float x, float y)
 {
 	ColPrimitive2D::Point point{ {x, y} };
@@ -667,6 +677,72 @@ void EObjArcNote::Draw()
 		if (itr != mControlPoints.end()) {
 			prevPos = itr->pos;
 			prevPos.z = mScene->GetScreenPosition(itr->beat);
+			itr++;
+		}
+		else {
+			break;
+		}
+	}
+}
+
+void EObjArcNote::DrawToMiniMap()
+{
+	float multipiler = 720 / mScene->GetAllScreenLength();
+	int32_t laneSize = 1280 - 1180;
+	int32_t laneCenter = (1180 + 1280) / 2;
+
+	Vector3 prevPos = mStartPos;
+	prevPos.z = 720 - mScene->GetOriginScreenPosition(mStartBeat) * multipiler;
+
+	//float startX = laneCenter + (prevPos.x / 8.0f) * (laneSize / 2);
+
+	//SimpleDrawer::DrawBox(startX - 10, prevPos.z - 10, startX + 10, prevPos.z + 10, 10, 0xaa33aa, true);
+
+	Vector3 startPos;
+	Vector3 endPos;
+	bool select = false;
+	bool selectHeight = false;
+
+	auto itr = mControlPoints.begin();
+
+	while (true) {
+		startPos = prevPos;
+		if (itr != mControlPoints.end()) {
+			endPos = itr->pos;
+			endPos.z = 720 - mScene->GetOriginScreenPosition(itr->beat) * multipiler;
+			select = itr->select;
+			selectHeight = itr->selectHeight;
+		}
+		else {
+			endPos = mEndPos;
+			endPos.z = 720 - mScene->GetOriginScreenPosition(mEndBeat) * multipiler;
+			select = mSelectEndPos;
+			selectHeight = mSelectEndHeight;
+		}
+
+		if ((startPos.z < 0 && endPos.z < 0) || (startPos.z < 0 && endPos.z > 720)) {
+			if (itr != mControlPoints.end()) {
+				prevPos = itr->pos;
+				prevPos.z = 720 - mScene->GetOriginScreenPosition(itr->beat) * multipiler;
+				itr++;
+				continue;
+			}
+			else {
+				break;
+			}
+		}
+
+		int32_t x1 = static_cast<int32_t>(laneCenter + (startPos.x / 8.0f) * (laneSize / 2));
+		int32_t x2 = static_cast<int32_t>(laneCenter + (endPos.x / 8.0f) * (laneSize / 2));
+
+		//SimpleDrawer::DrawCircle(x2, static_cast<int32_t>(endPos.z), 12, 10, 0xaa33aa, true);
+		float thickness = 5.0f * multipiler;
+		if (thickness < 1.0f) thickness = 1.0f;
+		SimpleDrawer::DrawLine(x1, static_cast<int32_t>(startPos.z), x2, static_cast<int32_t>(endPos.z), 10, 0xaa33aa, thickness);
+
+		if (itr != mControlPoints.end()) {
+			prevPos = itr->pos;
+			prevPos.z = 720 - mScene->GetOriginScreenPosition(itr->beat) * multipiler;
 			itr++;
 		}
 		else {

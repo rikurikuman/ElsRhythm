@@ -19,6 +19,18 @@ std::unique_ptr<EditorAction> EObjTapNote::GetSavePoint()
 	return ptr;
 }
 
+Vector2 EObjTapNote::GetPos()
+{
+	float x1 = 1180 + 100 / 4.0f * mLane;
+	float x2 = x1 + 100 / 4.0f;
+	return Vector2((x1 + x2) / 2.0f, mScene->GetOriginScreenPosition(mBeat));
+}
+
+Beat EObjTapNote::GetBeat()
+{
+	return mBeat;
+}
+
 bool EObjTapNote::Collide(float x, float y)
 {
 	int32_t laneSize = mScene->sMaxLaneX - mScene->sMinLaneX;
@@ -135,6 +147,20 @@ void EObjTapNote::Draw()
 
 	SimpleDrawer::DrawBox(x1 + 4, y - 15, x2 - 4, y, 5, Color(0, 1, 1, 1), true);
 	if(mIsSelected) SimpleDrawer::DrawBox(x1 + 4, y - 15, x2 - 4, y, 5, Color(1, 0, 0, 1), false, 2);
+}
+
+void EObjTapNote::DrawToMiniMap()
+{
+	float x1 = 1180 + 100 / 4.0f * mLane;
+	float x2 = x1 + 100 / 4.0f;
+
+	float y = mScene->GetOriginScreenPosition(mBeat);
+
+	float multipiler = 720 / mScene->GetAllScreenLength();
+	float posY1 = 720 - y * multipiler - 15 * multipiler;
+	float posY2 = 720 - y * multipiler;
+	if (posY2 - posY1 <= 1.0f) posY2 = posY1 + 1;
+	SimpleDrawer::DrawBox(x1, posY1, x2, posY2, 100, 0x00ffff, true);
 }
 
 void EObjTapNote::TempDraw(EditorScene* scene, int32_t lane, Beat beat)

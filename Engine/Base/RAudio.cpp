@@ -366,7 +366,7 @@ float RAudio::GetCurrentPosition(PlayingInfo info)
 		samplePerSec = waveData->wfex.nSamplesPerSec;
 	}
 	else {
-		Util::DebugLog("ERROR: RAudio::SetPlayRange() : Audio[" + info.handle + "] is unknown AudioType.");
+		Util::DebugLog("ERROR: RAudio::GetCurrentPosition() : Audio[" + info.handle + "] is unknown AudioType.");
 		return 0;
 	}
 

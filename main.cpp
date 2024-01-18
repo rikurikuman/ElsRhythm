@@ -65,7 +65,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	}
 
 	//WindowsAPI
-	RWindow::SetWindowName(L"リズムマウサー");
+	RWindow::SetWindowName(L"リズムマウサー 譜面エディタ v0.3.0");
 	RWindow::Init();
 
 	//DirectX

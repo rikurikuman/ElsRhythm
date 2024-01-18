@@ -29,12 +29,15 @@ public:
 	constexpr static int32_t sBaseLineY = 625;
 	constexpr static int32_t sMinFieldX = 0;
 	constexpr static int32_t sMaxFieldX = 1280;
-	constexpr static int32_t sMinLaneX = 750;
-	constexpr static int32_t sMaxLaneX = 1150;
-	constexpr static int32_t sMinArcHeightX = 200;
-	constexpr static int32_t sMaxArcHeightX = 560;
+	constexpr static int32_t sMinLaneX = 650;
+	constexpr static int32_t sMaxLaneX = 1050;
+	constexpr static int32_t sMinArcHeightX = 100;
+	constexpr static int32_t sMaxArcHeightX = 460;
 
 	float GetScreenPosition(Beat beat);
+	float GetOriginScreenPosition(Beat beat);
+	float GetMiliSecFromScreenLength(float length);
+	float GetAllScreenLength();
 	Beat GetVirtualCursorBeat(float y);
 
 	void AddEditorAction(std::unique_ptr<EditorAction>&& act);
@@ -75,8 +78,12 @@ private:
 	float mTime = 0;
 	float mNowScrollPos = 0;
 
-	bool misDragging = false;
+	bool mIsDragging = false;
 	Vector2 mDragStartPos;
+
+	bool mIsRightDragging = false;
+	bool mIsInsideMinimapDrag = false;
+	Vector2 mRightDragStartPos;
 
 	bool mEnableScrollChangeInEditor = false;
 	float mScrollSpeed = 1.0f;
@@ -103,13 +110,17 @@ private:
 	std::list<EMeterChange> mMeterChanges;
 	bool mOpenMeterChangeWindow = false;
 	void ShowMeterChangeWindow();
+	
+	bool mOpenAutoGenerateWindow = false;
+	void ShowAutoGenerateWindow();
+
+	void AutoGenerate(int32_t startMeasure, int32_t size, float targetMin, float targetMax, float thresholds);
 
 	float GetScroll(float miliSec);
 	float GetPosition(float miliSec);
 	Beat GetCursorBeat();
 	void DrawMeasureLine(Beat beat, Color color, bool drawNum);
 	void DrawMeasureLines();
-	void DrawNotes();
 
 	void InitEditor();
 	void Load(std::wstring path);

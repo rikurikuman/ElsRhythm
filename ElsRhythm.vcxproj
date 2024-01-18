@@ -159,7 +159,6 @@
     <ClCompile Include="Engine\Renderer\SpriteRenderStage.cpp" />
     <ClCompile Include="Engine\Renderer\TestRenderStage.cpp" />
     <ClCompile Include="Engine\Renderer\TransparentRenderStage.cpp" />
-    <ClCompile Include="Engine\Scene\ISceneFactory.cpp" />
     <ClCompile Include="Engine\Light\LightGroup.cpp" />
     <ClCompile Include="Application\EventSystem.cpp" />
     <ClCompile Include="Application\IEditorObject.cpp" />
@@ -203,6 +202,7 @@
     <ClCompile Include="Engine\Collision\SphereCollider.cpp" />
     <ClCompile Include="Engine\Base\SRVertexBuffer.cpp" />
     <ClCompile Include="Engine\PathUtil.cpp" />
+    <ClCompile Include="Application\SpectrumAnalyze.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\BasicPS.hlsl">
@@ -533,6 +533,7 @@
     <ClInclude Include="Application\IEditorObject.h" />
     <ClInclude Include="Application\EObjTapNote.h" />
     <ClInclude Include="Engine\PathUtil.h" />
+    <ClInclude Include="Application\SpectrumAnalyze.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\Basic.hlsli">

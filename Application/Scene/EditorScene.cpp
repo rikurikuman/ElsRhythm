@@ -19,6 +19,7 @@
 #include <filesystem>
 #include <PathUtil.h>
 #include <cuchar>
+#include <SpectrumAnalyze.h>
 
 EditorScene::EditorScene()
 {
@@ -95,6 +96,29 @@ void EditorScene::Update()
 				mDragStartPos = mouse;
 			}
 
+			if (RInput::GetMouseClickDown(1)) {
+				mRightDragStartPos = mouse;
+				mIsInsideMinimapDrag = mRightDragStartPos.x >= 1180;
+				mIsRightDragging = true;
+			}
+
+			if (mIsRightDragging) {
+				if (RInput::GetMouseClick(1)) {
+					if (mIsInsideMinimapDrag) {
+						mTime = GetMiliSecFromScreenLength(GetAllScreenLength() / 720 * (720 - mouse.y));
+					}
+					else {
+						Vector2 diff = mouse - mRightDragStartPos;
+						mRightDragStartPos = mouse;
+
+						mTime += GetMiliSecFromScreenLength(diff.y);
+					}
+				}
+				else {
+					mIsRightDragging = false;
+				}
+			}
+
 			if (RInput::GetKeyDown(DIK_DELETE)) {
 				std::vector<std::unique_ptr<EditorAction>> acts;
 
@@ -128,17 +152,17 @@ void EditorScene::Update()
 				bool checkOnObject = false;
 				if (mMode == EditMode::AreaSelect && (RInput::GetMouseClick(0) || RInput::GetMouseClickUp(0))) {
 					if (RInput::GetMouseClickDown(0)) {
-						misDragging = true;
+						mIsDragging = true;
 						for (auto itr = mEditorObjects.begin(); itr != mEditorObjects.end(); itr++) {
 							IEditorObject* obj = itr->get();
 							if (obj->Collide(mDragStartPos.x, mDragStartPos.y)) {
-								misDragging = false;
+								mIsDragging = false;
 								break;
 							}
 						}
 					}
 
-					if (misDragging) {
+					if (mIsDragging) {
 						SimpleDrawer::DrawBox(mDragStartPos.x, mDragStartPos.y, mouse.x, mouse.y, 50, 0x00ffff, false, 2);
 
 						if (RInput::GetMouseClickUp(0)) {
@@ -353,26 +377,59 @@ void EditorScene::Draw()
 		SimpleDrawer::DrawLine(sMinLaneX, sBaseLineY, sMaxLaneX, sBaseLineY, 1, 0xff00ff, 2);
 		DrawMeasureLines();
 
-		//DrawNotes();
-
+		float multipiler = 720 / GetAllScreenLength();
 		for (std::unique_ptr<IEditorObject>& obj : mEditorObjects) {
 			obj->Draw();
+			obj->DrawToMiniMap();
 		}
-	}
 
-	/*judgeLine.TransferBuffer(Camera::sNowCamera->mViewProjection);
-	judgeLine.Draw();
-	lane.TransferBuffer(Camera::sNowCamera->mViewProjection);
-	lane.Draw();
-	for (int32_t i = 0; i < 3; i++) {
-		lines[i].TransferBuffer(Camera::sNowCamera->mViewProjection);
-		lines[i].Draw();
-	}*/
+		SimpleDrawer::DrawLine(1180, 0, 1180, 720, 110, 0xffff00);
+
+		float nowAreaY1 = 720 - (mNowScrollPos - (720 - sBaseLineY)) * multipiler;
+		float nowAreaY2 = 720 - (mNowScrollPos + sBaseLineY) * multipiler;
+
+		SimpleDrawer::DrawBox(1180.0f, nowAreaY1, 1280.0f, nowAreaY2, 115, 0x00ff33, false);
+	}
 }
 
 float EditorScene::GetScreenPosition(Beat beat)
 {
 	return sBaseLineY - (GetPosition(chartFile.music.ConvertBeatToMiliSeconds(beat)) - mNowScrollPos);
+}
+
+float EditorScene::GetOriginScreenPosition(Beat beat)
+{
+	return GetPosition(chartFile.music.ConvertBeatToMiliSeconds(beat));
+}
+
+float EditorScene::GetMiliSecFromScreenLength(float length)
+{
+	float base = 0.2f * mScrollSpeed;
+	return length / base;
+}
+
+float EditorScene::GetAllScreenLength()
+{
+	float musicLength = RAudio::GetLength(mAudioHandle) * 1000;
+	if (musicLength == 0) {
+		Beat save = { 0, 0, 1 };
+		float saveSec = 0;
+		for (auto& itr : mEditorObjects) {
+			float tempSec = chartFile.music.ConvertBeatToMiliSeconds(itr->GetBeat());
+			if (saveSec <= tempSec) {
+				save = itr->GetBeat();
+				saveSec = tempSec;
+			}
+		}
+
+		//少なすぎると崩れるので最低5小節は入れる
+		if (save < Beat(5, 0, 1)) {
+			save = { 5, 0, 1 };
+		}
+
+		return GetOriginScreenPosition(save);
+	}
+	return GetPosition(musicLength);
 }
 
 Beat EditorScene::GetVirtualCursorBeat(float y)
@@ -528,8 +585,110 @@ void EditorScene::ShowMainWindow()
 	ShowMainWindowMenuBar();
 	if (mOpenBPMChangeWindow) ShowBPMChangeWindow();
 	if (mOpenMeterChangeWindow) ShowMeterChangeWindow();
+	if (mOpenAutoGenerateWindow) ShowAutoGenerateWindow();
 
 	ImGui::End();
+}
+
+void EditorScene::ShowMainWindowMenuBar()
+{
+	if (ImGui::BeginMenuBar()) {
+		if (ImGui::BeginMenu("ファイル")) {
+			if (ImGui::BeginMenu("新規作成")) {
+				if (ImGui::MenuItem("譜面ファイル(.kasu)")) {
+					InitEditor();
+					mState = EditorState::Chart;
+				}
+				ImGui::EndMenu();
+			}
+			if (ImGui::MenuItem("開く")) {
+				wchar_t filePath[MAX_PATH] = { 0 };
+
+				OPENFILENAME ofn = { 0 };
+				ofn.lStructSize = sizeof(OPENFILENAME);
+				ofn.hwndOwner = RWindow::GetWindowHandle();
+				ofn.lpstrFilter =
+					L"譜面ファイル (.kasu)\0*.kasu\0"
+					L"すべてのファイル (*.*)\0*.*\0";
+				ofn.nFilterIndex = 0;
+				ofn.lpstrFile = filePath;
+				ofn.nMaxFile = MAX_PATH;
+
+				auto old = std::filesystem::current_path();
+				if (GetOpenFileName(&ofn)) {
+					InitEditor();
+					std::wstring wStr = filePath;
+					Load(wStr);
+					mState = EditorState::Chart;
+				}
+				std::filesystem::current_path(old);
+			}
+			if (ImGui::MenuItem("保存")) {
+				if (chartFile.path.empty()) {
+					wchar_t filePath[MAX_PATH] = { 0 };
+
+					OPENFILENAME ofn = { 0 };
+					ofn.lStructSize = sizeof(OPENFILENAME);
+					ofn.hwndOwner = RWindow::GetWindowHandle();
+					ofn.lpstrFilter =
+						L"譜面ファイル (.kasu)\0*.kasu\0";
+					ofn.lpstrDefExt = L"kasu";
+					ofn.nFilterIndex = 0;
+					ofn.lpstrFile = filePath;
+					ofn.nMaxFile = MAX_PATH;
+					ofn.Flags = OFN_OVERWRITEPROMPT;
+
+					auto old = std::filesystem::current_path();
+					if (GetSaveFileName(&ofn)) {
+						std::wstring wStr = filePath;
+						Save(wStr);
+					}
+					std::filesystem::current_path(old);
+				}
+				else {
+					Save(chartFile.path);
+				}
+			}
+			if (ImGui::MenuItem("名前を付けて保存")) {
+				wchar_t filePath[MAX_PATH] = { 0 };
+
+				OPENFILENAME ofn = { 0 };
+				ofn.lStructSize = sizeof(OPENFILENAME);
+				ofn.hwndOwner = RWindow::GetWindowHandle();
+				ofn.lpstrFilter =
+					L"譜面ファイル (.kasu)\0*.kasu\0";
+				ofn.lpstrDefExt = L"kasu";
+				ofn.nFilterIndex = 0;
+				ofn.lpstrFile = filePath;
+				ofn.nMaxFile = MAX_PATH;
+				ofn.Flags = OFN_OVERWRITEPROMPT;
+
+				auto old = std::filesystem::current_path();
+				if (GetSaveFileName(&ofn)) {
+					std::wstring wStr = filePath;
+					Save(wStr);
+				}
+				std::filesystem::current_path(old);
+			}
+
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("編集")) {
+			if (ImGui::MenuItem("元に戻す  (Ctrl + Z)")) {
+				Undo();
+			}
+			if (ImGui::MenuItem("やり直し  (Ctrl + Y)")) {
+				Redo();
+			}
+			ImGui::Separator();
+			if (ImGui::MenuItem("譜面の自動生成")) {
+				mOpenAutoGenerateWindow = true;
+			}
+			ImGui::EndMenu();
+		}
+		ImGui::EndMenuBar();
+	}
+
 }
 
 void EditorScene::ShowToolWindow()
@@ -698,6 +857,96 @@ void EditorScene::ShowMeterChangeWindow() {
 	ImGui::EndChild();
 
 	ImGui::End();
+}
+
+void EditorScene::ShowAutoGenerateWindow() {
+	ImGui::SetNextWindowPos({ 640, 360 }, ImGuiCond_FirstUseEver, { 0.5f, 0.5f });
+
+	ImGuiWindowFlags window_flags = 0;
+	window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
+	ImGui::Begin("自動生成", &mOpenAutoGenerateWindow, window_flags);
+	ImGui::Text("開発中機能です");
+	ImGui::Spacing();
+	ImGui::Separator();
+	ImGui::Spacing();
+
+	int32_t startMeasure = chartFile.music.ConvertMiliSecondsToBeat(mTime).measure;
+
+	ImGui::Text(Util::StringFormat("生成開始小節: %d小節目", startMeasure).c_str());
+	static int32_t gMeasureSize = 1;
+	ImGui::Text("生成する小節数: ");
+	ImGui::SameLine();
+	ImGui::InputInt("##生成小節数", &gMeasureSize);
+
+	static float targetMin = 140;
+	static float targetMax = 400;
+	static float threshold = -30.0f;
+
+	ImGui::Text("注目する周波数: ");
+	ImGui::Text("下限: ");
+	ImGui::SameLine();
+	ImGui::DragFloat("##周波数A", &targetMin, 1.0f, 1.0f, targetMax);
+	ImGui::Text("上限: ");
+	ImGui::SameLine();
+	ImGui::DragFloat("##周波数B", &targetMax, 1.0f, targetMin, 0.0f);
+	ImGui::Text("しきい値: ");
+	ImGui::SameLine();
+	ImGui::SliderFloat("##周波数C", &threshold, -120.0f, 0.0f);
+
+	if (mAudioHandle == "") ImGui::BeginDisabled();
+	if (ImGui::Button("生成##自動生成開始")) {
+		AutoGenerate(startMeasure, gMeasureSize, targetMin, targetMax, threshold);
+	}
+	if (mAudioHandle == "") ImGui::EndDisabled();
+
+	ImGui::End();
+}
+
+void EditorScene::AutoGenerate(int32_t startMeasure, int32_t size, float targetMin, float targetMax, float threshold)
+{
+	startMeasure;
+	size;
+	targetMin;
+	targetMax;
+
+	if (mAudioHandle == "") return;
+	AudioData* data = RAudio::GetData(mAudioHandle);
+	if (data == nullptr) return;
+
+	WaveAudio* audio = static_cast<WaveAudio*>(data);
+
+	for (int32_t m = 0; m < size; m++) {
+		for (int32_t b = 0; b < mSetLPB; b++) {
+			Beat beat = { startMeasure + m, b, mSetLPB };
+
+			std::vector<float> spectrum = SpectrumAnalyze(data, static_cast<int32_t>(chartFile.music.ConvertBeatToMiliSeconds(beat) / 1000.0f * audio->wfex.nSamplesPerSec), 2048);
+
+			bool putFlag = false;
+
+			for (int32_t i = 0; i < spectrum.size(); i++) {
+				float magnitude = spectrum[i];
+				float freq = i * static_cast<float>(audio->wfex.nSamplesPerSec) / 2048;
+				if (freq >= targetMin && freq <= targetMax) {
+					if (freq >= 0.0000000001f) {
+						float logfreq = log(magnitude) * 10.0f;
+
+						if (logfreq >= threshold) {
+							putFlag = true;
+							break;
+						}
+					}
+				}
+			}
+
+			if (putFlag) {
+				mEditorObjects.push_back(std::make_unique<EObjTapNote>(this));
+				EObjTapNote* obj = static_cast<EObjTapNote*>(mEditorObjects.back().get());
+				obj->mLane = Util::GetRand(0, 3);
+				obj->mBeat = beat;
+				AddEditorAction(std::make_unique<EAAddEO>(obj->mUuid, mEditorObjects.back()));
+			}
+		}
+	}
 }
 
 float EditorScene::GetScroll(float miliSec)
@@ -902,192 +1151,12 @@ void EditorScene::DrawMeasureLines()
 	}
 }
 
-void EditorScene::DrawNotes()
-{
-	int32_t laneSize = sMaxLaneX - sMinLaneX;
-	int32_t laneCenter = (sMinLaneX + sMaxLaneX) / 2;
-
-	int32_t arcHeightSize = sMaxArcHeightX - sMinArcHeightX;
-
-	for (Note& note : chartFile.notes) {
-		if (note.type == Note::Types::Tap) {
-			float x1 = sMinLaneX + laneSize / 4.0f * note.lane;
-			float x2 = x1 + laneSize / 4.0f;
-
-			float y = sBaseLineY - (GetPosition(chartFile.music.ConvertBeatToMiliSeconds(note.mainBeat)) - mNowScrollPos);
-
-			if (y < 0 || y > 720) {
-				continue;
-			}
-
-			SimpleDrawer::DrawBox(x1 + 4, y - 10, x2 - 4, y, 5, 0x00ffff, true);
-		}
-		else if (note.type == Note::Types::Arc) {
-			Vector3 prevPos = note.mainPos;
-			prevPos.z = GetPosition(chartFile.music.ConvertBeatToMiliSeconds(note.mainBeat));
-
-			float startX = laneCenter + (prevPos.x / 8.0f) * (laneSize / 2);
-			float startX2 = sMaxArcHeightX - (((prevPos.y - 1) / 4.0f) * arcHeightSize);
-			float startZ = sBaseLineY - (prevPos.z - mNowScrollPos);
-			SimpleDrawer::DrawBox(startX - 10, startZ - 10, startX + 10, startZ + 10, 10, 0xaa33aa, true);
-			SimpleDrawer::DrawBox(startX2 - 10, startZ - 10, startX2 + 10, startZ + 10, 10, 0xaa33aa, true);
-
-			Vector3 startPos;
-			Vector3 endPos;
-
-			auto itr = note.controlPoints.begin();
-
-			while (true) {
-				startPos = prevPos;
-				if (itr != note.controlPoints.end()) {
-					endPos = itr->pos;
-					endPos.z = GetPosition(chartFile.music.ConvertBeatToMiliSeconds(itr->beat));
-				}
-				else {
-					endPos = note.subPos;
-					endPos.z = GetPosition(chartFile.music.ConvertBeatToMiliSeconds(note.subBeat));
-				}
-
-				startPos.z = sBaseLineY - (startPos.z - mNowScrollPos);
-				endPos.z = sBaseLineY - (endPos.z - mNowScrollPos);
-
-				if ((startPos.z < 0 && endPos.z < 0) || (startPos.z < 0 && endPos.z > 720)) {
-					if (itr != note.controlPoints.end()) {
-						prevPos = itr->pos;
-						prevPos.z = GetPosition(chartFile.music.ConvertBeatToMiliSeconds(itr->beat));
-						itr++;
-						continue;
-					}
-					else {
-						break;
-					}
-				}
-
-				int32_t x1 = static_cast<int32_t>(laneCenter + (startPos.x / 8.0f) * (laneSize / 2));
-				int32_t x2 = static_cast<int32_t>(laneCenter + (endPos.x / 8.0f) * (laneSize / 2));
-				int32_t x3 = static_cast<int32_t>(sMaxArcHeightX - ((startPos.y - 1) / 4.0f) * arcHeightSize);
-				int32_t x4 = static_cast<int32_t>(sMaxArcHeightX - ((endPos.y - 1) / 4.0f) * arcHeightSize);
-
-				SimpleDrawer::DrawCircle(x2, static_cast<int32_t>(endPos.z), 12, 10, 0xaa33aa, true);
-				SimpleDrawer::DrawLine(x1, static_cast<int32_t>(startPos.z), x2, static_cast<int32_t>(endPos.z), 10, 0xaa33aa, 10);
-				SimpleDrawer::DrawCircle(x4, static_cast<int32_t>(endPos.z), 12, 10, 0xaa33aa, true);
-				SimpleDrawer::DrawLine(x3, static_cast<int32_t>(startPos.z), x4, static_cast<int32_t>(endPos.z), 10, 0xaa33aa, 10);
-
-				if (itr != note.controlPoints.end()) {
-					prevPos = itr->pos;
-					prevPos.z = GetPosition(chartFile.music.ConvertBeatToMiliSeconds(itr->beat));
-					itr++;
-				}
-				else {
-					break;
-				}
-			}
-		}
-	}
-}
-
-void EditorScene::ShowMainWindowMenuBar()
-{
-	if (ImGui::BeginMenuBar()) {
-		if (ImGui::BeginMenu("ファイル")) {
-			if (ImGui::BeginMenu("新規作成")) {
-				if (ImGui::MenuItem("譜面ファイル(.kasu)")) {
-					InitEditor();
-					mState = EditorState::Chart;
-				}
-				ImGui::EndMenu();
-			}
-			if (ImGui::MenuItem("開く")) {
-				wchar_t filePath[MAX_PATH] = { 0 };
-
-				OPENFILENAME ofn = { 0 };
-				ofn.lStructSize = sizeof(OPENFILENAME);
-				ofn.hwndOwner = RWindow::GetWindowHandle();
-				ofn.lpstrFilter =
-					L"譜面ファイル (.kasu)\0*.kasu\0"
-					L"すべてのファイル (*.*)\0*.*\0";
-				ofn.nFilterIndex = 0;
-				ofn.lpstrFile = filePath;
-				ofn.nMaxFile = MAX_PATH;
-
-				auto old = std::filesystem::current_path();
-				if (GetOpenFileName(&ofn)) {
-					InitEditor();
-					std::wstring wStr = filePath;
-					Load(wStr);
-					mState = EditorState::Chart;
-				}
-				std::filesystem::current_path(old);
-			}
-			if (ImGui::MenuItem("保存")) {
-				if (chartFile.path.empty()) {
-					wchar_t filePath[MAX_PATH] = { 0 };
-
-					OPENFILENAME ofn = { 0 };
-					ofn.lStructSize = sizeof(OPENFILENAME);
-					ofn.hwndOwner = RWindow::GetWindowHandle();
-					ofn.lpstrFilter =
-						L"譜面ファイル (.kasu)\0*.kasu\0";
-					ofn.lpstrDefExt = L"kasu";
-					ofn.nFilterIndex = 0;
-					ofn.lpstrFile = filePath;
-					ofn.nMaxFile = MAX_PATH;
-					ofn.Flags = OFN_OVERWRITEPROMPT;
-
-					auto old = std::filesystem::current_path();
-					if (GetSaveFileName(&ofn)) {
-						std::wstring wStr = filePath;
-						Save(wStr);
-					}
-					std::filesystem::current_path(old);
-				}
-				else {
-					Save(chartFile.path);
-				}
-			}
-			if (ImGui::MenuItem("名前を付けて保存")) {
-				wchar_t filePath[MAX_PATH] = { 0 };
-
-				OPENFILENAME ofn = { 0 };
-				ofn.lStructSize = sizeof(OPENFILENAME);
-				ofn.hwndOwner = RWindow::GetWindowHandle();
-				ofn.lpstrFilter =
-					L"譜面ファイル (.kasu)\0*.kasu\0";
-				ofn.lpstrDefExt = L"kasu";
-				ofn.nFilterIndex = 0;
-				ofn.lpstrFile = filePath;
-				ofn.nMaxFile = MAX_PATH;
-				ofn.Flags = OFN_OVERWRITEPROMPT;
-
-				auto old = std::filesystem::current_path();
-				if (GetSaveFileName(&ofn)) {
-					std::wstring wStr = filePath;
-					Save(wStr);
-				}
-				std::filesystem::current_path(old);
-			}
-
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("編集")) {
-			if (ImGui::MenuItem("元に戻す  (Ctrl + Z)")) {
-				Undo();
-			}
-			if (ImGui::MenuItem("やり直し  (Ctrl + Y)")) {
-				Redo();
-			}
-			ImGui::EndMenu();
-		}
-		ImGui::EndMenuBar();
-	}
-
-}
-
 void EditorScene::InitEditor()
 {
 	mState = EditorState::None;
 	chartFile = ChartFile();
 	chartFile.path = PathUtil::GetMainPath() / "Charts";
+	mAudioHandle = "";
 	mEditorObjects.clear();
 	mTime = 0;
 	mBPMChanges.clear();

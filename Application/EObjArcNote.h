@@ -15,6 +15,8 @@ public:
 	std::string GetTypeName() override { return "EObjArcNote"; };
 	std::unique_ptr<IEditorObject> Clone() const override;
 	std::unique_ptr<EditorAction> GetSavePoint() override;
+	Vector2 GetPos() override;
+	Beat GetBeat() override;
 
 	struct ControlPoint {
 		Beat beat;
@@ -53,6 +55,7 @@ public:
 	void Move(float x, float y) override;
 	
 	void Draw() override;
+	void DrawToMiniMap() override;
 
 	static void TempDraw(EditorScene* scene, float x, Beat beat);
 };

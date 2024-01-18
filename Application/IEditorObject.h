@@ -8,6 +8,9 @@
 #include <string>
 #include <memory>
 
+#include <BeatUtil.h>
+#include <Vector2.h>
+
 class EditorScene;
 struct EditorAction;
 
@@ -24,6 +27,9 @@ public:
 	virtual std::string GetTypeName() = 0;
 	virtual std::unique_ptr<IEditorObject> Clone() const = 0;
 	virtual std::unique_ptr<EditorAction> GetSavePoint() = 0;
+
+	virtual Beat GetBeat() { return { 0, 0, 1 }; };
+	virtual Vector2 GetPos() { return { 0, 0 }; };
 
 	//当たり判定
 	virtual bool Collide(float x, float y) { x; y; return false; };
@@ -52,6 +58,7 @@ public:
 	virtual void Move(float x, float y) { x; y; };
 
 	virtual void Draw() {};
+	virtual void DrawToMiniMap() {};
 	virtual void SelectDraw() {};
 };
 

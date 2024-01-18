@@ -228,9 +228,6 @@
     <ClCompile Include="Engine\Base\RImGui.cpp">
       <Filter>ソース ファイル\Engine\Base</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Scene\ISceneFactory.cpp">
-      <Filter>ソース ファイル\Engine\SceneManage</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Camera\Camera.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
@@ -425,6 +422,9 @@
     </ClCompile>
     <ClCompile Include="Application\RhythmCore\ChartInfoFile.cpp">
       <Filter>ソース ファイル\Application\RhythmCore</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SpectrumAnalyze.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -861,6 +861,9 @@
     </ClInclude>
     <ClInclude Include="Application\RhythmCore\ChartInfoFile.h">
       <Filter>ヘッダー ファイル\Application\RhythmCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SpectrumAnalyze.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

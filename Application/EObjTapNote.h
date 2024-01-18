@@ -15,6 +15,8 @@ public:
 	std::string GetTypeName() override { return "EObjTapNote"; };
 	std::unique_ptr<IEditorObject> Clone() const override;
 	std::unique_ptr<EditorAction> GetSavePoint() override;
+	Vector2 GetPos() override;
+	Beat GetBeat() override;
 
 	int32_t mLane = 0;
 	Beat mBeat;
@@ -35,6 +37,7 @@ public:
 	void Move(float x, float y) override;
 
 	void Draw() override;
+	void DrawToMiniMap() override;
 
 	static void TempDraw(EditorScene* scene, int32_t lane, Beat beat);
 };
